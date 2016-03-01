@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Batua</string>
+    <string name="app_description">Batua Android Project</string>
+    <string name="action_settings">Settings</string>
+</resources>
