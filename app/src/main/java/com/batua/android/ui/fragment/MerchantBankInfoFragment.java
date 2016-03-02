@@ -9,18 +9,17 @@ import com.batua.android.R;
 import com.batua.android.app.base.BaseFragment;
 
 /**
- * Created by febinp on 01/03/16.
+ * Created by febinp on 02/03/16.
  */
-public class DraftedAgentFragment extends BaseFragment{
+public class MerchantBankInfoFragment extends BaseFragment {
 
-    public DraftedAgentFragment() {
+    public MerchantBankInfoFragment() {
 
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-
-        return inflater.inflate(R.layout.fragment_draft, null);
+        return inflater.inflate(R.layout.fragment_merchant_bank_info, null);
     }
 }

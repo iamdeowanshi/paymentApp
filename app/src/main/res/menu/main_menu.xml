@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".MainActivity">
 
-    <item android:id="@+id/action_cross"
+    <item android:id="@+id/action_add_merchant"
         android:icon="@drawable/add"
         android:title=""
         app:showAsAction="always" />

@@ -26,12 +26,12 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_login)
     void onLoginClick() {
-        startActivity(MainActivity.class,null);
+        startActivity(HomeActivity.class,null);
     }
 
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
-        startActivity(MainActivity.class, null);
+        startActivity(HomeActivity.class, null);
     }
 
     @OnClick(R.id.txt_forgot_password)
