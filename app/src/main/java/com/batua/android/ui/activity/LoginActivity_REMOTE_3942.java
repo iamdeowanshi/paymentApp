@@ -41,12 +41,11 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_login)
     void onLoginClick() {
-
-	ViewUtil.hideKeyboard(getContentView());
+        ViewUtil.hideKeyboard(getContentView());
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
         if (isValid) {
-            startActivity(HomeActivity.class,null);
+            bakery.snackLong(getContentView(), "Home screen coming soon");
             inputLayoutEmail.setErrorEnabled(false);
 
             return;
@@ -58,7 +57,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
-	startActivity(HomeActivity.class, null);
+        bakery.snackLong(getContentView(), "Home screen coming soon");
     }
 
     @OnClick(R.id.txt_forgot_password)
