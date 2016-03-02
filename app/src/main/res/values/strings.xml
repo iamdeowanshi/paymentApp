@@ -30,4 +30,22 @@
     <string name="new_password">Enter new password</string>
     <string name="confirm_password">Confirm password</string>
     <string name="add_merchant_title">Add Merchant</string>
+    <string name="merchant_name">Merchant Name</string>
+    <string name="merchant_short_code">Merchant Short Code</string>
+    <string name="merchant_email">Merchant Email</string>
+    <string name="merchant_mobile">Merchant Mobile</string>
+    <string name="merchant_category">Merchant Category</string>
+    <string name="merchant_fee">Merchant Fee (in %)</string>
+    <string name="merchant_address">Address</string>
+    <string name="merchant_pin_code">Pin</string>
+    <string name="account_holder_name">Account holder Name</string>
+    <string name="account_number">Account Number</string>
+    <string name="bank_branch">Bank Branch</string>
+    <string name="ifsc_code">IFSC Code</string>
+
+
+    <string-array name="merchant_category">
+        <item>@string/merchant_category</item>
+    </string-array>
+
 </resources>
