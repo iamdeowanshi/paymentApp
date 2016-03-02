@@ -24,6 +24,6 @@ public class ResetPasswordActivity extends BaseActivity {
 
     @OnClick(R.id.btn_confirm)
     void onConfirmClick() {
-        bakery.snackShort(getContentView(), "Your Password has been reset.");
+        startActivity(LoginActivity.class,null);
     }
 }

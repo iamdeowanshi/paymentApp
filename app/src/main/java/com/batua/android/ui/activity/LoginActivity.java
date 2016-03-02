@@ -26,12 +26,12 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_login)
     void onLoginClick() {
-        bakery.snackLong(getContentView(),"Home screen coming soon");
+        startActivity(MainActivity.class,null);
     }
 
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
-        bakery.snackLong(getContentView(),"Home screen coming soon");
+        startActivity(MainActivity.class, null);
     }
 
     @OnClick(R.id.txt_forgot_password)

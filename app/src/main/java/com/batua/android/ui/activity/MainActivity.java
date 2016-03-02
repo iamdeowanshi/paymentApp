@@ -6,11 +6,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,7 +29,7 @@ import butterknife.ButterKnife;
 /**
  * Created by febinp on 28/10/15.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener{
 
 
     @Bind(R.id.toolbar)
@@ -61,6 +63,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void showProfile() {
+        navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
     }
 
@@ -93,6 +96,19 @@ public class MainActivity extends BaseActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        int id = menuItem.getItemId();
+
+        switch(id) {
+            case R.id.nav_logout:
+                startActivity(LoginActivity.class, null);
+                break;
+        }
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 
     class FragmentAdapter extends FragmentPagerAdapter {
