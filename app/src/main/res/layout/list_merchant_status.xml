@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:layout_marginTop="10dp">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Merchant Title"
+        android:textSize="@dimen/text_size_18"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:textColor="@color/gray_dark"
+        android:id="@+id/txt_merchant_title" />
+
+    <LinearLayout
+        android:id="@+id/txt_merchant_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/txt_merchant_title">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Address"
+            android:layout_weight="4"
+            android:id="@+id/txt_merchant_address" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Short Code : "
+            android:layout_weight="1"
+            android:id="@+id/txt_merchant_short_code" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/highlight_view"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/green"
+        android:layout_below="@+id/txt_merchant_detail_layout"/>
+
+
+</RelativeLayout>

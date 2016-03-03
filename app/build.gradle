@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.batua.android"
         minSdkVersion 14
         targetSdkVersion 23
@@ -52,4 +53,7 @@ dependencies {
 
     // UI libraries
     compile 'com.jakewharton:butterknife:7.0.1'
+
+    //google play service
+    compile 'com.google.android.gms:play-services:8.4.0'
 }

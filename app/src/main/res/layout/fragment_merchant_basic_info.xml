@@ -14,7 +14,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:elevation="@dimen/elevation_depth">
 
 
             <RelativeLayout
@@ -140,9 +141,17 @@
                 android:spinnerMode="dropdown"
                 android:id="@+id/spinner_merchant_category"
                 android:textColorHint="@color/light_gray"
-                android:layout_marginTop="10dp"
                 android:layout_below="@+id/input_layout_merchant_mobile"
                 android:background="@android:color/transparent"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:id="@+id/view"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_below="@id/spinner_merchant_category"
+                android:background="@color/blue_dark"></View>
 
 
             <android.support.design.widget.TextInputLayout
@@ -151,7 +160,7 @@
                 android:layout_height="wrap_content"
                 app:errorTextAppearance="@style/error_appearance"
                 android:theme="@style/TextLabel"
-                android:layout_below="@+id/spinner_merchant_category">
+                android:layout_below="@+id/view">
 
                 <EditText
                     android:layout_width="match_parent"
@@ -185,7 +194,7 @@
                 android:layout_below="@+id/txt_add_image"
                 android:orientation="horizontal"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="20dp">
 
 
                 <TextView
