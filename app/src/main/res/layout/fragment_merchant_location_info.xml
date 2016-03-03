@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@android:color/white">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+                <Spinner
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:spinnerMode="dropdown"
+                    android:id="@+id/spinner_city"
+                    android:textColorHint="@color/light_gray"
+                    android:layout_marginTop="10dp"
+                    android:background="@android:color/transparent"/>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_merchant_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+                    android:theme="@style/TextLabel"
+                    android:layout_below="@+id/spinner_city">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/edt_merchant_address"
+                        android:hint="@string/merchant_address"
+                        android:textColorHint="@color/light_gray"
+                        android:paddingLeft="10dp"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/profile_img_upload_layout"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:id="@+id/input_layout_merchant_pin_code"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+                    android:theme="@style/TextLabel"
+                    android:layout_below="@+id/input_layout_merchant_address">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/edt_merchant_pin_code"
+                        android:hint="@string/merchant_pin_code"
+                        android:paddingLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/profile_img_upload_layout"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <LinearLayout
+                    android:id="@+id/merchant_location_map"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_below="@+id/input_layout_merchant_pin_code"
+                    android:orientation="horizontal">
+
+                    <!--<fragment
+                        android:id="@+id/map_fragment"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        class="com.google.android.gms.maps.SupportMapFragment">
+                    </fragment>-->
+                </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/merchant_location_map"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp">
+
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SAVE"
+                    android:textSize="16sp"
+                    android:paddingRight="10dp"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:textColor="@color/pink"
+                    android:id="@+id/txt_save_basic_info" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CANCEL"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:id="@+id/txt_cancel"
+                    android:textColor="@color/gray"
+                    android:paddingLeft="10dp"
+                    android:layout_alignBottom="@+id/txt_save_basic_info"
+                    android:layout_toRightOf="@+id/txt_save_basic_info" />
+
+
+            </LinearLayout>
+
+            </RelativeLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

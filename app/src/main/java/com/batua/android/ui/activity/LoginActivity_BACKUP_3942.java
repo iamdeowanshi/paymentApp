@@ -41,12 +41,14 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_login)
     void onLoginClick() {
-
-	ViewUtil.hideKeyboard(getContentView());
+<<<<<<< HEAD
+        startActivity(HomeActivity.class,null);
+=======
+        ViewUtil.hideKeyboard(getContentView());
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
         if (isValid) {
-            startActivity(HomeActivity.class,null);
+            bakery.snackLong(getContentView(), "Home screen coming soon");
             inputLayoutEmail.setErrorEnabled(false);
 
             return;
@@ -54,11 +56,16 @@ public class LoginActivity extends BaseActivity {
 
         inputLayoutEmail.setErrorEnabled(true);
         inputLayoutEmail.setError("Invalid email or mobile number");
+>>>>>>> 0085488e6a8463799692473942dee9ac8cc5daf4
     }
 
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
-	startActivity(HomeActivity.class, null);
+<<<<<<< HEAD
+        startActivity(HomeActivity.class, null);
+=======
+        bakery.snackLong(getContentView(), "Home screen coming soon");
+>>>>>>> 0085488e6a8463799692473942dee9ac8cc5daf4
     }
 
     @OnClick(R.id.txt_forgot_password)
