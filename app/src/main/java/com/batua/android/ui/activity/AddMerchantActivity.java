@@ -34,17 +34,13 @@ public class AddMerchantActivity extends BaseActivity{
         loadFragments();
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
-
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText(R.string.add_merchant_title);
         toolbar.setNavigationIcon(R.drawable.arrow_back);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

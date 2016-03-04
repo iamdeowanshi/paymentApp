@@ -28,12 +28,12 @@ public class AddMerchantFragmentAdapter extends FragmentPagerAdapter {
             case 2:
                 return new MerchantBankInfoFragment();
         }
+
         return null;
     }
 
     @Override
     public int getCount() {
-
         return NUMBER_OF_ADD_MERCHANT_FRAGMENT;
     }
 
@@ -48,6 +48,7 @@ public class AddMerchantFragmentAdapter extends FragmentPagerAdapter {
             case 2:
                 return "Bank Info";
         }
+
         return null;
     }
 
