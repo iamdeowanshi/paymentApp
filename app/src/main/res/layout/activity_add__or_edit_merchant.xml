@@ -19,7 +19,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_merchant_title"
             android:textSize="@dimen/toolbar_title_font_size"
             android:textColor="@color/blue_light"
             android:background="@android:color/transparent"
@@ -35,7 +34,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/add_merchant_tab_layout"
+            android:id="@+id/add_or_merchant_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffff"
@@ -47,7 +46,7 @@
             app:tabTextAppearance="@style/tab_layout_font_style"/>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/add_merchant_viewpager"
+            android:id="@+id/add_or__merchant_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill_horizontal" />

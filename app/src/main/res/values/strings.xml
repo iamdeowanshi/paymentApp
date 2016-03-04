@@ -42,10 +42,23 @@
     <string name="account_number">Account Number</string>
     <string name="bank_branch">Bank Branch</string>
     <string name="ifsc_code">IFSC Code</string>
+    <string name="merchant_city">City</string>
+    <string name="merchant_bank">Bank</string>
+    <string name="edit_merchant_title">Edit Merchant</string>
+    <string name="leader_board_title">Leader Board</string>
+    <string name="profile_title">Profile</string>
 
 
     <string-array name="merchant_category">
         <item>@string/merchant_category</item>
+    </string-array>
+
+    <string-array name="merchant_city">
+        <item>@string/merchant_city</item>
+    </string-array>
+
+    <string-array name="merchant_bank">
+        <item>@string/merchant_bank</item>
     </string-array>
 
 </resources>

@@ -7,4 +7,10 @@
         android:icon="@drawable/add"
         android:title=""
         app:showAsAction="always" />
+
+    <item android:id="@+id/action_edit"
+        android:icon="@drawable/edit"
+        android:title=""
+        app:showAsAction="always" />
+
 </menu>

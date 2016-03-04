@@ -12,7 +12,7 @@ import com.batua.android.app.base.BaseActivity;
  */
 public class SplashActivity extends BaseActivity {
 
-    private static final int timeOut = 2000;
+    private static final int TIME_OUT = 2000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class SplashActivity extends BaseActivity {
                 startActivity(LoginActivity.class, null);
                 finish();
             }
-        }, timeOut);
+        }, TIME_OUT);
     }
 
 }

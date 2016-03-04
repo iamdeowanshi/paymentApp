@@ -9,6 +9,7 @@ import android.widget.Spinner;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseFragment;
+import com.batua.android.ui.custom.LoadSpinner;
 
 import butterknife.Bind;
 
@@ -17,7 +18,7 @@ import butterknife.Bind;
  */
 public class MerchantBasicInfoFragment extends BaseFragment {
 
-    @Bind(R.id.spinner_merchant_category) Spinner spinner;
+    @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
 
     private View view;
 
@@ -32,19 +33,9 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
         onViewCreated(view,null);
 
-        loadSpinner();
+        LoadSpinner.loadSpinner(getContext(), R.array.merchant_category, spinnerMerchantCategory);
 
         return view;
-    }
-
-    private void loadSpinner() {
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.merchant_category, android.R.layout.simple_spinner_item);
-
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner.setAdapter(adapter);
-
     }
 
 
