@@ -9,21 +9,38 @@ import android.widget.Spinner;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseFragment;
+import com.batua.android.listener.NextClickedListener;
+import com.batua.android.listener.PreviousClickedListener;
 import com.batua.android.ui.custom.LoadSpinner;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * Created by febinp on 02/03/16.
  */
 public class MerchantLocationInfoFragment extends BaseFragment{
 
+    private static int LOCATION_INFO_POSITION = 1;
+
     @Bind(R.id.spinner_city) Spinner spinnerCity;
 
     private View view;
+    private NextClickedListener nextClickedListener;
+    private PreviousClickedListener previousClickedListener;
 
     public MerchantLocationInfoFragment() {
 
+    }
+
+    @OnClick(R.id.txt_load_next)
+    public void onNextClicked(){
+        nextClickedListener.nextClicked(LOCATION_INFO_POSITION);
+    }
+
+    @OnClick(R.id.txt_load_previous)
+    public void onPreviousClicked(){
+        previousClickedListener.previousClicked(LOCATION_INFO_POSITION);
     }
 
     @Override
@@ -36,6 +53,14 @@ public class MerchantLocationInfoFragment extends BaseFragment{
         LoadSpinner.loadSpinner(getContext(), R.array.merchant_city, spinnerCity);
 
         return view;
+    }
+
+    public void setNextClickedListener(NextClickedListener nextClickedListener){
+        this.nextClickedListener = nextClickedListener;
+    }
+
+    public void setPreviousClickedListener(PreviousClickedListener previousClickedListener){
+        this.previousClickedListener = previousClickedListener;
     }
 
 }

@@ -37,8 +37,8 @@ public class PendingMerchantFragment extends BaseFragment {
 
         onViewCreated(view, null);
 
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "address", "PZ4", "Pending"));
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","address","PZ5","Pending"));
+        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Jayanagar, Bangalore", "PZ4", "Pending"));
+        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","Kormanagala, Bangalore","PZ5","Pending"));
 
         PopulateMerchantStatusAdapter.populateAdapter(getContext(), merchantStatusModelList, merchantPendingRecyclerView);
 

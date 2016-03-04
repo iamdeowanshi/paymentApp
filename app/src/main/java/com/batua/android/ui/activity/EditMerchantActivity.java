@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
+import com.batua.android.listener.NextClickedListener;
+import com.batua.android.listener.PreviousClickedListener;
 import com.batua.android.ui.adapter.AddMerchantFragmentAdapter;
 
 import butterknife.Bind;
@@ -17,7 +22,7 @@ import butterknife.Bind;
 /**
  * Created by febinp on 02/03/16.
  */
-public class EditMerchantActivity extends BaseActivity {
+public class EditMerchantActivity extends BaseActivity implements NextClickedListener, PreviousClickedListener{
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.add_or_merchant_tab_layout) TabLayout editMerchantTabLayout;
@@ -36,8 +41,23 @@ public class EditMerchantActivity extends BaseActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        super.onBackPressed();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_add_merchant).setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void nextClicked(int position) {
+        editMerchantViewPager.setCurrentItem(position + 1);
+    }
+
+    @Override
+    public void previousClicked(int position) {
+        editMerchantViewPager.setCurrentItem(position - 1);
     }
 
     private void setToolBar() {
@@ -55,7 +75,7 @@ public class EditMerchantActivity extends BaseActivity {
     }
 
     private void loadFragments() {
-        editMerchantViewPager.setAdapter(new AddMerchantFragmentAdapter((getSupportFragmentManager())));
+        editMerchantViewPager.setAdapter(new AddMerchantFragmentAdapter(getSupportFragmentManager(),this,"Edit"));
         editMerchantTabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -63,5 +83,4 @@ public class EditMerchantActivity extends BaseActivity {
             }
         });
     }
-
 }

@@ -13,4 +13,8 @@
         android:title=""
         app:showAsAction="always" />
 
+    <item android:id="@+id/action_save"
+        android:title="@string/save_title"
+        app:showAsAction="always" />
+
 </menu>

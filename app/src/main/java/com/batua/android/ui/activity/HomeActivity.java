@@ -52,6 +52,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_save).setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 

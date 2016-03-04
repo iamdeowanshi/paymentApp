@@ -43,7 +43,8 @@
             app:tabMode="fixed"
             app:tabSelectedTextColor="@color/primary_blue"
             app:tabTextColor="@color/primary_blue_light"
-            app:tabTextAppearance="@style/tab_layout_font_style"/>
+            app:tabTextAppearance="@style/tab_layout_font_style"
+            android:elevation="@dimen/elevation_depth"/>
 
         <android.support.v4.view.ViewPager
             android:id="@+id/add_or__merchant_viewpager"

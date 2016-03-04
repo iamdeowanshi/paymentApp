@@ -3,11 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="toolbar_title_font_size">18dp</dimen>
-    <dimen name="spinner_spacing">20dp</dimen>
-    <dimen name="text_size_14">14dp</dimen>
-    <dimen name="text_size_16">16dp</dimen>
-    <dimen name="text_size_18">18dp</dimen>
-    <dimen name="text_size_12">12dp</dimen>
+    <dimen name="spinner_spacing">20sp</dimen>
+    <dimen name="text_size_14">14sp</dimen>
+    <dimen name="text_size_16">16sp</dimen>
+    <dimen name="text_size_18">18sp</dimen>
+    <dimen name="text_size_12">12sp</dimen>
     <dimen name="elevation_depth">5dp</dimen>
+    <dimen name="text_size_18_to_pix">16sp</dimen>
 
 </resources>
