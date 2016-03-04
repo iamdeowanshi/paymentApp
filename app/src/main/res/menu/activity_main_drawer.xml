@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single" >
+    <group
+        android:id="@+id/leaderboard"
+        android:checkableBehavior="single" >
+
+        <item
+            android:id="@+id/nav_leaderboard"
+            android:icon="@drawable/leader_board_icon"
+            android:title="@string/leader_board_title" />
+
+    </group>
+
+    <group
+        android:id="@+id/logout"
+        android:checkableBehavior="single" >
 
         <item
             android:id="@+id/nav_logout"

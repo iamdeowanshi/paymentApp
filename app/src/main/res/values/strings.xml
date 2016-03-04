@@ -45,6 +45,8 @@
     <string name="merchant_city">City</string>
     <string name="merchant_bank">Bank</string>
     <string name="edit_merchant_title">Edit Merchant</string>
+    <string name="leader_board_title">Leader Board</string>
+    <string name="profile_title">Profile</string>
 
 
     <string-array name="merchant_category">

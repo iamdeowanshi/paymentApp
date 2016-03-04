@@ -18,8 +18,7 @@ import butterknife.Bind;
  */
 public class MerchantBankInfoFragment extends BaseFragment {
 
-    @Bind(R.id.spinner_bank)
-    Spinner spinnerBank;
+    @Bind(R.id.spinner_bank) Spinner spinnerBank;
 
     private View view;
 

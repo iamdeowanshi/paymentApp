@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.batua.android.R;
@@ -46,26 +47,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         loadFragments();
     }
 
-    private void showProfile() {
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-    }
-
-    private void setToolBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        title = (TextView)toolbar.findViewById(R.id.toolbar_title);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        toolbar.setNavigationIcon(R.drawable.menu);
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
+        menu.findItem(R.id.action_edit).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -109,7 +95,31 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
+    private void showProfile() {
+        navigationView.setNavigationItemSelectedListener(this);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
 
+        ImageView profileimage = (ImageView)headerLayout.findViewById(R.id.img_profile);
+
+        profileimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(ProfileActivity.class,null);
+            }
+        });
+
+    }
+
+    private void setToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+        toolbar.setNavigationIcon(R.drawable.menu);
+    }
 
 
 }
