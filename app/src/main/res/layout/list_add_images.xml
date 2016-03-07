@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/img_add_merchant_images"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_marginLeft="5dp"

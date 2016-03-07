@@ -190,7 +190,7 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/add_images_scroll_view"
                 android:scrollbars="horizontal"
                 android:layout_marginTop="15dp"
@@ -200,7 +200,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="70dp"
                     android:id="@+id/add_images_recycler_view"/>
-
 
             </ScrollView>
 
