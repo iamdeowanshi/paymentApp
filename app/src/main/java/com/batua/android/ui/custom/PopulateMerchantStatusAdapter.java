@@ -15,6 +15,7 @@ import java.util.List;
 public class PopulateMerchantStatusAdapter {
 
     public static void populateAdapter(Context context, List<MerchantStatusModel> merchantStatusModelList, RecyclerView merchantStatusRecyclerView){
+
         MerchantStatusAdapter merchantStatusAdapter = new MerchantStatusAdapter(merchantStatusModelList);
         LinearLayoutManager llayout = new LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false);
         merchantStatusRecyclerView.setLayoutManager(llayout);

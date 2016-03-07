@@ -4,10 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +12,7 @@ import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
 import com.batua.android.listener.NextClickedListener;
 import com.batua.android.listener.PreviousClickedListener;
-import com.batua.android.ui.adapter.AddMerchantFragmentAdapter;
+import com.batua.android.ui.adapter.AddMerchantFragmentPagerAdapter;
 
 import butterknife.Bind;
 
@@ -75,7 +72,7 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
     }
 
     private void loadFragments() {
-        editMerchantViewPager.setAdapter(new AddMerchantFragmentAdapter(getSupportFragmentManager(),this,"Edit"));
+        editMerchantViewPager.setAdapter(new AddMerchantFragmentPagerAdapter(getSupportFragmentManager(),this,"Edit"));
         editMerchantTabLayout.post(new Runnable() {
             @Override
             public void run() {

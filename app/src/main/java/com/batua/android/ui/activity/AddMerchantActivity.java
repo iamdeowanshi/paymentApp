@@ -1,14 +1,10 @@
 package com.batua.android.ui.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,12 +12,7 @@ import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
 import com.batua.android.listener.NextClickedListener;
 import com.batua.android.listener.PreviousClickedListener;
-import com.batua.android.ui.adapter.AddMerchantFragmentAdapter;
-import com.batua.android.ui.fragment.MerchantBankInfoFragment;
-import com.batua.android.ui.fragment.MerchantBasicInfoFragment;
-import com.batua.android.ui.fragment.MerchantLocationInfoFragment;
-
-import javax.inject.Inject;
+import com.batua.android.ui.adapter.AddMerchantFragmentPagerAdapter;
 
 import butterknife.Bind;
 
@@ -34,21 +25,14 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     @Bind(R.id.add_or_merchant_tab_layout) TabLayout addMerchantTabLayout;
     @Bind(R.id.add_or__merchant_viewpager) ViewPager addMerchantViewPager;
 
-    @Inject MerchantBasicInfoFragment merchantBasicInfoFragment;
-    @Inject MerchantLocationInfoFragment merchantLocationInfoFragment;
-    @Inject MerchantBankInfoFragment merchantBankInfoFragment;
-
     private TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add__or_edit_merchant);
 
-        injectDependencies();
-
         setToolBar();
-
-        //setListener();
 
         loadFragments();
 
@@ -90,7 +74,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     }
 
     private void loadFragments() {
-        addMerchantViewPager.setAdapter(new AddMerchantFragmentAdapter(getSupportFragmentManager(), this , "Add"));
+        addMerchantViewPager.setAdapter(new AddMerchantFragmentPagerAdapter(getSupportFragmentManager(), this, "Add"));
         addMerchantTabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -99,10 +83,4 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
         });
     }
 
-    private void setListener() {
-        merchantBasicInfoFragment.setNextClickedListener(AddMerchantActivity.this);
-        merchantLocationInfoFragment.setNextClickedListener(AddMerchantActivity.this);
-        merchantLocationInfoFragment.setPreviousClickedListener(AddMerchantActivity.this);
-        merchantBankInfoFragment.setPreviousClickedListener(AddMerchantActivity.this);
-    }
 }

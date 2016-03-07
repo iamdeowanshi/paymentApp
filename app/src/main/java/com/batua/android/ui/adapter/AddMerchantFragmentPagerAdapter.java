@@ -15,13 +15,13 @@ import com.batua.android.ui.fragment.MerchantLocationInfoFragment;
 /**
  * Created by febinp on 02/03/16.
  */
-public class AddMerchantFragmentAdapter extends FragmentPagerAdapter {
+public class AddMerchantFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private static int NUMBER_OF_ADD_MERCHANT_FRAGMENT = 3;
 
     private AppCompatActivity activity;
     private String type;
-    public AddMerchantFragmentAdapter(FragmentManager fm, AppCompatActivity activity, String type) {
+    public AddMerchantFragmentPagerAdapter(FragmentManager fm, AppCompatActivity activity, String type) {
         super(fm);
         this.activity = activity;
         this.type = type;
