@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
-import com.batua.android.ui.adapter.HomeFragmentAdapter;
+import com.batua.android.ui.adapter.HomeFragmentPagerAdapter;
 
 import butterknife.Bind;
 
@@ -52,6 +52,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
         menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_save).setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -62,6 +64,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         switch(id) {
             case R.id.nav_logout:
                 startActivity(LoginActivity.class, null);
+                break;
+
+            case R.id.nav_leaderboard:
+                startActivity(LeaderBoardActivity.class,null);
                 break;
         }
 
@@ -85,7 +91,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void loadFragments() {
-        homeViewPager.setAdapter(new HomeFragmentAdapter((getSupportFragmentManager())));
+        homeViewPager.setAdapter(new HomeFragmentPagerAdapter((getSupportFragmentManager())));
         homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         homeTabLayout.post(new Runnable() {
             @Override

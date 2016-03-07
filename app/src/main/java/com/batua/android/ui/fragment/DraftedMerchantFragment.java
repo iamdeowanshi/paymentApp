@@ -37,7 +37,7 @@ public class DraftedMerchantFragment extends BaseFragment{
 
         onViewCreated(view, null);
 
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "address", "PZ4", "Drafted"));
+        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Jayanagar, Bangalore", "PZ4", "Drafted"));
 
         PopulateMerchantStatusAdapter.populateAdapter(getContext(), merchantStatusModelList, merchantDraftedRecyclerView);
         

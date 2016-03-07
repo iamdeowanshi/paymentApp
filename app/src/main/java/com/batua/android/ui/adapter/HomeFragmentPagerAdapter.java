@@ -11,8 +11,9 @@ import com.batua.android.ui.fragment.PendingMerchantFragment;
 /**
  * Created by febinp on 02/03/16.
  */
-public class HomeFragmentAdapter extends FragmentPagerAdapter{
-        public HomeFragmentAdapter(FragmentManager fm) {
+public class HomeFragmentPagerAdapter extends FragmentPagerAdapter{
+
+        public HomeFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

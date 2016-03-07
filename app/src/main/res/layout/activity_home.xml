@@ -20,7 +20,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@drawable/side_menu_bg"
-            app:menu="@menu/activity_main_drawer">
+            app:menu="@menu/main_menu_navigation_drawer">
 
         </android.support.design.widget.NavigationView>
 

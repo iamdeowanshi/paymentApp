@@ -33,6 +33,7 @@
     <string name="merchant_name">Merchant Name</string>
     <string name="merchant_short_code">Merchant Short Code</string>
     <string name="merchant_email">Merchant Email</string>
+    <string name="merchant_email_title">Email : </string>
     <string name="merchant_mobile">Merchant Mobile</string>
     <string name="merchant_category">Merchant Category</string>
     <string name="merchant_fee">Merchant Fee (in %)</string>
@@ -47,6 +48,10 @@
     <string name="edit_merchant_title">Edit Merchant</string>
     <string name="leader_board_title">Leader Board</string>
     <string name="profile_title">Profile</string>
+    <string name="merchant_current_password">Current Password</string>
+    <string name="merchant_new_password">New Password</string>
+    <string name="merchant_confirm_password">Confirm Password</string>
+    <string name="save_title">SAVE</string>
 
 
     <string-array name="merchant_category">

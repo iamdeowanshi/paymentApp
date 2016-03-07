@@ -3,6 +3,7 @@ package com.batua.android.ui.activity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.batua.android.R;
@@ -41,7 +42,22 @@ public class ProfileActivity extends BaseActivity{
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
 
+        menu.findItem(R.id.action_save).setVisible(false);
         menu.findItem(R.id.action_add_merchant).setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+            case R.id.action_edit:
+                startActivity(EditProfileActivity.class, null);
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
