@@ -1,7 +1,10 @@
 package com.batua.android.util;
 
 import android.content.Context;
+import android.graphics.Point;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
 /**

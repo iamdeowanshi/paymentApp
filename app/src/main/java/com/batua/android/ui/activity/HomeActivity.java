@@ -17,8 +17,10 @@ import android.widget.TextView;
 import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
 import com.batua.android.ui.adapter.HomeFragmentPagerAdapter;
+import com.batua.android.ui.adapter.MerchantStatusAdapter;
 
 import butterknife.Bind;
+import timber.log.Timber;
 
 /**
  * Created by febinp on 28/10/15.
@@ -126,6 +128,5 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         toggle.syncState();
         toolbar.setNavigationIcon(R.drawable.menu);
     }
-
 
 }

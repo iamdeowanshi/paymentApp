@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.batua.android.ui.activity.MerchantDetailsActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#ffffff"
+        android:elevation="@dimen/elevation_depth"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@color/blue_light"
+            android:textSize="@dimen/toolbar_title_font_size"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:padding="10dp"
+            android:clipToPadding="false">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:clipChildren="false"
+                android:elevation="@dimen/elevation_depth"
+                android:padding="10dp">
+
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/merchant_dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/profile_pic_merch"/>
+
+                <TextView
+                    android:id="@+id/text_short_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/merchant_dp"
+                    android:text="Short Code : "/>
+
+                <TextView
+                    android:id="@+id/short_code"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:layout_toRightOf="@+id/text_short_code"
+                    android:text="MR3523"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/text_short_code"
+                    android:layout_below="@+id/text_short_code"
+                    android:layout_marginTop="5dp"
+                    android:text="JP Nagar Bangalore"/>
+
+                <TextView
+                    android:id="@+id/text_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/text_short_code"
+                    android:layout_below="@+id/text_address"
+                    android:layout_marginTop="5dp"
+                    android:text="Drafted"
+                    android:textColor="@color/red"/>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/drawable_location"
+                    android:elevation="6dp"/>
+
+                <TextView
+                    android:id="@+id/text_fees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_status"
+                    android:layout_marginTop="10dp"
+                    android:text="Fees : "/>
+
+                <TextView
+                    android:id="@+id/fees"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_fees"
+                    android:layout_toRightOf="@+id/text_fees"
+                    android:text="10%"
+                    android:textStyle="bold"/>
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/text_fees"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/gray"/>
+
+                <TextView
+                    android:id="@+id/text_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view"
+                    android:layout_marginTop="10dp"
+                    android:text="Email : "/>
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_email"
+                    android:layout_toRightOf="@+id/text_email"
+                    android:text="emailId@test.com"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:id="@+id/img_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/text_email"
+                    android:layout_marginRight="18dp"
+                    android:elevation="3dp"
+                    android:src="@drawable/email"/>
+
+                <TextView
+                    android:id="@+id/text_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_email"
+                    android:layout_marginTop="10dp"
+                    android:text="Phone : +91 "/>
+
+                <TextView
+                    android:id="@+id/call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_call"
+                    android:layout_toRightOf="@+id/text_call"
+                    android:text="99999 99999"
+                    android:textStyle="bold"/>
+
+                <ImageView
+                    android:id="@+id/img_call"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/text_call"
+                    android:layout_marginRight="18dp"
+                    android:elevation="3dp"
+                    android:src="@drawable/call"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:elevation="@dimen/elevation_depth"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/text_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bank Details"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_account_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_bank"
+                    android:layout_marginTop="15dp"
+                    android:text="Account Number : "/>
+
+                <TextView
+                    android:id="@+id/account_no"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_account_no"
+                    android:layout_toRightOf="@+id/text_account_no"
+                    android:text="xxxxxxxxxxxx"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_account_no"
+                    android:layout_marginTop="5dp"
+                    android:text="Account Holder Name : "/>
+
+                <TextView
+                    android:id="@+id/account_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_account_name"
+                    android:layout_toRightOf="@+id/text_account_name"
+                    android:text="John Galt"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_bank_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_account_name"
+                    android:layout_marginTop="5dp"
+                    android:text="Bank : "/>
+
+                <TextView
+                    android:id="@+id/bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_bank_name"
+                    android:layout_toRightOf="@+id/text_bank_name"
+                    android:text="HDFC"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_bank_branch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_bank_name"
+                    android:layout_marginTop="5dp"
+                    android:text="Branch : "/>
+
+                <TextView
+                    android:id="@+id/branch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_bank_branch"
+                    android:layout_toRightOf="@+id/text_bank_branch"
+                    android:text="Kormangala Branch"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_bank_ifsc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_bank_branch"
+                    android:layout_marginTop="5dp"
+                    android:text="IFSC Code : "/>
+
+                <TextView
+                    android:id="@+id/ifsc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_bank_ifsc"
+                    android:layout_toRightOf="@+id/text_bank_ifsc"
+                    android:text="HDFC6585"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/white"
+                android:elevation="@dimen/elevation_depth"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/text_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gallery Images"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/text_gallery"
+                    android:layout_alignParentRight="true"
+                    android:text="VIEW MORE"
+                    android:id="@+id/view_images"
+                    android:textColor="@color/pink"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_gallery"
+                    android:layout_marginTop="15dp"
+                    android:weightSum="5">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_gallery"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_gallery"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_gallery"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_gallery"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_gallery"/>
+
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

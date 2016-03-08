@@ -30,4 +30,5 @@ public abstract class MerchantFragment extends BaseFragment {
     public MerchantStatusAdapter getMerchantStatusAdapter() {
         return merchantStatusAdapter;
     }
+
 }
