@@ -1,5 +1,6 @@
 package com.batua.android.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
@@ -21,6 +22,7 @@ public class GalleryFullScreenActivity extends BaseActivity {
     @Bind(R.id.view_pager) ViewPager viewPager;
 
     private ArrayList<String> imagesList = new ArrayList<>();
+    private int position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,8 @@ public class GalleryFullScreenActivity extends BaseActivity {
         setContentView(R.layout.activity_gallery_full_screen);
 
         setToolBar();
+
+        position = getIntent().getIntExtra("position", 0);
 
         imagesList.add("https://www.planwallpaper.com/static/images/canberra_hero_image_JiMVvYU.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/images_1_05GM1zY.jpg");
@@ -45,8 +49,9 @@ public class GalleryFullScreenActivity extends BaseActivity {
         imagesList.add("https://www.planwallpaper.com/static/images/orangutan_1600x1000_279157.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/image5_170127819.jpg");
 
-        GalleryViewPagerAdapter galleryViewPagerAdapter = new GalleryViewPagerAdapter(imagesList);
+        GalleryViewPagerAdapter galleryViewPagerAdapter = new GalleryViewPagerAdapter(imagesList, position);
         viewPager.setAdapter(galleryViewPagerAdapter);
+        viewPager.setCurrentItem(position, true);
     }
 
     private void setToolBar() {

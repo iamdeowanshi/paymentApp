@@ -1,29 +1,22 @@
 package com.batua.android.ui.adapter;
 
 import android.content.Context;
-import android.media.Image;
-import android.net.Uri;
 import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.app.di.Injector;
-import com.batua.android.util.DisplayUtil;
 import com.bumptech.glide.Glide;
 
-import java.io.File;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * @author Aaditya Deowanshi.
@@ -33,11 +26,13 @@ public class GalleryViewPagerAdapter extends PagerAdapter {
     @Inject Context context;
     @Inject LayoutInflater inflater;
 
+    private int index;
     private List<String> images;
 
-    public GalleryViewPagerAdapter(List<String> images) {
+    public GalleryViewPagerAdapter(List<String> images, int position) {
         Injector.instance().inject(this);
         this.images = images;
+        this.index = position;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.batua.android.ui.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
@@ -64,11 +63,11 @@ public class GalleryGridViewAdapter extends BaseAdapter {
 
     class OnImageClickListener implements View.OnClickListener {
 
-        int _postion;
+        int position;
 
         // constructor
         public OnImageClickListener(int position) {
-            this._postion = position;
+            this.position = position;
         }
 
         @Override
@@ -76,7 +75,7 @@ public class GalleryGridViewAdapter extends BaseAdapter {
             // on selecting grid view image
             // launch full screen activity
             Intent i = new Intent(context, GalleryFullScreenActivity.class);
-            i.putExtra("position", _postion);
+            i.putExtra("position", position);
             context.startActivity(i);
         }
 

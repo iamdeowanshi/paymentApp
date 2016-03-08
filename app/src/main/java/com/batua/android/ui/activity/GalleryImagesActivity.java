@@ -36,12 +36,11 @@ public class GalleryImagesActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery_images);
-        ButterKnife.bind(this);
+        injectDependencies();
 
         initializeGridView();
         setToolBar();
 
-        imagesList.add("https://www.planwallpaper.com/static/images/9-credit-1.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/canberra_hero_image_JiMVvYU.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/images_1_05GM1zY.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/offset_WaterHouseMarineImages_62652-2-660x440.jpg");
