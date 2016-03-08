@@ -9,7 +9,6 @@
         android:background="#ffffff"
         app:titleTextAppearance="?attr/titleTextAppearance"
         android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:contentInsetStart="0dp"
         android:contentInsetLeft="0dp">
 

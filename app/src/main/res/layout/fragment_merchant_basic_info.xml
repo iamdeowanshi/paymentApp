@@ -188,20 +188,11 @@
                 android:layout_below="@+id/input_layout_merchant_fee"
                 android:textColor="@color/pink" />
 
-            <ScrollView
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_images_scroll_view"
-                android:scrollbars="horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/txt_add_image">
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:id="@+id/add_images_recycler_view"/>
-
-            </ScrollView>
+                android:layout_height="70dp"
+                android:id="@+id/add_images_recycler_view"
+                android:layout_below="@+id/txt_add_image"/>
 
             <TextView
                 android:layout_weight="1"
@@ -217,7 +208,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/pink"
                 android:id="@+id/txt_load_next"
-                android:layout_below="@+id/add_images_scroll_view"/>
+                android:layout_below="@+id/add_images_recycler_view"/>
 
         </RelativeLayout>
 
