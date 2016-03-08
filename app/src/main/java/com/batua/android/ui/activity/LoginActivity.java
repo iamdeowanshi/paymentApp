@@ -58,7 +58,7 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
-	startActivity(HomeActivity.class, null);
+	startActivity(MerchantDetailsActivity.class, null);
     }
 
     @OnClick(R.id.txt_forgot_password)

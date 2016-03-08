@@ -8,6 +8,6 @@
     <dimen name="text_size_16">16dp</dimen>
     <dimen name="text_size_18">18dp</dimen>
     <dimen name="text_size_12">12dp</dimen>
-    <dimen name="elevation_depth">5dp</dimen>
+    <dimen name="elevation_depth">4dp</dimen>
 
 </resources>
