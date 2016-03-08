@@ -83,13 +83,9 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_merchant_basic_info, null);
-
         onViewCreated(view, null);
-
         injectDependencies();
-
         LoadSpinner.loadSpinner(getContext(), R.array.merchant_category, spinnerMerchantCategory);
-
         hideAddImageRecyclerView();
 
         return view;
@@ -115,13 +111,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
                 ArrayList<CustomGallery> customGalleries = new ArrayList<CustomGallery>();
 
-                /*for (String string : all_path) {
-                    CustomGallery item = new CustomGallery();
-                    item.setImagePath(string);
-
-                    customGalleries.add(item);
-                }*/
-
                 CustomGallery item = new CustomGallery();
                 item.setImagePath(selectedImageUri);
 
@@ -145,7 +134,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
                     // Permission Granted
                     startCamera();
-
                 } else {
                     // Permission Denied
                     showCameraPermissionsSnackbar();
@@ -157,7 +145,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
                     // Permission Granted
                     chooseFromGallery();
-
                 } else {
                     // Permission Denied
                     showReadStoragePermissionsSnackbar();
