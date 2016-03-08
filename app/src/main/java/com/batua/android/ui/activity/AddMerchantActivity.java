@@ -10,20 +10,23 @@ import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
-import com.batua.android.ui.adapter.AddMerchantFragmentAdapter;
+import com.batua.android.listener.NextClickedListener;
+import com.batua.android.listener.PreviousClickedListener;
+import com.batua.android.ui.adapter.AddMerchantFragmentPagerAdapter;
 
 import butterknife.Bind;
 
 /**
  * Created by febinp on 02/03/16.
  */
-public class AddMerchantActivity extends BaseActivity{
+public class AddMerchantActivity extends BaseActivity implements NextClickedListener, PreviousClickedListener{
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.add_or_merchant_tab_layout) TabLayout addMerchantTabLayout;
     @Bind(R.id.add_or__merchant_viewpager) ViewPager addMerchantViewPager;
 
     private TextView title;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +35,28 @@ public class AddMerchantActivity extends BaseActivity{
         setToolBar();
 
         loadFragments();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_add_merchant).setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
+
+    }
+
+    @Override
+    public void nextClicked(int position) {
+        addMerchantViewPager.setCurrentItem(position + 1);
+    }
+
+    @Override
+    public void previousClicked(int position) {
+        addMerchantViewPager.setCurrentItem(position - 1);
     }
 
     private void setToolBar() {
@@ -50,7 +75,7 @@ public class AddMerchantActivity extends BaseActivity{
     }
 
     private void loadFragments() {
-        addMerchantViewPager.setAdapter(new AddMerchantFragmentAdapter((getSupportFragmentManager())));
+        addMerchantViewPager.setAdapter(new AddMerchantFragmentPagerAdapter(getSupportFragmentManager(), this, "Add"));
         addMerchantTabLayout.post(new Runnable() {
             @Override
             public void run() {

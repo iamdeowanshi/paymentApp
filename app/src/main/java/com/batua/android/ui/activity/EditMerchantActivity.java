@@ -10,14 +10,16 @@ import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
-import com.batua.android.ui.adapter.AddMerchantFragmentAdapter;
+import com.batua.android.listener.NextClickedListener;
+import com.batua.android.listener.PreviousClickedListener;
+import com.batua.android.ui.adapter.AddMerchantFragmentPagerAdapter;
 
 import butterknife.Bind;
 
 /**
  * Created by febinp on 02/03/16.
  */
-public class EditMerchantActivity extends BaseActivity {
+public class EditMerchantActivity extends BaseActivity implements NextClickedListener, PreviousClickedListener{
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.add_or_merchant_tab_layout) TabLayout editMerchantTabLayout;
@@ -31,6 +33,26 @@ public class EditMerchantActivity extends BaseActivity {
         setContentView(R.layout.activity_add__or_edit_merchant);
 
         setToolBar();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+
+        menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_add_merchant).setVisible(false);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public void nextClicked(int position) {
+        editMerchantViewPager.setCurrentItem(position + 1);
+    }
+
+    @Override
+    public void previousClicked(int position) {
+        editMerchantViewPager.setCurrentItem(position - 1);
     }
 
     private void setToolBar() {
@@ -50,7 +72,7 @@ public class EditMerchantActivity extends BaseActivity {
     }
 
     private void loadFragments() {
-        editMerchantViewPager.setAdapter(new AddMerchantFragmentAdapter((getSupportFragmentManager())));
+        editMerchantViewPager.setAdapter(new AddMerchantFragmentPagerAdapter(getSupportFragmentManager(),this,"Edit"));
         editMerchantTabLayout.post(new Runnable() {
             @Override
             public void run() {

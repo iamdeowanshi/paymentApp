@@ -3,6 +3,8 @@ package com.batua.android.app.di;
 import com.batua.android.presenter.SamplePresenter;
 import com.batua.android.presenter.concrete.SamplePresenterImpl;
 
+import javax.inject.Singleton;
+
 import dagger.Module;
 import dagger.Provides;
 
@@ -21,5 +23,6 @@ public class PresenterModule {
     public SamplePresenter provideSamplePresenter() {
         return new SamplePresenterImpl();
     }
+
 
 }

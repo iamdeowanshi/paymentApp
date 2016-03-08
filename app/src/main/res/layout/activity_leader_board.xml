@@ -21,6 +21,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/toolbar_title_font_size"
             android:textColor="@color/blue_light"
+            android:text="@string/leader_board_title"
             android:background="@android:color/transparent"
             android:id="@+id/toolbar_title"/>
 
@@ -34,7 +35,7 @@
         android:orientation="vertical">
 
         <android.support.design.widget.TabLayout
-            android:id="@+id/add_or_merchant_tab_layout"
+            android:id="@+id/leaderboard_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="#ffffff"
@@ -47,7 +48,7 @@
             android:elevation="@dimen/elevation_depth"/>
 
         <android.support.v4.view.ViewPager
-            android:id="@+id/add_or__merchant_viewpager"
+            android:id="@+id/leaderboard_viewpager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="fill_horizontal" />

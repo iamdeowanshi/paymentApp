@@ -4,11 +4,15 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.batua.android.app.BatuaApplication;
+import com.batua.android.ui.activity.AddMerchantActivity;
 import com.batua.android.ui.activity.ForgotPasswordActivity;
 import com.batua.android.ui.activity.GalleryImagesActivity;
 import com.batua.android.ui.activity.LoginActivity;
 import com.batua.android.ui.activity.OtpActivity;
 import com.batua.android.ui.activity.ResetPasswordActivity;
+import com.batua.android.ui.fragment.MerchantBankInfoFragment;
+import com.batua.android.ui.fragment.MerchantBasicInfoFragment;
+import com.batua.android.ui.fragment.MerchantLocationInfoFragment;
 import com.batua.android.ui.adapter.GalleryViewPagerAdapter;
 import com.batua.android.util.Bakery;
 import com.batua.android.util.ConnectivityUtil;
@@ -29,18 +33,25 @@ import dagger.Provides;
 @Module(
         includes = {
                 PresenterModule.class,
-                ApiModule.class
+                ApiModule.class,
+                FragmentModule.class
         },
         injects = {
                 BatuaApplication.class,
 
-                // View specific classes - activities, fragments, adapters etc
+                // View specific classes - activities, adapters etc
                 LoginActivity.class,
                 ForgotPasswordActivity.class,
                 OtpActivity.class,
                 ResetPasswordActivity.class,
                 GalleryViewPagerAdapter.class,
                 GalleryImagesActivity.class,
+                AddMerchantActivity.class,
+
+                //Fragment
+                MerchantBasicInfoFragment.class,
+                MerchantLocationInfoFragment.class,
+                MerchantBankInfoFragment.class,
 
                 // Presenter implementations
 

@@ -4,7 +4,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -39,13 +43,12 @@ public class ActiveMerchantFragment extends BaseFragment{
 
         onViewCreated(view, null);
 
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "address", "PZ1", "Active"));
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","address","PZ2","Active"));
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","address","PZ3","Active"));
+        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","JP Nagar, Bangalore", "PZ1", "Active"));
+        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","Kormanagala, Bangalore","PZ2","Active"));
+        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","Jayanagar, Bangalore","PZ3","Active"));
 
         PopulateMerchantStatusAdapter.populateAdapter(getContext(),merchantStatusModelList,merchantActiveRecyclerView);
 
         return view;
     }
-
 }

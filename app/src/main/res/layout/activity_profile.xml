@@ -14,6 +14,7 @@
         app:titleTextAppearance="?attr/titleTextAppearance"
         android:theme="@style/AppTheme"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="@dimen/elevation_depth"
         app:contentInsetStart="0dp"
         android:contentInsetLeft="0dp">
 

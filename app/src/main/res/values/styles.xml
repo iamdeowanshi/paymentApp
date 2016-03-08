@@ -3,6 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:actionMenuTextColor">@color/blue_light</item>
+        <item name="android:actionMenuTextAppearance">@style/menuTitleTheme</item>
     </style>
 
     <style name="tab_layout_font_style">
@@ -35,6 +37,11 @@
 
     <style name="SpinnerTheme.DropDown">
         <item name="android:spinnerMode">dropdown</item>
+    </style>
+
+    <style name="menuTitleTheme">
+        <item name="android:textSize">@dimen/text_size_18_to_pix</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 </resources>
