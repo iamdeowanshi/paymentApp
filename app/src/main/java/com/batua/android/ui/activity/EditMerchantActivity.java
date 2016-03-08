@@ -33,7 +33,6 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
         setContentView(R.layout.activity_add__or_edit_merchant);
 
         setToolBar();
-
         loadFragments();
     }
 
@@ -60,9 +59,11 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
+
         title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText(R.string.edit_merchant_title);
         toolbar.setNavigationIcon(R.drawable.arrow_back);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,4 +81,5 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
             }
         });
     }
+
 }

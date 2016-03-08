@@ -2,6 +2,7 @@ package com.batua.android.app.di;
 
 import com.batua.android.util.Bakery;
 import com.batua.android.util.ConnectivityUtil;
+import com.batua.android.util.DisplayUtil;
 import com.batua.android.util.PreferenceUtil;
 
 import javax.inject.Singleton;
@@ -36,6 +37,12 @@ public class UtilModule {
     @Singleton
     public Bakery provideBakery() {
         return new Bakery();
+    }
+
+    @Provides
+    @Singleton
+    public DisplayUtil provideDisplayUtil() {
+        return new DisplayUtil();
     }
 
 }

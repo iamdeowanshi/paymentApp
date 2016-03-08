@@ -65,6 +65,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
         title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         title.setText(R.string.add_merchant_title);
         toolbar.setNavigationIcon(R.drawable.arrow_back);
+
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

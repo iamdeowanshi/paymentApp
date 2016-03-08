@@ -3,6 +3,8 @@ package com.batua.android.ui.activity;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
@@ -18,7 +20,6 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
         proceedToLogin();
     }
 
