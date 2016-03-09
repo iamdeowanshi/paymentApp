@@ -14,9 +14,11 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -62,6 +64,8 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     private View view;
     private NextClickedListener nextClickedListener;
+    private ArrayList<Uri> image_uris = new ArrayList<Uri>();
+    private ViewGroup mSelectedImagesContainer;
 
     public MerchantBasicInfoFragment() {
 
@@ -258,10 +262,42 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     private void chooseFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image/*");
+        intent.setType("image*//*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select File"), GET_IMAGE_FROM_GALLERY_REQUEST_CODE);
+
+    }
+
+    private void showMedia() {
+        // Remove all views before
+        // adding the new ones.
+        mSelectedImagesContainer.removeAllViews();
+        if (image_uris.size() >= 1) {
+            mSelectedImagesContainer.setVisibility(View.VISIBLE);
+        }
+
+        int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+        int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
+
+
+        for (Uri uri : image_uris) {
+
+            View imageHolder = LayoutInflater.from(getContext()).inflate(R.layout.list_add_images, null);
+            ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.img_add_merchant_images);
+
+            Glide.with(this)
+                    .load(uri.toString())
+                    .fitCenter()
+                    .into(thumbnail);
+
+            mSelectedImagesContainer.addView(imageHolder);
+
+            thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
+
+
+        }
+
     }
 
     private void showCameraPermissionsSnackbar() {

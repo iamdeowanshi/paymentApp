@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 import com.batua.android.R;
 import com.batua.android.data.model.MerchantStatusModel;
-import com.batua.android.ui.activity.MerchantDetailsActivity;
-import com.batua.android.ui.adapter.MerchantStatusAdapter;
-import com.batua.android.ui.custom.PopulateMerchantStatusAdapter;
 
 import java.util.ArrayList;
 import java.util.List;

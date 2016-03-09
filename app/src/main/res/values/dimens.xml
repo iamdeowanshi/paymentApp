@@ -10,5 +10,7 @@
     <dimen name="text_size_12">12sp</dimen>
     <dimen name="elevation_depth">5dp</dimen>
     <dimen name="text_size_18_to_pix">16sp</dimen>
+    <dimen name="app_camera_height">150dp</dimen>
+    <dimen name="bottom_height">150dp</dimen>
 
 </resources>

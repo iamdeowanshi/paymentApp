@@ -11,17 +11,19 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
     }
     buildTypes {
         release {
             minifyEnabled false
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 repositories {
-    mavenCentral() // jcenter() works as well because it pulls from Maven Central
+    mavenCentral()
 }
 
 dependencies {
@@ -66,4 +68,7 @@ dependencies {
 
     //circular image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    //Multi Image Picker
+    //compile 'com.github.ParkSangGwon:TedPicker:v1.0.10'
 }
