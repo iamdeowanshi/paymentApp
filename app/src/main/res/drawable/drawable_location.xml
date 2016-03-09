@@ -3,6 +3,8 @@
     <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android"
                android:shape="rectangle">
+
+
             <size android:width="50dp"
                   android:height="50dp"/>
             <solid android:color="@color/white"/>
@@ -14,7 +16,7 @@
         </shape>
     </item>
 
-    <item android:drawable="@drawable/place" android:gravity="center">
+    <!--<item android:drawable="@drawable/place" android:gravity="center">-->
 
-    </item>
+    <!--</item>-->
 </layer-list>

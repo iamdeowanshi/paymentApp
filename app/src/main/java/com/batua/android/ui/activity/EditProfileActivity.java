@@ -9,6 +9,7 @@ import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * @author Arnold Laishram.
@@ -25,6 +26,11 @@ public class EditProfileActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_profile);
 
         setToolBar();
+    }
+
+    @OnClick(R.id.img_profile)
+    void onImageClick() {
+
     }
 
     private void setToolBar() {
