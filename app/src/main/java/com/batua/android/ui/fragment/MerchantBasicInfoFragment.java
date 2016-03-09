@@ -114,8 +114,7 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         switch (requestCode) {
 
             case CAMERA_STORAGE_REQUEST_CODE:
-
-
+                
                 break;
 
             case GET_IMAGE_FROM_GALLERY_REQUEST_CODE:
@@ -270,7 +269,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select File"), GET_IMAGE_FROM_GALLERY_REQUEST_CODE);
-
     }
 
     private void showCameraPermissionsSnackbar() {

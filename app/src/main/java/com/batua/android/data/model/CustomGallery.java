@@ -16,4 +16,5 @@ public class CustomGallery {
     public void setImagePath(Uri imagePath) {
         this.imagePath = imagePath;
     }
+
 }

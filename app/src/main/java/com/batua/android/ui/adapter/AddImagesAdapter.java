@@ -45,14 +45,12 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
                 .load(customGallery.getImagePath())
                 .fitCenter()
                 .into(addImagesViewHolder.imgMerchantImages);
-
     }
 
     @Override
     public int getItemCount() {
         return customGalleryList.size();
     }
-
 
     public class AddImagesViewHolder extends RecyclerView.ViewHolder {
 
@@ -62,6 +60,6 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-
     }
+
 }
