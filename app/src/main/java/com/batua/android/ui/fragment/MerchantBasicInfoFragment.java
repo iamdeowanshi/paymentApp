@@ -2,6 +2,7 @@ package com.batua.android.ui.fragment;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -16,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -26,6 +28,7 @@ import com.batua.android.R;
 import com.batua.android.app.base.BaseFragment;
 import com.batua.android.data.model.CustomGallery;
 import com.batua.android.listener.NextClickedListener;
+import com.batua.android.ui.activity.MerchantDetailsActivity;
 import com.batua.android.ui.adapter.AddImagesAdapter;
 import com.batua.android.ui.custom.LoadSpinner;
 import com.batua.android.util.Bakery;
@@ -64,8 +67,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     private View view;
     private NextClickedListener nextClickedListener;
-    private ArrayList<Uri> image_uris = new ArrayList<Uri>();
-    private ViewGroup mSelectedImagesContainer;
 
     public MerchantBasicInfoFragment() {
 
@@ -82,6 +83,12 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_merchant_basic_info, null);
@@ -91,6 +98,19 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         hideAddImageRecyclerView();
 
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_save:
+                startActivity(MerchantDetailsActivity.class, null);
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -110,16 +130,11 @@ public class MerchantBasicInfoFragment extends BaseFragment {
             case GET_IMAGE_FROM_GALLERY_REQUEST_CODE:
 
                 Uri selectedImageUri = data.getData();
-
                 ArrayList<CustomGallery> customGalleries = new ArrayList<CustomGallery>();
-
                 CustomGallery item = new CustomGallery();
                 item.setImagePath(selectedImageUri);
-
                 customGalleries.add(item);
-
                 populateAdapter(customGalleries, addImagesrecyclerView);
-
                 showAddImageRecyclerView();
 
                 break;
@@ -262,41 +277,8 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     private void chooseFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        intent.setType("image*//*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select File"), GET_IMAGE_FROM_GALLERY_REQUEST_CODE);
-
-    }
-
-    private void showMedia() {
-        // Remove all views before
-        // adding the new ones.
-        mSelectedImagesContainer.removeAllViews();
-        if (image_uris.size() >= 1) {
-            mSelectedImagesContainer.setVisibility(View.VISIBLE);
-        }
-
-        int wdpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-        int htpx = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 100, getResources().getDisplayMetrics());
-
-
-        for (Uri uri : image_uris) {
-
-            View imageHolder = LayoutInflater.from(getContext()).inflate(R.layout.list_add_images, null);
-            ImageView thumbnail = (ImageView) imageHolder.findViewById(R.id.img_add_merchant_images);
-
-            Glide.with(this)
-                    .load(uri.toString())
-                    .fitCenter()
-                    .into(thumbnail);
-
-            mSelectedImagesContainer.addView(imageHolder);
-
-            thumbnail.setLayoutParams(new FrameLayout.LayoutParams(wdpx, htpx));
-
-
-        }
 
     }
 

@@ -53,6 +53,7 @@
     <string name="merchant_confirm_password">Confirm Password</string>
     <string name="save_title">SAVE</string>
     <string name="add_image_title">Add Image</string>
+    <string name="search_merchant_hint">Search Merchant</string>
 
 
     <string-array name="merchant_category">

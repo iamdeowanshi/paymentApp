@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="wrap_content"
 android:background="@android:color/white"
@@ -10,11 +10,11 @@ android:padding="10dp" >
 
 <ImageView
     android:id="@+id/img_add_merchant_images"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:adjustViewBounds="true"
     android:contentDescription="new post image"
     android:visibility="visible" />
 
 
-</FrameLayout>
+</RelativeLayout>
