@@ -44,8 +44,8 @@
                 android:layout_height="120dp">
 
 
-                <ImageView
-                    android:layout_width="wrap_content"
+                <com.github.siyamed.shapeimageview.CircularImageView
+                    android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:id="@+id/img_profile"
                     android:layout_marginTop="10dp"
@@ -75,7 +75,7 @@
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:id="@+id/txt_display_name"
-                    android:text="Merchant Name"
+                    android:text="John Galt Agent"
                     android:textSize="16dp"
                     android:textStyle="bold"
                     android:layout_marginLeft="5dp"

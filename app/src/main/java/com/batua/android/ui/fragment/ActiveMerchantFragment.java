@@ -40,12 +40,10 @@ public class ActiveMerchantFragment extends MerchantFragment{
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         view = inflater.inflate(R.layout.fragment_active, null);
 
         onViewCreated(view, null);
         populateAdapter();
-
 
         return view;
     }

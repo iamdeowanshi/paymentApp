@@ -6,8 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,29 +13,21 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.app.base.BaseFragment;
 import com.batua.android.data.model.CustomGallery;
 import com.batua.android.listener.NextClickedListener;
-import com.batua.android.ui.activity.AddMerchantActivity;
 import com.batua.android.ui.custom.LoadSpinner;
 import com.batua.android.ui.custom.PopulateImageAdapter;
 import com.batua.android.util.Bakery;
 import com.batua.android.util.PermissionUtil;
 
-import java.io.File;
 import java.util.ArrayList;
 
 import javax.inject.Inject;
@@ -74,6 +64,11 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.img_profile)
+    void onImageClick() {
+        getImage();
+    }
+
     @OnClick(R.id.txt_load_next)
     public void loadNextClicked(){
         nextClickedListener.nextClicked(BASIC_INFO_POSITION);
@@ -81,7 +76,7 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     @OnClick(R.id.txt_add_image)
     public void addImage(){
-        chooseImage();
+        getImage();
     }
 
     @Override
@@ -188,7 +183,7 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         this.nextClickedListener = nextClickedListener;
     }
 
-    public void chooseImage(){
+    public void getImage(){
         final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
@@ -198,15 +193,9 @@ public class MerchantBasicInfoFragment extends BaseFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
                         if (options[item].equals("Take Photo")) {
-
                             checkCameraPermission();
-
-
                         } else if (options[item].equals("Choose from Gallery")) {
-
-
                             checkReadStoragePermission();
-
                         } else if (options[item].equals("Cancel")) {
                             dialog.dismiss();
                         }

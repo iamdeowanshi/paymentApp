@@ -43,7 +43,7 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter{
 
             switch (position) {
                 case 0:
-                    return "Active";
+                    return "Active" + "(9)";
                 case 1:
                     return "Pending";
                 case 2:
