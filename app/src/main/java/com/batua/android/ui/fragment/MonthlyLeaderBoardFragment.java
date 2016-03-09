@@ -24,10 +24,6 @@ public class MonthlyLeaderBoardFragment extends LeaderBoardFragment {
 
     @Bind(R.id.leaderboard_monthly_recycler_view) RecyclerView leaderBoardMonthlyRecyclerView;
 
-    public MonthlyLeaderBoardFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

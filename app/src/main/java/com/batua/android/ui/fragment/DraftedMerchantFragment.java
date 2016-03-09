@@ -24,10 +24,6 @@ public class DraftedMerchantFragment extends MerchantFragment{
 
     @Bind(R.id.merchant_drafted_status_recycler_view) RecyclerView merchantDraftedRecyclerView;
 
-    public DraftedMerchantFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

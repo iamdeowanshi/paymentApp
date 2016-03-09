@@ -6,8 +6,6 @@ import android.widget.Spinner;
 
 import com.batua.android.R;
 
-import java.util.ArrayList;
-
 /**
  * Created by febinp on 03/03/16.
  */

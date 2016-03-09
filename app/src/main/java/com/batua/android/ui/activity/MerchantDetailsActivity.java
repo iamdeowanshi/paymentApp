@@ -1,7 +1,6 @@
 package com.batua.android.ui.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,7 +11,6 @@ import com.batua.android.R;
 import com.batua.android.app.base.BaseActivity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MerchantDetailsActivity extends BaseActivity {

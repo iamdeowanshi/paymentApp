@@ -1,7 +1,7 @@
 package com.batua.android.ui.activity;
 
-import android.support.design.widget.TextInputLayout;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.widget.EditText;
 
 import com.batua.android.R;

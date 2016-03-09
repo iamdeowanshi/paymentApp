@@ -1,6 +1,5 @@
 package com.batua.android.ui.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,7 +38,6 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     @Override
     public void onBindViewHolder(LeaderBoardViewHolder leaderBoardViewHolder, int position) {
         LeaderBoardModel leaderBoardModel = leaderBoardModelList.get(position);
-
         leaderBoardViewHolder.txtMerchantName.setText(leaderBoardModel.getMerchantName());
         leaderBoardViewHolder.txtMerchantPoint.setText(leaderBoardModel.getPoints()+"");
     }

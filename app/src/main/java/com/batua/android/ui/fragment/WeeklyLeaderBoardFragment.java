@@ -24,10 +24,6 @@ public class WeeklyLeaderBoardFragment extends LeaderBoardFragment {
 
     @Bind(R.id.leaderboard_weekly_recycler_view) RecyclerView leaderBoardWeeklyRecyclerView;
 
-    public WeeklyLeaderBoardFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

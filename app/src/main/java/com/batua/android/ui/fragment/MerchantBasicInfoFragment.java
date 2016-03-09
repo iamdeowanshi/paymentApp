@@ -2,7 +2,6 @@ package com.batua.android.ui.fragment;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -15,13 +14,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.batua.android.R;
@@ -33,7 +29,6 @@ import com.batua.android.ui.adapter.AddImagesAdapter;
 import com.batua.android.ui.custom.LoadSpinner;
 import com.batua.android.util.Bakery;
 import com.batua.android.util.PermissionUtil;
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,10 +62,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     private View view;
     private NextClickedListener nextClickedListener;
-
-    public MerchantBasicInfoFragment() {
-
-    }
 
     @OnClick(R.id.txt_load_next)
     public void loadNextClicked(){

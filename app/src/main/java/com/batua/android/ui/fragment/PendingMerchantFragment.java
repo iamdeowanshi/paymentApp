@@ -24,10 +24,6 @@ public class PendingMerchantFragment extends MerchantFragment {
 
     @Bind(R.id.merchant_pending_status_recycler_view) RecyclerView merchantPendingRecyclerView;
 
-    public PendingMerchantFragment() {
-
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 

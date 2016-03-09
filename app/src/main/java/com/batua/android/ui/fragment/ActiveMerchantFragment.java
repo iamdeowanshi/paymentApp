@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import timber.log.Timber;
 
 /**
  * Created by febinp on 01/03/16.
@@ -24,9 +23,6 @@ public class ActiveMerchantFragment extends MerchantFragment{
 
     private View view;
     private List<MerchantStatusModel> merchantStatusModelList = new ArrayList<MerchantStatusModel>();
-
-    /*public ActiveMerchantFragment() {
-    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

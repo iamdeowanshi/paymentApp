@@ -2,7 +2,6 @@ package com.batua.android.ui.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 
 import com.batua.android.R;
 import com.batua.android.data.model.MerchantStatusModel;
-import com.batua.android.ui.activity.GalleryFullScreenActivity;
 import com.batua.android.ui.activity.MerchantDetailsActivity;
 
 import java.util.List;

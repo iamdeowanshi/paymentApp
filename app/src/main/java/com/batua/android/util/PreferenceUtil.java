@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.google.gson.Gson;
 import com.batua.android.app.di.Injector;
+import com.google.gson.Gson;
 
 import java.util.Set;
 

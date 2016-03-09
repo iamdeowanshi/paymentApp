@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.batua.android.R;
@@ -28,10 +27,6 @@ public class MerchantBankInfoFragment extends BaseFragment {
 
     private View view;
     private PreviousClickedListener previousClickedListener;
-
-    public MerchantBankInfoFragment() {
-
-    }
 
     @OnClick(R.id.txt_load_previous)
     public void onPreviousClicked(){
