@@ -3,8 +3,12 @@ package com.batua.android.user.app.di;
 import android.content.Context;
 
 import com.batua.android.user.app.BatuaUserApplication;
-import com.batua.android.user.presenter.concrete.SamplePresenterImpl;
-import com.batua.android.user.ui.activity.SampleActivity;
+import com.batua.android.user.ui.activity.MobileNumberActivity;
+import com.batua.android.user.ui.activity.LoginActivity;
+import com.batua.android.user.ui.activity.OtpActivity;
+import com.batua.android.user.ui.activity.ResetPasswordActivity;
+import com.batua.android.user.ui.fragment.LoginFragment;
+import com.batua.android.user.ui.fragment.SignUpFragment;
 import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ConnectivityUtil;
 import com.batua.android.user.util.PreferenceUtil;
@@ -29,10 +33,13 @@ import dagger.Provides;
                 BatuaUserApplication.class,
 
                 // View specific classes - activities, fragments, adapters etc
-                SampleActivity.class,
-
+                MobileNumberActivity.class,
+                LoginFragment.class,
+                SignUpFragment.class,
+                ResetPasswordActivity.class,
+                OtpActivity.class,
+                LoginActivity.class,
                 // Presenter implementations
-                SamplePresenterImpl.class,
 
                 // Utilities
                 PreferenceUtil.class,
