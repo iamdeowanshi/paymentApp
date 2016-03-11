@@ -1,6 +1,7 @@
 package com.batua.android.user.ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -34,10 +35,14 @@ public class LoginFragment extends BaseFragment {
     @Bind(R.id.input_layout_password) TextInputLayout inputLayoutPassword;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_login, null);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         injectDependencies();
-        return view;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_login, null);
     }
 
     @OnClick({R.id.txt_forgot_password, R.id.btn_login, R.id.btn_fb, R.id.btn_gplus})
@@ -46,12 +51,15 @@ public class LoginFragment extends BaseFragment {
             case R.id.txt_forgot_password:
                 startActivity(MobileNumberActivity.class, null);
                 break;
+
             case R.id.btn_login:
                 validate();
                 break;
+
             case R.id.btn_fb:
                 bakery.snackShort(getContentView(), "Loged In , Home screen coming soon");
                 break;
+
             case R.id.btn_gplus:
                 bakery.snackShort(getContentView(), "Loged In , Home screen coming soon");
                 break;
@@ -72,7 +80,6 @@ public class LoginFragment extends BaseFragment {
         inputLayoutEmail.setErrorEnabled(true);
         inputLayoutEmail.setError("Invalid email or mobile number");
     }
-
 
     private final static boolean isValidEmail(CharSequence target) {
         if (target == null) {

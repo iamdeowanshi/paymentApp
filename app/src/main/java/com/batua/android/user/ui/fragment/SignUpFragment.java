@@ -2,6 +2,7 @@ package com.batua.android.user.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -26,20 +27,18 @@ import butterknife.OnClick;
  */
 public class SignUpFragment extends BaseFragment {
 
-    @Inject Bakery bakery;
-
     @Bind(R.id.edt_mobile) EditText edtMobile;
     @Bind(R.id.input_layout_mobile) TextInputLayout inputLayoutMobile;
-    @Bind(R.id.edt_email) EditText edtEmail;
-    @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
-    @Bind(R.id.input_password) EditText inputPassword;
-    @Bind(R.id.input_layout_password) TextInputLayout inputLayoutPassword;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        injectDependencies();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_signup, null);
-        injectDependencies();
-        return view;
+        return inflater.inflate(R.layout.fragment_signup, null);
     }
 
     @OnClick({R.id.btn_login, R.id.btn_fb, R.id.btn_gplus})
@@ -48,9 +47,11 @@ public class SignUpFragment extends BaseFragment {
             case R.id.btn_login:
                 validate();
                 break;
+
             case R.id.btn_fb:
                 startActivity(MobileNumberActivity.class, null);
                 break;
+
             case R.id.btn_gplus:
                 startActivity(MobileNumberActivity.class, null);
                 break;
@@ -72,7 +73,6 @@ public class SignUpFragment extends BaseFragment {
         inputLayoutMobile.setError("Invalid mobile number");
     }
 
-
     private final static boolean isValidEmail(CharSequence target) {
         if (target == null) {
             return true;
@@ -88,4 +88,5 @@ public class SignUpFragment extends BaseFragment {
 
         return Patterns.PHONE.matcher(target).matches();
     }
+
 }

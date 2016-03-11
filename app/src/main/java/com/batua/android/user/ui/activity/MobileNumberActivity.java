@@ -20,4 +20,5 @@ public class MobileNumberActivity extends BaseActivity {
     void onSendClick() {
         startActivity(OtpActivity.class, null);
     }
+
 }

@@ -48,4 +48,5 @@ public class LoginFragmentPagerAdpater extends FragmentPagerAdapter {
 
         return null;
     }
+
 }
