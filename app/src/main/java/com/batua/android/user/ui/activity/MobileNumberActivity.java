@@ -2,7 +2,6 @@ package com.batua.android.user.ui.activity;
 
 import android.os.Bundle;
 
-
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
 

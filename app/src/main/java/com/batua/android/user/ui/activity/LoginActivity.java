@@ -3,7 +3,6 @@ package com.batua.android.user.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;

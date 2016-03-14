@@ -20,4 +20,5 @@
     <color name="red">#D34836</color>
     <color name="red_selected">#c44433</color>
     <color name="black">#000</color>
+    <color name="tool_bar_blue">#2196f3</color>
 </resources>

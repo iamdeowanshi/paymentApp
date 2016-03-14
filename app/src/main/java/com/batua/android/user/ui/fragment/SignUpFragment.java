@@ -1,7 +1,6 @@
 package com.batua.android.user.ui.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.util.Patterns;
@@ -13,13 +12,9 @@ import android.widget.EditText;
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseFragment;
 import com.batua.android.user.ui.activity.MobileNumberActivity;
-import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ViewUtil;
 
-import javax.inject.Inject;
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
