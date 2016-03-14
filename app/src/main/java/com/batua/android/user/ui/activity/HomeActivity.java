@@ -47,7 +47,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         fillMerchantList();
     }
 
-
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         return false;
@@ -65,7 +64,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
             }
         });
-
     }
 
     private void setToolBar() {
@@ -79,7 +77,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void fillMerchantList() {
-
         merchantDetailList.add(new MerchantDetail("Pizza Hut", 5.0f, 10, "JP Nagar Bangalore", "1km"));
         merchantDetailList.add(new MerchantDetail("Health and Glow", 3.0f, 10, "JP Nagar Bangalore", "2km"));
 
@@ -87,7 +84,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         LinearLayoutManager llayout = new LinearLayoutManager(this);
         merchantListRecyclerView.setLayoutManager(llayout);
         merchantListRecyclerView.setAdapter(merchantListAdapter);
-
     }
 
 }
