@@ -23,6 +23,9 @@
         </activity>
         <activity android:name=".ui.activity.ResetPasswordActivity">
         </activity>
+        <activity android:name=".ui.activity.ReviewActivity"
+            android:theme="@style/BlueTheme">
+        </activity>
     </application>
 
 </manifest>

@@ -3,6 +3,7 @@
     
     <color name="primary_blue">#3949AB</color>
     <color name="sky_blue">#33ACE0</color>
+    <color name="sky_blue_dark">#2f9dcc</color>
     <color name="sky_blue_light">#b0e7ff</color>
     <color name="primary_blue_dark">#283593</color>
     <color name="primary_blue_light">#C5CAE9</color>
