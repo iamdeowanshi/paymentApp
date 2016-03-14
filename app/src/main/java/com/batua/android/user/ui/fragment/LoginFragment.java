@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseFragment;
+import com.batua.android.user.ui.activity.HomeActivity;
 import com.batua.android.user.ui.activity.MobileNumberActivity;
 import com.batua.android.user.ui.activity.ReviewActivity;
 import com.batua.android.user.util.Bakery;
@@ -62,7 +63,8 @@ public class LoginFragment extends BaseFragment {
                 break;
 
             case R.id.btn_gplus:
-                startActivity(ReviewActivity.class, null);
+                startActivity(HomeActivity.class, null);
+                getActivity().finish();
                 break;
         }
     }

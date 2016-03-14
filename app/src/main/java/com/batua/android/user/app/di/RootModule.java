@@ -3,8 +3,8 @@ package com.batua.android.user.app.di;
 import android.content.Context;
 
 import com.batua.android.user.app.BatuaUserApplication;
-import com.batua.android.user.ui.activity.MobileNumberActivity;
 import com.batua.android.user.ui.activity.LoginActivity;
+import com.batua.android.user.ui.activity.MobileNumberActivity;
 import com.batua.android.user.ui.activity.OtpActivity;
 import com.batua.android.user.ui.activity.ResetPasswordActivity;
 import com.batua.android.user.ui.fragment.LoginFragment;

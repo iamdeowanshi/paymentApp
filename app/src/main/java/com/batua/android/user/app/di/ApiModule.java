@@ -2,13 +2,13 @@ package com.batua.android.user.app.di;
 
 import android.content.Context;
 
+import com.batua.android.user.app.Config;
+import com.batua.android.user.data.api.AppApi;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.squareup.okhttp.Cache;
 import com.squareup.okhttp.OkHttpClient;
-import com.batua.android.user.app.Config;
-import com.batua.android.user.data.api.AppApi;
 
 import java.io.File;
 import java.io.IOException;
