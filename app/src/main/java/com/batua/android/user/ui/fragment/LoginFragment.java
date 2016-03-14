@@ -8,17 +8,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseFragment;
 import com.batua.android.user.ui.activity.HomeActivity;
 import com.batua.android.user.ui.activity.MobileNumberActivity;
+import com.batua.android.user.ui.activity.ReviewActivity;
 import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ViewUtil;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
