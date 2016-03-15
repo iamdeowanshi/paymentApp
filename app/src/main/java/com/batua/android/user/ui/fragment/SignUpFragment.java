@@ -22,8 +22,10 @@ import butterknife.OnClick;
  */
 public class SignUpFragment extends BaseFragment {
 
-    @Bind(R.id.edt_mobile) EditText edtMobile;
-    @Bind(R.id.input_layout_mobile) TextInputLayout inputLayoutMobile;
+    @Bind(R.id.edt_mobile)
+    EditText edtMobile;
+    @Bind(R.id.input_layout_mobile)
+    TextInputLayout inputLayoutMobile;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

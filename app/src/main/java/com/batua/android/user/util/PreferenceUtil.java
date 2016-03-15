@@ -13,8 +13,10 @@ import javax.inject.Inject;
 
 public class PreferenceUtil {
 
-    @Inject Context context;
-    @Inject Gson gson;
+    @Inject
+    Context context;
+    @Inject
+    Gson gson;
 
     private SharedPreferences preferences;
 

@@ -14,7 +14,8 @@ import javax.inject.Inject;
  */
 public class Bakery {
 
-    @Inject Context context;
+    @Inject
+    Context context;
 
     public Bakery() {
         Injector.instance().inject(this);

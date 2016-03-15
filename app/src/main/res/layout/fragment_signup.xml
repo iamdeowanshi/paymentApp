@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_mobile"
             android:inputType="phone"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/text_size_16"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_only_email"
             android:inputType="textEmailAddress"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/text_size_16"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/hint_password"
             android:inputType="textPassword"
-            android:textSize="14sp"/>
+            android:textSize="@dimen/text_size_16"/>
 
     </android.support.design.widget.TextInputLayout>
 

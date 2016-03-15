@@ -28,8 +28,8 @@ public class Injector {
         if (instance == null) {
             instance = new Injector();
         }
-        
-        return  instance;
+
+        return instance;
     }
 
     /**

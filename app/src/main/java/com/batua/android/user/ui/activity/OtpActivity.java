@@ -12,7 +12,8 @@ import butterknife.OnClick;
 
 public class OtpActivity extends BaseActivity {
 
-    @Inject Bakery bakery;
+    @Inject
+    Bakery bakery;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
