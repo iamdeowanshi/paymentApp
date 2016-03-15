@@ -1,12 +1,10 @@
 package com.batua.android.user.ui.adapter;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.widget.ImageView;
 
 import com.batua.android.user.R;
@@ -62,7 +60,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.image) ImageView image;
+        @Bind(R.id.image)
+        ImageView image;
 
         public ViewHolder(View itemView) {
             super(itemView);

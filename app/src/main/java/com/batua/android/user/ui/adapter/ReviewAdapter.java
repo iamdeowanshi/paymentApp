@@ -50,7 +50,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         if (reviewList.get(position).getStars() != 5.0f) {
             stars.getDrawable(2).setColorFilter(Color.rgb(249, 173, 35), PorterDuff.Mode.SRC_ATOP);
         } else {
-            stars.getDrawable(2).setColorFilter(Color.rgb(138,211,33), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(2).setColorFilter(Color.rgb(138, 211, 33), PorterDuff.Mode.SRC_ATOP);
         }
 
     }
@@ -62,10 +62,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.text_name) TextView textName;
-        @Bind(R.id.rating) RatingBar rating;
-        @Bind(R.id.text_date) TextView textDate;
-        @Bind(R.id.expandable_text_review) ExpandableTextView expandableTextReview;
+        @Bind(R.id.text_name)
+        TextView textName;
+        @Bind(R.id.rating)
+        RatingBar rating;
+        @Bind(R.id.text_date)
+        TextView textDate;
+        @Bind(R.id.expandable_text_review)
+        ExpandableTextView expandableTextReview;
 
         public ViewHolder(View itemView) {
             super(itemView);

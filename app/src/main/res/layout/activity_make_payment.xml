@@ -171,14 +171,13 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal"
-                android:layout_weight="1">
+                android:layout_height="50dp">
 
                 <TextView
-                    android:layout_width="175dp"
+                    android:id="@+id/default_wallet"
+                    android:layout_width="180dp"
                     android:layout_height="match_parent"
                     android:text="Batua Wallet"
                     android:gravity="center_vertical"
@@ -189,14 +188,30 @@
                     android:drawableRight="@drawable/triangle_right_blue"/>
 
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/rupee_symbol"
+                    android:textColor="@color/green"
+                    android:layout_alignParentTop="true"
+                    android:layout_toStartOf="@+id/wallet_amount"
+                    android:layout_toLeftOf="@+id/wallet_amount" />
+
+                <TextView
+                    android:id="@+id/wallet_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:gravity="right|center_vertical"
                     android:paddingRight="10dp"
+                    android:paddingLeft="2dp"
                     android:text="@string/amount"
-                    android:textColor="@color/green"/>
+                    android:textColor="@color/green"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <Button
                 android:layout_width="match_parent"
@@ -206,7 +221,7 @@
                 android:textColor="@color/white"
                 android:textSize="@dimen/text_size_16"
                 android:background="@drawable/bg_button_pink"
-                android:text="MAKE PAYMENT"/>
+                android:text="MAKE PAYMENT" />
 
         </LinearLayout>
 

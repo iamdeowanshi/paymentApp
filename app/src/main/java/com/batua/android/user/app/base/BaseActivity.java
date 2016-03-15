@@ -52,7 +52,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Starts an activity with a bundle set to the intent.
      *
      * @param activityClass Class<? extends Activity>
-     * @param bundle Bundle
+     * @param bundle        Bundle
      */
     protected void startActivity(Class<? extends Activity> activityClass, Bundle bundle) {
         Intent intent = new Intent(this, activityClass);
@@ -66,7 +66,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * Start an activity by clearing all previous activities.
      *
      * @param activityClass Class<? extends Activity>
-     * @param bundle Bundle
+     * @param bundle        Bundle
      */
     protected void startActivityClearTop(Class<? extends Activity> activityClass, Bundle bundle) {
         Intent intent = new Intent(this, activityClass);

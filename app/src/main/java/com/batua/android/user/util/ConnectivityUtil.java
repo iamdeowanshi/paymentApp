@@ -13,7 +13,8 @@ import javax.inject.Inject;
  */
 public class ConnectivityUtil {
 
-    @Inject Context context;
+    @Inject
+    Context context;
 
     private ConnectivityManager connectivityManager;
 

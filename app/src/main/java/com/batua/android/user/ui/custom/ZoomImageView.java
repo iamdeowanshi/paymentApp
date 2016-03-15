@@ -13,8 +13,8 @@ import android.widget.ImageView;
 
 /**
  * @author Aaditya Deowanshi.
- *
- * src : androidhive
+ *         <p>
+ *         src : androidhive
  */
 public class ZoomImageView extends ImageView {
 

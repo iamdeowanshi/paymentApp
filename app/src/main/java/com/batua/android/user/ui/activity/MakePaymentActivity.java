@@ -2,11 +2,8 @@ package com.batua.android.user.ui.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
@@ -20,7 +17,8 @@ import butterknife.OnClick;
  */
 public class MakePaymentActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,7 @@ public class MakePaymentActivity extends BaseActivity {
     }
 
     @OnClick(R.id.txt_promo_code)
-    public void startPromocode(){
+    public void startPromocode() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_promocode);
         dialog.show();

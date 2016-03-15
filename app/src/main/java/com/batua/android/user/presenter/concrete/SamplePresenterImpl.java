@@ -13,7 +13,8 @@ import javax.inject.Inject;
 public class SamplePresenterImpl extends BasePresenter<SampleViewInteractor>
         implements SamplePresenter {
 
-    @Inject PreferenceUtil preference;
+    @Inject
+    PreferenceUtil preference;
 
     public SamplePresenterImpl() {
         injectDependencies();

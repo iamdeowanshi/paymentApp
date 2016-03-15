@@ -55,10 +55,10 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
         merchantDetailViewHolder.ratingReview.setRating(merchantDetail.getRatingReview());
 
         LayerDrawable stars = (LayerDrawable) merchantDetailViewHolder.ratingReview.getProgressDrawable();
-        if (merchantDetail.getRatingReview() != 5.0f ){
-            stars.getDrawable(2).setColorFilter(Color.rgb(249,173,35), PorterDuff.Mode.SRC_ATOP);
+        if (merchantDetail.getRatingReview() != 5.0f) {
+            stars.getDrawable(2).setColorFilter(Color.rgb(249, 173, 35), PorterDuff.Mode.SRC_ATOP);
         } else {
-            stars.getDrawable(2).setColorFilter(Color.rgb(138,211,33), PorterDuff.Mode.SRC_ATOP);
+            stars.getDrawable(2).setColorFilter(Color.rgb(138, 211, 33), PorterDuff.Mode.SRC_ATOP);
         }
 
         merchantDetailViewHolder.txtReviewedNum.setText(merchantDetail.getReviewedNum().toString());
@@ -75,14 +75,20 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
 
 
     public class MerchantDetailViewHolder extends RecyclerView.ViewHolder {
-        @Bind(R.id.img_merchant_profile) ImageView imgProfile;
-        @Bind(R.id.txt_merchant_title) TextView txtMerchantTitle;
-        @Bind(R.id.rating_review) RatingBar ratingReview;
-        @Bind(R.id.txt_reviewed_num) TextView txtReviewedNum;
-        @Bind(R.id.txt_merchant_address) TextView txtMerchantAddress;
-        @Bind(R.id.txt_distance) TextView txtDistance;
+        @Bind(R.id.img_merchant_profile)
+        ImageView imgProfile;
+        @Bind(R.id.txt_merchant_title)
+        TextView txtMerchantTitle;
+        @Bind(R.id.rating_review)
+        RatingBar ratingReview;
+        @Bind(R.id.txt_reviewed_num)
+        TextView txtReviewedNum;
+        @Bind(R.id.txt_merchant_address)
+        TextView txtMerchantAddress;
+        @Bind(R.id.txt_distance)
+        TextView txtDistance;
 
-        @OnClick({ R.id.txt_reviewed_num, R.id.rating_layout})
+        @OnClick({R.id.txt_reviewed_num, R.id.rating_layout})
         public void onClick(View view) {
             switch (view.getId()) {
                 case R.id.txt_reviewed_num:
@@ -100,7 +106,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
 
     }
 
-    class MerchantClickListener implements View.OnClickListener{
+    class MerchantClickListener implements View.OnClickListener {
 
         private int position;
 
@@ -110,7 +116,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
 
         @Override
         public void onClick(View v) {
-            Timber.d(position+"");
+            Timber.d(position + "");
             Intent i = new Intent(context, MakePaymentActivity.class);
             i.putExtra("position", position);
             context.startActivity(i);
