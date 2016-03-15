@@ -15,7 +15,7 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class MakePaymentActivity extends BaseActivity {
+public class PrePaymentConfirmationActivity extends BaseActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -29,7 +29,7 @@ public class MakePaymentActivity extends BaseActivity {
     }
 
     @OnClick(R.id.txt_promo_code)
-    public void startPromocode() {
+    void showPromocodeDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_promocode);
         dialog.show();

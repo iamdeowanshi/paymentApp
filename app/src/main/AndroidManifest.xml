@@ -25,14 +25,14 @@
         </activity>
         <activity android:name=".ui.activity.HomeActivity">
         </activity>
-        <activity android:name=".ui.activity.MakePaymentActivity"
+        <activity android:name=".ui.activity.PrePaymentConfirmationActivity"
             android:windowSoftInputMode="adjustPan|adjustResize">
         </activity>
         <activity android:name=".ui.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
         <activity android:name=".ui.activity.WalletActivity">
-        </activity>
-    </application>
+		</activity>
+   </application>
 
 </manifest>
