@@ -32,7 +32,7 @@
             android:theme="@style/BlueTheme">
         </activity>
         <activity android:name=".ui.activity.WalletActivity">
-        </activity>
-    </application>
+		</activity>
+   </application>
 
 </manifest>
