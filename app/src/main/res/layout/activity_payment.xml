@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.batua.android.user.ui.activity.PaymentActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
+        android:paddingTop="10dp"
+        android:paddingRight="8dp"
+        android:paddingBottom="20dp"
+        android:id="@+id/details_layout"
+        android:elevation="@dimen/elevation_depth"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pizza Hut"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_18"
+            android:id="@+id/text__merchant_name"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="J P Nagar, Bangalote - 560012"
+            android:layout_below="@+id/text__merchant_name"
+            android:id="@+id/text__merchant_address"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_amount"
+            android:layout_below="@+id/text__merchant_address"
+            android:layout_marginTop="30dp"
+            android:text="Total Amount :"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="1000"
+            android:id="@+id/text_amount_value"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/text_amount"
+            android:textSize="@dimen/text_size_18"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginRight="5dp"
+            android:layout_alignTop="@+id/text_amount"
+            android:textSize="@dimen/text_size_18"
+            android:layout_toLeftOf="@+id/text_amount_value"
+            android:text="@string/rupee_symbol"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:elevation="@dimen/elevation_depth"
+        android:layout_below="@+id/details_layout">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/payment_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            app:tabGravity="fill"
+            android:layout_below="@+id/img_logo"
+            app:tabIndicatorColor="@color/sky_blue"
+            app:tabSelectedTextColor="@color/sky_blue"
+            app:tabTextAppearance="@style/tab_layout_font_style"
+            app:tabTextColor="@color/sky_blue_light"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/payment_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/home_tab_layout"
+            android:layout_gravity="fill_horizontal"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
