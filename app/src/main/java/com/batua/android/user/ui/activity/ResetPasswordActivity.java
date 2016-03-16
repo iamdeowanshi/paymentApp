@@ -16,11 +16,15 @@ import butterknife.OnClick;
 
 public class ResetPasswordActivity extends BaseActivity {
 
-    @Inject Bakery bakery;
+    @Inject
+    Bakery bakery;
 
-    @Bind(R.id.input_password) EditText edtPassword;
-    @Bind(R.id.input_confirm_password) EditText edtConfirmPassword;
-    @Bind(R.id.input_layout_confirm_password) TextInputLayout inputLayoutConfirm;
+    @Bind(R.id.input_password)
+    EditText edtPassword;
+    @Bind(R.id.input_confirm_password)
+    EditText edtConfirmPassword;
+    @Bind(R.id.input_layout_confirm_password)
+    TextInputLayout inputLayoutConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +35,7 @@ public class ResetPasswordActivity extends BaseActivity {
 
     @OnClick(R.id.btn_confirm)
     void onConfirmClick() {
-        if ( isPasswordValid()) {
+        if (isPasswordValid()) {
             ViewUtil.hideKeyboard(getContentView());
             bakery.snackShort(getContentView(), "Your Password has been reset.");
             inputLayoutConfirm.setErrorEnabled(false);
@@ -44,7 +48,7 @@ public class ResetPasswordActivity extends BaseActivity {
     }
 
     private boolean isPasswordValid() {
-       return edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString());
+        return edtPassword.getText().toString().equals(edtConfirmPassword.getText().toString());
     }
 
 }

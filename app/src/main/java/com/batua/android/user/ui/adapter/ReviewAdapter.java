@@ -1,6 +1,9 @@
 package com.batua.android.user.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,6 +46,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
         holder.textDate.setText(reviewList.get(position).getDate());
         holder.expandableTextReview.setText(reviewList.get(position).getReview());
         holder.rating.setRating(reviewList.get(position).getStars());
+        LayerDrawable stars = (LayerDrawable) holder.rating.getProgressDrawable();
+        if (reviewList.get(position).getStars() != 5.0f) {
+            stars.getDrawable(2).setColorFilter(Color.rgb(249, 173, 35), PorterDuff.Mode.SRC_ATOP);
+        } else {
+            stars.getDrawable(2).setColorFilter(Color.rgb(138, 211, 33), PorterDuff.Mode.SRC_ATOP);
+        }
+
     }
 
     @Override
@@ -52,10 +62,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.text_name) TextView textName;
-        @Bind(R.id.rating) RatingBar rating;
-        @Bind(R.id.text_date) TextView textDate;
-        @Bind(R.id.expandable_text_review) ExpandableTextView expandableTextReview;
+        @Bind(R.id.text_name)
+        TextView textName;
+        @Bind(R.id.rating)
+        RatingBar rating;
+        @Bind(R.id.text_date)
+        TextView textDate;
+        @Bind(R.id.expandable_text_review)
+        ExpandableTextView expandableTextReview;
 
         public ViewHolder(View itemView) {
             super(itemView);

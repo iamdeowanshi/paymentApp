@@ -44,7 +44,7 @@ public abstract class BaseFragment extends Fragment {
      * Starts an activity with a bundle set to the intent.
      *
      * @param activityClass Class<? extends Activity>
-     * @param bundle Bundle
+     * @param bundle        Bundle
      */
     protected void startActivity(Class<? extends Activity> activityClass, Bundle bundle) {
         Intent intent = new Intent(getActivity(), activityClass);

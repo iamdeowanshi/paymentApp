@@ -23,6 +23,11 @@
         </activity>
         <activity android:name=".ui.activity.ResetPasswordActivity">
         </activity>
+        <activity android:name=".ui.activity.HomeActivity">
+        </activity>
+        <activity android:name=".ui.activity.MakePaymentActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+        </activity>
         <activity android:name=".ui.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
@@ -30,5 +35,8 @@
                   android:theme="@style/BlueTheme">
         </activity>
     </application>
+        <activity android:name=".ui.activity.WalletActivity">
+		</activity>
+   </application>
 
 </manifest>

@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.google.gson.Gson;
 import com.batua.android.user.app.di.Injector;
+import com.google.gson.Gson;
 
 import java.util.Set;
 
@@ -13,8 +13,10 @@ import javax.inject.Inject;
 
 public class PreferenceUtil {
 
-    @Inject Context context;
-    @Inject Gson gson;
+    @Inject
+    Context context;
+    @Inject
+    Gson gson;
 
     private SharedPreferences preferences;
 

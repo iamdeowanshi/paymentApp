@@ -3,7 +3,6 @@ package com.batua.android.user.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
@@ -13,8 +12,10 @@ import butterknife.Bind;
 
 public class LoginActivity extends BaseActivity {
 
-    @Bind(R.id.home_tab_layout) TabLayout loginTabLayout;
-    @Bind(R.id.home_viewpager) ViewPager loginViewpager;
+    @Bind(R.id.home_tab_layout)
+    TabLayout loginTabLayout;
+    @Bind(R.id.home_viewpager)
+    ViewPager loginViewpager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

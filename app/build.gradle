@@ -5,6 +5,7 @@ android {
     buildToolsVersion "23.0.1"
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.batua.android.user"
         minSdkVersion 14
         targetSdkVersion 23
@@ -14,6 +15,7 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            multiDexEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -55,4 +57,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.github.aakira:expandable-layout:1.4.0@aar'
     compile 'com.ms-square:expandableTextView:0.1.4'
+
+    //circular image
+    compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 }

@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseFragment;
+import com.batua.android.user.ui.activity.HomeActivity;
 import com.batua.android.user.ui.activity.MobileNumberActivity;
 import com.batua.android.user.ui.activity.PaymentActivity;
 import com.batua.android.user.ui.activity.ReviewActivity;
@@ -29,12 +30,17 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends BaseFragment {
 
-    @Inject Bakery bakery;
+    @Inject
+    Bakery bakery;
 
-    @Bind(R.id.edt_email) EditText edtEmail;
-    @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
-    @Bind(R.id.input_password) EditText inputPassword;
-    @Bind(R.id.input_layout_password) TextInputLayout inputLayoutPassword;
+    @Bind(R.id.edt_email)
+    EditText edtEmail;
+    @Bind(R.id.input_layout_email)
+    TextInputLayout inputLayoutEmail;
+    @Bind(R.id.input_password)
+    EditText inputPassword;
+    @Bind(R.id.input_layout_password)
+    TextInputLayout inputLayoutPassword;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -63,7 +69,8 @@ public class LoginFragment extends BaseFragment {
                 break;
 
             case R.id.btn_gplus:
-                startActivity(ReviewActivity.class, null);
+                startActivity(HomeActivity.class, null);
+                getActivity().finish();
                 break;
         }
     }

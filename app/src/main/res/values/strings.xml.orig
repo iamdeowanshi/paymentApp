@@ -56,9 +56,6 @@
     <string name="hint_only_email">Email(optional)</string>
     <string name="hint_mobile">Mobile Number</string>
     <string name="fb_signup">Sign-Up with facebook</string>
-<<<<<<< Updated upstream
-    <string name="google_signup">Sing-Up with Google+</string>
-=======
     <string name="google_signup">Sign-Up with Google+</string>
     <string name="search_merchant_hint">Search Merchant</string>
     <string name="my_wallet">My Wallet</string>
@@ -69,10 +66,17 @@
     <string name="wallet">Wallet</string>
     <string name="Promocode">Enter Promo Code</string>
     <string name="rupee_symbol">\u20B9</string>
+<<<<<<< HEAD
     <string name="amount">\u20B9 2000.00</string>
     <string name="confirmation">Confirmation</string>
     <string name="text_balance">Bal : <b>\u20B9 </b> \t</string>
->>>>>>> Stashed changes
+=======
+    <string name="amount">2000.00</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="order_num_title">Order No. :</string>
+    <string name="available_bal">Available Balance : </string>
+    <string name="cash_back_title">Cashback recieved against </string>
+>>>>>>> 5eedcde064734355739856e183ebb80312be1b21
 
 
     <string-array name="merchant_category">
