@@ -26,14 +26,10 @@ import butterknife.Bind;
  */
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.drawer_layout)
-    DrawerLayout drawer;
-    @Bind(R.id.nav_view)
-    NavigationView navigationView;
-    @Bind(R.id.merchant_list_recycler_view)
-    RecyclerView merchantListRecyclerView;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.drawer_layout) DrawerLayout drawer;
+    @Bind(R.id.nav_view) NavigationView navigationView;
+    @Bind(R.id.merchant_list_recycler_view) RecyclerView merchantListRecyclerView;
 
     private ActionBarDrawerToggle toggle;
     private MerchantListAdapter merchantListAdapter;
@@ -59,8 +55,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item) {
             case R.id.nav_wallet:
                 startActivity(WalletActivity.class, null);
+                drawer.closeDrawers();
                 return true;
-
         }
         return false;
     }
@@ -74,7 +70,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         profileimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(ProfileActivity.class, null);
+                drawer.closeDrawers();
             }
         });
     }

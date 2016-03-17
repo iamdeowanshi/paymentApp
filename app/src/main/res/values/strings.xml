@@ -74,6 +74,11 @@
     <string name="available_bal">Available Balance : </string>
     <string name="cash_back_title">Cashback recieved against </string>
     <string name="card_number">Card Number</string>
+    <string name="logout_bold_title">LOGOUT</string>
+    <string name="update_title">UPDATE</string>
+    <string name="merchant_current_pin">Current PIN</string>
+    <string name="merchant_new_pin">New PIN</string>
+    <string name="merchant_confirm_pin">Confirm PIN</string>
 
 
     <string-array name="merchant_category">
