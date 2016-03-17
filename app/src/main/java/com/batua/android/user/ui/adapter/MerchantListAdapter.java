@@ -61,7 +61,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
             stars.getDrawable(2).setColorFilter(Color.rgb(138, 211, 33), PorterDuff.Mode.SRC_ATOP);
         }
 
-        merchantDetailViewHolder.txtReviewedNum.setText(merchantDetail.getReviewedNum().toString());
+        merchantDetailViewHolder.txtReviewedNum.setText("(" + merchantDetail.getReviewedNum().toString() + ")");
         merchantDetailViewHolder.txtMerchantAddress.setText(merchantDetail.getMerchantAddress());
         merchantDetailViewHolder.txtDistance.setText(merchantDetail.getDistance());
 

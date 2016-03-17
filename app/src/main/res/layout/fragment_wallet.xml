@@ -46,6 +46,7 @@
         android:id="@+id/text_balance_batua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingRight="3dp"
         android:layout_alignBaseline="@+id/btn_add"
         android:layout_toLeftOf="@+id/batua_balance"
         android:text="@string/text_balance"/>

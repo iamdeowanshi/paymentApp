@@ -7,7 +7,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 
+import com.batua.android.user.ui.fragment.CardFragment;
 import com.batua.android.user.ui.fragment.LoginFragment;
+import com.batua.android.user.ui.fragment.NetBankingFragment;
 import com.batua.android.user.ui.fragment.SignUpFragment;
 import com.batua.android.user.ui.fragment.WalletFragment;
 
@@ -33,9 +35,9 @@ public class PaymentFragmentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new WalletFragment();
             case 1:
-                return new SignUpFragment();
+                return new CardFragment();
             case 2:
-                return new LoginFragment();
+                return new NetBankingFragment();
         }
 
         return null;

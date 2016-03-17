@@ -65,7 +65,8 @@ public class LoginFragment extends BaseFragment {
                 break;
 
             case R.id.btn_fb:
-                startActivity(PaymentActivity.class, null);
+                startActivity(HomeActivity.class, null);
+                getActivity().finish();
                 break;
 
             case R.id.btn_gplus:

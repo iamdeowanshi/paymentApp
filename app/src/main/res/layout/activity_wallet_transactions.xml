@@ -97,7 +97,7 @@
         android:layout_below="@+id/wallet_balance_layout"
         app:tabIndicatorColor="@color/sky_blue"
         app:tabSelectedTextColor="@color/sky_blue"
-        app:tabTextAppearance="@style/wallet_tab_layout_font_style"
+        app:tabTextAppearance="@style/tab_layout_font_style"
         app:tabTextColor="@color/sky_blue_light"
         android:elevation="@dimen/elevation_depth"/>
 

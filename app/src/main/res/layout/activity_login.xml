@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
+    android:id="@+id/rootLayout"
     tools:context="com.batua.android.user.ui.activity.LoginActivity">
 
     <ImageView
@@ -26,7 +27,7 @@
         android:layout_below="@+id/img_logo"
         app:tabIndicatorColor="@color/sky_blue"
         app:tabSelectedTextColor="@color/sky_blue"
-        app:tabTextAppearance="@style/tab_layout_font_style"
+        app:tabTextAppearance="@style/login_tab_layout_font_style"
         app:tabTextColor="@color/sky_blue_light"/>
 
     <android.support.v4.view.ViewPager
