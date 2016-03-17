@@ -26,13 +26,21 @@
         <activity android:name=".ui.activity.HomeActivity">
         </activity>
         <activity android:name=".ui.activity.PrePaymentConfirmationActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
         <activity android:name=".ui.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
         <activity android:name=".ui.activity.WalletActivity">
 		</activity>
+        <activity android:name=".ui.activity.ProfileActivity">
+        </activity>
+        <activity android:name=".ui.activity.SetPinActivity">
+        </activity>
+        <activity android:name=".ui.activity.EditProfileActivity">
+        </activity>
+        <activity android:name=".ui.activity.ChangePinActivity">
+        </activity>
    </application>
 
 </manifest>

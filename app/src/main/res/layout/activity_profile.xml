@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/tool_bar_blue"
+        app:titleTextAppearance="?attr/titleTextAppearance"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="@dimen/elevation_depth"
+        app:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/toolbar_title_font_size"
+            android:textAllCaps="false"
+            android:text="@string/profile_title"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:id="@+id/toolbar_title"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_below="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@android:color/white"
+        android:elevation="@dimen/elevation_depth">
+
+
+        <RelativeLayout
+            android:id="@+id/profile_img_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.github.siyamed.shapeimageview.CircularImageView
+                android:layout_width="107dp"
+                android:layout_height="107dp"
+                android:id="@+id/img_profile"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/drawer_profile_image" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:id="@+id/txt_display_name"
+                android:text="John galt agent"
+                android:textSize="18dp"
+                android:layout_gravity="bottom"
+                android:textStyle="bold"
+                android:layout_alignBottom="@+id/img_profile"
+                android:layout_toRightOf="@+id/img_profile"
+                android:layout_toEndOf="@+id/img_profile" />
+
+            <ImageButton
+                android:id="@+id/img_edit_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit_profile"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@android:color/transparent"/>
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view"
+            android:layout_below="@+id/profile_img_layout"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/gray"/>
+
+
+        <TextView
+            android:id="@+id/txt_email_title"
+            android:layout_weight="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="10dp"
+            android:text="Email : "
+            android:textSize="@dimen/text_size_14"
+            android:layout_below="@+id/view"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:paddingTop="10dp"
+            android:id="@+id/txt_merchant_email"
+            android:text="John galt agent"
+            android:textSize="@dimen/text_size_14"
+            android:layout_below="@+id/view"
+            android:layout_toRightOf="@+id/txt_email_title"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/txt_phone_num_title"
+            android:layout_weight="4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:text="Phone Number : "
+            android:textSize="@dimen/text_size_14"
+            android:layout_below="@+id/txt_merchant_email"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:id="@+id/txt_merchant_phone"
+            android:text="9066298956"
+            android:textSize="@dimen/text_size_14"
+            android:textStyle="bold"
+            android:layout_alignTop="@+id/txt_phone_num_title"
+            android:layout_toRightOf="@+id/txt_phone_num_title"
+            android:layout_toEndOf="@+id/txt_phone_num_title" />
+
+        <View
+            android:id="@+id/view1"
+            android:layout_below="@+id/txt_merchant_phone"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/gray"/>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/view1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/pin_setting_layout">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:text="PIN Settings"
+                android:textSize="@dimen/text_size_16"
+                android:id="@+id/txt_pin_setting_title"
+                android:gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="70dp"
+                android:text="ENABLE"
+                android:textColor="@color/tool_bar_blue"
+                android:id="@+id/txt_enable_pin"
+                android:textSize="@dimen/text_size_16"
+                android:gravity="center"
+                android:layout_above="@+id/txt_set_or_change_pin"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="Set PIN"
+                android:visibility="gone"
+                android:textColor="@color/pink"
+                android:id="@+id/txt_set_or_change_pin"
+                android:textSize="@dimen/text_size_16"
+                android:layout_below="@+id/txt_pin_setting_title"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+
+        </RelativeLayout>
+
+        <View
+            android:id="@+id/view2"
+            android:layout_below="@+id/pin_setting_layout"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/gray"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:text="Change Password"
+            android:textSize="@dimen/text_size_16"
+            android:id="@+id/txt_change_password"
+            android:gravity="center"
+            android:layout_marginLeft="15dp"
+            android:layout_below="@+id/view2"/>
+
+        <View
+            android:id="@+id/view3"
+            android:layout_below="@+id/txt_change_password"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/gray"/>
+
+        <TextView
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/logout_bold_title"
+            android:textSize="@dimen/text_size_18"
+            android:textColor="@color/tool_bar_blue"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:layout_below="@+id/view3"/>
+
+
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
