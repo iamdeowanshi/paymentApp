@@ -10,9 +10,10 @@ import android.widget.Spinner;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseFragment;
+import com.batua.android.user.ui.activity.PaymentSuccessActivity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * @author Aaditya Deowanshi.
@@ -38,6 +39,12 @@ public class NetBankingFragment extends BaseFragment {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.merchant_bank, R.layout.custom_spinner);
         adapter.setDropDownViewResource(R.layout.custom_spinner_list);
         spinnerBank.setAdapter(adapter);
+    }
+
+
+    @OnClick(R.id.btn_make_payment)
+    public void onClick() {
+        startActivity(PaymentSuccessActivity.class, null);
     }
 
 }

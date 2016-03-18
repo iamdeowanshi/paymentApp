@@ -25,17 +25,20 @@
         </activity>
         <activity android:name=".ui.activity.HomeActivity">
         </activity>
-        <activity android:name=".ui.activity.PrePaymentConfirmationActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan"
-                  android:theme="@style/BlueTheme">
+        <activity
+            android:name=".ui.activity.PrePaymentConfirmationActivity"
+            android:theme="@style/BlueTheme"
+            android:windowSoftInputMode="stateHidden|adjustPan">
         </activity>
-        <activity android:name=".ui.activity.ReviewActivity"
+        <activity
+            android:name=".ui.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
-        <activity android:name=".ui.activity.PaymentActivity"
-                  android:theme="@style/BlueTheme"/>
+        <activity
+            android:name=".ui.activity.PaymentActivity"
+            android:theme="@style/BlueTheme"/>
         <activity android:name=".ui.activity.WalletActivity">
-		</activity>
+        </activity>
         <activity android:name=".ui.activity.ProfileActivity">
         </activity>
         <activity android:name=".ui.activity.SetPinActivity">
@@ -44,6 +47,12 @@
         </activity>
         <activity android:name=".ui.activity.ChangePinActivity">
         </activity>
-   </application>
+        <activity
+            android:name=".ui.activity.PaymentSuccessActivity"
+            android:theme="@style/PaymentStatus">
+        </activity>
+        <activity android:name=".ui.activity.PaymentFailureActivity">
+        </activity>
+    </application>
 
 </manifest>
