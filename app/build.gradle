@@ -7,7 +7,7 @@ android {
     defaultConfig {
         multiDexEnabled true
         applicationId "com.batua.android.user"
-        minSdkVersion 14
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -60,4 +60,6 @@ dependencies {
 
     //circular image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:1.0.0'
 }

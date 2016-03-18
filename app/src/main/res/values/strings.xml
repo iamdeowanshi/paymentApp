@@ -58,6 +58,9 @@
     <string name="fb_signup">Sign-Up with facebook</string>
     <string name="google_signup">Sign-Up with Google+</string>
     <string name="search_merchant_hint">Search Merchant</string>
+    <!--<string name="amount">\u20B9 2000.00</string>-->
+    <string name="confirmation">Confirmation</string>
+    <string name="text_balance">Bal : <b>\u20B9 </b></string>
     <string name="my_wallet">My Wallet</string>
     <string name="transaction_history">Transaction History</string>
     <string name="contact_us">Contact Us</string>
@@ -67,10 +70,10 @@
     <string name="Promocode">Enter Promo Code</string>
     <string name="rupee_symbol">\u20B9</string>
     <string name="amount">2000.00</string>
-    <string name="confirmation">Confirmation</string>
     <string name="order_num_title">Order No. :</string>
     <string name="available_bal">Available Balance : </string>
     <string name="cash_back_title">Cashback recieved against </string>
+    <string name="card_number">Card Number</string>
     <string name="logout_bold_title">LOGOUT</string>
     <string name="update_title">UPDATE</string>
     <string name="merchant_current_pin">Current PIN</string>
@@ -91,7 +94,11 @@
     </string-array>
 
     <string-array name="merchant_bank">
-        <item>@string/merchant_bank</item>
+        <item>Select Bank</item>
+        <item>HDFC Bank</item>
+        <item>ICICI Bank</item>
+        <item>SBI Bank</item>
+        <item>Axis Bank</item>
     </string-array>
 
 </resources>

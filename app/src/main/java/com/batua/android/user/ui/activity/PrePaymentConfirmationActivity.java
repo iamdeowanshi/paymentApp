@@ -3,8 +3,6 @@ package com.batua.android.user.ui.activity;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,10 +24,9 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_payment);
+        setContentView(R.layout.activity_pre_payment_confirmation);
 
         setToolBar();
-
     }
 
     @OnClick(R.id.txt_promo_code)
@@ -52,6 +49,11 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    @OnClick(R.id.default_wallet)
+    void onWalletClick() {
+        startActivity(PaymentActivity.class, null);
     }
 
     private void setToolBar() {

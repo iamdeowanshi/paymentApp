@@ -41,7 +41,7 @@ public class LoginFragmentPagerAdpater extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return "Login";
+                return "LogIn";
             case 1:
                 return "Sign-Up";
         }

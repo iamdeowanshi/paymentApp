@@ -31,7 +31,7 @@ public class RechargedFragment extends WalletTransactionFragment {
 
     @Override
     List<WalletTransaction> getWalletTransactionList() {
-        walletTransactionList.add(new WalletTransaction("200", "15/03/2016", "89760987436357", "Wallet", null));
+        walletTransactionList.add(new WalletTransaction("200", "15/03/2016", "89760987436357", "Debit Card", null));
         walletTransactionList.add(new WalletTransaction("300", "14/03/2016", "89760987435367", "Wallet", null));
 
         return walletTransactionList;
