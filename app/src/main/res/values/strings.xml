@@ -79,6 +79,7 @@
     <string name="merchant_current_pin">Current PIN</string>
     <string name="merchant_new_pin">New PIN</string>
     <string name="merchant_confirm_pin">Confirm PIN</string>
+    <string name="error_msg_transaction">Sorry, your transaction could not be completed</string>
 
 
     <string-array name="merchant_category">

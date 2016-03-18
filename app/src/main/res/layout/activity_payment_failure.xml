@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ui.activity.PaymentFailureActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@android:color/white"
+        android:elevation="@dimen/elevation_depth"
+        android:paddingRight="15dp"
+        android:theme="@style/PaymentStatus"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:layout_margin="10dp"
+        android:background="@color/red"
+        android:orientation="vertical"
+        android:padding="10dp"
+        android:textColor="@android:color/white">
+
+        <RelativeLayout
+            android:id="@+id/top_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/text__merchant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pizza Hut"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_18"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/text__merchant_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text__merchant_name"
+                android:text="J P Nagar, Bangalore"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/text_transaction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/text__merchant_name"
+                android:layout_alignParentRight="true"
+                android:text="Transaction ID"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/text__merchant_address"
+                android:layout_alignParentRight="true"
+                android:text="M756357875"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/text_error_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text__merchant_address"
+                android:layout_marginTop="20dp"
+                android:gravity="center"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:text="@string/error_msg_transaction"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_20"/>
+
+            <TextView
+                android:id="@+id/text_rupee_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_error_msg"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:padding="5dp"
+                android:text="@string/rupee_symbol"
+                android:textColor="@android:color/white"
+                android:textSize="26sp"/>
+
+            <TextView
+                android:id="@+id/text_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_rupee_symbol"
+                android:layout_centerHorizontal="true"
+                android:text="1000.00"
+                android:textColor="@android:color/white"
+                android:textSize="70sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/text_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_amount"
+                android:layout_toRightOf="@+id/text_rupee_symbol"
+                android:text="12:23:32am"
+                android:textColor="@android:color/white"/>
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text_amount"
+                android:layout_toLeftOf="@+id/text_rupee_symbol"
+                android:text="12/12/2015"
+                android:textColor="@android:color/white"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/promo_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top_layout"
+            android:layout_marginTop="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Offer / Promo applied :"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/promo_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Rs. 0"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/text_size_12"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/retry_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/promo_layout"
+            android:layout_centerHorizontal="true">
+
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/retry_btn"/>
+
+
+            <TextView
+                android:id="@+id/btn_cancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:background="@null"
+                android:paddingBottom="10dp"
+                android:text="Cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
