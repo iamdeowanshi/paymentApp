@@ -41,6 +41,10 @@
         </activity>
         <activity android:name=".ui.activity.ChangePinActivity">
         </activity>
+        <activity android:name=".ui.activity.ChangePasswordActivity">
+        </activity>
+        <activity android:name=".ui.activity.TransactionHistoryActivity">
+        </activity>
    </application>
 
 </manifest>

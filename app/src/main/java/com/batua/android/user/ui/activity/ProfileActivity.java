@@ -77,6 +77,11 @@ public class ProfileActivity extends BaseActivity {
         finish();
     }
 
+    @OnClick(R.id.txt_change_password)
+    void changePassword(){
+        startActivity(ChangePasswordActivity.class, null);
+    }
+
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");

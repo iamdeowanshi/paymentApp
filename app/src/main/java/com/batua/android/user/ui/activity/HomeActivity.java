@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
 import com.batua.android.user.data.model.MerchantDetail;
+import com.batua.android.user.data.model.TransactionHistory;
 import com.batua.android.user.ui.adapter.MerchantListAdapter;
 
 import java.util.ArrayList;
@@ -57,7 +58,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(WalletActivity.class, null);
                 drawer.closeDrawers();
                 return true;
+
+            case R.id.nav_transaction_history:
+                startActivity(TransactionHistoryActivity.class, null);
+                drawer.closeDrawers();
+                return true;
         }
+
         return false;
     }
 
