@@ -26,14 +26,14 @@
         <activity android:name=".ui.activity.HomeActivity">
         </activity>
         <activity android:name=".ui.activity.PrePaymentConfirmationActivity"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="stateHidden|adjustPan"
+                  android:theme="@style/BlueTheme">
         </activity>
         <activity android:name=".ui.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
         <activity android:name=".ui.activity.PaymentActivity"
-                  android:theme="@style/BlueTheme"
-            android:windowSoftInputMode="adjustPan">
+                  android:theme="@style/BlueTheme"/>
         <activity android:name=".ui.activity.WalletActivity">
 		</activity>
         <activity android:name=".ui.activity.ProfileActivity">

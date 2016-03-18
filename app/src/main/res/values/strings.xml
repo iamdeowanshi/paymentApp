@@ -90,6 +90,7 @@
     </string-array>
 
     <string-array name="merchant_bank">
+        <item>Select Bank</item>
         <item>HDFC Bank</item>
         <item>ICICI Bank</item>
         <item>SBI Bank</item>

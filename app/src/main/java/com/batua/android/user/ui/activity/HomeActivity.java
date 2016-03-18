@@ -10,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * @author Arnold Laishram.
@@ -64,10 +66,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void showProfile() {
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        LinearLayout profileLayout = (LinearLayout) headerLayout.findViewById(R.id.profile_layout);
 
-        ImageView profileimage = (ImageView) headerLayout.findViewById(R.id.img_profile);
-
-        profileimage.setOnClickListener(new View.OnClickListener() {
+        profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(ProfileActivity.class, null);

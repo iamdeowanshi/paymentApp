@@ -1,5 +1,6 @@
 package com.batua.android.user.ui.activity;
 
+import android.content.Context;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
@@ -36,6 +38,24 @@ public class PaymentActivity extends BaseActivity {
 
     private void loadFragments() {
         paymentViewpager.setAdapter(new PaymentFragmentPagerAdapter(getSupportFragmentManager(), this));
+        paymentViewpager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrolled(int position, float offset, int offsetPixels) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                final InputMethodManager imm = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(getContentView().getWindowToken(), 0);
+            }
+        });
+
         paymentTabLayout.post(new Runnable() {
             @Override
             public void run() {
@@ -57,4 +77,6 @@ public class PaymentActivity extends BaseActivity {
             }
         });
     }
+
+
 }

@@ -25,7 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/img_logo"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:theme="@style/TextLabel">
 
         <EditText
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:hint="@string/otp"
             android:inputType="number"
-            android:textSize="14sp"/>
+            android:textSize="18sp"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -47,7 +47,7 @@
         android:textColor="@color/sky_blue"
         android:layout_below="@+id/input_layout_otp"
         android:text="@string/resend_otp"
-        android:textSize="14sp"/>
+        android:textSize="18sp"/>
 
     <Button
         android:id="@+id/btn_submit"
@@ -56,11 +56,11 @@
         android:layout_marginTop="30dp"
         android:layout_below="@+id/txt_resend_otp"
         android:text="Submit"
-        android:textSize="14sp"
+        android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@drawable/bg_button_pink"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ import com.batua.android.user.ui.fragment.LoginFragment;
 import com.batua.android.user.ui.fragment.NetBankingFragment;
 import com.batua.android.user.ui.fragment.SignUpFragment;
 import com.batua.android.user.ui.fragment.WalletFragment;
+import com.batua.android.user.util.ViewUtil;
 
 /**
  * @author Aaditya Deowanshi.
@@ -42,6 +43,8 @@ public class PaymentFragmentPagerAdapter extends FragmentPagerAdapter {
 
         return null;
     }
+
+    
 
     @Override
     public CharSequence getPageTitle(int position) {
