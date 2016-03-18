@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.batua.android.user.R;
 import com.batua.android.user.data.model.MerchantDetail;
-import com.batua.android.user.ui.activity.MakePaymentActivity;
+import com.batua.android.user.ui.activity.PrePaymentConfirmationActivity;
 import com.batua.android.user.ui.activity.ReviewActivity;
 
 import java.util.List;
@@ -61,7 +61,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
             stars.getDrawable(2).setColorFilter(Color.rgb(138, 211, 33), PorterDuff.Mode.SRC_ATOP);
         }
 
-        merchantDetailViewHolder.txtReviewedNum.setText(merchantDetail.getReviewedNum().toString());
+        merchantDetailViewHolder.txtReviewedNum.setText("(" + merchantDetail.getReviewedNum().toString() + ")");
         merchantDetailViewHolder.txtMerchantAddress.setText(merchantDetail.getMerchantAddress());
         merchantDetailViewHolder.txtDistance.setText(merchantDetail.getDistance());
 
@@ -117,7 +117,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
         @Override
         public void onClick(View v) {
             Timber.d(position + "");
-            Intent i = new Intent(context, MakePaymentActivity.class);
+            Intent i = new Intent(context, PrePaymentConfirmationActivity.class);
             i.putExtra("position", position);
             context.startActivity(i);
         }

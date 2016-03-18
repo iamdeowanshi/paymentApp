@@ -87,8 +87,6 @@ public class ReviewActivity extends BaseActivity implements ImageAdapter.ImageCl
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Reviews");
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

@@ -25,14 +25,25 @@
         </activity>
         <activity android:name=".ui.activity.HomeActivity">
         </activity>
-        <activity android:name=".ui.activity.MakePaymentActivity"
-            android:windowSoftInputMode="adjustPan|adjustResize">
+        <activity android:name=".ui.activity.PrePaymentConfirmationActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan"
+                  android:theme="@style/BlueTheme">
         </activity>
         <activity android:name=".ui.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
+        <activity android:name=".ui.activity.PaymentActivity"
+                  android:theme="@style/BlueTheme"/>
         <activity android:name=".ui.activity.WalletActivity">
 		</activity>
+        <activity android:name=".ui.activity.ProfileActivity">
+        </activity>
+        <activity android:name=".ui.activity.SetPinActivity">
+        </activity>
+        <activity android:name=".ui.activity.EditProfileActivity">
+        </activity>
+        <activity android:name=".ui.activity.ChangePinActivity">
+        </activity>
    </application>
 
 </manifest>

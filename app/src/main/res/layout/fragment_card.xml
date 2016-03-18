@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+            android:fillViewport="true"
+            android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    <RelativeLayout
+        android:layout_marginTop="60dp"
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:padding="@dimen/text_size_20"
+        android:background="@drawable/bg_card">
+
+        <RadioGroup
+            android:id="@+id/radio_cards"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true">
+
+            <RadioButton
+                android:id="@+id/rbtn_debit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/bg_radio"
+                android:drawablePadding="15dp"
+                android:text="Debit Card"
+                android:textColor="@color/gray"
+                android:textSize="18sp"/>
+
+            <RadioButton
+                android:id="@+id/rbtn_credit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rbtn_batua_wallet"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/bg_radio"
+                android:drawablePadding="15dp"
+                android:text="Credit Card"
+                android:textColor="@color/gray"
+                android:textSize="18sp"/>
+        </RadioGroup>
+
+
+            <EditText
+                android:id="@+id/edt_card_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/card_number"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/radio_cards"
+                android:inputType="number"
+                android:theme="@style/TextLabel"
+                android:textSize="@dimen/text_size_16"
+                android:paddingLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Expires on : "
+            android:id="@+id/text_expire"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/edt_card_number"/>
+
+        <EditText
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_expire"
+            android:gravity="center"
+            android:layout_alignBaseline="@+id/text_expire"
+            android:layout_toRightOf="@+id/text_expire"
+            android:theme="@style/TextLabel"
+            android:inputType="date"
+            android:paddingLeft="5dp"
+            android:hint="MM/YY"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="CVV: "
+            android:id="@+id/text_cvv"
+            android:layout_toLeftOf="@+id/edt_cvv"
+            android:layout_alignBaseline="@+id/text_expire"
+            />
+
+        <EditText
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edt_cvv"
+            android:layout_alignBaseline="@+id/text_expire"
+            android:layout_alignParentRight="true"
+            android:theme="@style/TextLabel"
+            android:maxLength="3"
+            android:gravity="center"
+            android:inputType="numberPassword"
+            android:paddingLeft="5dp"
+            android:hint="CVV"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_make_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_button_pink"
+        android:text="Make Payment"
+        android:textColor="@color/white"/>
+
+        </RelativeLayout>
+
+</ScrollView>

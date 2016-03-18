@@ -44,9 +44,11 @@ public class WalletTransactionAdapter extends RecyclerView.Adapter<WalletTransac
         if (walletTransaction.getCashBackAgainst() != null) {
             walletTransactionViewHolder.cashBackLayout.setVisibility(View.VISIBLE);
             walletTransactionViewHolder.txtCashBackAgainst.setText(walletTransaction.getCashBackAgainst());
-        } else {
-            walletTransactionViewHolder.cashBackLayout.setVisibility(View.GONE);
+
+            return;
         }
+        walletTransactionViewHolder.cashBackLayout.setVisibility(View.GONE);
+
     }
 
     @Override

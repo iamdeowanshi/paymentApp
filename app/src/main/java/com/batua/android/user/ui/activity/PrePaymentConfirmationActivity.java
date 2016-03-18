@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
@@ -15,21 +16,21 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class MakePaymentActivity extends BaseActivity {
+public class PrePaymentConfirmationActivity extends BaseActivity {
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.edt_enter_amount) EditText edtAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_make_payment);
+        setContentView(R.layout.activity_pre_payment_confirmation);
 
         setToolBar();
     }
 
     @OnClick(R.id.txt_promo_code)
-    public void startPromocode() {
+    void showPromocodeDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_promocode);
         dialog.show();
@@ -48,6 +49,11 @@ public class MakePaymentActivity extends BaseActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    @OnClick(R.id.default_wallet)
+    void onWalletClick() {
+        startActivity(PaymentActivity.class, null);
     }
 
     private void setToolBar() {

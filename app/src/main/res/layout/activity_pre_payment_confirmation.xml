@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:text="Merchant title"
+            android:text="Pizza Hut"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_18"
             android:textStyle="bold" />
@@ -56,6 +56,7 @@
                 android:layout_toStartOf="@+id/txt_reviewed_num"
                 android:gravity="center_vertical"
                 android:isIndicator="true"
+                android:rating="3"
                 android:numStars="5"
                 android:progressDrawable="@drawable/rating_bar_reviewed"
                 android:stepSize="0.5" />
@@ -67,11 +68,10 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:drawableLeft="@drawable/comments_icon_blue"
                 android:drawablePadding="3dp"
                 android:gravity="right"
                 android:paddingRight="3dp"
-                android:text="num"
+                android:text="(10)"
                 android:textSize="@dimen/text_size_16" />
 
 
@@ -86,8 +86,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="@string/merchant_address"
-        android:textSize="@dimen/text_size_16" />
+        android:text="JP Nagar, Bangalore"
+        android:textSize="@dimen/text_size_14" />
 
     <TextView
         android:id="@+id/txt_distance"
@@ -100,7 +100,7 @@
         android:drawableLeft="@drawable/location_confirmation"
         android:gravity="center"
         android:text="1 km"
-        android:textSize="@dimen/text_size_16" />
+        android:textSize="@dimen/text_size_14" />
 
     <ImageButton
         android:id="@+id/call_merchant"
@@ -109,15 +109,14 @@
         android:layout_alignBottom="@+id/txt_distance"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="30dp"
         android:background="@android:color/transparent"
         android:src="@drawable/call_icon_green" />
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/call_merchant"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/grey_img_background">
 
         <RelativeLayout
@@ -127,7 +126,7 @@
             android:background="@color/white"
             android:layout_above="@+id/default_wallet_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="156dp">
+            android:layout_marginBottom="150dp">
 
             <EditText
                 android:layout_width="wrap_content"
@@ -150,7 +149,7 @@
                 android:id="@+id/txt_promo_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Promo Code?"
+                android:text="Promo code?"
                 android:paddingBottom="5dp"
                 android:paddingRight="5dp"
                 android:textColor="@color/sky_blue"
@@ -167,7 +166,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:orientation="vertical">
 
@@ -177,14 +176,14 @@
 
                 <TextView
                     android:id="@+id/default_wallet"
-                    android:layout_width="180dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Batua Wallet"
                     android:gravity="center_vertical"
                     android:textSize="@dimen/text_size_16"
-                    android:drawablePadding="15dp"
+                    android:drawablePadding="10dp"
                     android:layout_marginLeft="10dp"
-                    android:drawableLeft="@drawable/batua_logo_summary"
+                    android:drawableLeft="@drawable/img_batua_logo_small"
                     android:drawableRight="@drawable/triangle_right_blue"/>
 
                 <TextView

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <RadioGroup
+        android:id="@+id/radio_wallet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp">
+
+        <RadioButton
+            android:id="@+id/rbtn_batua_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/bg_radio"
+            android:drawablePadding="15dp"
+            android:text="BATUA Wallet"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_other_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rbtn_batua_wallet"
+            android:layout_marginTop="18dp"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawableLeft="@drawable/bg_radio"
+            android:drawablePadding="15dp"
+            android:text="Other Wallet"
+            android:textColor="@color/gray"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/text_balance_batua"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="3dp"
+        android:layout_alignBaseline="@+id/btn_add"
+        android:layout_toLeftOf="@+id/batua_balance"
+        android:text="@string/text_balance"/>
+
+    <TextView
+        android:id="@+id/btn_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="67dp"
+        android:background="@android:color/transparent"
+        android:padding="7dp"
+        android:text="ADD +"
+        android:textColor="@color/pink_dark"
+        android:textSize="@dimen/text_size_14"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/batua_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btn_add"
+        android:layout_marginRight="20dp"
+        android:layout_toLeftOf="@+id/btn_add"
+        android:text="2000"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_balance_other"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/text_balance_batua"
+        android:layout_marginTop="118dp"
+        android:text="@string/text_balance"/>
+
+    <TextView
+        android:id="@+id/other_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/text_balance_other"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_toLeftOf="@+id/btn_add"
+        android:text="2000"
+        android:textStyle="bold"/>
+
+    <CheckBox
+        android:id="@+id/checkbox_default"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_make_payment"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="15dp"
+        android:text="Default Wallet"
+        android:buttonTint="@color/sky_blue_dark"
+        android:checked="true"
+        android:textColor="@color/gray"/>
+
+    <Button
+        android:id="@+id/btn_make_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_button_pink"
+        android:text="Make Payment"
+        android:textColor="@color/white"/>
+</RelativeLayout>
