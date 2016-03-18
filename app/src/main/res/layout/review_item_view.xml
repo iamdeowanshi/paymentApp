@@ -32,7 +32,7 @@
 
         <RatingBar
             android:id="@+id/rating"
-            style="@style/CustomRatingBar"
+            style="@style/ReviewRatingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"

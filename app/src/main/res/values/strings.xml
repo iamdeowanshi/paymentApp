@@ -85,6 +85,7 @@
     <string name="make_another_payment">Make Another Payment</string>
     <string name="query">Query</string>
     <string name="submit">Submit</string>
+    <string name="error_msg_transaction">Sorry, your transaction could not be completed</string>
 
 
     <string-array name="merchant_category">
