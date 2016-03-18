@@ -9,20 +9,17 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
 import com.batua.android.user.data.model.MerchantDetail;
-import com.batua.android.user.data.model.TransactionHistory;
 import com.batua.android.user.ui.adapter.MerchantListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.OnClick;
 
 /**
  * @author Arnold Laishram.
@@ -65,6 +62,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                 startActivity(TransactionHistoryActivity.class, null);
                 drawer.closeDrawers();
                 return true;
+
+            case R.id.nav_contact_us:
+                startActivity(ContactUsActivity.class, null);
+                drawer.closeDrawers();
+                return true;
+
         }
 
         return false;

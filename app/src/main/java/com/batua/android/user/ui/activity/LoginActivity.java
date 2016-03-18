@@ -14,7 +14,6 @@ import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
 import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class LoginActivity extends BaseActivity {
 

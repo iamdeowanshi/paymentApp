@@ -83,6 +83,8 @@
     <string name="transaction_number_title">Transaction Id :</string>
     <string name="transaction_history_title">Transaction History</string>
     <string name="make_another_payment">Make Another Payment</string>
+    <string name="query">Query</string>
+    <string name="submit">Submit</string>
 
 
     <string-array name="merchant_category">

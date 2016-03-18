@@ -7,13 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
 import com.batua.android.user.data.model.TransactionHistory;
-import com.batua.android.user.data.model.WalletTransaction;
-import com.batua.android.user.ui.activity.PrePaymentConfirmationActivity;
+import com.batua.android.user.ui.activity.PaymentActivity;
 
 import java.util.List;
 
@@ -69,7 +67,8 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
         transactionHistoryViewHolder.btnMakeAnotherPayment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Implement Payment activity
+                Intent paymentIntent = new Intent(activity, PaymentActivity.class);
+                activity.startActivity(paymentIntent);
             }
         });
     }

@@ -37,8 +37,8 @@ public class TransactionHistoryActivity extends BaseActivity {
     }
 
     private void populateAdapter() {
-        transactionHistoryList.add(new TransactionHistory("200", "15/03/2016", "89760987436357", "Debit Card", "Pizza Hut", "89760987436357"));
-        transactionHistoryList.add(new TransactionHistory("200", "15/03/2016", "89760987436357", "Credit Card", "Health and Glow", "89760987436357"));
+        transactionHistoryList.add(new TransactionHistory("200", "15/03/2016", "89760987436357", "Debit Card", "Pizza Hut", "RTYUIGH7436357"));
+        transactionHistoryList.add(new TransactionHistory("200", "15/03/2016", "89760987436357", "Credit Card", "Health and Glow", "RTYUIGH7436357"));
 
         transactionHistoryAdapter = new TransactionHistoryAdapter(transactionHistoryList, this);
         LinearLayoutManager llayout = new LinearLayoutManager(this);

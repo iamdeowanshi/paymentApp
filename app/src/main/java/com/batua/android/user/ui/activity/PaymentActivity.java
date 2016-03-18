@@ -1,20 +1,16 @@
 package com.batua.android.user.ui.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnTouchListener;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
-import com.batua.android.user.ui.adapter.LoginFragmentPagerAdpater;
 import com.batua.android.user.ui.adapter.PaymentFragmentPagerAdapter;
 
 import butterknife.Bind;
@@ -77,6 +73,5 @@ public class PaymentActivity extends BaseActivity {
             }
         });
     }
-
 
 }
