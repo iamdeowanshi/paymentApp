@@ -56,14 +56,7 @@ public class MerchantDetailsActivity extends BaseActivity {
 
         title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Pizza Hut JP Nagar");
-        toolbar.setNavigationIcon(R.drawable.arrow_back);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
 }

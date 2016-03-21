@@ -81,14 +81,7 @@ public class GalleryImagesActivity extends BaseActivity {
 
         title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Gallery Images");
-        toolbar.setNavigationIcon(R.drawable.arrow_back);
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 }
 

@@ -52,13 +52,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         title = (TextView) toolbar.findViewById(R.id.toolbar_title);
-        toolbar.setNavigationIcon(R.drawable.arrow_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
