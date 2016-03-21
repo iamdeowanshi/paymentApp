@@ -44,8 +44,6 @@ public class PaymentFragmentPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
-    
-
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position) {

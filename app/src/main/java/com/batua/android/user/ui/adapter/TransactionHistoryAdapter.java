@@ -78,7 +78,6 @@ public class TransactionHistoryAdapter extends RecyclerView.Adapter<TransactionH
         return transactionHistoryList.size();
     }
 
-
     public class TransactionHistoryViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.txt_amount_paid) TextView txtAmountPaid;
         @Bind(R.id.txt_payment_date) TextView txtPaymentDate;

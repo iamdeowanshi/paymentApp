@@ -2,19 +2,22 @@ package com.batua.android.user.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
 import com.batua.android.user.data.model.MerchantDetail;
 import com.batua.android.user.ui.adapter.MerchantListAdapter;
+import com.batua.android.user.ui.fragment.NavigationFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,67 +27,30 @@ import butterknife.Bind;
 /**
  * @author Arnold Laishram.
  */
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class HomeActivity extends BaseActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.merchant_list_recycler_view) RecyclerView merchantListRecyclerView;
 
     private ActionBarDrawerToggle toggle;
     private MerchantListAdapter merchantListAdapter;
     private List<MerchantDetail> merchantDetailList = new ArrayList<MerchantDetail>();
+    private NavigationFragment navigationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        showProfile();
-
         setToolBar();
-
+        initializeNavigation();
         fillMerchantList();
     }
 
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-
-        int item = menuItem.getItemId();
-
-        switch (item) {
-            case R.id.nav_wallet:
-                startActivity(WalletActivity.class, null);
-                drawer.closeDrawers();
-                return true;
-
-            case R.id.nav_transaction_history:
-                startActivity(TransactionHistoryActivity.class, null);
-                drawer.closeDrawers();
-                return true;
-
-            case R.id.nav_contact_us:
-                startActivity(ContactUsActivity.class, null);
-                drawer.closeDrawers();
-                return true;
-
-        }
-
-        return false;
-    }
-
-    private void showProfile() {
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-        LinearLayout profileLayout = (LinearLayout) headerLayout.findViewById(R.id.profile_layout);
-
-        profileLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(ProfileActivity.class, null);
-                drawer.closeDrawers();
-            }
-        });
+    private void initializeNavigation() {
+        navigationFragment = (NavigationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+        navigationFragment.initializeDrawer(drawer);
     }
 
     private void setToolBar() {
@@ -108,3 +74,4 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 }
+
