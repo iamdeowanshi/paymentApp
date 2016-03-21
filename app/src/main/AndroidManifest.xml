@@ -47,6 +47,12 @@
         </activity>
         <activity android:name=".ui.activity.ChangePinActivity">
         </activity>
+        <activity android:name=".ui.activity.ChangePasswordActivity">
+        </activity>
+        <activity android:name=".ui.activity.ContactUsActivity">
+        </activity>
+        <activity android:name=".ui.activity.TransactionHistoryActivity">
+        </activity>
         <activity
             android:name=".ui.activity.PaymentSuccessActivity"
             android:theme="@style/PaymentStatus">

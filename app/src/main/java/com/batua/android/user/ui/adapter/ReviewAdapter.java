@@ -62,14 +62,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ViewHolder
 
     class ViewHolder extends RecyclerView.ViewHolder {
 
-        @Bind(R.id.text_name)
-        TextView textName;
-        @Bind(R.id.rating)
-        RatingBar rating;
-        @Bind(R.id.text_date)
-        TextView textDate;
-        @Bind(R.id.expandable_text_review)
-        ExpandableTextView expandableTextReview;
+        @Bind(R.id.text_name) TextView textName;
+        @Bind(R.id.rating) RatingBar rating;
+        @Bind(R.id.text_date) TextView textDate;
+        @Bind(R.id.expandable_text_review) ExpandableTextView expandableTextReview;
 
         public ViewHolder(View itemView) {
             super(itemView);

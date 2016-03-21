@@ -79,6 +79,12 @@
     <string name="merchant_current_pin">Current PIN</string>
     <string name="merchant_new_pin">New PIN</string>
     <string name="merchant_confirm_pin">Confirm PIN</string>
+    <string name="transaction_recieved_title">Payment recieved against</string>
+    <string name="transaction_number_title">Transaction Id :</string>
+    <string name="transaction_history_title">Transaction History</string>
+    <string name="make_another_payment">Make Another Payment</string>
+    <string name="query">Query</string>
+    <string name="submit">Submit</string>
     <string name="error_msg_transaction">Sorry, your transaction could not be completed</string>
 
 

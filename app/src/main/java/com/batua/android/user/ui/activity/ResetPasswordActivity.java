@@ -16,15 +16,11 @@ import butterknife.OnClick;
 
 public class ResetPasswordActivity extends BaseActivity {
 
-    @Inject
-    Bakery bakery;
+    @Inject Bakery bakery;
 
-    @Bind(R.id.input_password)
-    EditText edtPassword;
-    @Bind(R.id.input_confirm_password)
-    EditText edtConfirmPassword;
-    @Bind(R.id.input_layout_confirm_password)
-    TextInputLayout inputLayoutConfirm;
+    @Bind(R.id.input_password) EditText edtPassword;
+    @Bind(R.id.input_confirm_password) EditText edtConfirmPassword;
+    @Bind(R.id.input_layout_confirm_password) TextInputLayout inputLayoutConfirm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
