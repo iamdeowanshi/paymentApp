@@ -47,6 +47,7 @@ public class MerchantDetailsActivity extends BaseActivity {
     @OnClick(R.id.view_images)
     void onViewImagesClick() {
         startActivity(GalleryImagesActivity.class, null);
+        finish();
     }
 
     private void setToolBar() {

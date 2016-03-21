@@ -5,16 +5,17 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
@@ -29,6 +30,7 @@ import com.batua.android.merchant.util.Bakery;
 import com.batua.android.merchant.util.PermissionUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -59,15 +61,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     private View view;
     private NextClickedListener nextClickedListener;
 
-    public MerchantBasicInfoFragment() {
-
-    }
-
-    @OnClick(R.id.img_profile)
-    void onImageClick() {
-        getImage();
-    }
-
     @OnClick(R.id.txt_load_next)
     public void loadNextClicked(){
         nextClickedListener.nextClicked(BASIC_INFO_POSITION);
@@ -79,19 +72,34 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     }
 
     @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_merchant_basic_info, null);
-
         onViewCreated(view, null);
-
         injectDependencies();
-
         LoadSpinner.loadSpinner(getContext(), R.array.merchant_category, spinnerMerchantCategory);
-
         hideAddImageRecyclerView();
 
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_save:
+                startActivity(MerchantDetailsActivity.class, null);
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -104,31 +112,17 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         switch (requestCode) {
 
             case CAMERA_STORAGE_REQUEST_CODE:
-
-
+                
                 break;
 
             case GET_IMAGE_FROM_GALLERY_REQUEST_CODE:
 
                 Uri selectedImageUri = data.getData();
-                String galleryPath = getRealPathFromUri(selectedImageUri);
-
                 ArrayList<CustomGallery> customGalleries = new ArrayList<CustomGallery>();
-
-                /*for (String string : all_path) {
-                    CustomGallery item = new CustomGallery();
-                    item.setImagePath(string);
-
-                    customGalleries.add(item);
-                }*/
-
                 CustomGallery item = new CustomGallery();
-                item.setImagePath(galleryPath);
-
+                item.setImagePath(selectedImageUri);
                 customGalleries.add(item);
-
-                PopulateImageAdapter.populateAdapter(getContext(),customGalleries,addImagesrecyclerView);
-
+                populateAdapter(customGalleries, addImagesrecyclerView);
                 showAddImageRecyclerView();
 
                 break;
@@ -145,7 +139,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
                     // Permission Granted
                     startCamera();
-
                 } else {
                     // Permission Denied
                     showCameraPermissionsSnackbar();
@@ -157,7 +150,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
                 if (PermissionUtil.verifyPermissions(grantResults)) {
                     // Permission Granted
                     chooseFromGallery();
-
                 } else {
                     // Permission Denied
                     showReadStoragePermissionsSnackbar();
@@ -257,18 +249,15 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     }
 
     private void startCamera() {
-
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (intent.resolveActivity(this.getActivity().getPackageManager()) != null) {
             Log.d("Internal:", "............................");
             startActivityForResult(intent, CAMERA_STORAGE_REQUEST_CODE);
         }
-
     }
 
     private void chooseFromGallery() {
-
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         intent.setType("image/*");
         startActivityForResult(Intent.createChooser(intent, "Select File"), GET_IMAGE_FROM_GALLERY_REQUEST_CODE);
@@ -296,18 +285,14 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     }
 
     public View getContentView(){
-
-        View view = (View)getActivity().findViewById(android.R.id.content);
-        return view;
+        return (View)getActivity().findViewById(android.R.id.content);
     }
 
-    private String getRealPathFromUri(Uri uri) {
-        Cursor cursor = getActivity().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-
-        return cursor.getString(idx);
+    private void populateAdapter( List<CustomGallery> customGalleryList, RecyclerView imageRecyclerView){
+        AddImagesAdapter addImagesAdapter = new AddImagesAdapter(customGalleryList);
+        LinearLayoutManager llayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        imageRecyclerView.setLayoutManager(llayout);
+        imageRecyclerView.setAdapter(addImagesAdapter);
     }
-
 
 }

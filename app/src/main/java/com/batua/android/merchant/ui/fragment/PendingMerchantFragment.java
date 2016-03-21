@@ -19,16 +19,12 @@ import butterknife.Bind;
 /**
  * Created by febinp on 01/03/16.
  */
-public class PendingMerchantFragment extends BaseFragment {
+public class PendingMerchantFragment extends MerchantFragment {
 
     private View view;
     private List<MerchantStatusModel> merchantStatusModelList = new ArrayList<MerchantStatusModel>();
 
     @Bind(R.id.merchant_pending_status_recycler_view) RecyclerView merchantPendingRecyclerView;
-
-    public PendingMerchantFragment() {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,11 +33,21 @@ public class PendingMerchantFragment extends BaseFragment {
 
         onViewCreated(view, null);
 
+        populateAdapter();
+
+        return view;
+    }
+
+    @Override
+    RecyclerView getMerchantRecyclerView() {
+        return merchantPendingRecyclerView;
+    }
+
+    @Override
+    List<MerchantStatusModel> getMerchantList() {
         merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Jayanagar, Bangalore", "PZ4", "Pending"));
         merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","Kormanagala, Bangalore","PZ5","Pending"));
 
-        PopulateMerchantStatusAdapter.populateAdapter(getContext(), merchantStatusModelList, merchantPendingRecyclerView);
-
-        return view;
+        return merchantStatusModelList;
     }
 }

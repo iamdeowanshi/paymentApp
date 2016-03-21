@@ -38,7 +38,6 @@ public class LeaderBoardAdapter extends RecyclerView.Adapter<LeaderBoardAdapter.
     @Override
     public void onBindViewHolder(LeaderBoardViewHolder leaderBoardViewHolder, int position) {
         LeaderBoardModel leaderBoardModel = leaderBoardModelList.get(position);
-
         leaderBoardViewHolder.txtMerchantName.setText(leaderBoardModel.getMerchantName());
         leaderBoardViewHolder.txtMerchantPoint.setText(leaderBoardModel.getPoints()+"");
     }

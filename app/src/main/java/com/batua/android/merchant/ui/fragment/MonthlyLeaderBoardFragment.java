@@ -19,16 +19,12 @@ import butterknife.Bind;
 /**
  * @author Arnold Laishram.
  */
-public class MonthlyLeaderBoardFragment extends BaseFragment {
+public class MonthlyLeaderBoardFragment extends LeaderBoardFragment {
 
     private View view;
     private List<LeaderBoardModel> leaderBoardModelList = new ArrayList<LeaderBoardModel>();
 
     @Bind(R.id.leaderboard_monthly_recycler_view) RecyclerView leaderBoardMonthlyRecyclerView;
-
-    public MonthlyLeaderBoardFragment() {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,12 +33,22 @@ public class MonthlyLeaderBoardFragment extends BaseFragment {
 
         onViewCreated(view, null);
 
+        populateAdapter();
+
+        return view;
+    }
+
+    @Override
+    RecyclerView getLeaderBoardRecyclerView() {
+        return leaderBoardMonthlyRecyclerView;
+    }
+
+    @Override
+    List<LeaderBoardModel> getLeaderBoardList() {
         leaderBoardModelList.add(new LeaderBoardModel("John", 10));
         leaderBoardModelList.add(new LeaderBoardModel("Wick",8));
         leaderBoardModelList.add(new LeaderBoardModel("Swazeneger",7));
 
-        PopulateLeaderBoardAdapter.populateAdapter(getContext(), leaderBoardModelList, leaderBoardMonthlyRecyclerView);
-
-        return view;
+        return leaderBoardModelList;
     }
 }

@@ -10,7 +10,7 @@ import com.batua.android.merchant.ui.adapter.MerchantStatusAdapter;
 import java.util.List;
 
 /**
- * @author Aaditya Deowanshi.
+ * @author Arnold Laishram.
  */
 public abstract class MerchantFragment extends BaseFragment {
 

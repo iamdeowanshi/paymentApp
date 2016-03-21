@@ -63,10 +63,12 @@ public class AddMerchantFragmentPagerAdapter extends FragmentPagerAdapter {
         if (type.equals("Add")) {
             MerchantBasicInfoFragment merchantBasicInfoFragment = new MerchantBasicInfoFragment();
             merchantBasicInfoFragment.setNextClickedListener((AddMerchantActivity)activity);
+
             return merchantBasicInfoFragment;
         }
         MerchantBasicInfoFragment merchantBasicInfoFragment = new MerchantBasicInfoFragment();
         merchantBasicInfoFragment.setNextClickedListener((EditMerchantActivity)activity);
+
         return merchantBasicInfoFragment;
 
     }
@@ -76,11 +78,13 @@ public class AddMerchantFragmentPagerAdapter extends FragmentPagerAdapter {
             MerchantLocationInfoFragment merchantLocationInfoFragment = new MerchantLocationInfoFragment();
             merchantLocationInfoFragment.setNextClickedListener((AddMerchantActivity) activity);
             merchantLocationInfoFragment.setPreviousClickedListener((AddMerchantActivity) activity);
+
             return merchantLocationInfoFragment;
         }
         MerchantLocationInfoFragment merchantLocationInfoFragment = new MerchantLocationInfoFragment();
         merchantLocationInfoFragment.setNextClickedListener((EditMerchantActivity) activity);
         merchantLocationInfoFragment.setPreviousClickedListener((EditMerchantActivity) activity);
+
         return merchantLocationInfoFragment;
     }
 
@@ -88,10 +92,12 @@ public class AddMerchantFragmentPagerAdapter extends FragmentPagerAdapter {
         if (type.equals("Add")) {
             MerchantBankInfoFragment merchantBankInfoFragment = new MerchantBankInfoFragment();
             merchantBankInfoFragment.setPreviousClickedListener((AddMerchantActivity) activity);
+
             return merchantBankInfoFragment;
         }
         MerchantBankInfoFragment merchantBankInfoFragment = new MerchantBankInfoFragment();
         merchantBankInfoFragment.setPreviousClickedListener((EditMerchantActivity) activity);
+
         return merchantBankInfoFragment;
     }
 

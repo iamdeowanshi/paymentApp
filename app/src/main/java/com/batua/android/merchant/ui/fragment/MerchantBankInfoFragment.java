@@ -2,6 +2,7 @@ package com.batua.android.merchant.ui.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
@@ -26,13 +27,15 @@ public class MerchantBankInfoFragment extends BaseFragment {
     private View view;
     private PreviousClickedListener previousClickedListener;
 
-    public MerchantBankInfoFragment() {
-
-    }
-
     @OnClick(R.id.txt_load_previous)
     public void onPreviousClicked(){
         previousClickedListener.previousClicked(BANK_INFO_POSITION);
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -45,6 +48,19 @@ public class MerchantBankInfoFragment extends BaseFragment {
         LoadSpinner.loadSpinner(getContext(), R.array.merchant_bank, spinnerBank);
 
         return view;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        switch (id) {
+            case R.id.action_save:
+                startActivity(MerchantDetailsActivity.class,null);
+                getActivity().finish();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void setPreviousClickedListener(PreviousClickedListener previousClickedListener){

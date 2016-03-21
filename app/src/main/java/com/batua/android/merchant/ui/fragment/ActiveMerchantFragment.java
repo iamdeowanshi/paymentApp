@@ -24,9 +24,6 @@ public class ActiveMerchantFragment extends MerchantFragment{
     private View view;
     private List<MerchantStatusModel> merchantStatusModelList = new ArrayList<MerchantStatusModel>();
 
-    /*public ActiveMerchantFragment() {
-    }*/
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_active, null);
