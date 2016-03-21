@@ -8,19 +8,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/sky_blue"
     tools:context=".ui.activity.SplashActivity">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/img_batua_icon"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@+id/image_batua"/>
 
     <ImageView
         android:id="@+id/image_batua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/img_batua_text"/>
+        android:src="@drawable/img_splash"/>
 </RelativeLayout>

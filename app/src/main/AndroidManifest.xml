@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.batua.android">
+          package="com.batua.android.merchant">
 
     <permission
         android:name="com.batua.android.MAPS_RECEIVE"
@@ -23,6 +23,10 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!--for multi select images -->
+
+
+
     <application
         android:name=".app.BatuaApplication"
         android:allowBackup="true"
@@ -35,7 +39,8 @@
             android:value="@string/google_maps_key" />
 
 
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".ui.activity.SplashActivity"
+            android:theme="@style/BlueTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -67,8 +72,6 @@
         <activity android:name=".ui.activity.GalleryImagesActivity">
         </activity>
         <activity android:name=".ui.activity.GalleryFullScreenActivity">
-        </activity>
-        <activity android:name=".ui.activity.LeaderBoardActivity">
         </activity>
     </application>
 

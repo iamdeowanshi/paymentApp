@@ -112,26 +112,60 @@
 
             </android.support.design.widget.TextInputLayout>
 
-            <android.support.design.widget.TextInputLayout
-                android:id="@+id/input_layout_merchant_mobile"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorTextAppearance="@style/error_appearance"
-                android:theme="@style/TextLabel"
+                android:id="@+id/input_layout_merchant_mobile"
                 android:layout_below="@+id/input_layout_merchant_email">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_mobile"
-                    android:hint="@string/merchant_mobile"
-                    android:textColorHint="@color/light_gray"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp"
-                    android:layout_marginTop="10dp"
-                    android:layout_below="@+id/view3"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="8dp"
+                    android:layout_marginLeft="10dp">
 
-            </android.support.design.widget.TextInputLayout>
+                    <TextView
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:text="+91"
+                        android:gravity="center"
+                        android:textSize="16sp"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:id="@+id/view2"
+                        android:layout_below="@id/spinner_bank"
+                        android:background="@color/blue_dark"></View>
+                </LinearLayout>
+
+                <android.support.design.widget.TextInputLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:errorTextAppearance="@style/error_appearance"
+                    android:theme="@style/TextLabel"
+                    android:layout_below="@+id/input_layout_merchant_email">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:id="@+id/edt_merchant_mobile"
+                        android:hint="@string/merchant_mobile"
+                        android:textColorHint="@color/light_gray"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="14sp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/view3"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+
 
 
             <Spinner
@@ -187,20 +221,11 @@
                 android:layout_below="@+id/input_layout_merchant_fee"
                 android:textColor="@color/pink" />
 
-            <ScrollView
+            <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/add_images_scroll_view"
-                android:scrollbars="horizontal"
-                android:layout_marginTop="15dp"
-                android:layout_below="@+id/txt_add_image">
-
-                <android.support.v7.widget.RecyclerView
-                    android:layout_width="match_parent"
-                    android:layout_height="70dp"
-                    android:id="@+id/add_images_recycler_view"/>
-
-            </ScrollView>
+                android:layout_height="70dp"
+                android:id="@+id/add_images_recycler_view"
+                android:layout_below="@+id/txt_add_image"/>
 
             <TextView
                 android:layout_weight="1"
@@ -216,7 +241,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/pink"
                 android:id="@+id/txt_load_next"
-                android:layout_below="@+id/add_images_scroll_view"/>
+                android:layout_below="@+id/add_images_recycler_view"/>
 
         </RelativeLayout>
 

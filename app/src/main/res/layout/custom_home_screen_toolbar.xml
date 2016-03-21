@@ -9,7 +9,6 @@
         android:background="#ffffff"
         app:titleTextAppearance="?attr/titleTextAppearance"
         android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:contentInsetStart="0dp"
         android:contentInsetLeft="0dp">
 
@@ -23,6 +22,7 @@
             android:drawableLeft="@drawable/search"
             android:drawablePadding="5dp"
             android:padding="5dp"
+            android:hint="@string/search_merchant_hint"
             android:background="@drawable/search_box"
             android:id="@+id/txt_search"/>
 

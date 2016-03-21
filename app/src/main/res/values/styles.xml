@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/blue_dark</item>
         <item name="android:actionMenuTextColor">@color/blue_light</item>
         <item name="android:actionMenuTextAppearance">@style/menuTitleTheme</item>
     </style>
@@ -42,6 +43,11 @@
     <style name="menuTitleTheme">
         <item name="android:textSize">@dimen/text_size_18_to_pix</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+
+    <style name="BlueTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/sky_blue_dark</item>
     </style>
 
 </resources>
