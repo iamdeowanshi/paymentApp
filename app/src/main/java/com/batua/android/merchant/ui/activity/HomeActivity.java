@@ -65,10 +65,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.nav_logout:
                 startActivity(LoginActivity.class, null);
                 break;
-
-            case R.id.nav_leaderboard:
-                startActivity(LeaderBoardActivity.class,null);
-                break;
         }
 
         drawer.closeDrawer(GravityCompat.START);

@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.CustomGallery;
+import com.bumptech.glide.Glide;
 
 import java.util.List;
 

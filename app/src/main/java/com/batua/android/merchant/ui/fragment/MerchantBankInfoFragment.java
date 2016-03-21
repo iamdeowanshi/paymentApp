@@ -10,6 +10,7 @@ import android.widget.Spinner;
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.app.base.BaseFragment;
 import com.batua.android.merchant.listener.PreviousClickedListener;
+import com.batua.android.merchant.ui.activity.MerchantDetailsActivity;
 import com.batua.android.merchant.ui.custom.LoadSpinner;
 
 import butterknife.Bind;

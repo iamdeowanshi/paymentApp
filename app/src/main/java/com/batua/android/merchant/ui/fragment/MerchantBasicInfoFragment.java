@@ -24,8 +24,9 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.app.base.BaseFragment;
 import com.batua.android.merchant.data.model.CustomGallery;
 import com.batua.android.merchant.listener.NextClickedListener;
+import com.batua.android.merchant.ui.activity.MerchantDetailsActivity;
+import com.batua.android.merchant.ui.adapter.AddImagesAdapter;
 import com.batua.android.merchant.ui.custom.LoadSpinner;
-import com.batua.android.merchant.ui.custom.PopulateImageAdapter;
 import com.batua.android.merchant.util.Bakery;
 import com.batua.android.merchant.util.PermissionUtil;
 
