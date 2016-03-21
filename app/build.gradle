@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         multiDexEnabled true
-        applicationId "com.batua.android"
+        applicationId "com.batua.android.merchant"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
