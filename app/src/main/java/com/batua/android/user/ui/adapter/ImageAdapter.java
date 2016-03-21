@@ -70,9 +70,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     public interface ImageClickListener {
-
         void onImageClick(int position);
-
     }
 
 }

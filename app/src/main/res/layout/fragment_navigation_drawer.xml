@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/profile_bg_relative_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:clickable="true">
+
+    <include
+        android:id="@+id/nav_header_layout"
+        layout="@layout/nav_header_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <include
+        android:id="@+id/nav_my_wallet"
+        android:layout_marginTop="15dp"
+        layout="@layout/item_navigation_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nav_header_layout" />
+
+    <include
+        android:id="@+id/nav_transaction_history"
+        layout="@layout/item_navigation_transaction_history"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:layout_below="@+id/nav_my_wallet"/>
+
+    <View
+        android:id="@+id/view1"
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:clickable="false"
+        android:layout_below="@+id/nav_transaction_history"
+        android:background="@color/light_gray"/>
+
+    <include
+        android:id="@+id/nav_contact_us"
+        android:layout_marginTop="15dp"
+        layout="@layout/item_navigation_contact_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/view1"/>
+
+    <include
+        android:id="@+id/nav_rate_app"
+        layout="@layout/item_navigation_rate_the_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/nav_contact_us"/>
+
+    <include
+        android:id="@+id/nav_refer_app"
+        layout="@layout/item_navigation_share_the_app"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/nav_rate_app"/>
+
+</RelativeLayout>

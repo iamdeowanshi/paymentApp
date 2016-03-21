@@ -82,15 +82,10 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
         @Bind(R.id.txt_merchant_address) TextView txtMerchantAddress;
         @Bind(R.id.txt_distance) TextView txtDistance;
 
-        @OnClick({R.id.txt_reviewed_num, R.id.rating_layout})
+        @OnClick({R.id.rating_layout})
         public void onClick(View view) {
-            switch (view.getId()) {
-                case R.id.txt_reviewed_num:
-                case R.id.rating_layout:
-                    Intent i = new Intent(context, ReviewActivity.class);
-                    context.startActivity(i);
-                    break;
-            }
+            Intent i = new Intent(context, ReviewActivity.class);
+            context.startActivity(i);
         }
 
         public MerchantDetailViewHolder(View itemView) {
