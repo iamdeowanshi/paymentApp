@@ -62,4 +62,5 @@ dependencies {
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
     compile 'net.yslibrary.keyboardvisibilityevent:keyboardvisibilityevent:1.0.0'
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
 }

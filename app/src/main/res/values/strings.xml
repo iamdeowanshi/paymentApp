@@ -83,6 +83,8 @@
     <string name="text_wallet_balance">Balance : \u20B9</string>
     <string name="forgot_pin">Forgot PIN?</string>
 
+    <string name="lorem">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
 
     <string-array name="merchant_category">
         <item>@string/merchant_category</item>

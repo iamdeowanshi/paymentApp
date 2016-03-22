@@ -40,6 +40,8 @@ public class ResetPasswordActivity extends BaseActivity {
             bakery.snackShort(getContentView(), "Your Password has been reset.");
             inputLayoutConfirm.setErrorEnabled(false);
 
+            startActivity(LoginActivity.class, null);
+
             return;
         }
 

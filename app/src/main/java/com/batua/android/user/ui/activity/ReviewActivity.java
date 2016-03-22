@@ -53,8 +53,8 @@ public class ReviewActivity extends BaseActivity implements ImageAdapter.ImageCl
 
         setToolBar();
 
-        Review review1 = new Review(3, "Erik Chapman", "23/12/2015", "jshfu hwdfi hw fiw hfiw hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc adiufbw fbsiudhfuwfwf  ffbiuwgfuig sfufbiuwf fiw hfiw hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc fiw hfiw hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc ");
-        Review review2 = new Review(5, "John Galt", "23/12/2015", "jshfu hwdfi hw fiw hfiw hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc adiufbw fbsiudhfuwfwf  ffbiuwgfuig sfufbiuwf hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc hfiwu hiuwf n cwf ebf yudwgfc cswbfiuwfb scuhfiw fwuhfs fb fhwbf bdfubc");
+        Review review1 = new Review(3, "Erik Chapman", "23/12/2015", "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
+        Review review2 = new Review(5, "John Galt", "23/12/2015", "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.");
 
         reviewList.add(review1);
         reviewList.add(review2);
