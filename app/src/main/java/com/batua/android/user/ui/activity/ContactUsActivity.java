@@ -13,21 +13,21 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class SetPinActivity extends BaseActivity {
+public class ContactUsActivity extends BaseActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_pin);
+        setContentView(R.layout.activity_contact_us);
 
         setToolBar();
     }
 
-    @OnClick(R.id.btn_save)
-    void onSave(){
-        startActivity(ProfileActivity.class, null);
+    @OnClick(R.id.btn_submit)
+    void submitQuery(){
+        startActivity(HomeActivity.class, null);
         finish();
     }
 

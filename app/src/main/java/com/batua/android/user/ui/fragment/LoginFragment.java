@@ -30,17 +30,12 @@ import butterknife.OnClick;
  */
 public class LoginFragment extends BaseFragment {
 
-    @Inject
-    Bakery bakery;
+    @Inject Bakery bakery;
 
-    @Bind(R.id.edt_email)
-    EditText edtEmail;
-    @Bind(R.id.input_layout_email)
-    TextInputLayout inputLayoutEmail;
-    @Bind(R.id.input_password)
-    EditText inputPassword;
-    @Bind(R.id.input_layout_password)
-    TextInputLayout inputLayoutPassword;
+    @Bind(R.id.edt_email) EditText edtEmail;
+    @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
+    @Bind(R.id.input_password) EditText inputPassword;
+    @Bind(R.id.input_layout_password) TextInputLayout inputLayoutPassword;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {

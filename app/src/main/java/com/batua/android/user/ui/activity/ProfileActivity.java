@@ -1,11 +1,7 @@
 package com.batua.android.user.ui.activity;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -75,6 +71,11 @@ public class ProfileActivity extends BaseActivity {
     void logout(){
         startActivity(LoginActivity.class, null);
         finish();
+    }
+
+    @OnClick(R.id.txt_change_password)
+    void changePassword(){
+        startActivity(ChangePasswordActivity.class, null);
     }
 
     private void setToolBar() {

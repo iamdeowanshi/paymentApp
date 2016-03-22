@@ -24,14 +24,10 @@ import butterknife.Bind;
 
 public class ReviewActivity extends BaseActivity implements ImageAdapter.ImageClickListener {
 
-    @Bind(R.id.toolbar_title)
-    TextView title;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
-    @Bind(R.id.recycler_view)
-    RecyclerView recyclerViewImage;
-    @Bind(R.id.review_list)
-    RecyclerView recyclerViewReview;
+    @Bind(R.id.toolbar_title) TextView title;
+    @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.recycler_view) RecyclerView recyclerViewImage;
+    @Bind(R.id.review_list) RecyclerView recyclerViewReview;
 
     private List<Review> reviewList = new ArrayList<>();
     private List<String> imagesList = new ArrayList<>();

@@ -13,20 +13,20 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class SetPinActivity extends BaseActivity {
+public class ChangePasswordActivity extends BaseActivity {
 
     @Bind(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_set_pin);
+        setContentView(R.layout.activity_change_password);
 
         setToolBar();
     }
 
-    @OnClick(R.id.btn_save)
-    void onSave(){
+    @OnClick(R.id.btn_update_password)
+    void updatePassword() {
         startActivity(ProfileActivity.class, null);
         finish();
     }

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
     android:layout_marginRight="10dp"
-              android:padding="10dp"
+    android:layout_marginTop="10dp"
     android:background="@android:color/white"
-    android:elevation="@dimen/elevation_depth">
+    android:elevation="@dimen/elevation_depth"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
 
     <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/img_merchant_profile"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginRight="10dp"
-        android:id="@+id/img_merchant_profile"
-        android:src="@drawable/drawer_profile_image"/>
+        android:src="@drawable/drawer_profile_image" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,51 +24,53 @@
         android:orientation="vertical">
 
         <RelativeLayout
+            android:id="@+id/merchant_title_layout"
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/merchant_title_layout">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:id="@+id/rating_layout">
+            android:layout_marginTop="10dp">
 
 
             <TextView
                 android:id="@+id/txt_merchant_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:text="Merchant title"
+                android:paddingRight="35dp"
                 android:textColor="@color/black"
                 android:textSize="@dimen/text_size_16"
-                android:textStyle="bold"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:textStyle="bold" />
 
-            <RatingBar
+            <RelativeLayout
+                android:id="@+id/rating_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:numStars="5"
-                android:stepSize="0.5"
-                android:isIndicator="true"
-                android:id="@+id/rating_review"
                 android:clickable="true"
-                android:gravity="center_vertical"
-                android:progressDrawable="@drawable/rating_bar_reviewed"
-                android:layout_toLeftOf="@+id/txt_reviewed_num"
-                android:layout_toStartOf="@+id/txt_reviewed_num" />
+                android:layout_toRightOf="@+id/txt_merchant_title">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawablePadding="3dp"
-                android:text="num"
-                android:gravity="right"
-                android:id="@+id/txt_reviewed_num"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                <RatingBar
+                    android:id="@+id/rating_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toLeftOf="@+id/txt_reviewed_num"
+                    android:layout_toStartOf="@+id/txt_reviewed_num"
+                    android:clickable="true"
+                    android:gravity="center_vertical"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:progressDrawable="@drawable/rating_bar_reviewed"
+                    android:stepSize="0.5" />
+
+                <TextView
+                    android:id="@+id/txt_reviewed_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawablePadding="3dp"
+                    android:gravity="right"
+                    android:text="num"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"/>
 
             </RelativeLayout>
 
@@ -76,29 +78,29 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/location_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/location_layout">
+            android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_14"
-                android:layout_marginTop="5dp"
                 android:id="@+id/txt_merchant_address"
-                android:text="@string/merchant_address"/>
-
-            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1 km"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentBottom="true"
+                android:layout_marginTop="5dp"
+                android:text="@string/merchant_address"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
                 android:id="@+id/txt_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/location_confirmation"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_14"
-                android:drawableLeft="@drawable/location_confirmation"/>
+                android:text="1 km"
+                android:textSize="@dimen/text_size_14" />
 
 
         </RelativeLayout>
