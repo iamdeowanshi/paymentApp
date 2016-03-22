@@ -11,6 +11,7 @@ import com.batua.android.user.app.base.BaseActivity;
 import com.batua.android.user.ui.adapter.WalletTransactionFragmentPagerAdapter;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 /**
  * @author Arnold Laishram.
@@ -28,6 +29,11 @@ public class WalletActivity extends BaseActivity {
 
         setToolBar();
         loadFragments();
+    }
+
+    @OnClick(R.id.btn_add)
+    void onAddClick() {
+        startActivity(WalletRechargeActivity.class, null);
     }
 
     private void setToolBar() {

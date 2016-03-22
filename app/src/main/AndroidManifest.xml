@@ -51,7 +51,13 @@
             android:name=".ui.activity.PaymentSuccessActivity"
             android:theme="@style/PaymentStatus">
         </activity>
-        <activity android:name=".ui.activity.PaymentFailureActivity">
+        <activity
+            android:name=".ui.activity.PaymentFailureActivity"
+            android:theme="@style/PaymentStatus">
+        </activity>
+        <activity android:name=".ui.activity.WalletRechargeActivity">
+        </activity>
+        <activity android:name=".ui.activity.PinLoginActivity">
         </activity>
     </application>
 

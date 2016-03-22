@@ -1,108 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
-                android:padding="@dimen/text_size_16"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/text_size_16">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel"
+            app:errorTextAppearance="@style/error_appearance">
+
+            <EditText
+                android:id="@+id/edt_mobile"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_mobile"
+                android:inputType="phone"
+                android:textSize="@dimen/text_size_16"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_mobile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextLabel"
-        app:errorTextAppearance="@style/error_appearance">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edt_mobile"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_mobile"
-            android:inputType="phone"
-            android:textSize="@dimen/text_size_16"/>
+            android:layout_below="@+id/input_layout_mobile"
+            android:theme="@style/TextLabel"
+            app:errorTextAppearance="@style/error_appearance">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_only_email"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/text_size_16"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/input_layout_mobile"
-        android:theme="@style/TextLabel"
-        app:errorTextAppearance="@style/error_appearance">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edt_email"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_only_email"
-            android:inputType="textEmailAddress"
-            android:textSize="@dimen/text_size_16"/>
+            android:layout_below="@+id/input_layout_email"
+            android:theme="@style/TextLabel">
 
-    </android.support.design.widget.TextInputLayout>
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/text_size_16"/>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/input_layout_email"
-        android:theme="@style/TextLabel">
+        </android.support.design.widget.TextInputLayout>
 
-        <EditText
-            android:id="@+id/input_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:textSize="@dimen/text_size_16"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="140dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/input_layout_password"
-        android:text="Sign Up"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/bg_button_pink"
-        android:layout_centerHorizontal="true"/>
-
-    <LinearLayout
-        android:id="@+id/layout_social_buttons"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/btn_fb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
+            android:id="@+id/btn_login"
+            android:layout_width="140dp"
+            android:layout_height="36dp"
+            android:layout_below="@+id/input_layout_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="100dp"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/bg_button_pink"
+            android:text="Sign Up"
             android:textColor="@color/white"
-            android:text="@string/fb_signup"
-            android:layout_weight="1"
-            android:background="@drawable/bg_button_fb"/>
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
-        <View
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"/>
-
-        <Button
-            android:id="@+id/btn_gplus"
+        <LinearLayout
+            android:id="@+id/layout_social_buttons"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_weight="1"
-            android:textColor="@color/white"
-            android:text="@string/google_signup"
-            android:background="@drawable/bg_button_gplus"/>
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
 
-    </LinearLayout>
+            <Button
+                android:id="@+id/btn_fb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_fb"
+                android:text="@string/fb_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
 
-</RelativeLayout>
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_gplus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_button_gplus"
+                android:text="@string/google_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

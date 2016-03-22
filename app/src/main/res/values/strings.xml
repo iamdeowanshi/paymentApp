@@ -80,6 +80,8 @@
     <string name="merchant_new_pin">New PIN</string>
     <string name="merchant_confirm_pin">Confirm PIN</string>
     <string name="error_msg_transaction">Sorry, your transaction could not be completed</string>
+    <string name="text_wallet_balance">Balance : \u20B9</string>
+    <string name="forgot_pin">Forgot PIN?</string>
 
 
     <string-array name="merchant_category">
