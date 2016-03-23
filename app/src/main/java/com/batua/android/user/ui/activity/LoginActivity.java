@@ -9,13 +9,15 @@ import android.widget.ImageView;
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
 import com.batua.android.user.ui.adapter.LoginFragmentPagerAdpater;
+import com.batua.android.user.util.ViewUtil;
 
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+import javax.inject.Inject;
 
 import butterknife.Bind;
 
 public class LoginActivity extends BaseActivity {
+
+    @Inject ViewUtil viewUtil;
 
     @Bind(R.id.home_tab_layout) TabLayout loginTabLayout;
     @Bind(R.id.home_viewpager) ViewPager loginViewpager;
@@ -25,23 +27,22 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        injectDependencies();
 
         loadFragments();
 
-        KeyboardVisibilityEvent.setEventListener(
-                this,
-                new KeyboardVisibilityEventListener() {
-                    @Override
-                    public void onVisibilityChanged(boolean isOpen) {
-                        if (isOpen) {
-                            imgLogo.setVisibility(View.GONE);
+        viewUtil.keyboardListener(this, new ViewUtil.KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                if (isOpen) {
+                    imgLogo.setVisibility(View.GONE);
 
-                            return;
-                        }
+                    return;
+                }
 
-                        imgLogo.setVisibility(View.VISIBLE);
-                    }
-                });
+                imgLogo.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void loadFragments() {

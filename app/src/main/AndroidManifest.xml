@@ -28,7 +28,7 @@
         <activity
             android:name=".ui.activity.PrePaymentConfirmationActivity"
             android:theme="@style/BlueTheme"
-            android:windowSoftInputMode="stateHidden|adjustPan">
+            android:windowSoftInputMode="adjustUnspecified">
         </activity>
         <activity
             android:name=".ui.activity.ReviewActivity"
@@ -55,9 +55,16 @@
         </activity>
         <activity
             android:name=".ui.activity.PaymentSuccessActivity"
+            android:theme="@style/PaymentStatus"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity
+            android:name=".ui.activity.PaymentFailureActivity"
             android:theme="@style/PaymentStatus">
         </activity>
-        <activity android:name=".ui.activity.PaymentFailureActivity">
+        <activity android:name=".ui.activity.WalletRechargeActivity">
+        </activity>
+        <activity android:name=".ui.activity.PinLoginActivity">
         </activity>
     </application>
 

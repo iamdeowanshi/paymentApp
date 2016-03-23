@@ -64,8 +64,8 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void fillMerchantList() {
-        merchantDetailList.add(new MerchantDetail("Pizza Hut", 5.0f, 10, "JP Nagar Bangalore", "1km"));
-        merchantDetailList.add(new MerchantDetail("Health and Glow", 3.0f, 10, "JP Nagar Bangalore", "2km"));
+        merchantDetailList.add(new MerchantDetail("Pizza Hut", 5.0f, 10, "JP Nagar, Bangalore", "1Km"));
+        merchantDetailList.add(new MerchantDetail("Health and Glow", 3.0f, 10, "JP Nagar, Bangalore", "2Km"));
 
         merchantListAdapter = new MerchantListAdapter(merchantDetailList);
         LinearLayoutManager llayout = new LinearLayoutManager(this);

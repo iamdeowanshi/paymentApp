@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.view.View;
 
+import com.batua.android.user.R;
 import com.batua.android.user.app.Config;
 import com.batua.android.user.app.di.Injector;
 
@@ -32,6 +34,23 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onStart();
         //noinspection WrongConstant
         setRequestedOrientation(orientation);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_out, R.anim.push_right_in);
     }
 
     /**

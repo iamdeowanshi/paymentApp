@@ -31,6 +31,7 @@ import butterknife.OnClick;
 public class LoginFragment extends BaseFragment {
 
     @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
 
     @Bind(R.id.edt_email) EditText edtEmail;
     @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
@@ -72,7 +73,7 @@ public class LoginFragment extends BaseFragment {
     }
 
     private void validate() {
-        ViewUtil.hideKeyboard(getContentView());
+        viewUtil.hideKeyboard(getActivity());
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
         if (isValid) {

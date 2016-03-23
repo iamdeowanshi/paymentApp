@@ -6,6 +6,8 @@ import com.batua.android.user.app.BatuaUserApplication;
 import com.batua.android.user.ui.activity.LoginActivity;
 import com.batua.android.user.ui.activity.MobileNumberActivity;
 import com.batua.android.user.ui.activity.OtpActivity;
+import com.batua.android.user.ui.activity.PaymentSuccessActivity;
+import com.batua.android.user.ui.activity.PrePaymentConfirmationActivity;
 import com.batua.android.user.ui.activity.ResetPasswordActivity;
 import com.batua.android.user.ui.fragment.LoginFragment;
 import com.batua.android.user.ui.fragment.SignUpFragment;
@@ -27,7 +29,8 @@ import dagger.Provides;
 @Module(
         includes = {
                 PresenterModule.class,
-                ApiModule.class
+                ApiModule.class,
+                UtilModule.class
         },
         injects = {
                 BatuaUserApplication.class,
@@ -36,6 +39,8 @@ import dagger.Provides;
                 MobileNumberActivity.class,
                 LoginFragment.class,
                 SignUpFragment.class,
+                PaymentSuccessActivity.class,
+                PrePaymentConfirmationActivity.class,
                 ResetPasswordActivity.class,
                 OtpActivity.class,
                 LoginActivity.class,

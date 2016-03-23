@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:orientation="horizontal"
     android:id="@+id/rootLayout"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.batua.android.user.ui.activity.LoginActivity">
 
     <ImageView
@@ -22,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
         app:tabGravity="fill"
         android:layout_below="@+id/img_logo"
         app:tabIndicatorColor="@color/sky_blue"

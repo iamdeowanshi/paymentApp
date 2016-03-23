@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="50dp"
         android:background="@color/tool_bar_blue"
-        app:titleTextAppearance="?attr/titleTextAppearance"
+        android:contentInsetLeft="0dp"
         android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:contentInsetStart="0dp"
-        android:contentInsetLeft="0dp">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance">
 
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/toolbar_title_font_size"
             android:text="@string/confirmation"
             android:textColor="@color/white"
-            android:id="@+id/toolbar_title"/>
+            android:textSize="@dimen/toolbar_title_font_size"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -31,10 +32,10 @@
         android:id="@+id/merchant_title_layout"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/toolbar"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/toolbar">
+        android:layout_marginTop="10dp">
 
 
         <TextView
@@ -46,33 +47,33 @@
             android:text="Pizza Hut"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_18"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
-            <RatingBar
-                android:id="@+id/rating_review"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toLeftOf="@+id/txt_reviewed_num"
-                android:layout_toStartOf="@+id/txt_reviewed_num"
-                android:gravity="center_vertical"
-                android:isIndicator="true"
-                android:rating="3"
-                android:numStars="5"
-                android:progressDrawable="@drawable/rating_bar_reviewed"
-                android:stepSize="0.5" />
+        <RatingBar
+            android:id="@+id/rating_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@+id/txt_reviewed_num"
+            android:layout_toStartOf="@+id/txt_reviewed_num"
+            android:gravity="center_vertical"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressDrawable="@drawable/rating_bar_reviewed"
+            android:rating="3"
+            android:stepSize="0.5"/>
 
-            <TextView
-                android:id="@+id/txt_reviewed_num"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:drawablePadding="3dp"
-                android:gravity="right"
-                android:paddingRight="3dp"
-                android:text="(10)"
-                android:textSize="@dimen/text_size_16" />
+        <TextView
+            android:id="@+id/txt_reviewed_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="3dp"
+            android:gravity="right"
+            android:paddingRight="3dp"
+            android:text="(10)"
+            android:textSize="@dimen/text_size_16"/>
 
 
     </RelativeLayout>
@@ -83,24 +84,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/merchant_title_layout"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:text="JP Nagar, Bangalore"
-        android:textSize="@dimen/text_size_14" />
+        android:textSize="@dimen/text_size_14"/>
 
     <TextView
         android:id="@+id/txt_distance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:layout_below="@+id/txt_merchant_address"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_below="@+id/txt_merchant_address"
+        android:layout_marginTop="5dp"
         android:drawableLeft="@drawable/location_confirmation"
         android:gravity="center"
         android:text="1 km"
-        android:textSize="@dimen/text_size_14" />
+        android:textSize="@dimen/text_size_14"/>
 
     <ImageButton
         android:id="@+id/call_merchant"
@@ -111,120 +112,137 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="30dp"
         android:background="@android:color/transparent"
-        android:src="@drawable/call_icon_green" />
+        android:src="@drawable/call_icon_green"/>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/call_merchant"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/grey_img_background">
+        android:layout_marginTop="10dp">
+
+        <ScrollView
+            android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/grey_img_background"/>
+
+        </ScrollView>
 
         <RelativeLayout
             android:id="@+id/amount_layout"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:background="@color/white"
-            android:layout_above="@+id/default_wallet_layout"
+            android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="150dp">
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="60dp"
+            android:background="@color/white">
 
             <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Enter Amount"
-                android:drawablePadding="10dp"
-                android:textColorHint="@color/light_gray"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_25"
-                android:layout_marginLeft="10dp"
-                android:inputType="numberDecimal"
-                android:drawableLeft="@drawable/rupee_icon_confirmation"
-                android:background="@android:color/transparent"
                 android:id="@+id/edt_enter_amount"
-                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="8dp"
+                android:background="@android:color/transparent"
+                android:drawableLeft="@drawable/rupee_icon_confirmation"
+                android:drawablePadding="10dp"
+                android:hint="Enter Amount"
+                android:maxLength="12"
+                android:inputType="numberDecimal"
+                android:textColor="@android:color/black"
+                android:textColorHint="@color/light_gray"
+                android:textSize="@dimen/text_size_25"/>
 
             <TextView
                 android:id="@+id/txt_promo_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Promo code?"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:paddingBottom="5dp"
                 android:paddingRight="5dp"
-                android:textColor="@color/sky_blue"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:text="Promo code?"
+                android:textColor="@color/sky_blue"/>
 
         </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/default_wallet_layout"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
             android:background="@color/white"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="45dp">
 
                 <TextView
                     android:id="@+id/default_wallet"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Batua Wallet"
-                    android:gravity="center_vertical"
-                    android:textSize="@dimen/text_size_16"
-                    android:drawablePadding="10dp"
                     android:layout_marginLeft="10dp"
                     android:drawableLeft="@drawable/img_batua_logo_small"
-                    android:drawableRight="@drawable/triangle_right_blue"/>
+                    android:drawablePadding="10dp"
+                    android:drawableRight="@drawable/triangle_right_blue"
+                    android:gravity="center_vertical"
+                    android:text="Batua Wallet"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_16"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/wallet_amount"
+                    android:layout_toStartOf="@+id/wallet_amount"
                     android:gravity="center"
                     android:text="@string/rupee_symbol"
-                    android:textColor="@color/green"
-                    android:layout_alignParentTop="true"
-                    android:layout_toStartOf="@+id/wallet_amount"
-                    android:layout_toLeftOf="@+id/wallet_amount" />
+                    android:textColor="@color/green"/>
 
                 <TextView
                     android:id="@+id/wallet_amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right|center_vertical"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="2dp"
-                    android:text="@string/amount"
-                    android:textColor="@color/green"
-                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:layout_alignParentTop="true"
-                    android:layout_alignParentBottom="true" />
+                    android:gravity="right|center_vertical"
+                    android:paddingLeft="2dp"
+                    android:paddingRight="10dp"
+                    android:text="@string/amount"
+                    android:textColor="@color/green"/>
 
             </RelativeLayout>
 
             <Button
+                android:id="@+id/btn_make_payment"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:gravity="center"
-                android:textColor="@color/white"
-                android:textSize="@dimen/text_size_16"
                 android:background="@drawable/bg_button_pink"
-                android:text="MAKE PAYMENT" />
+                android:gravity="center"
+                android:text="MAKE PAYMENT"
+                android:textColor="@color/white"
+                android:textSize="@dimen/text_size_16"/>
 
         </LinearLayout>
 
     </RelativeLayout>
-
 
 </RelativeLayout>
