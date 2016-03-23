@@ -1,5 +1,6 @@
 package com.batua.android.user.ui.activity;
 
+import android.annotation.TargetApi;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
@@ -8,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
@@ -18,12 +20,9 @@ import android.widget.TextView;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
-import com.google.android.gms.appindexing.Action;
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
+import com.batua.android.user.util.ViewUtil;
 
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
-import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
+import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -34,25 +33,34 @@ import butterknife.OnClick;
  */
 public class PrePaymentConfirmationActivity extends BaseActivity {
 
+    @Inject ViewUtil viewUtil;
+
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.edt_enter_amount) EditText edtAmount;
+    @Bind(R.id.scrollView) ScrollView scrollView;
     @Bind(R.id.amount_layout) RelativeLayout amountLayout;
-    @Bind(R.id.default_wallet_layout) LinearLayout defaultWalletLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_payment_confirmation);
+        injectDependencies();
 
         setToolBar();
-        KeyboardVisibilityEvent.setEventListener(
-                this,
-                new KeyboardVisibilityEventListener() {
+        viewUtil.keyboardListener(this, new ViewUtil.KeyboardVisibilityEventListener() {
                     @Override
                     public void onVisibilityChanged(boolean isOpen) {
                         togglePaymentView(isOpen);
                     }
-                });
+        });
+
+        scrollView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                // TODO Auto-generated method stub
+                return true;
+            }});
     }
 
     @OnClick(R.id.txt_promo_code)
@@ -101,33 +109,27 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void togglePaymentView(boolean isKeyboardVisible) {
         if (isKeyboardVisible) {
             RelativeLayout.LayoutParams amountLayoutLayoutParams = (RelativeLayout.LayoutParams) amountLayout.getLayoutParams();
-            amountLayoutLayoutParams.setMargins(getPx(60), getPx(20),0, getPx(10));
+            amountLayoutLayoutParams.setMargins(getPx(60), getPx(5),0, getPx(15));
+            amountLayoutLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL,0);
+            amountLayoutLayoutParams.addRule(RelativeLayout.ABOVE, R.id.default_wallet_layout);
             amountLayout.setLayoutParams(amountLayoutLayoutParams);
-
-            RelativeLayout.LayoutParams defaultWalletLayoutLayoutParams = (RelativeLayout.LayoutParams) defaultWalletLayout.getLayoutParams();
-            defaultWalletLayoutLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,0);
-            defaultWalletLayoutLayoutParams.addRule(RelativeLayout.BELOW, R.id.amount_layout);
-            defaultWalletLayout.setLayoutParams(defaultWalletLayoutLayoutParams);
 
             return;
         }
 
         RelativeLayout.LayoutParams amountLayoutLayoutParams = (RelativeLayout.LayoutParams) amountLayout.getLayoutParams();
-        amountLayoutLayoutParams.setMargins(getPx(60), getPx(140),0, getPx(60));
+        amountLayoutLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL,1);
+        amountLayoutLayoutParams.removeRule(RelativeLayout.ABOVE);
+        amountLayoutLayoutParams.setMargins(getPx(60), getPx(0),0, getPx(0));
         amountLayout.setLayoutParams(amountLayoutLayoutParams);
-
-        RelativeLayout.LayoutParams defaultWalletLayoutLayoutParams = (RelativeLayout.LayoutParams) defaultWalletLayout.getLayoutParams();
-        defaultWalletLayoutLayoutParams.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM,R.id.scrollView);
-        defaultWalletLayout.setLayoutParams(defaultWalletLayoutLayoutParams);
-        
     }
 
     private int getPx(int dimensionDp) {
-        float density = getResources().getDisplayMetrics().density;
-        return (int) (dimensionDp * density + 0.5f);
+         return (int) viewUtil.convertDpToPx(this, dimensionDp);
     }
 
 }

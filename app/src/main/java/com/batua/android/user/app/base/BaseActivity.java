@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.batua.android.user.R;
 import com.batua.android.user.app.Config;
 import com.batua.android.user.app.di.Injector;
 
@@ -44,6 +45,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.push_right_out, R.anim.push_right_in);
     }
 
     /**

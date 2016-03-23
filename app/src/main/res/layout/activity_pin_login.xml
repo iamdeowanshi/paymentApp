@@ -40,11 +40,12 @@
                 android:layout_weight="1">
 
                 <EditText
-                    android:id="@+id/txt_first_pin"
+                    android:id="@+id/edt_first_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center"
                     android:hint="X"
+                    android:inputType="number"
                     android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
@@ -53,7 +54,7 @@
                     android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/txt_first_pin"
+                    android:layout_below="@+id/edt_first_pin"
                     android:background="@color/blue_dark" />
             </RelativeLayout>
 
@@ -64,11 +65,12 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/txt_second_pin"
+                <EditText
+                    android:id="@+id/edt_second_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center"
+                    android:inputType="number"
                     android:background="@android:color/transparent"
                     android:hint="X"
                     android:textColor="@android:color/black"
@@ -78,7 +80,7 @@
                     android:id="@+id/view2"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/txt_second_pin"
+                    android:layout_below="@+id/edt_second_pin"
                     android:background="@color/blue_dark" />
             </RelativeLayout>
 
@@ -89,12 +91,13 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/txt_third_pin"
+                <EditText
+                    android:id="@+id/edt_third_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center"
                     android:hint="X"
+                    android:inputType="number"
                     android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
@@ -103,7 +106,7 @@
                     android:id="@+id/view3"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/txt_third_pin"
+                    android:layout_below="@+id/edt_third_pin"
                     android:background="@color/blue_dark" />
             </RelativeLayout>
 
@@ -114,12 +117,13 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1">
 
-                <TextView
-                    android:id="@+id/txt_fourth_pin"
+                <EditText
+                    android:id="@+id/edt_fourth_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:gravity="center"
                     android:hint="X"
+                    android:inputType="number"
                     android:background="@android:color/transparent"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
@@ -128,7 +132,7 @@
                     android:id="@+id/view4"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:layout_below="@+id/txt_fourth_pin"
+                    android:layout_below="@+id/edt_fourth_pin"
                     android:background="@color/blue_dark" />
             </RelativeLayout>
 

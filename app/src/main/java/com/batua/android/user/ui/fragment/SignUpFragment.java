@@ -14,6 +14,8 @@ import com.batua.android.user.app.base.BaseFragment;
 import com.batua.android.user.ui.activity.MobileNumberActivity;
 import com.batua.android.user.util.ViewUtil;
 
+import javax.inject.Inject;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
@@ -21,6 +23,8 @@ import butterknife.OnClick;
  * @author Aaditya Deowanshi.
  */
 public class SignUpFragment extends BaseFragment {
+
+    @Inject ViewUtil viewUtil;
 
     @Bind(R.id.edt_mobile) EditText edtMobile;
     @Bind(R.id.input_layout_mobile) TextInputLayout inputLayoutMobile;
@@ -54,7 +58,7 @@ public class SignUpFragment extends BaseFragment {
     }
 
     private void validate() {
-        ViewUtil.hideKeyboard(getContentView());
+        viewUtil.hideKeyboard(getActivity());
         boolean isValid = isValidNumber(edtMobile.getText());
 
         if (isValid) {

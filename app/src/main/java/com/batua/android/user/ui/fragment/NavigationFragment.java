@@ -1,5 +1,6 @@
 package com.batua.android.user.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
@@ -79,7 +80,18 @@ public class NavigationFragment extends BaseFragment {
 
     @OnClick(R.id.nav_refer_app)
     void navigateToReferTheApp(){
+        shareApp();
+    }
 
+    private void shareApp() {
+        //TODO:  Custom share message
+        String message = "Check my new payment wallet- Batua";
+
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("text/plain");
+        i.putExtra(Intent.EXTRA_SUBJECT, "Batua");
+        i.putExtra(Intent.EXTRA_TEXT, message);
+        startActivity(Intent.createChooser(i, "Check new payment app"));
     }
 
     public void initializeDrawer(DrawerLayout drawer){
