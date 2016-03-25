@@ -74,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
+                    android:maxLength="128"
                     android:id="@+id/txt_display_name"
                     android:text="John Galt Agent"
                     android:textSize="16dp"
@@ -150,6 +151,7 @@
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
                     android:textSize="14sp"
+                    android:inputType="textPassword"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/view1"/>
 
@@ -170,7 +172,9 @@
                     android:hint="@string/merchant_new_password"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
+                    android:inputType="textPassword"
                     android:textSize="14sp"
+                    android:maxLines="1"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/input_layout_merchant_current_password"/>
 
@@ -191,6 +195,7 @@
                     android:hint="@string/merchant_confirm_password"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
+                    android:inputType="textPassword"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/view3"/>
@@ -204,6 +209,7 @@
                 android:layout_height="wrap_content"
                 android:text="SAVE"
                 android:textSize="16sp"
+                android:maxLines="1"
                 android:layout_marginTop="30dp"
                 android:layout_centerHorizontal="true"
                 android:textStyle="bold"

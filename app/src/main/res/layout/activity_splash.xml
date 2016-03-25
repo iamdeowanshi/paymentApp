@@ -11,11 +11,11 @@
     android:background="@color/sky_blue"
     tools:context=".ui.activity.SplashActivity">
 
-
     <ImageView
         android:id="@+id/image_batua"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:src="@drawable/img_splash"/>
+    
 </RelativeLayout>

@@ -21,6 +21,7 @@ import com.batua.android.merchant.util.DisplayUtil;
 import com.batua.android.merchant.util.ImageUtil;
 import com.batua.android.merchant.util.PermissionUtil;
 import com.batua.android.merchant.util.PreferenceUtil;
+import com.batua.android.merchant.util.ViewUtil;
 
 import javax.inject.Singleton;
 
@@ -67,6 +68,7 @@ import dagger.Provides;
                 ConnectivityUtil.class,
                 DisplayUtil.class,
                 ImageUtil.class,
+                ViewUtil.class,
         }
 )
 public class RootModule {

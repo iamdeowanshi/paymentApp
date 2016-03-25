@@ -53,6 +53,7 @@
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
                     android:textSize="14sp"
+                    android:inputType="number"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/profile_img_upload_layout"/>
 

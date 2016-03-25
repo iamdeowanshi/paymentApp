@@ -6,6 +6,7 @@ import com.batua.android.merchant.util.DisplayUtil;
 import com.batua.android.merchant.util.ImageUtil;
 import com.batua.android.merchant.util.PermissionUtil;
 import com.batua.android.merchant.util.PreferenceUtil;
+import com.batua.android.merchant.util.ViewUtil;
 
 import javax.inject.Singleton;
 
@@ -57,6 +58,12 @@ public class UtilModule {
     @Singleton
     public PermissionUtil providePermissionUtil() {
         return new PermissionUtil();
+    }
+
+    @Provides
+    @Singleton
+    public ViewUtil provideViewUtil() {
+        return new ViewUtil();
     }
 
 }

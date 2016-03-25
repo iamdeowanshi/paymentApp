@@ -3,6 +3,8 @@ package com.batua.android.merchant.ui.activity;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class GalleryFullScreenActivity extends BaseActivity {
 
     private ArrayList<String> imagesList = new ArrayList<>();
     private int position;
+    private GalleryViewPagerAdapter galleryViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +51,7 @@ public class GalleryFullScreenActivity extends BaseActivity {
         imagesList.add("https://www.planwallpaper.com/static/images/orangutan_1600x1000_279157.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/image5_170127819.jpg");
 
-        GalleryViewPagerAdapter galleryViewPagerAdapter = new GalleryViewPagerAdapter(imagesList, position);
+        galleryViewPagerAdapter = new GalleryViewPagerAdapter(imagesList, position);
         viewPager.setAdapter(galleryViewPagerAdapter);
         viewPager.setCurrentItem(position, true);
     }
@@ -60,5 +63,24 @@ public class GalleryFullScreenActivity extends BaseActivity {
         title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText("Gallery Image");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_gallery_full_screen, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if ( item.getItemId() == R.id.action_delete) {
+            finish();
+
+            imagesList.remove(position);
+            galleryViewPagerAdapter.notifyDataSetChanged();
+
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
