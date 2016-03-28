@@ -108,4 +108,7 @@
         <item>Axis Bank</item>
     </string-array>
 
+    //facebook id
+    <string name="facebook_app_id">1697066873847337</string>
+
 </resources>

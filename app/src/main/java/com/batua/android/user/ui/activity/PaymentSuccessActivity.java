@@ -4,10 +4,15 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 
 import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
+import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ViewUtil;
 
 import javax.inject.Inject;
@@ -18,9 +23,14 @@ import butterknife.OnClick;
 public class PaymentSuccessActivity extends BaseActivity {
 
     @Inject ViewUtil viewUtil;
+    @Inject Bakery bakery;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.scroll_view) ScrollView scroll;
     @Bind(R.id.promo_layout) RelativeLayout promoLayout;
+    @Bind(R.id.btn_submit) Button submit;
+    @Bind(R.id.rating_bar) RatingBar ratingBar;
+    @Bind(R.id.edt_review) EditText edtReview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +67,28 @@ public class PaymentSuccessActivity extends BaseActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.btn_share)
+    @OnClick(R.id.btn_submit)
     void onWalletClick() {
-        startActivity(HomeActivity.class, null);
-        finish();
+        if (isValidateReview()) {
+            startActivity(HomeActivity.class, null);
+            finish();
+        }
     }
 
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private boolean isValidateReview() {
+        if (ratingBar.getRating() == 0.0) {
+            bakery.toastShort( "Rating can not be zero");
+
+            return false;
+        }
+
+        return true;
     }
 
     private void togglePromoLayout(boolean isKeyboardVisible) {
@@ -77,6 +99,20 @@ public class PaymentSuccessActivity extends BaseActivity {
             promoLayoutLayoutParams.addRule(RelativeLayout.BELOW, R.id.top_layout);
             promoLayoutLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL,0);
             promoLayout.setLayoutParams(promoLayoutLayoutParams);
+
+            scroll.post(new Runnable() {
+                @Override
+                public void run() {
+                    scroll.scrollTo(0, scroll.getBottom());
+                }
+            });
+
+            scroll.post(new Runnable() {
+                @Override
+                public void run() {
+                    scroll.fullScroll(ScrollView.FOCUS_DOWN);
+                }
+            });
 
             return;
         }

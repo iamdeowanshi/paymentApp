@@ -4,6 +4,7 @@ import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ConnectivityUtil;
 import com.batua.android.user.util.PreferenceUtil;
 import com.batua.android.user.util.ViewUtil;
+import com.batua.android.user.util.social.SocialAuth;
 
 import javax.inject.Singleton;
 
