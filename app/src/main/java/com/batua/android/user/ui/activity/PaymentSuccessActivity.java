@@ -96,29 +96,12 @@ public class PaymentSuccessActivity extends BaseActivity {
 
         if (isKeyboardVisible) {
             promoLayoutLayoutParams.setMargins(0,10,0,0);
-            promoLayoutLayoutParams.addRule(RelativeLayout.BELOW, R.id.top_layout);
-            promoLayoutLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL,0);
             promoLayout.setLayoutParams(promoLayoutLayoutParams);
-
-            scroll.post(new Runnable() {
-                @Override
-                public void run() {
-                    scroll.scrollTo(0, scroll.getBottom());
-                }
-            });
-
-            scroll.post(new Runnable() {
-                @Override
-                public void run() {
-                    scroll.fullScroll(ScrollView.FOCUS_DOWN);
-                }
-            });
 
             return;
         }
 
         promoLayoutLayoutParams.setMargins(0,0,0,0);
-        promoLayoutLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL, 1);
         promoLayout.setLayoutParams(promoLayoutLayoutParams);
     }
 

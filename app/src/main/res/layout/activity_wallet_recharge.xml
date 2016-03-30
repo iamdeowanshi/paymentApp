@@ -107,6 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:isScrollContainer="false"
+            android:layout_below="@+id/wallet_tab_layout"
             android:layout_gravity="fill_horizontal"
             android:padding="@dimen/text_size_12"/>
 
