@@ -1,23 +1,36 @@
 package com.batua.android.merchant.ui.activity;
 
+import android.app.Dialog;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
+import android.util.SparseBooleanArray;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.app.base.BaseActivity;
 import com.batua.android.merchant.ui.adapter.GalleryGridViewAdapter;
 import com.batua.android.merchant.util.DisplayUtil;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import timber.log.Timber;
 
 public class GalleryImagesActivity extends BaseActivity {
 
@@ -56,8 +69,64 @@ public class GalleryImagesActivity extends BaseActivity {
         imagesList.add("https://www.planwallpaper.com/static/images/orangutan_1600x1000_279157.jpg");
         imagesList.add("https://www.planwallpaper.com/static/images/image5_170127819.jpg");
 
-        galleryGridViewAdapter = new GalleryGridViewAdapter(this, imagesList, columnWidth);
+        galleryGridViewAdapter = new GalleryGridViewAdapter(this,R.layout.page_item_gallery, imagesList, columnWidth);
         gridView.setAdapter(galleryGridViewAdapter);
+
+        gridView.setLongClickable(true);
+        gridView.setChoiceMode(GridView.CHOICE_MODE_MULTIPLE_MODAL);
+        /*gridView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
+
+            @Override
+            public boolean onCreateActionMode(android.view.ActionMode mode, Menu menu) {
+                mode.getMenuInflater().inflate(R.menu.menu_gallery_full_screen, menu);
+
+                return true;
+            }
+
+            @Override
+            public boolean onPrepareActionMode(android.view.ActionMode mode, Menu menu) {
+                return false;
+            }
+
+            @Override
+            public boolean onActionItemClicked(android.view.ActionMode mode, MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_delete:
+                        // Calls getSelectedIds method from ListViewAdapter Class
+                        SparseBooleanArray selected = galleryGridViewAdapter
+                                .getSelectedIds();
+                        // Captures all selected ids with a loop
+                        for (int i = (selected.size() - 1); i >= 0; i--) {
+                            if (selected.valueAt(i)) {
+                                String selecteditem = galleryGridViewAdapter
+                                        .getItem(selected.keyAt(i));
+                                // Remove selected items following the ids
+                                galleryGridViewAdapter.remove(selecteditem);
+                            }
+                        }
+                        // Close CAB
+                        mode.finish();
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+
+            @Override
+            public void onDestroyActionMode(android.view.ActionMode mode) {
+                galleryGridViewAdapter.removeSelection();
+            }
+
+            @Override
+            public void onItemCheckedStateChanged(android.view.ActionMode mode, int position, long id, boolean checked) {
+                // Capture total checked items
+                final int checkedCount = gridView.getCheckedItemCount();
+                // Set the CAB title according to total checked items
+                mode.setTitle(checkedCount + " Selected");
+                // Calls toggleSelection method from ListViewAdapter Class
+                galleryGridViewAdapter.toggleSelection(position);
+            }
+        });*/
 
     }
 
