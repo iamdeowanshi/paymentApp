@@ -1,5 +1,6 @@
 package com.batua.android.merchant.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.util.Patterns;
@@ -11,6 +12,9 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.app.base.BaseActivity;
 import com.batua.android.merchant.util.Bakery;
 import com.batua.android.merchant.util.ViewUtil;
+import com.batua.android.merchant.util.social.AuthResult;
+import com.batua.android.merchant.util.social.SocialAuth;
+import com.batua.android.merchant.util.social.SocialAuthCallback;
 
 import javax.inject.Inject;
 
@@ -20,7 +24,7 @@ import butterknife.OnClick;
 /**
  * @author Aaditya Deowanshi.
  */
-public class LoginActivity extends BaseActivity {
+public class LoginActivity extends BaseActivity implements SocialAuthCallback {
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
@@ -29,23 +33,49 @@ public class LoginActivity extends BaseActivity {
     @Bind(R.id.img_logo) ImageView imgLogo;
     @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
 
+    private SocialAuth socialAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         injectDependencies();
 
+
+        socialAuth = new SocialAuth(this);
+        socialAuth.setCallback(this);
         setListeners();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        socialAuth.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onSuccess(AuthResult result) {
+        socialAuth.disconnect();
+        startActivity(HomeActivity.class, null);
+    }
+
+    @Override
+    public void onCancel() {
+
+    }
+
+    @Override
+    public void onError(Throwable throwable) {
+
     }
 
     @OnClick(R.id.btn_login)
     void onLoginClick() {
-
-	viewUtil.hideKeyboard(this);
+        viewUtil.hideKeyboard(this);
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
         if (isValid) {
-            startActivity(HomeActivity.class,null);
+            startActivity(HomeActivity.class, null);
             inputLayoutEmail.setErrorEnabled(false);
 
             return;
@@ -57,7 +87,8 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
-	startActivity(HomeActivity.class, null);
+        viewUtil.hideKeyboard(this);
+        socialAuth.login(SocialAuth.SocialType.GOOGLE);
     }
 
     @OnClick(R.id.txt_forgot_password)

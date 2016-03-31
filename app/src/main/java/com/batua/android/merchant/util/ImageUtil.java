@@ -148,6 +148,7 @@ public class ImageUtil implements ActivityCompat.OnRequestPermissionsResultCallb
         }
     }
 
+
     public View getContentView() {
         return activity.findViewById(android.R.id.content);
     }

@@ -7,6 +7,7 @@ import com.batua.android.merchant.util.ImageUtil;
 import com.batua.android.merchant.util.PermissionUtil;
 import com.batua.android.merchant.util.PreferenceUtil;
 import com.batua.android.merchant.util.ViewUtil;
+import com.batua.android.merchant.util.social.SocialAuth;
 
 import javax.inject.Singleton;
 
