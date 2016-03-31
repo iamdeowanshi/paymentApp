@@ -19,16 +19,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.app.base.BaseFragment;
 import com.batua.android.merchant.data.model.CustomGallery;
 import com.batua.android.merchant.listener.NextClickedListener;
+import com.batua.android.merchant.listener.RemoveImageClickedListener;
 import com.batua.android.merchant.ui.activity.MerchantDetailsActivity;
 import com.batua.android.merchant.ui.adapter.AddImagesAdapter;
 import com.batua.android.merchant.ui.custom.LoadSpinner;
 import com.batua.android.merchant.util.Bakery;
 import com.batua.android.merchant.util.PermissionUtil;
+
+import net.yazeed44.imagepicker.model.ImageEntry;
+import net.yazeed44.imagepicker.util.Picker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +47,21 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantBasicInfoFragment extends BaseFragment {
+public class MerchantBasicInfoFragment extends BaseFragment implements Picker.PickListener, RemoveImageClickedListener{
 
+    private static final String TAG = "Image Multipick";
     private static int BASIC_INFO_POSITION = 0;
     private final static int CAMERA_STORAGE_REQUEST_CODE = 1;
     private final static int GET_IMAGE_FROM_GALLERY_REQUEST_CODE = 2;
     private static final int CAMERA_REQUEST_CODE = 3;
     private static final int READ_STORAGE_REQUEST_CODE = 4;
+    private static final int PHOTO_MULTI_SELECT_LIMIT = 10;
 
     final String[] CAMERA_PERMISSION = {Manifest.permission.CAMERA};
     final String[] STORAGE_PERMISSION = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
+    private ArrayList<ImageEntry> selectedImages;
+    private AddImagesAdapter addImagesAdapter;
 
     @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
     @Bind(R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
@@ -69,7 +78,11 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
     @OnClick(R.id.txt_add_image)
     public void addImage(){
-        getImage();
+        new Picker.Builder(getContext(), this, R.style.AppTheme)
+                .setPickMode(Picker.PickMode.MULTIPLE_IMAGES)
+                .setLimit(PHOTO_MULTI_SELECT_LIMIT)
+                .build()
+                .startActivity();
     }
 
     @Override
@@ -100,6 +113,7 @@ public class MerchantBasicInfoFragment extends BaseFragment {
                 getActivity().finish();
                 break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -118,13 +132,13 @@ public class MerchantBasicInfoFragment extends BaseFragment {
 
             case GET_IMAGE_FROM_GALLERY_REQUEST_CODE:
 
-                Uri selectedImageUri = data.getData();
-                ArrayList<CustomGallery> customGalleries = new ArrayList<CustomGallery>();
+                /*Uri selectedImageUri = data.getData();
+                ArrayList<ImageEntry> customGalleries = new ArrayList<ImageEntry>();
                 CustomGallery item = new CustomGallery();
                 item.setImagePath(selectedImageUri);
                 customGalleries.add(item);
                 populateAdapter(customGalleries, addImagesrecyclerView);
-                showAddImageRecyclerView();
+                showAddImageRecyclerView();*/
 
                 break;
         }
@@ -162,6 +176,39 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         }
     }
 
+    // overidden methods of multipick images
+    @Override
+    public void onPickedSuccessfully(ArrayList<ImageEntry> images) {
+        if (images.size() > 0) {
+            showAddImageRecyclerView();
+            selectedImages = images;
+            populateAdapter(selectedImages, addImagesrecyclerView);
+
+            return;
+        }
+
+        hideAddImageRecyclerView();
+    }
+
+    @Override
+    public void onCancel() {
+        Log.i(TAG, "User canceled picker activity");
+    }
+
+    //overidden methods of remove clicked image
+    @Override
+    public void removeClickedPosition(int position) {
+        selectedImages.remove(position);
+
+        if (addImagesAdapter!=null) {
+            addImagesAdapter.notifyDataSetChanged();
+        }
+
+        if (selectedImages.isEmpty()) {
+            hideAddImageRecyclerView();
+        }
+    }
+
     private void hideAddImageRecyclerView() {
         addImagesrecyclerView.setVisibility(View.GONE);
     }
@@ -169,7 +216,6 @@ public class MerchantBasicInfoFragment extends BaseFragment {
     private void showAddImageRecyclerView() {
         addImagesrecyclerView.setVisibility(View.VISIBLE);
     }
-
 
     public void setNextClickedListener(NextClickedListener nextClickedListener){
         this.nextClickedListener = nextClickedListener;
@@ -289,8 +335,8 @@ public class MerchantBasicInfoFragment extends BaseFragment {
         return (View)getActivity().findViewById(android.R.id.content);
     }
 
-    private void populateAdapter( List<CustomGallery> customGalleryList, RecyclerView imageRecyclerView){
-        AddImagesAdapter addImagesAdapter = new AddImagesAdapter(customGalleryList);
+    private void populateAdapter( List<ImageEntry> customGalleryList, RecyclerView imageRecyclerView){
+        addImagesAdapter = new AddImagesAdapter(customGalleryList, this);
         LinearLayoutManager llayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         imageRecyclerView.setLayoutManager(llayout);
         imageRecyclerView.setAdapter(addImagesAdapter);

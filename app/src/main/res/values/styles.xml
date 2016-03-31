@@ -9,7 +9,7 @@
     </style>
 
     <style name="tab_layout_font_style">
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textAllCaps">false</item>
     </style>
 

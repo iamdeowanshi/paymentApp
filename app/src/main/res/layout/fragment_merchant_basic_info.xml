@@ -225,8 +225,9 @@
                 android:textColor="@color/pink" />
 
             <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_height="100dp"
                 android:id="@+id/add_images_recycler_view"
                 android:layout_below="@+id/txt_add_image"/>
 
