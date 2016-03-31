@@ -9,7 +9,10 @@ import android.widget.ImageView;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.CustomGallery;
+import com.batua.android.merchant.listener.RemoveImageClickedListener;
 import com.bumptech.glide.Glide;
+
+import net.yazeed44.imagepicker.model.ImageEntry;
 
 import java.util.List;
 
@@ -21,11 +24,13 @@ import butterknife.ButterKnife;
  */
 public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddImagesViewHolder>{
 
-    private List<CustomGallery> customGalleryList;
+    private List<ImageEntry> customGalleryList;
     private Context context;
+    private RemoveImageClickedListener removeImageClickedListener;
 
-    public AddImagesAdapter(List<CustomGallery> customGalleries) {
+    public AddImagesAdapter(List<ImageEntry> customGalleries, RemoveImageClickedListener removeImageClickedListener) {
         this.customGalleryList = customGalleries;
+        this.removeImageClickedListener = removeImageClickedListener;
     }
 
     @Override
@@ -38,23 +43,33 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
     }
 
     @Override
-    public void onBindViewHolder(AddImagesViewHolder addImagesViewHolder, int position) {
-        CustomGallery customGallery = customGalleryList.get(position);
-
+    public void onBindViewHolder(AddImagesViewHolder addImagesViewHolder, final int position) {
         Glide.with(context)
-                .load(customGallery.getImagePath())
-                .fitCenter()
+                .load(customGalleryList.get(position).path)
+                .centerCrop()
                 .into(addImagesViewHolder.imgMerchantImages);
+
+        addImagesViewHolder.imgRevoveImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeImageClickedListener.removeClickedPosition(position);
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
+        if (customGalleryList.size() == 0) {
+
+        }
         return customGalleryList.size();
     }
 
     public class AddImagesViewHolder extends RecyclerView.ViewHolder {
 
         @Bind(R.id.img_add_merchant_images) ImageView imgMerchantImages;
+        @Bind(R.id.img_remove) ImageView imgRevoveImage;
 
         public AddImagesViewHolder(View itemView) {
             super(itemView);

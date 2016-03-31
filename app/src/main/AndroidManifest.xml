@@ -63,7 +63,8 @@
         </activity>
 		<activity android:name=".ui.activity.HomeActivity">
         </activity>
-        <activity android:name=".ui.activity.AddMerchantActivity">
+        <activity android:name=".ui.activity.AddMerchantActivity"
+            android:windowSoftInputMode="stateHidden">
         </activity>
         <activity android:name=".ui.activity.EditMerchantActivity">
         </activity>
