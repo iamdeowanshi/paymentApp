@@ -1,41 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="#ffffff"
-        app:titleTextAppearance="?attr/titleTextAppearance"
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:contentInsetLeft="0dp"
         android:elevation="@dimen/elevation_depth"
+        android:theme="@style/AppTheme"
         app:contentInsetStart="0dp"
-        android:contentInsetLeft="0dp">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance">
 
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"
-            android:textSize="@dimen/toolbar_title_font_size"
-            android:textColor="@color/blue_light"
             android:background="@android:color/transparent"
-            android:id="@+id/toolbar_title"/>
+            android:text="Edit Profile"
+            android:textColor="@color/blue_light"
+            android:textSize="@dimen/toolbar_title_font_size"/>
 
     </android.support.v7.widget.Toolbar>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
-            android:layout_below="@id/toolbar"
-            android:elevation="@dimen/elevation_depth"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            android:elevation="@dimen/elevation_depth">
 
 
             <RelativeLayout
@@ -43,115 +48,116 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dp">
 
-
                 <com.github.siyamed.shapeimageview.CircularImageView
+                    android:id="@+id/img_profile"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:id="@+id/img_profile"
-                    android:layout_marginTop="10dp"
+                    android:layout_alignParentTop="true"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
-                    android:background="@drawable/profile_pic_container"
-                    android:layout_alignParentTop="true" />
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/splash_logo"/>
 
                 <TextView
+                    android:id="@+id/txt_upload"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Upload"
-                    android:id="@+id/txt_upload"
-                    android:textSize="@dimen/text_size_16"
-                    android:textStyle="bold"
-                    android:textColor="@color/pink"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/txt_display_name"
                     android:layout_marginLeft="25dp"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/txt_display_name"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:text="Upload"
+                    android:textColor="@color/pink"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold"/>
 
 
                 <EditText
+                    android:id="@+id/txt_display_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="10dp"
-                    android:id="@+id/txt_display_name"
-                    android:text="John Galt Agent"
-                    android:textSize="16dp"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="5dp"
-                    android:textColor="@color/gray"
-                    android:background="@android:color/transparent"
                     android:layout_alignBottom="@+id/img_profile"
+                    android:layout_marginLeft="5dp"
+                    android:layout_toEndOf="@+id/img_profile"
                     android:layout_toRightOf="@+id/img_profile"
-                    android:layout_toEndOf="@+id/img_profile" />
+                    android:background="@android:color/transparent"
+                    android:maxLength="128"
+                    android:paddingBottom="10dp"
+                    android:paddingTop="10dp"
+                    android:text="John Galt Agent"
+                    android:textColor="@color/gray"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
 
                 <View
+                    android:id="@+id/view1"
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
-                    android:id="@+id/view1"
-                    android:layout_marginRight="5dp"
                     android:layout_below="@id/txt_display_name"
-                    android:background="@color/blue_dark"
-                    android:layout_toRightOf="@+id/img_profile"/>
+                    android:layout_marginRight="5dp"
+                    android:layout_toRightOf="@+id/img_profile"
+                    android:background="@color/blue_dark"/>
 
 
             </RelativeLayout>
 
             <View
+                android:id="@+id/view2"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:id="@+id/view2"
-                android:layout_marginRight="5dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
                 android:layout_below="@id/profile_img_upload_layout"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/light_gray"/>
 
 
             <TextView
+                android:id="@+id/edt_merchant_email_title"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
+                android:layout_below="@+id/profile_img_upload_layout"
                 android:layout_marginTop="30dp"
-                android:id="@+id/edt_merchant_email_title"
-                android:hint="@string/merchant_email_title"
-                android:textColorHint="@color/gray"
-                android:paddingLeft="5dp"
                 android:gravity="center_vertical"
-                android:textSize="14sp"
-                android:layout_below="@+id/profile_img_upload_layout"/>
+                android:hint="@string/merchant_email_title"
+                android:paddingLeft="5dp"
+                android:textColorHint="@color/gray"
+                android:textSize="14sp"/>
 
             <TextView
+                android:id="@+id/edt_merchant_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:layout_marginTop="30dp"
-                android:id="@+id/edt_merchant_email"
-                android:hint="@string/merchant_email"
-                android:textColorHint="@color/gray"
-                android:textStyle="bold"
-                android:paddingLeft="10dp"
-                android:gravity="center_vertical"
-                android:textSize="14sp"
                 android:layout_below="@+id/profile_img_upload_layout"
-                android:layout_toRightOf="@+id/edt_merchant_email_title"/>
+                android:layout_marginTop="30dp"
+                android:layout_toRightOf="@+id/edt_merchant_email_title"
+                android:gravity="center_vertical"
+                android:hint="@string/merchant_email"
+                android:paddingLeft="10dp"
+                android:textColorHint="@color/gray"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
             <android.support.design.widget.TextInputLayout
                 android:id="@+id/input_layout_merchant_current_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorTextAppearance="@style/error_appearance"
+                android:layout_below="@+id/edt_merchant_email"
                 android:theme="@style/TextLabel"
-                android:layout_below="@+id/edt_merchant_email">
+                app:errorTextAppearance="@style/error_appearance">
 
                 <EditText
+                    android:id="@+id/edt_merchant_current_password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_current_password"
-                    android:hint="@string/merchant_current_password"
-                    android:textColorHint="@color/light_gray"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp"
+                    android:layout_below="@+id/view1"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/view1"/>
+                    android:hint="@string/merchant_current_password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -159,20 +165,22 @@
                 android:id="@+id/input_layout_merchant_new_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorTextAppearance="@style/error_appearance"
+                android:layout_below="@+id/input_layout_merchant_current_password"
                 android:theme="@style/TextLabel"
-                android:layout_below="@+id/input_layout_merchant_current_password">
+                app:errorTextAppearance="@style/error_appearance">
 
                 <EditText
+                    android:id="@+id/edt_merchant_new_password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_new_password"
-                    android:hint="@string/merchant_new_password"
-                    android:textColorHint="@color/light_gray"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp"
+                    android:layout_below="@+id/input_layout_merchant_current_password"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/input_layout_merchant_current_password"/>
+                    android:hint="@string/merchant_new_password"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
@@ -180,38 +188,42 @@
                 android:id="@+id/input_layout_merchant_confirm_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorTextAppearance="@style/error_appearance"
+                android:layout_below="@+id/input_layout_merchant_new_password"
                 android:theme="@style/TextLabel"
-                android:layout_below="@+id/input_layout_merchant_new_password">
+                app:errorTextAppearance="@style/error_appearance">
 
                 <EditText
+                    android:id="@+id/edt_merchant_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_confirm_password"
-                    android:hint="@string/merchant_confirm_password"
-                    android:textColorHint="@color/light_gray"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp"
+                    android:layout_below="@+id/view3"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/view3"/>
+                    android:hint="@string/merchant_confirm_password"
+                    android:inputType="textPassword"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
 
             <TextView
-                android:layout_weight="1"
+                android:id="@+id/txt_save_basic_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SAVE"
-                android:textSize="16sp"
-                android:layout_marginTop="30dp"
+                android:layout_below="@+id/input_layout_merchant_confirm_password"
                 android:layout_centerHorizontal="true"
-                android:textStyle="bold"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:text="SAVE"
                 android:textColor="@color/pink"
-                android:id="@+id/txt_save_basic_info"
-                android:layout_below="@+id/input_layout_merchant_confirm_password"/>
+                android:textSize="16sp"
+                android:textStyle="bold"/>
 
         </RelativeLayout>
 
+    </ScrollView>
 
 </RelativeLayout>

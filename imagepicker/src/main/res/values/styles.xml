@@ -1,0 +1,16 @@
+<resources>
+
+
+    <style name="ImagePickerAppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/blue_dark</item>
+        <item name="android:actionMenuTextColor">@color/blue_light</item>
+        <item name="android:actionMenuTextAppearance">@style/ToolbarTitleAppearance</item>
+    </style>
+
+    <style name="ToolbarTitleAppearance" parent="@style/TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/toolbartitleSize</item>
+        <item name="android:textStyle">bold</item>
+        <!-- include other attributes you want to change: textColor, textStyle, etc -->
+    </style>
+</resources>

@@ -158,6 +158,8 @@
                         android:paddingLeft="10dp"
                         android:layout_marginLeft="10dp"
                         android:textSize="14sp"
+                        android:inputType="number"
+                        android:maxLength="10"
                         android:layout_marginTop="10dp"
                         android:layout_below="@+id/view3"/>
 
@@ -202,6 +204,7 @@
                     android:hint="@string/merchant_fee"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
+                    android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/view5"/>
@@ -222,8 +225,9 @@
                 android:textColor="@color/pink" />
 
             <android.support.v7.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_height="100dp"
                 android:id="@+id/add_images_recycler_view"
                 android:layout_below="@+id/txt_add_image"/>
 

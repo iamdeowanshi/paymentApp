@@ -28,7 +28,7 @@
 
 
     <application
-        android:name=".app.BatuaApplication"
+        android:name=".BatuaApplication"
         android:allowBackup="true"
         android:icon="@drawable/img_batua_icon"
         android:label="@string/app_name"
@@ -39,8 +39,8 @@
             android:value="@string/google_maps_key" />
 
 
-        <activity android:name=".ui.activity.SplashActivity"
-            android:theme="@style/BlueTheme">
+        <activity android:name=".module.onboard.view.activity.SplashActivity"
+                  android:theme="@style/FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
@@ -48,30 +48,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".module.onboard.view.activity.LoginActivity"
             android:label="@string/title_activity_login">
         </activity>
-        <activity android:name=".ui.activity.ForgotPasswordActivity">
+        <activity android:name=".module.onboard.view.activity.ForgotPasswordActivity">
         </activity>
-        <activity android:name=".ui.activity.OtpActivity">
+        <activity android:name=".module.onboard.view.activity.OtpActivity">
         </activity>
-        <activity android:name=".ui.activity.ProfileActivity">
+        <activity android:name=".module.profile.view.activity.ProfileActivity">
         </activity>
-        <activity android:name=".ui.activity.EditProfileActivity">
+        <activity android:name=".module.profile.view.activity.EditProfileActivity">
         </activity>
-        <activity android:name=".ui.activity.ResetPasswordActivity">
+        <activity android:name=".module.onboard.view.activity.ResetPasswordActivity">
         </activity>
-		<activity android:name=".ui.activity.HomeActivity">
+		<activity android:name=".module.dashboard.view.HomeActivity">
         </activity>
-        <activity android:name=".ui.activity.AddMerchantActivity">
+        <activity android:name=".module.merchant.view.activity.AddMerchantActivity"
+            android:windowSoftInputMode="stateHidden">
         </activity>
-        <activity android:name=".ui.activity.EditMerchantActivity">
+        <activity android:name=".module.merchant.view.activity.EditMerchantActivity">
         </activity>
-        <activity android:name=".ui.activity.MerchantDetailsActivity">
+        <activity android:name=".module.merchant.view.activity.MerchantDetailsActivity">
         </activity>
-        <activity android:name=".ui.activity.GalleryImagesActivity">
+        <activity android:name=".module.merchant.view.activity.GalleryImagesActivity">
         </activity>
-        <activity android:name=".ui.activity.GalleryFullScreenActivity">
+        <activity android:name=".module.merchant.view.activity.GalleryFullScreenActivity">
         </activity>
     </application>
 

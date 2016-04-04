@@ -12,18 +12,18 @@ public abstract class ApiObserver<T> implements Observer<T> {
     /**
      * Publish result to observer.
      *
-     * @param result
+     * @param response
      */
-    public abstract void onResult(T result);
+    public abstract void onResponse(T response);
 
     @Override
     public void onCompleted() {
-        // Default implementation, may override.
+        // Default implementation, can be override accordingly.
     }
 
     @Override
     public void onNext(T result) {
-        onResult(result);
+        onResponse(result);
     }
 
 }

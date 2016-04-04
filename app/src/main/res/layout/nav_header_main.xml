@@ -20,7 +20,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/agent_prof_pic_small" />
+            android:src="@drawable/agent_prof_pic_small" />
 
         <TextView
             android:layout_width="match_parent"

@@ -74,6 +74,7 @@
                         android:id="@+id/edt_merchant_pin_code"
                         android:hint="@string/merchant_pin_code"
                         android:paddingLeft="10dp"
+                        android:inputType="number"
                         android:layout_marginTop="10dp"
                         android:layout_below="@+id/profile_img_upload_layout"/>
 

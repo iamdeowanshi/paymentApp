@@ -1,13 +1,14 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         multiDexEnabled true
         applicationId "com.batua.android.merchant"
-        minSdkVersion 16
+        minSdkVersion 15
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
@@ -20,6 +21,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+    dexOptions {
+        javaMaxHeapSize "135g"
+    }
 }
 
 repositories {
@@ -30,25 +40,29 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     // Android support libs
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+    compile 'com.android.support:recyclerview-v7:23.2.0'
+    compile 'com.android.support:design:23.2.0'
 
     // Networking
-    compile 'com.squareup.retrofit:retrofit:1.9.0'
-    compile 'com.squareup.okhttp:okhttp-urlconnection:2.0.0'
-    compile 'com.squareup.okhttp:okhttp:2.0.0'
+    compile 'com.google.code.gson:gson:2.6.1'
+    compile 'com.squareup.retrofit2:retrofit:2.0.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0'
+    compile 'com.squareup.okhttp3:okhttp:3.1.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.0.1'
+
+    // rx
+    compile 'io.reactivex:rxjava:1.1.1'
+    compile 'io.reactivex:rxandroid:1.1.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0'
 
     // Image loading with cache
     compile 'com.github.bumptech.glide:glide:3.7.0'
 
-    // Dependency injection
-    compile 'com.squareup.dagger:dagger:1.2.2'
-    provided 'com.squareup.dagger:dagger-compiler:1.2.2'
-
-    // Reactive programming
-    compile 'io.reactivex:rxjava:1.0.13'
-    compile 'io.reactivex:rxandroid:1.0.1'
+    // Dependency injection - Dagger 2
+    apt 'com.google.dagger:dagger-compiler:2.1'
+    compile 'com.google.dagger:dagger:2.1'
+    provided 'javax.annotation:jsr250-api:1.0'
 
     // Parceling data between components
     compile "org.parceler:parceler-api:1.0.3"
@@ -62,7 +76,14 @@ dependencies {
 
     //google play service
     compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
 
     //circular image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    //multi image pick
+    compile project(':imagepicker')
+
 }
