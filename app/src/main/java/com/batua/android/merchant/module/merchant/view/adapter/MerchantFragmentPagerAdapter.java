@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.app.AppCompatActivity;
 
+import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantBankInfoFragment;
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantBasicInfoFragment;
@@ -14,16 +15,19 @@ import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActi
 /**
  * Created by febinp on 02/03/16.
  */
-public class AddMerchantFragmentPagerAdapter extends FragmentPagerAdapter {
+public class MerchantFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private static int NUMBER_OF_ADD_MERCHANT_FRAGMENT = 3;
 
     private AppCompatActivity activity;
     private String type;
-    public AddMerchantFragmentPagerAdapter(FragmentManager fm, AppCompatActivity activity, String type) {
+    private MerchantRequest merchantRequest;
+
+    public MerchantFragmentPagerAdapter(FragmentManager fm, AppCompatActivity activity, String type, MerchantRequest merchantRequest) {
         super(fm);
         this.activity = activity;
         this.type = type;
+        this.merchantRequest = merchantRequest;
     }
 
     @Override
@@ -61,12 +65,12 @@ public class AddMerchantFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private MerchantBasicInfoFragment loadMerchantBasicInfoFragment(){
         if (type.equals("Add")) {
-            MerchantBasicInfoFragment merchantBasicInfoFragment = new MerchantBasicInfoFragment();
+            MerchantBasicInfoFragment merchantBasicInfoFragment = new MerchantBasicInfoFragment(merchantRequest);
             merchantBasicInfoFragment.setNextClickedListener((AddMerchantActivity)activity);
 
             return merchantBasicInfoFragment;
         }
-        MerchantBasicInfoFragment merchantBasicInfoFragment = new MerchantBasicInfoFragment();
+        MerchantBasicInfoFragment merchantBasicInfoFragment = new MerchantBasicInfoFragment(merchantRequest);
         merchantBasicInfoFragment.setNextClickedListener((EditMerchantActivity)activity);
 
         return merchantBasicInfoFragment;
