@@ -21,7 +21,9 @@ public class Gallery extends BaseModel {
     @SerializedName("type")
     @Expose
     public String type;
-
+    @SerializedName("MerchantsGalleries")
+    @Expose
+    public MerchantGallery merchantGallery;
     /**
      *
      * @return
@@ -74,6 +76,14 @@ public class Gallery extends BaseModel {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    public MerchantGallery getMerchantGallery() {
+        return merchantGallery;
+    }
+
+    public void setMerchantGallery(MerchantGallery merchantGallery) {
+        this.merchantGallery = merchantGallery;
     }
 
 }
