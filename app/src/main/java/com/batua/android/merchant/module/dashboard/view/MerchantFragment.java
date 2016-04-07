@@ -4,7 +4,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 
-import com.batua.android.merchant.data.model.MerchantStatusModel;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.BaseFragment;
 
 import java.util.List;
@@ -18,17 +18,14 @@ public abstract class MerchantFragment extends BaseFragment {
 
     abstract RecyclerView getMerchantRecyclerView();
 
-    abstract List<MerchantStatusModel> getMerchantList();
+    abstract List<Merchant> getActiveList();
 
     protected void populateAdapter() {
-        merchantStatusAdapter = new MerchantStatusAdapter(getMerchantList());
+        merchantStatusAdapter = new MerchantStatusAdapter(getActiveList());
         LinearLayoutManager llayout = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         getMerchantRecyclerView().setLayoutManager(llayout);
         getMerchantRecyclerView().setAdapter(merchantStatusAdapter);
     }
 
-    public MerchantStatusAdapter getMerchantStatusAdapter() {
-        return merchantStatusAdapter;
-    }
 
 }

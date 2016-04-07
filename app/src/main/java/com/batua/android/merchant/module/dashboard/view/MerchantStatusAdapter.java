@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.MerchantStatusModel;
 import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
 
@@ -19,7 +20,7 @@ import timber.log.Timber;
 
 public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAdapter.MerchantStatusViewHolder> {
 
-    private List<MerchantStatusModel> merchantStatusList;
+    private List<Merchant> merchantList;
     private Context context;
 
     private MerchantClickListener merchantClickListener;
@@ -28,8 +29,8 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
     private static String PENDING_STATUS="Pending";
     private static String DRAFTED_STATUS="Drafted";
 
-    public MerchantStatusAdapter(List<MerchantStatusModel> merchantStatusList) {
-        this.merchantStatusList = merchantStatusList;
+    public MerchantStatusAdapter(List<Merchant> merchantList) {
+        this.merchantList = merchantList;
     }
 
     @Override
@@ -45,25 +46,25 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
 
     @Override
     public void onBindViewHolder(final MerchantStatusViewHolder viewHolder, final int position) {
-        final MerchantStatusModel merchantStatusModel = merchantStatusList.get(position);
+        final Merchant merchant = merchantList.get(position);
 
-        viewHolder.txtMerchantTitle.setText(merchantStatusModel.getMerchantTitle());
-        viewHolder.txtMerchantAddress.setText(merchantStatusModel.getMerchantAddress());
-        viewHolder.txtMerchantShortCode.setText(merchantStatusModel.getMerchantShortCode());
-        if (merchantStatusModel.getStatus().equals(ACTIVE_STATUS)) {
+        viewHolder.txtMerchantTitle.setText(merchant.getName());
+        viewHolder.txtMerchantAddress.setText(merchant.getAddress());
+        viewHolder.txtMerchantShortCode.setText(merchant.getShortCode());
+        if (merchant.getStatus().equals(ACTIVE_STATUS)) {
             viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.green));
-        }else if (merchantStatusModel.getStatus().equals(PENDING_STATUS)) {
+        }else if (merchant.getStatus().equals(PENDING_STATUS)) {
             viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.yellow_dark));
-        } else if (merchantStatusModel.getStatus().equals(DRAFTED_STATUS)){
+        } else if (merchant.getStatus().equals(DRAFTED_STATUS)){
             viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.red_selected));
         }
 
-        viewHolder.itemView.setOnClickListener(new MerchantClickListener(position, merchantStatusModel.getStatus()));
+        viewHolder.itemView.setOnClickListener(new MerchantClickListener(position, merchant.getStatus()));
     }
 
     @Override
     public int getItemCount() {
-        return merchantStatusList.size();
+        return merchantList.size();
     }
 
     public void setItemClickListener(MerchantClickListener merchantClickListener) {

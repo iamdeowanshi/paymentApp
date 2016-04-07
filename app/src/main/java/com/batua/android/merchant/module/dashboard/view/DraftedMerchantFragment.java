@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.batua.android.merchant.data.model.MerchantStatusModel;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,7 +20,7 @@ import butterknife.Bind;
 public class DraftedMerchantFragment extends MerchantFragment{
 
     private View view;
-    private List<MerchantStatusModel> merchantStatusModelList = new ArrayList<MerchantStatusModel>();
+    private List<Merchant> draftedList;
 
     @Bind(com.batua.android.merchant.R.id.merchant_drafted_status_recycler_view) RecyclerView merchantDraftedRecyclerView;
 
@@ -29,6 +30,7 @@ public class DraftedMerchantFragment extends MerchantFragment{
         view = inflater.inflate(com.batua.android.merchant.R.layout.fragment_draft, null);;
 
         onViewCreated(view, null);
+        draftedList = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
 
         populateAdapter();
         
@@ -40,10 +42,7 @@ public class DraftedMerchantFragment extends MerchantFragment{
         return merchantDraftedRecyclerView;
     }
 
-    @Override
-    List<MerchantStatusModel> getMerchantList() {
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Jayanagar, Bangalore", "PZ4", "Drafted"));
-
-        return merchantStatusModelList;
+    List<Merchant> getActiveList() {
+        return draftedList;
     }
 }

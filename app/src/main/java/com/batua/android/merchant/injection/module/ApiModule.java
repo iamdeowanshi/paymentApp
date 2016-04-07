@@ -1,10 +1,10 @@
 package com.batua.android.merchant.injection.module;
 
+import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.batua.android.merchant.Config;
-import com.batua.android.merchant.data.api.ApiService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +38,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public ApiService provideApi(
+    public BatuaMerchantService provideApi(
             OkHttpClient client,
             Converter.Factory converterFactory,
             CallAdapter.Factory callAdapterFactory) {
@@ -49,7 +49,7 @@ public class ApiModule {
                 .addCallAdapterFactory(callAdapterFactory)
                 .build();
 
-        return retrofit.create(ApiService.class);
+        return retrofit.create(BatuaMerchantService.class);
     }
 
     @Provides
