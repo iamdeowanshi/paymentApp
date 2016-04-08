@@ -3,8 +3,6 @@ package com.batua.android.merchant.injection.module;
 
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
-import com.batua.android.merchant.module.merchant.presenter.MerchantDetailPresenter;
-import com.batua.android.merchant.module.merchant.presenter.MerchantDetailPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 

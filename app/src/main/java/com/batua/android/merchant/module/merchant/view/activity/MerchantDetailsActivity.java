@@ -13,25 +13,17 @@ import android.widget.TextView;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
-import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
-import com.batua.android.merchant.module.common.util.Bakery;
-import com.batua.android.merchant.module.merchant.presenter.MerchantDetailPresenter;
-import com.batua.android.merchant.module.merchant.presenter.MerchantDetailViewInteractor;
 
 import org.parceler.Parcels;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class MerchantDetailsActivity extends BaseActivity implements MerchantDetailViewInteractor{
+public class MerchantDetailsActivity extends BaseActivity {
 
     private static final String ACTIVE = "Active";
     private static final String DRAFTED = "Drafted";
-
-    @Inject MerchantDetailPresenter presenter;
 
     @Bind(com.batua.android.merchant.R.id.toolbar_title) TextView title;
     @Bind(com.batua.android.merchant.R.id.toolbar) Toolbar toolbar;
@@ -61,12 +53,10 @@ public class MerchantDetailsActivity extends BaseActivity implements MerchantDet
         super.onCreate(savedInstanceState);
         setContentView(com.batua.android.merchant.R.layout.activity_merchant_details);
 
-        Injector.component().inject(this);
-        presenter.attachViewInteractor(this);
         merchant = Parcels.unwrap(getIntent().getParcelableExtra("MerchantDetail"));
 
-        hideMerchantDetail();
-        merchantDetail(merchant);
+        scrollView.setVisibility(View.GONE);
+        showMerchantDetail(merchant);
     }
 
     @Override
@@ -102,17 +92,8 @@ public class MerchantDetailsActivity extends BaseActivity implements MerchantDet
         finish();
     }
 
-    public void showMerchantDetail() {
+    public void showMerchantDetail(Merchant merchant) {
         scrollView.setVisibility(View.VISIBLE);
-    }
-
-    public void hideMerchantDetail() {
-        scrollView.setVisibility(View.GONE);
-    }
-
-    public void merchantDetail(Merchant merchant) {
-
-        showMerchantDetail();
         setToolBar(merchant.getName());
         txtShortCode.setText(merchant.getShortCode());
         txtAddress.setText(merchant.getAddress());
@@ -147,7 +128,7 @@ public class MerchantDetailsActivity extends BaseActivity implements MerchantDet
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        title = (TextView) toolbar.findViewById(com.batua.android.merchant.R.id.toolbar_title);
+        title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         title.setText(name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }

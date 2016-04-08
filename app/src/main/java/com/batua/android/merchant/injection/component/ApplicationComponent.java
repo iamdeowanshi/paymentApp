@@ -7,7 +7,6 @@ import com.batua.android.merchant.injection.module.PresenterModule;
 import com.batua.android.merchant.injection.module.UtilModule;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
 import com.batua.android.merchant.module.dashboard.view.HomeActivity;
-import com.batua.android.merchant.module.merchant.presenter.MerchantDetailPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantBankInfoFragment;
