@@ -1,13 +1,22 @@
 package com.batua.android.merchant.module.merchant.view.fragment;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,11 +32,13 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.merchant.view.adapter.SearchAddressAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.AutoCompleteRecyclerItemClickListener;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedListener;
+import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -51,6 +62,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import timber.log.Timber;
 
 /**
  * Created by febinp on 02/03/16.
@@ -59,7 +71,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, 180), new LatLng(85, -180));
-    public static final String NO_SERVICE = "No Service!";
+    private static final String NO_SERVICE = "No Service!";
+    private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    private static final int LOCATION_REQUEST_CODE = 4;
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
@@ -106,9 +120,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         super.onViewCreated(view, savedInstanceState);
 
         Injector.component().inject(this);
-        buildGoogleApiClient();
+        checkLocationPermission();
         initialiseMapUiSettings();
-        inflateSearchAddressAdapter();
 
         edtAddress.addTextChangedListener(new TextWatcher() {
 
@@ -162,8 +175,21 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         locationLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                v.getParent().requestDisallowInterceptTouchEvent(true);
-                v.requestFocus();
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        v.requestFocus();
+                        break;
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        v.requestFocus();
+                        break;
+                }
+
                 return true;
             }
         });
@@ -188,6 +214,62 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
 
+    }
+
+    private void checkLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), LOCATION_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this.getActivity(), LOCATION_PERMISSION[1]) != PackageManager.PERMISSION_GRANTED) {
+            requestLocationPermissions();
+        } else {
+            buildGoogleApiClient();
+            inflateSearchAddressAdapter();
+        }
+    }
+
+    private void requestLocationPermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), LOCATION_PERMISSION[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(), LOCATION_PERMISSION[1])) {
+            Timber.d("request");
+            // Display a SnackBar with an explanation and a button to trigger the request.
+            bakery.snack(getContentView(), "Location permission is required to continue!", Snackbar.LENGTH_INDEFINITE, "Try Again", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(getActivity(), LOCATION_PERMISSION, LOCATION_REQUEST_CODE);
+                }
+            });
+
+        } else {
+            // Permissions have not been granted yet. Request them directly.
+            ActivityCompat.requestPermissions(this.getActivity(), LOCATION_PERMISSION, LOCATION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE:
+                if (PermissionUtil.verifyPermissions(grantResults)) {
+                    buildGoogleApiClient();
+                    inflateSearchAddressAdapter();
+                } else {
+                    // Permission Denied
+                    showLocationPermissionsSnackbar();
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void showLocationPermissionsSnackbar() {
+        Snackbar.make(getContentView(), "Location permission is required to continue!", Snackbar.LENGTH_LONG)
+                .setAction("ALLOW", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        checkLocationPermission();
+                    }
+                });
     }
 
     private void inflateSearchAddressAdapter() {
@@ -259,14 +341,58 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void showCurrentPosition() {
         try {
-            Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-            if (location != null) {
-                LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
-                animateCamera(curentpoint, "myLocation");
+            if (isLocationEnabled()) {
+                Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                if (location != null) {
+                    LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
+                    animateCamera(curentpoint, "myLocation");
+                }
+                return;
             }
-        } catch (SecurityException e) {
 
+            showSettingsAlert();
+        } catch (SecurityException e) {
+            bakery.snack(getContentView(), "Please enable Location", Snackbar.LENGTH_SHORT);
         }
+    }
+
+    public boolean isLocationEnabled() {
+        int locationMode = 0;
+        String locationProviders;
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+            try {
+                locationMode = Settings.Secure.getInt(this.getContext().getContentResolver(), Settings.Secure.LOCATION_MODE);
+
+            } catch (Settings.SettingNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
+
+            return locationMode != Settings.Secure.LOCATION_MODE_OFF;
+
+        }else{
+            locationProviders = Settings.Secure.getString(this.getContext().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            return !TextUtils.isEmpty(locationProviders);
+        }
+    }
+
+    public void showSettingsAlert(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
+        alertDialog.setTitle("GPS settings");
+        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog,int which) {
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                MerchantLocationInfoFragment.this.getContext().startActivity(intent);
+            }
+        });
+        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        alertDialog.show();
     }
 
     protected synchronized void buildGoogleApiClient() {
