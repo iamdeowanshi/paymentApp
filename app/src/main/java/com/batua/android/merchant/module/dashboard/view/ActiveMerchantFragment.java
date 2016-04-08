@@ -6,9 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.batua.android.merchant.data.model.MerchantStatusModel;
+import com.batua.android.merchant.R;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -18,16 +20,17 @@ import butterknife.Bind;
  */
 public class ActiveMerchantFragment extends MerchantFragment{
 
-    @Bind(com.batua.android.merchant.R.id.merchant_active_status_recycler_view) RecyclerView merchantActiveRecyclerView;
+    @Bind(R.id.merchant_active_status_recycler_view) RecyclerView merchantActiveRecyclerView;
 
     private View view;
-    private List<MerchantStatusModel> merchantStatusModelList = new ArrayList<MerchantStatusModel>();
+    private List<Merchant> activeList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(com.batua.android.merchant.R.layout.fragment_active, null);
 
         onViewCreated(view, null);
+        activeList = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
         populateAdapter();
 
         return view;
@@ -38,13 +41,8 @@ public class ActiveMerchantFragment extends MerchantFragment{
         return merchantActiveRecyclerView;
     }
 
-    @Override
-    List<MerchantStatusModel> getMerchantList() {
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "JP Nagar, Bangalore", "PZ1", "Active"));
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Kormanagala, Bangalore", "PZ2", "Active"));
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Jayanagar, Bangalore", "PZ3", "Active"));
-
-        return merchantStatusModelList;
+    List<Merchant> getActiveList() {
+        return activeList;
     }
 
 }

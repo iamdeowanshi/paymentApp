@@ -2,14 +2,19 @@ package com.batua.android.merchant.module.dashboard.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.MerchantStatusModel;
 import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -19,7 +24,7 @@ import timber.log.Timber;
 
 public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAdapter.MerchantStatusViewHolder> {
 
-    private List<MerchantStatusModel> merchantStatusList;
+    private List<Merchant> merchantList;
     private Context context;
 
     private MerchantClickListener merchantClickListener;
@@ -28,8 +33,8 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
     private static String PENDING_STATUS="Pending";
     private static String DRAFTED_STATUS="Drafted";
 
-    public MerchantStatusAdapter(List<MerchantStatusModel> merchantStatusList) {
-        this.merchantStatusList = merchantStatusList;
+    public MerchantStatusAdapter(List<Merchant> merchantList) {
+        this.merchantList = merchantList;
     }
 
     @Override
@@ -45,25 +50,25 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
 
     @Override
     public void onBindViewHolder(final MerchantStatusViewHolder viewHolder, final int position) {
-        final MerchantStatusModel merchantStatusModel = merchantStatusList.get(position);
+        final Merchant merchant = merchantList.get(position);
 
-        viewHolder.txtMerchantTitle.setText(merchantStatusModel.getMerchantTitle());
-        viewHolder.txtMerchantAddress.setText(merchantStatusModel.getMerchantAddress());
-        viewHolder.txtMerchantShortCode.setText(merchantStatusModel.getMerchantShortCode());
-        if (merchantStatusModel.getStatus().equals(ACTIVE_STATUS)) {
-            viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.green));
-        }else if (merchantStatusModel.getStatus().equals(PENDING_STATUS)) {
-            viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.yellow_dark));
-        } else if (merchantStatusModel.getStatus().equals(DRAFTED_STATUS)){
-            viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.red_selected));
+        viewHolder.txtMerchantTitle.setText(merchant.getName());
+        viewHolder.txtMerchantAddress.setText(merchant.getAddress());
+        viewHolder.txtMerchantShortCode.setText(merchant.getShortCode());
+        if (merchant.getStatus().equals(ACTIVE_STATUS)) {
+            viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, com.batua.android.merchant.R.color.green));
+        }else if (merchant.getStatus().equals(PENDING_STATUS)) {
+            viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, com.batua.android.merchant.R.color.yellow_dark));
+        } else if (merchant.getStatus().equals(DRAFTED_STATUS)){
+            viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, com.batua.android.merchant.R.color.red_selected));
         }
 
-        viewHolder.itemView.setOnClickListener(new MerchantClickListener(position, merchantStatusModel.getStatus()));
+        viewHolder.itemView.setOnClickListener(new MerchantClickListener(merchant));
     }
 
     @Override
     public int getItemCount() {
-        return merchantStatusList.size();
+        return merchantList.size();
     }
 
     public void setItemClickListener(MerchantClickListener merchantClickListener) {
@@ -86,19 +91,19 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
 
     class MerchantClickListener implements View.OnClickListener{
 
-        private int position;
-        private String status;
+        private Merchant merchant;
 
-        public MerchantClickListener(int position, String status) {
-            this.status = status;
-            this.position = position;
+        public MerchantClickListener(Merchant merchant) {
+            this.merchant = merchant;
         }
 
         @Override
         public void onClick(View v) {
-            Timber.d(position + " " + status);
+
             Intent i = new Intent(context, MerchantDetailsActivity.class);
-            i.putExtra("position", position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("MerchantDetail", Parcels.wrap(merchant));
+            i.putExtras(bundle);
             context.startActivity(i);
         }
     }

@@ -6,9 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.batua.android.merchant.data.model.MerchantStatusModel;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 
-import java.util.ArrayList;
+import org.parceler.Parcels;
+
 import java.util.List;
 
 import butterknife.Bind;
@@ -19,8 +20,7 @@ import butterknife.Bind;
 public class PendingMerchantFragment extends MerchantFragment {
 
     private View view;
-    private List<MerchantStatusModel> merchantStatusModelList = new ArrayList<MerchantStatusModel>();
-
+    private List<Merchant> pendingList;
     @Bind(com.batua.android.merchant.R.id.merchant_pending_status_recycler_view) RecyclerView merchantPendingRecyclerView;
 
     @Override
@@ -29,6 +29,7 @@ public class PendingMerchantFragment extends MerchantFragment {
         view = inflater.inflate(com.batua.android.merchant.R.layout.fragment_pending, null);;
 
         onViewCreated(view, null);
+        pendingList = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
 
         populateAdapter();
 
@@ -40,11 +41,7 @@ public class PendingMerchantFragment extends MerchantFragment {
         return merchantPendingRecyclerView;
     }
 
-    @Override
-    List<MerchantStatusModel> getMerchantList() {
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut", "Jayanagar, Bangalore", "PZ4", "Pending"));
-        merchantStatusModelList.add(new MerchantStatusModel("Pizza Hut","Kormanagala, Bangalore","PZ5","Pending"));
-
-        return merchantStatusModelList;
+    List<Merchant> getActiveList() {
+        return pendingList;
     }
 }

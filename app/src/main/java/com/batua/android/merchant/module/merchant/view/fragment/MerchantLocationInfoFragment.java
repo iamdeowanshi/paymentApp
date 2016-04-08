@@ -50,7 +50,7 @@ public class MerchantLocationInfoFragment extends BaseFragment {
         return view;
     }
 
-    @Override
+ /*   @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -61,7 +61,7 @@ public class MerchantLocationInfoFragment extends BaseFragment {
                 break;
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     public void setNextClickedListener(NextClickedListener nextClickedListener){
         this.nextClickedListener = nextClickedListener;
