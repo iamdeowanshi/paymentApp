@@ -138,5 +138,6 @@ public class GalleryImagesActivity extends BaseActivity {
         title.setText("Gallery Images");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
+
 }
 

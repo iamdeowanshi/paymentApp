@@ -27,9 +27,4 @@ public class PresenterModule {
         return new MerchantListPresenterImpl();
     }
 
-    @Provides
-    public MerchantDetailPresenter provideMerchantDetailPresenter() {
-        return new MerchantDetailPresenterImpl();
-    }
-
 }

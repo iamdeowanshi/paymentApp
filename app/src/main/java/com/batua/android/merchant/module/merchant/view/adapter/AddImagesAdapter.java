@@ -53,7 +53,6 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
                 removeImageClickedListener.removeClickedPosition(position);
             }
         });
-
     }
 
     @Override

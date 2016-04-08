@@ -69,7 +69,6 @@ public interface ApplicationComponent {
     // inject methods for presenter classes
     void inject(MerchantPresenterImpl merchantPresenter);
     void inject(MerchantListPresenterImpl merchantListPresenter);
-    void inject(MerchantDetailPresenterImpl merchantDetailPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

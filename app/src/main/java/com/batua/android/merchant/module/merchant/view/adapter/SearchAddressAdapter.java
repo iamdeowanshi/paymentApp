@@ -28,9 +28,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Created by febinp on 12/01/16.
  */
-public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapter.PredictionHolder> implements Filterable {
+public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdapter.PredictionHolder> implements Filterable {
 
-    private static final String TAG = "PlacesAutoCompleteAdapter";
     private ArrayList<PlaceAutocomplete> resultList;
     private GoogleApiClient googleApiClient;
     private LatLngBounds latLngBounds;
@@ -39,20 +38,13 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     private Context context;
     private int layout;
 
-    public SearchResultAdapter(Context context, int resource, GoogleApiClient googleApiClient,
-                               LatLngBounds bounds, AutocompleteFilter filter) {
+    public SearchAddressAdapter(Context context, int resource, GoogleApiClient googleApiClient,
+                                LatLngBounds bounds, AutocompleteFilter filter) {
         this.context = context;
         layout = resource;
         this.googleApiClient = googleApiClient;
         latLngBounds = bounds;
         autocompleteFilter = filter;
-    }
-
-    /**
-     * Sets the bounds for all subsequent queries.
-     */
-    public void setBounds(LatLngBounds bounds) {
-        latLngBounds = bounds;
     }
 
     /**
@@ -156,7 +148,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
     public void onBindViewHolder(PredictionHolder predictionHolder, final int position) {
 
         predictionHolder.prediction.setText(resultList.get(position).description);
-
     }
 
     @Override
@@ -186,7 +177,6 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
      * Holder for Places Geo Data Autocomplete API results.
      */
     public class PlaceAutocomplete {
-
         public CharSequence placeId;
         public CharSequence description;
 
@@ -199,6 +189,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter<SearchResultAdapte
         public String toString() {
             return description.toString();
         }
+
     }
 
 }

@@ -73,7 +73,6 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.edt_merchant_short_code) EditText edtShortCode;
     @Bind(R.id.edt_merchant_mobile) EditText edtMobile;
     @Bind(R.id.edt_merchant_fee) EditText edtFee;
-    @Bind(R.id.edt_merchant_address) EditText edtAddress;
 
     @Inject Bakery bakery;
 
@@ -230,7 +229,6 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     private void loadData() {
         merchantRequest.setName(edtName.getText().toString());
-        merchantRequest.setAddress(edtAddress.getText().toString());
     }
 
     private void hideAddImageRecyclerView() {

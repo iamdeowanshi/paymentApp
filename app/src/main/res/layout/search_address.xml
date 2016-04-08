@@ -3,8 +3,8 @@
     android:id="@+id/predictedRow"
     android:layout_width="match_parent"
     android:layout_height="65dp"
-    android:layout_marginLeft="20dp"
-    android:layout_marginRight="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
     android:layout_centerVertical="true"
     android:gravity="center_vertical"
     android:background="@android:color/white">
@@ -23,6 +23,6 @@
         android:layout_below="@+id/address"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@android:color/darker_gray"></View>
+        android:background="@color/blue_dark"></View>
 
 </RelativeLayout>

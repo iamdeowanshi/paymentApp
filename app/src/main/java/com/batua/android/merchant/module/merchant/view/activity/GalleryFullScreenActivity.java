@@ -81,4 +81,5 @@ public class GalleryFullScreenActivity extends BaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

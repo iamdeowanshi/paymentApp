@@ -25,8 +25,8 @@ public class MerchantDetailsActivity extends BaseActivity {
     private static final String ACTIVE = "Active";
     private static final String DRAFTED = "Drafted";
 
-    @Bind(com.batua.android.merchant.R.id.toolbar_title) TextView title;
-    @Bind(com.batua.android.merchant.R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar_title) TextView title;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.merchant_detail_scroll_view) ScrollView scrollView;
     @Bind(R.id.txt_short_code) TextView txtShortCode;
     @Bind(R.id.text_address) TextView txtAddress;
