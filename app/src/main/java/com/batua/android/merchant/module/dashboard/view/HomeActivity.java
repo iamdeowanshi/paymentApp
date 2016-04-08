@@ -1,9 +1,13 @@
 package com.batua.android.merchant.module.dashboard.view;
 
+import android.Manifest;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -22,6 +26,8 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
+import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.view.custom.LoadingView;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
@@ -35,13 +41,18 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import timber.log.Timber;
 
 /**
  * Created by febinp on 28/10/15.
  */
 public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MerchantListViewInteractor{
 
+    private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
+    private static final int LOCATION_REQUEST_CODE = 4;
+
     @Inject MerchantListPresenter presenter;
+    @Inject Bakery bakery;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
@@ -86,7 +97,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         int id = menuItem.getItemId();
 
         switch(id) {
-            case com.batua.android.merchant.R.id.nav_logout:
+            case R.id.nav_logout:
                 startActivity(LoginActivity.class, null);
                 break;
         }
@@ -99,8 +110,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case com.batua.android.merchant.R.id.action_add_merchant:
-                startActivity(AddMerchantActivity.class, null);
+            case R.id.action_add_merchant:
+                checkLocationPermission();
                 return true;
 
             default:
@@ -135,7 +146,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         profileimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(ProfileActivity.class,null);
+                startActivity(ProfileActivity.class, null);
             }
         });
 
@@ -166,6 +177,60 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public void merchantList(List<Merchant> merchants) {
         this.merchantList = merchants;
         loadFragments();
+    }
+
+    private void checkLocationPermission() {
+        if (ActivityCompat.checkSelfPermission(this, LOCATION_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, LOCATION_PERMISSION[1]) != PackageManager.PERMISSION_GRANTED) {
+            requestLocationPermissions();
+        } else {
+            startActivity(AddMerchantActivity.class, null);
+        }
+    }
+
+    private void requestLocationPermissions() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, LOCATION_PERMISSION[0]) || ActivityCompat.shouldShowRequestPermissionRationale(this, LOCATION_PERMISSION[1])) {
+            Timber.d("request");
+            // Display a SnackBar with an explanation and a button to trigger the request.
+            bakery.snack(getContentView(), "Location permission is required to continue!", Snackbar.LENGTH_INDEFINITE, "Try Again", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(HomeActivity.this, LOCATION_PERMISSION, LOCATION_REQUEST_CODE);
+                }
+            });
+
+        } else {
+            // Permissions have not been granted yet. Request them directly.
+            ActivityCompat.requestPermissions(this, LOCATION_PERMISSION, LOCATION_REQUEST_CODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case LOCATION_REQUEST_CODE:
+                if (PermissionUtil.verifyPermissions(grantResults)) {
+                    startActivity(AddMerchantActivity.class, null);
+                } else {
+                    // Permission Denied
+                    showLocationPermissionsSnackbar();
+                }
+                break;
+
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    private void showLocationPermissionsSnackbar() {
+        Snackbar.make(getContentView(), "Location permission is required to continue!", Snackbar.LENGTH_LONG)
+                .setAction("ALLOW", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        checkLocationPermission();
+                    }
+                });
     }
 
 }

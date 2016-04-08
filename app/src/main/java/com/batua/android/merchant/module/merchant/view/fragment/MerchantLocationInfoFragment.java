@@ -195,6 +195,12 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        googleApiClient.connect();
+    }
+
     // GoogleApiClient.ConnectionCallbacks and GoogleApiClient.OnConnectionFailedListener override methods
     @Override
     public void onMyLocationChange(Location location) {
