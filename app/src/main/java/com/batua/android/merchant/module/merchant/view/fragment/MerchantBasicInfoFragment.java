@@ -17,8 +17,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.batua.android.merchant.R;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
+import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.merchant.util.SpinnerLoad;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
@@ -27,6 +32,7 @@ import com.batua.android.merchant.module.merchant.view.adapter.AddImagesAdapter;
 import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
+import com.github.siyamed.shapeimageview.CircularImageView;
 
 import net.yazeed44.imagepicker.model.ImageEntry;
 import net.yazeed44.imagepicker.util.Picker;
@@ -59,13 +65,28 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     private ArrayList<ImageEntry> selectedImages;
     private AddImagesAdapter addImagesAdapter;
 
-    @Bind(com.batua.android.merchant.R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
-    @Bind(com.batua.android.merchant.R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
+    @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
+    @Bind(R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
+    @Bind(R.id.edt_merchant_email) EditText edtEmail;
+    @Bind(R.id.img_profile) CircularImageView profileImage;
+    @Bind(R.id.edt_merchant_name) EditText edtName;
+    @Bind(R.id.edt_merchant_short_code) EditText edtShortCode;
+    @Bind(R.id.edt_merchant_mobile) EditText edtMobile;
+    @Bind(R.id.edt_merchant_fee) EditText edtFee;
+    @Bind(R.id.edt_merchant_address) EditText edtAddress;
 
     @Inject Bakery bakery;
 
     private View view;
     private NextClickedListener nextClickedListener;
+    private MerchantRequest merchantRequest;
+
+    public MerchantBasicInfoFragment() {
+    }
+
+    public MerchantBasicInfoFragment(MerchantRequest merchantRequest) {
+        this.merchantRequest = merchantRequest;
+    }
 
     @OnClick(com.batua.android.merchant.R.id.txt_load_next)
     public void loadNextClicked(){
@@ -92,9 +113,10 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
         view = inflater.inflate(com.batua.android.merchant.R.layout.fragment_merchant_basic_info, null);
         onViewCreated(view, null);
-        //injectDependencies();
+        Injector.component().inject(this);
         SpinnerLoad.loadSpinner(getContext(), com.batua.android.merchant.R.array.merchant_category, spinnerMerchantCategory);
         hideAddImageRecyclerView();
+        loadData();
 
         return view;
     }
@@ -106,7 +128,8 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         switch (id) {
             case com.batua.android.merchant.R.id.action_save:
                 startActivity(MerchantDetailsActivity.class, null);
-                getActivity().finish();
+                getActivity().onOptionsItemSelected(item);
+
                 break;
         }
 
@@ -203,6 +226,11 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         if (selectedImages.isEmpty()) {
             hideAddImageRecyclerView();
         }
+    }
+
+    private void loadData() {
+        merchantRequest.setName(edtName.getText().toString());
+        merchantRequest.setAddress(edtAddress.getText().toString());
     }
 
     private void hideAddImageRecyclerView() {

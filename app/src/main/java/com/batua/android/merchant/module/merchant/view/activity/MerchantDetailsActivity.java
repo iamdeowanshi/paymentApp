@@ -1,27 +1,62 @@
 package com.batua.android.merchant.module.merchant.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.batua.android.merchant.R;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.BaseActivity;
+
+import org.parceler.Parcels;
 
 import butterknife.Bind;
 import butterknife.OnClick;
 
 public class MerchantDetailsActivity extends BaseActivity {
 
+    private static final String ACTIVE = "Active";
+    private static final String DRAFTED = "Drafted";
+
     @Bind(com.batua.android.merchant.R.id.toolbar_title) TextView title;
     @Bind(com.batua.android.merchant.R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.merchant_detail_scroll_view) ScrollView scrollView;
+    @Bind(R.id.txt_short_code) TextView txtShortCode;
+    @Bind(R.id.text_address) TextView txtAddress;
+    @Bind(R.id.text_status) TextView txtStatus;
+    @Bind(R.id.fees) TextView txtFees;
+    @Bind(R.id.email) TextView txtEmail;
+    @Bind(R.id.call) TextView txtCall;
+    @Bind(R.id.account_no) TextView txtAccountNumber;
+    @Bind(R.id.account_name) TextView txtAccountName;
+    @Bind(R.id.bank) TextView txtBank;
+    @Bind(R.id.branch) TextView txtBranch;
+    @Bind(R.id.ifsc) TextView txtIfsc;
+    @Bind(R.id.gallery_layout) RelativeLayout galleryLayout;
+    @Bind(R.id.first_image) ImageView firstGalleyImage;
+    @Bind(R.id.second_image) ImageView secondGalleyImage;
+    @Bind(R.id.third_image) ImageView thirdGalleyImage;
+    @Bind(R.id.fourth_image) ImageView fourthGalleyImage;
+    @Bind(R.id.fifth_image) ImageView fifthGalleyImage;
+
+    private Merchant merchant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.batua.android.merchant.R.layout.activity_merchant_details);
 
-        setToolBar();
+        merchant = Parcels.unwrap(getIntent().getParcelableExtra("MerchantDetail"));
+
+        scrollView.setVisibility(View.GONE);
+        showMerchantDetail(merchant);
     }
 
     @Override
@@ -37,9 +72,18 @@ public class MerchantDetailsActivity extends BaseActivity {
             case com.batua.android.merchant.R.id.action_edit:
                 startActivity(EditMerchantActivity.class, null);
                 break;
+
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 
     @OnClick(com.batua.android.merchant.R.id.view_images)
@@ -48,12 +92,44 @@ public class MerchantDetailsActivity extends BaseActivity {
         finish();
     }
 
-    private void setToolBar() {
+    public void showMerchantDetail(Merchant merchant) {
+        scrollView.setVisibility(View.VISIBLE);
+        setToolBar(merchant.getName());
+        txtShortCode.setText(merchant.getShortCode());
+        txtAddress.setText(merchant.getAddress());
+        txtFees.setText(merchant.getFees() + "%");
+        txtEmail.setText(merchant.getEmail());
+        txtCall.setText(merchant.getPhone().toString());
+        txtAccountNumber.setText(merchant.getAccountNumber().toString());
+        txtAccountName.setText(merchant.getAccountHolder());
+        txtBank.setText(merchant.getBankName());
+        txtBranch.setText(merchant.getBranchName());
+        txtIfsc.setText(merchant.getIfscCode());
+        String status = merchant.getStatus();
+        txtStatus.setText(status);
+
+        if (status.equals(ACTIVE)) {
+            txtStatus.setTextColor(ContextCompat.getColor(this, R.color.green));
+        } else if (status.equals(DRAFTED)) {
+            txtStatus.setTextColor(ContextCompat.getColor(this, R.color.red_selected));
+        } else {
+            txtStatus.setTextColor(ContextCompat.getColor(this, R.color.yellow_dark));
+        }
+
+        if (merchant.getGalleries().size() == 0) {
+            galleryLayout.setVisibility(View.GONE);
+            return;
+        }
+
+        galleryLayout.setVisibility(View.VISIBLE);
+    }
+
+    private void setToolBar(String name) {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        title = (TextView) toolbar.findViewById(com.batua.android.merchant.R.id.toolbar_title);
-        title.setText("Pizza Hut JP Nagar");
+        title = (TextView) toolbar.findViewById(R.id.toolbar_title);
+        title.setText(name);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

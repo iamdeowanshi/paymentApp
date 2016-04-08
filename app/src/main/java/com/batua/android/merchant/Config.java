@@ -26,16 +26,20 @@ public class Config {
     // API related constants/configurations - used in ApiModule, should end with `/`
     //--------------------------------------------------------------------------------
     public static final String API_BASE_URL_PRODUCTION = "";
-    public static final String API_BASE_URL_DEVELOP = "";
+    public static final String API_BASE_URL_DEVELOP = "http://52.36.228.74:1337/";
     public static final String API_BASE_URL_MOCK = "http://android-training.getsandbox.com/";
 
     // Active base url
-    public static final String API_BASE_URL = API_BASE_URL_MOCK;
+    public static final String API_BASE_URL = API_BASE_URL_DEVELOP;
 
     // Headers required to be added by interceptor
     public static final Map<String, String> API_HEADERS = new HashMap<String, String>() {{
         put("User-Agent", "Batua-Android-App");
         put("Content-Type", "application/json");
     }};
+
+    public static final String MERCHANT = "api/merchant";
+
+    public static final String LIST_MERCHANT = "/api/salesagent/{salesAgentId}/merchant";
 
 }

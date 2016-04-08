@@ -43,4 +43,13 @@
 
     </LinearLayout>
 
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="#c5c5c5"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"/>
+
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.batua.android.merchant.data.api;
 
+import retrofit2.Response;
 import rx.Observer;
 
 /**
@@ -7,7 +8,7 @@ import rx.Observer;
  *
  * @author Farhan Ali
  */
-public abstract class ApiObserver<T> implements Observer<T> {
+public abstract class ApiObserver<T extends Response> implements Observer<T> {
 
     /**
      * Publish result to observer.
