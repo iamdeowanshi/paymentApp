@@ -96,25 +96,20 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 4;
 
+    @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
     @Inject MerchantPresenter merchantPresenter;
     @Inject CityPresenter cityPresenter;
 
     @Bind(R.id.edt_merchant_city) EditText edtCity;
-    @Bind(R.id.edt_merchant_address) EditText edtAddress;
     @Bind(R.id.edt_merchant_pin_code) EditText edtPin;
+    @Bind(R.id.recyclerView_search_address) RecyclerView searchAddressRecycler;
+    @Bind(R.id.edt_merchant_address) EditText edtAddress;
+    @Bind(R.id.merchant_location_map) LinearLayout locationLayout;
+    @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
 
     private Merchant merchant;
     private MerchantRequest merchantRequest;
-    @Inject Bakery bakery;
-    @Inject ViewUtil viewUtil;
-
-    @Bind(R.id.recyclerView_search_address) RecyclerView searchAddressRecycler;
-    @Bind(R.id.edt_merchant_address) EditText edtAddress;
-    @Bind(R.id.edt_merchant_pin_code) EditText edtPinCode;
-    @Bind(R.id.edt_merchant_city) AutoCompleteTextView txtCity;
-    @Bind(R.id.merchant_location_map) LinearLayout locationLayout;
-    @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
-    @Bind(R.id.scrollView) ScrollView scrollView;
 
     private GoogleApiClient googleApiClient;
     private NextClickedListener nextClickedListener;
@@ -351,7 +346,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     }
 
-    public void setNextClickedListener(NextClickedListener nextClickedListener){
     private void showLocationPermissionsSnackbar() {
         Snackbar.make(getContentView(), "Location permission is required to continue!", Snackbar.LENGTH_LONG)
                 .setAction("ALLOW", new View.OnClickListener() {
@@ -394,7 +388,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void hidePinAndMap() {
         searchAddressRecycler.setVisibility(View.VISIBLE);
-        edtPinCode.setVisibility(View.GONE);
+        edtPin.setVisibility(View.GONE);
         locationLayout.setVisibility(View.GONE);
         navigationLayout.setVisibility(View.GONE);
         googleMap.setOnMyLocationChangeListener(this);
@@ -402,7 +396,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void showPinAndMap() {
         searchAddressRecycler.setVisibility(View.GONE);
-        edtPinCode.setVisibility(View.VISIBLE);
+        edtPin.setVisibility(View.VISIBLE);
         locationLayout.setVisibility(View.VISIBLE);
         navigationLayout.setVisibility(View.VISIBLE);
         viewUtil.hideKeyboard(MerchantLocationInfoFragment.this.getActivity());
@@ -411,6 +405,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void displayAddress(String placeDescription, LatLng latLng) {
         edtAddress.setText(placeDescription);
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
         animateCamera(latLng, "address");
         showPinAndMap();
     }

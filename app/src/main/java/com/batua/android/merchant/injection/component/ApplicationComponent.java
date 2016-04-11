@@ -66,8 +66,6 @@ public interface ApplicationComponent {
     void inject(MerchantDetailsActivity merchantDetailsActivity);
     void inject(MerchantLocationInfoFragment merchantLocationInfoFragment);
 
-
-
     // inject methods for presenter classes
     void inject(MerchantPresenterImpl merchantPresenter);
     void inject(MerchantListPresenterImpl merchantListPresenter);
