@@ -1,4 +1,4 @@
-package com.batua.android.merchant.module.dashboard.view;
+package com.batua.android.merchant.module.dashboard.view.activity;
 
 import android.app.Dialog;
 import android.os.Bundle;
@@ -17,18 +17,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
-import com.batua.android.merchant.module.common.view.custom.LoadingView;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
+import com.batua.android.merchant.module.dashboard.view.adapter.HomeFragmentPagerAdapter;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
-import com.bumptech.glide.Glide;
 
 import java.util.List;
 
@@ -101,6 +99,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         switch (item.getItemId()){
             case com.batua.android.merchant.R.id.action_add_merchant:
                 startActivity(AddMerchantActivity.class, null);
+                finish();
                 return true;
 
             default:

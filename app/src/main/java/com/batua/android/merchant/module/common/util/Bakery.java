@@ -5,7 +5,6 @@ import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.Toast;
 
-
 import com.batua.android.merchant.injection.Injector;
 
 import javax.inject.Inject;

@@ -61,7 +61,7 @@
         </activity>
         <activity android:name=".module.onboard.view.activity.ResetPasswordActivity">
         </activity>
-		<activity android:name=".module.dashboard.view.HomeActivity">
+		<activity android:name=".module.dashboard.view.activity.HomeActivity">
         </activity>
         <activity android:name=".module.merchant.view.activity.AddMerchantActivity"
             android:windowSoftInputMode="stateHidden">

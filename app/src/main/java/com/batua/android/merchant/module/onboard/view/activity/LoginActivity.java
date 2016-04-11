@@ -8,14 +8,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.batua.android.merchant.R;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
-import com.batua.android.merchant.module.dashboard.view.HomeActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.common.util.social.AuthResult;
 import com.batua.android.merchant.module.common.util.social.SocialAuth;
 import com.batua.android.merchant.module.common.util.social.SocialAuthCallback;
+import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 
 import javax.inject.Inject;
 
@@ -70,7 +71,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
 
     }
 
-    @OnClick(com.batua.android.merchant.R.id.btn_login)
+    @OnClick(R.id.btn_login)
     void onLoginClick() {
         viewUtil.hideKeyboard(this);
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
@@ -86,13 +87,13 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
         inputLayoutEmail.setError("Invalid email or mobile number");
     }
 
-    @OnClick(com.batua.android.merchant.R.id.btn_gplus)
+    @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
     }
 
-    @OnClick(com.batua.android.merchant.R.id.txt_forgot_password)
+    @OnClick(R.id.txt_forgot_password)
     void onForgotPasswordClick() {
         startActivity(ForgotPasswordActivity.class, null);
         finish();

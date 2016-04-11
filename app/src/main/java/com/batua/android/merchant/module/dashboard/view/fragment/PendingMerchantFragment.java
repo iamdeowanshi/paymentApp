@@ -1,4 +1,4 @@
-package com.batua.android.merchant.module.dashboard.view;
+package com.batua.android.merchant.module.dashboard.view.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;

@@ -3,6 +3,10 @@ package com.batua.android.merchant.injection.module;
 
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
+import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenter;
+import com.batua.android.merchant.module.merchant.presenter.MerchantMerchantCategoryPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 
@@ -27,4 +31,13 @@ public class PresenterModule {
         return new MerchantListPresenterImpl();
     }
 
+    @Provides
+    public MerchantCategoryPresenter provideCategoryPresenter() {
+        return new MerchantMerchantCategoryPresenterImpl();
+    }
+
+    @Provides
+    public CityPresenter provideCityProvide() {
+        return new CityPresenterImpl();
+    }
 }

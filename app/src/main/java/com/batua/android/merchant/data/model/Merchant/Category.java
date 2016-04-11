@@ -19,6 +19,11 @@ public class Category extends BaseModel {
     @Expose
     public String name;
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     /**
      *
      * @return

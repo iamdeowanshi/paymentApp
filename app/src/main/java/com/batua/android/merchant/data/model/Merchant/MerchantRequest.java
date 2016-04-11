@@ -4,12 +4,16 @@ import com.batua.android.merchant.data.model.BaseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Aaditya Deowanshi.
  */
+@Parcel
 public class MerchantRequest extends BaseModel {
 
     @SerializedName("id")
@@ -29,7 +33,7 @@ public class MerchantRequest extends BaseModel {
     private String email;
     @SerializedName("phone")
     @Expose
-    private Integer phone;
+    private String phone;
     @SerializedName("imageGallery")
     @Expose
     private List<String> imageGallery = new ArrayList<String>();
@@ -59,7 +63,7 @@ public class MerchantRequest extends BaseModel {
     private String accountHolder;
     @SerializedName("accountNumber")
     @Expose
-    private Integer accountNumber;
+    private String accountNumber;
     @SerializedName("ifscCode")
     @Expose
     private String ifscCode;
@@ -171,7 +175,7 @@ public class MerchantRequest extends BaseModel {
      * @return
      * The phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -180,7 +184,7 @@ public class MerchantRequest extends BaseModel {
      * @param phone
      * The phone
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -351,7 +355,7 @@ public class MerchantRequest extends BaseModel {
      * @return
      * The accountNumber
      */
-    public Integer getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
@@ -360,7 +364,7 @@ public class MerchantRequest extends BaseModel {
      * @param accountNumber
      * The accountNumber
      */
-    public void setAccountNumber(Integer accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 

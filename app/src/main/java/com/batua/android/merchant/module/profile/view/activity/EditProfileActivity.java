@@ -12,7 +12,6 @@ import com.batua.android.merchant.module.common.util.ImageUtil;
 import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.CircularImageView;
 
-
 import java.io.File;
 
 import javax.inject.Inject;

@@ -1,4 +1,4 @@
-package com.batua.android.merchant.module.dashboard.view;
+package com.batua.android.merchant.module.dashboard.view.adapter;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,6 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.module.dashboard.view.fragment.ActiveMerchantFragment;
+import com.batua.android.merchant.module.dashboard.view.fragment.DraftedMerchantFragment;
+import com.batua.android.merchant.module.dashboard.view.fragment.PendingMerchantFragment;
 
 import org.parceler.Parcels;
 

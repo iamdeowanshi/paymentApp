@@ -1,7 +1,5 @@
 package com.batua.android.merchant.module.dashboard.presenter;
 
-import android.accounts.NetworkErrorException;
-
 import com.batua.android.merchant.data.api.ApiObserver;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.batua.android.merchant.data.model.Merchant.Merchant;

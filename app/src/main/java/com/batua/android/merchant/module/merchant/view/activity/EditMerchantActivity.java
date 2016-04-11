@@ -1,21 +1,26 @@
 package com.batua.android.merchant.module.merchant.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.TextView;
 
-
+import com.batua.android.merchant.R;
+import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
+import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
+import com.batua.android.merchant.module.merchant.view.adapter.MerchantFragmentPagerAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedListener;
-import com.batua.android.merchant.module.merchant.view.adapter.MerchantFragmentPagerAdapter;
+
+import org.parceler.Parcels;
 
 import javax.inject.Inject;
 
@@ -33,13 +38,17 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
     @Bind(com.batua.android.merchant.R.id.add_or__merchant_viewpager) ViewPager editMerchantViewPager;
 
     private TextView title;
-    private MerchantRequest merchantRequest;
+    private Merchant merchant;
+    private MerchantRequest merchantRequest = new MerchantRequest();
+    private MerchantFragmentPagerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.batua.android.merchant.R.layout.activity_add__or_edit_merchant);
         Injector.component().inject(this);
+
+        merchant = Parcels.unwrap(getIntent().getParcelableExtra("Merchant"));
 
         setToolBar();
         loadFragments();
@@ -49,24 +58,23 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.batua.android.merchant.R.menu.main_menu, menu);
 
-        menu.findItem(com.batua.android.merchant.R.id.action_edit).setVisible(false);
-        menu.findItem(com.batua.android.merchant.R.id.action_add_merchant).setVisible(false);
+        menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_add_merchant).setVisible(false);
+
+        if (merchant.getStatus() == "Pending for Approval") {
+            menu.findItem(R.id.action_save).setVisible(false);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-        switch (id) {
-            case com.batua.android.merchant.R.id.action_save:
-                startActivity(MerchantDetailsActivity.class,null);
-                //presenter.updateMerchant(null);
-                finish();
-                break;
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -83,19 +91,24 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
 
-        title = (TextView)toolbar.findViewById(com.batua.android.merchant.R.id.toolbar_title);
-        title.setText(com.batua.android.merchant.R.string.edit_merchant_title);
+        title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title.setText(R.string.edit_merchant_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void loadFragments() {
-        editMerchantViewPager.setAdapter(new MerchantFragmentPagerAdapter(getSupportFragmentManager(),this,"Edit", merchantRequest));
+        adapter = new MerchantFragmentPagerAdapter(getSupportFragmentManager(),this,"Edit", merchant);
+        editMerchantViewPager.setAdapter(adapter);
         editMerchantTabLayout.post(new Runnable() {
             @Override
             public void run() {
                 editMerchantTabLayout.setupWithViewPager(editMerchantViewPager);
             }
         });
+    }
+
+    public MerchantRequest getMerchantRequest() {
+        return merchantRequest;
     }
 
 }

@@ -139,6 +139,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Submit for approval"
+                android:id="@+id/btn_submit"
                 android:textColor="@color/white"
                 android:background="@drawable/bg_button_pink"
                 android:layout_below="@+id/txt_load_previous"

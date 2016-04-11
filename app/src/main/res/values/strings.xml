@@ -65,7 +65,10 @@
     </string-array>
 
     <string-array name="merchant_bank">
-        <item>@string/merchant_bank</item>
+        <item>HDFC</item>
+        <item>ICICI</item>
+        <item>SBI</item>
+        <item>AXIS</item>
     </string-array>
 
 </resources>

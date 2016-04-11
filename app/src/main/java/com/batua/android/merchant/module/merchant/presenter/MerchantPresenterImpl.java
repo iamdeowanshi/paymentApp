@@ -1,15 +1,11 @@
 package com.batua.android.merchant.module.merchant.presenter;
 
-import android.accounts.NetworkErrorException;
-
 import com.batua.android.merchant.data.api.ApiObserver;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
-import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseNetworkPresenter;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -45,7 +41,7 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
                     return;
                 }
 
-                getViewInteractor().merchantAdded(response.body());
+                getViewInteractor().showMerchant(response.body());
             }
         });
     }
@@ -67,7 +63,7 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
                     return;
                 }
 
-                getViewInteractor().merchantUpdated(response.body());
+                getViewInteractor().showMerchant(response.body());
             }
         });
     }

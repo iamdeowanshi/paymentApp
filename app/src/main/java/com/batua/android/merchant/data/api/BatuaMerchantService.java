@@ -1,8 +1,10 @@
 package com.batua.android.merchant.data.api;
 
 import com.batua.android.merchant.Config;
-import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
+import com.batua.android.merchant.data.model.Merchant.Category;
+import com.batua.android.merchant.data.model.Merchant.City;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 
 import java.util.List;
 
@@ -28,5 +30,11 @@ public interface BatuaMerchantService {
 
     @GET(Config.LIST_MERCHANT)
     Observable<Response<List<Merchant>>> getMerchants(@Path("salesAgentId") int salesId, @Header("Access-Token") String header);
+
+    @GET(Config.CATEGORY)
+    Observable<Response<List<Category>>> getCategories(@Header("Access-Token") String header);
+
+    @GET(Config.CITY)
+    Observable<Response<List<City>>> getCities(@Header("Access-Token") String header);
 
 }
