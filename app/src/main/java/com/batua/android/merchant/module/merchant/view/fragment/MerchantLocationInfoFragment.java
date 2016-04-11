@@ -513,7 +513,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void loadData() {
-        if (merchant.getLocation().getCity() != null) {
+
+        if (merchant.getLocation() != null) {
             edtCity.setText(merchant.getLocation().getCity().getName());
         }
 
@@ -521,7 +522,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             edtAddress.setText(merchant.getAddress());
         }
 
-        if (merchant.getLocation().getPincode() != null) {
+        if (merchant.getLocation() != null) {
             edtPin.setText(String.valueOf(merchant.getLocation().getPincode()));
         }
     }
