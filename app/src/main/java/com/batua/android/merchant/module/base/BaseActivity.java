@@ -39,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
+        /*ActivityManager mngr = (ActivityManager) getSystemService( ACTIVITY_SERVICE );
 
         List<ActivityManager.RunningTaskInfo> taskList = mngr.getRunningTasks(10);
 
@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             return;
         }
 
-        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);
+        overridePendingTransition(R.anim.push_right_in, R.anim.push_right_out);*/
     }
 
     @Override

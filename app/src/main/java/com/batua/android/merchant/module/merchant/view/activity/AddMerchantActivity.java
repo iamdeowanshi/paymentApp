@@ -67,7 +67,6 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
         menu.findItem(com.batua.android.merchant.R.id.action_add_merchant).setVisible(false);
 
         return super.onCreateOptionsMenu(menu);
-
     }
 
     @Override
