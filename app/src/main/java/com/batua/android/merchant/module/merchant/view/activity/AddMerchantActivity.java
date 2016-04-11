@@ -164,7 +164,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     @Override
     public void showMerchant(Merchant response) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Merchant", Parcels.wrap(response));
+        bundle.putParcelable("MerchantDetail", Parcels.wrap(response));
         startActivity(MerchantDetailsActivity.class, bundle);
         finish();
     }

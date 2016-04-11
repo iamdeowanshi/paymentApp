@@ -16,6 +16,7 @@ import com.batua.android.merchant.module.common.util.social.SocialAuth;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantMerchantCategoryPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
@@ -71,6 +72,7 @@ public interface ApplicationComponent {
     void inject(MerchantListPresenterImpl merchantListPresenter);
     void inject(CityPresenterImpl cityPresenter);
     void inject(MerchantMerchantCategoryPresenterImpl categoryPresenter);
+    void inject(ImageUploadPresenterImpl imageUploadPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

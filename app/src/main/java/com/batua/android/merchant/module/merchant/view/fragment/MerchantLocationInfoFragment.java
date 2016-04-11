@@ -91,6 +91,8 @@ import timber.log.Timber;
 public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, MerchantViewInteractor, CityViewInteractor {
 
     private static final int LOCATION_INFO_POSITION = 1;
+    private static final int LOCATION_REQUEST_CODE = 2;
+    final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, 180), new LatLng(85, -180));
     private static final String NO_SERVICE = "No Service!";
 
@@ -308,7 +310,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     void onCityChange(CharSequence text) {
         int position = 0;
 
-        if (cities.size() > 0) {
+        if (cities!=null && cities.size() > 0) {
             position = cities.indexOf(text.toString());
         }
 

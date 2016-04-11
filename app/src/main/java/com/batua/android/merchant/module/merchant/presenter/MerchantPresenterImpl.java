@@ -9,6 +9,9 @@ import com.batua.android.merchant.module.base.BaseNetworkPresenter;
 
 import javax.inject.Inject;
 
+import okhttp3.MultipartBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
 import retrofit2.Response;
 import rx.Observable;
 import timber.log.Timber;

@@ -22,11 +22,11 @@ import butterknife.ButterKnife;
  */
 public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddImagesViewHolder>{
 
-    private List<ImageEntry> customGalleryList;
+    private List<String> customGalleryList;
     private Context context;
     private RemoveImageClickedListener removeImageClickedListener;
 
-    public AddImagesAdapter(List<ImageEntry> customGalleries, RemoveImageClickedListener removeImageClickedListener) {
+    public AddImagesAdapter(List<String> customGalleries, RemoveImageClickedListener removeImageClickedListener) {
         this.customGalleryList = customGalleries;
         this.removeImageClickedListener = removeImageClickedListener;
     }
@@ -43,7 +43,7 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
     @Override
     public void onBindViewHolder(AddImagesViewHolder addImagesViewHolder, final int position) {
         Glide.with(context)
-                .load(customGalleryList.get(position).path)
+                .load(customGalleryList.get(position))
                 .centerCrop()
                 .into(addImagesViewHolder.imgMerchantImages);
 
