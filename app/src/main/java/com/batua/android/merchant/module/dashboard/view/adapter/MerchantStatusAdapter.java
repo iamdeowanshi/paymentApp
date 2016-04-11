@@ -2,6 +2,8 @@ package com.batua.android.merchant.module.dashboard.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -51,14 +55,14 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
         viewHolder.txtMerchantAddress.setText(merchant.getAddress());
         viewHolder.txtMerchantShortCode.setText(merchant.getShortCode());
         if (merchant.getStatus().equals(ACTIVE_STATUS)) {
-            viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.green));
+            viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, com.batua.android.merchant.R.color.green));
         }else if (merchant.getStatus().equals(PENDING_STATUS)) {
-            viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.yellow_dark));
+            viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, com.batua.android.merchant.R.color.yellow_dark));
         } else if (merchant.getStatus().equals(DRAFTED_STATUS)){
-            viewHolder.view.setBackgroundColor(context.getResources().getColor(com.batua.android.merchant.R.color.red_selected));
+            viewHolder.view.setBackgroundColor(ContextCompat.getColor(context, com.batua.android.merchant.R.color.red_selected));
         }
 
-        viewHolder.itemView.setOnClickListener(new MerchantClickListener(position, merchant.getStatus()));
+        viewHolder.itemView.setOnClickListener(new MerchantClickListener(merchant));
     }
 
     @Override
@@ -86,19 +90,19 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
 
     class MerchantClickListener implements View.OnClickListener{
 
-        private int position;
-        private String status;
+        private Merchant merchant;
 
-        public MerchantClickListener(int position, String status) {
-            this.status = status;
-            this.position = position;
+        public MerchantClickListener(Merchant merchant) {
+            this.merchant = merchant;
         }
 
         @Override
         public void onClick(View v) {
-            Timber.d(position + " " + status);
+
             Intent i = new Intent(context, MerchantDetailsActivity.class);
-            i.putExtra("position", position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("MerchantDetail", Parcels.wrap(merchant));
+            i.putExtras(bundle);
             context.startActivity(i);
         }
     }

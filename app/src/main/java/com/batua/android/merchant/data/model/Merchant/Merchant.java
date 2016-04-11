@@ -82,16 +82,16 @@ public class Merchant extends BaseModel {
     @SerializedName("categoryId")
     @Expose
     private Integer categoryId;
-    @SerializedName("User")
+    @SerializedName("users")
     @Expose
     private User User;
-    @SerializedName("Galleries")
+    @SerializedName("galleries")
     @Expose
-    private List<Gallery> Galleries = new ArrayList<Gallery>();
-    @SerializedName("Category")
+    private List<Gallery> galleries = new ArrayList<Gallery>();
+    @SerializedName("categories")
     @Expose
     private Category Category;
-    @SerializedName("Location")
+    @SerializedName("locations")
     @Expose
     private Location Location;
 
@@ -512,19 +512,19 @@ public class Merchant extends BaseModel {
     /**
      *
      * @return
-     * The Galleries
+     * The galleries
      */
     public List<Gallery> getGalleries() {
-        return Galleries;
+        return galleries;
     }
 
     /**
      *
      * @param Galleries
-     * The Galleries
+     * The galleries
      */
     public void setGalleries(List<Gallery> Galleries) {
-        this.Galleries = Galleries;
+        this.galleries = Galleries;
     }
 
     /**

@@ -40,4 +40,9 @@ public class PresenterModule {
     public CityPresenter provideCityProvide() {
         return new CityPresenterImpl();
     }
+    @Provides
+    public MerchantDetailPresenter provideMerchantDetailPresenter() {
+        return new MerchantDetailPresenterImpl();
+    }
+
 }
