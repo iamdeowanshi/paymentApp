@@ -29,7 +29,7 @@
                     android:id="@+id/img_profile"
                     android:layout_margin="10dp"
                     android:layout_alignParentBottom="true"
-                    android:background="@drawable/profile_pic_container"
+                    android:src="@drawable/profile_pic_container"
                     android:layout_alignParentTop="true" />
 
                 <TextView

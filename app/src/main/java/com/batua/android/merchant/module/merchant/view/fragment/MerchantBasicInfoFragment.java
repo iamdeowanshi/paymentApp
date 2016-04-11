@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -71,7 +72,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
     @Bind(R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
     @Bind(R.id.edt_merchant_email) EditText edtEmail;
-    @Bind(R.id.img_profile) CircularImageView profileImage;
+    @Bind(R.id.img_profile) ImageView profileImage;
     @Bind(R.id.edt_merchant_name) EditText edtName;
     @Bind(R.id.edt_merchant_short_code) EditText edtShortCode;
     @Bind(R.id.edt_merchant_mobile) EditText edtMobile;
@@ -103,8 +104,8 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         categoryPresenter.attachViewInteractor(this);
         imageUtil.setImageUtilCallback(this);
 
-        merchantRequest = (merchant == null) ? ((AddMerchantActivity) getActivity()).getMerchantRequest() : ((EditMerchantActivity) getActivity()).getMerchantRequest();
         merchant = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
+        merchantRequest = (merchant == null) ? ((AddMerchantActivity) getActivity()).getMerchantRequest() : ((EditMerchantActivity) getActivity()).getMerchantRequest();
 
         categoryPresenter.getCategory();
 
@@ -115,19 +116,6 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         hideAddImageRecyclerView();
         setSpinnerListener();
     }
-
-/*    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_save:
-                onSaveClick();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -229,13 +217,19 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     private void loadData() {
         edtName.setText(merchant.getName());
-        edtShortCode.setText(merchant.getShortCode());
-        edtEmail.setText(merchant.getEmail());
         edtMobile.setText(merchant.getPhone().toString());
-        edtFee.setText(merchant.getFees());
+        edtShortCode.setText(merchant.getShortCode());
+        edtFee.setText(String.valueOf(merchant.getFees()));
+        if (merchant.getEmail() != null) {
+            edtEmail.setText(merchant.getEmail());
+        }
 
         if (categories != null) {
             spinnerMerchantCategory.setSelection(categories.indexOf(merchant.getCategoryId()));
+        }
+
+        if (merchant.getProfileImageUrl() != null) {
+            Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fitCenter().into(profileImage);
         }
     }
 
@@ -257,56 +251,6 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         imageRecyclerView.setLayoutManager(llayout);
         imageRecyclerView.setAdapter(addImagesAdapter);
     }
-
-/*    private void setData() {
-        merchantRequest = (merchant == null) ? ((AddMerchantActivity) getActivity()).getMerchantRequest() : ((EditMerchantActivity) getActivity()).getMerchantRequest();
-
-        merchantRequest.setName(edtName.getText().toString());
-        merchantRequest.setShortCode(edtShortCode.getText().toString());
-        merchantRequest.setEmail(edtEmail.getText().toString());
-        merchantRequest.setPhone(edtMobile.getText().toString());
-        merchantRequest.setFee(Integer.valueOf(edtFee.getText().toString()));
-        merchantRequest.setStatus("Drafted");
-    }*/
-
-/*    private void togglePresenter() {
-        if (merchant != null) {
-            merchantPresenter.updateMerchant(merchantRequest);
-            return;
-        }
-
-        merchantPresenter.addMerchant(merchantRequest);
-    }*/
-
-/*    private boolean validateData() {
-        if (edtName.getText().toString().isEmpty()) {
-            return false;
-        }
-
-        if (edtShortCode.getText().toString().isEmpty()) {
-            return false;
-        }
-
-        if (edtMobile.getText().toString().isEmpty()) {
-            return false;
-        }
-
-        if (edtFee.getText().toString().isEmpty()) {
-            return false;
-        }
-
-        return true;
-    }*/
-
-/*    private void onSaveClick() {
-        if (validateData()) {
-            setData();
-            togglePresenter();
-            return;
-        }
-
-        bakery.snackShort(getContentView(), "Mandatory Basic information are missing");
-    }*/
 
     private void setSpinnerListener() {
         spinnerMerchantCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

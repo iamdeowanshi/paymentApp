@@ -78,7 +78,12 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
         merchant = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
         merchantRequest = (merchant == null) ? ((AddMerchantActivity) getActivity()).getMerchantRequest() : ((EditMerchantActivity) getActivity()).getMerchantRequest();
+
         bankList = Arrays.asList(getResources().getStringArray(R.array.merchant_bank));
+
+        if (merchant != null) {
+            loadData();
+        }
 
         SpinnerLoad.loadSpinner(getContext(), R.array.merchant_bank, spinnerBank);
         setSpinnerListener();
@@ -220,6 +225,28 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
                 merchantRequest.setBankName(bankList.get(spinnerBank.getSelectedItemPosition()));
             }
         });
+    }
+
+    private void loadData() {
+        if (merchant.getAccountHolder() != null) {
+            edtAccountHolder.setText(merchant.getAccountHolder());
+        }
+
+        if (merchant.getBankName() != null) {
+            spinnerBank.setSelection(bankList.indexOf(merchant.getBankName()));
+        }
+
+        if (merchant.getAccountNumber() != null) {
+            edtAccountNumber.setText(merchant.getAccountNumber().toString());
+        }
+
+        if (merchant.getBranchName() != null) {
+            edtBankBranch.setText(merchant.getBranchName());
+        }
+
+        if (merchant.getIfscCode() != null) {
+            edtIfscCode.setText(merchant.getIfscCode());
+        }
     }
 
 }
