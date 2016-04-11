@@ -78,15 +78,14 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         setToolBar();
 
         presenter.getMerchant("");
-        //loadFragments();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.batua.android.merchant.R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
-        menu.findItem(com.batua.android.merchant.R.id.action_edit).setVisible(false);
-        menu.findItem(com.batua.android.merchant.R.id.action_save).setVisible(false);
+        menu.findItem(R.id.action_edit).setVisible(false);
+        menu.findItem(R.id.action_save).setVisible(false);
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -154,7 +153,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        title = (TextView)toolbar.findViewById(com.batua.android.merchant.R.id.toolbar_title);
+        title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);

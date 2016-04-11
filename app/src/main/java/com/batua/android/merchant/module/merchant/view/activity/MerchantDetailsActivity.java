@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.BaseActivity;
+import com.bumptech.glide.Glide;
+import com.github.siyamed.shapeimageview.CircularImageView;
 
 import org.parceler.Parcels;
 
@@ -45,6 +47,7 @@ public class MerchantDetailsActivity extends BaseActivity {
     @Bind(R.id.third_image) ImageView thirdGalleyImage;
     @Bind(R.id.fourth_image) ImageView fourthGalleyImage;
     @Bind(R.id.fifth_image) ImageView fifthGalleyImage;
+    @Bind(R.id.merchant_dp) ImageView merchantDp;
 
     private Merchant merchant;
 
@@ -70,7 +73,9 @@ public class MerchantDetailsActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case com.batua.android.merchant.R.id.action_edit:
-                startActivity(EditMerchantActivity.class, null);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Merchant", Parcels.wrap(merchant));
+                startActivity(EditMerchantActivity.class, bundle);
                 break;
 
             case android.R.id.home:
@@ -86,7 +91,7 @@ public class MerchantDetailsActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(com.batua.android.merchant.R.id.view_images)
+    @OnClick(R.id.view_images)
     void onViewImagesClick() {
         startActivity(GalleryImagesActivity.class, null);
         finish();
@@ -96,15 +101,38 @@ public class MerchantDetailsActivity extends BaseActivity {
         scrollView.setVisibility(View.VISIBLE);
         setToolBar(merchant.getName());
         txtShortCode.setText(merchant.getShortCode());
-        txtAddress.setText(merchant.getAddress());
+        if (merchant.getAddress() != null) {
+            txtAddress.setText(merchant.getAddress());
+        }
+
         txtFees.setText(merchant.getFees() + "%");
-        txtEmail.setText(merchant.getEmail());
+
+        if (merchant.getEmail() != null ) {
+            txtEmail.setText(merchant.getEmail());
+        }
+
         txtCall.setText(merchant.getPhone().toString());
-        txtAccountNumber.setText(merchant.getAccountNumber().toString());
-        txtAccountName.setText(merchant.getAccountHolder());
-        txtBank.setText(merchant.getBankName());
-        txtBranch.setText(merchant.getBranchName());
-        txtIfsc.setText(merchant.getIfscCode());
+
+        if (merchant.getAccountNumber() != null) {
+            txtAccountNumber.setText(merchant.getAccountNumber().toString());
+        }
+
+        if (merchant.getAccountHolder() != null) {
+            txtAccountName.setText(merchant.getAccountHolder());
+        }
+
+        if (merchant.getBankName() != null) {
+            txtBank.setText(merchant.getBankName());
+        }
+
+        if (merchant.getBranchName() != null) {
+            txtBranch.setText(merchant.getBranchName());
+        }
+
+        if (merchant.getIfscCode() != null) {
+            txtIfsc.setText(merchant.getIfscCode());
+        }
+
         String status = merchant.getStatus();
         txtStatus.setText(status);
 
@@ -114,6 +142,10 @@ public class MerchantDetailsActivity extends BaseActivity {
             txtStatus.setTextColor(ContextCompat.getColor(this, R.color.red_selected));
         } else {
             txtStatus.setTextColor(ContextCompat.getColor(this, R.color.yellow_dark));
+        }
+
+        if (merchant.getProfileImageUrl() != null) {
+            Glide.with(this).load(merchant.getProfileImageUrl()).centerCrop().fitCenter().into(merchantDp);
         }
 
         if (merchant.getGalleries().size() == 0) {

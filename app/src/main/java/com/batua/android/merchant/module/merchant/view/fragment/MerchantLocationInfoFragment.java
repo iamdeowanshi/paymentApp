@@ -146,6 +146,10 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         merchant = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
         merchantRequest = (merchant == null) ? ((AddMerchantActivity) getActivity()).getMerchantRequest() : ((EditMerchantActivity) getActivity()).getMerchantRequest();
 
+        if (merchant != null) {
+            loadData();
+        }
+
         checkLocationPermission();
         buildGoogleApiClient();
         inflateSearchAddressAdapter();
@@ -237,6 +241,11 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     @Override
     public void onConnected(Bundle bundle) {
+        if (merchant != null && merchant.getAddress() != null) {
+            animateCamera(new LatLng(merchant.getLatitude(), merchant.getLongitude()), "address");
+            return;
+        }
+
         showCurrentPosition();
     }
 
@@ -429,16 +438,17 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void showCurrentPosition() {
         try {
-            if (isLocationEnabled()) {
-                Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
-                if (location != null) {
-                    LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
-                    animateCamera(curentpoint, "myLocation");
-                }
+            if ( ! isLocationEnabled()) {
+                showSettingsAlert();
                 return;
             }
 
-            showSettingsAlert();
+            Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+            if (location != null) {
+                LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
+                animateCamera(curentpoint, "myLocation");
+            }
+
         } catch (SecurityException e) {
             bakery.snack(getContentView(), "Please enable Location", Snackbar.LENGTH_SHORT);
         }
@@ -500,6 +510,20 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     public void setPreviousClickedListener(PreviousClickedListener previousClickedListener) {
         this.previousClickedListener = previousClickedListener;
+    }
+
+    private void loadData() {
+        if (merchant.getLocation().getCity() != null) {
+            edtCity.setText(merchant.getLocation().getCity().getName());
+        }
+
+        if (merchant.getAddress() != null) {
+            edtAddress.setText(merchant.getAddress());
+        }
+
+        if (merchant.getLocation().getPincode() != null) {
+            edtPin.setText(String.valueOf(merchant.getLocation().getPincode()));
+        }
     }
 
 }
