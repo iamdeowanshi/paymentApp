@@ -93,8 +93,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private static final int LOCATION_INFO_POSITION = 1;
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, 180), new LatLng(85, -180));
     private static final String NO_SERVICE = "No Service!";
-    private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
-    private static final int LOCATION_REQUEST_CODE = 4;
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
@@ -147,6 +145,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         merchantRequest = (merchant == null) ? ((AddMerchantActivity) getActivity()).getMerchantRequest() : ((EditMerchantActivity) getActivity()).getMerchantRequest();
 
         checkLocationPermission();
+        buildGoogleApiClient();
+        inflateSearchAddressAdapter();
         initialiseMapUiSettings();
 
         edtAddress.addTextChangedListener(new TextWatcher() {
