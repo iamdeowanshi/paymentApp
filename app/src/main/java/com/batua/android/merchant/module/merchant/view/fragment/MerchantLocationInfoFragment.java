@@ -7,10 +7,10 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,20 +23,13 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.EditText;
-import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.City;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
-import com.batua.android.merchant.injection.Injector;
-import com.batua.android.merchant.R;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
@@ -46,15 +39,15 @@ import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteract
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
-import com.batua.android.merchant.module.merchant.view.adapter.SpinAdapter;
+import com.batua.android.merchant.module.merchant.view.adapter.SearchCityAdapter;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.merchant.view.adapter.SearchAddressAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.AutoCompleteRecyclerItemClickListener;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
+import com.batua.android.merchant.module.merchant.view.listener.CitySelectedListener;
 import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedListener;
-import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -65,7 +58,6 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -88,7 +80,8 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, MerchantViewInteractor, CityViewInteractor {
+public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener,
+        MerchantViewInteractor, CityViewInteractor, CitySelectedListener {
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final int LOCATION_REQUEST_CODE = 2;
@@ -104,9 +97,11 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Bind(R.id.edt_merchant_city) EditText edtCity;
     @Bind(R.id.edt_merchant_pin_code) EditText edtPin;
     @Bind(R.id.recyclerView_search_address) RecyclerView searchAddressRecycler;
+    @Bind(R.id.recyclerView_search_city) RecyclerView searchCityRecycler;
     @Bind(R.id.edt_merchant_address) EditText edtAddress;
     @Bind(R.id.merchant_location_map) LinearLayout locationLayout;
     @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
+    @Bind(R.id.input_layout_merchant_city) TextInputLayout inputLayoutMerchantCity;
 
     private Merchant merchant;
     private MerchantRequest merchantRequest;
@@ -115,6 +110,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private NextClickedListener nextClickedListener;
     private PreviousClickedListener previousClickedListener;
     private SearchAddressAdapter searchAddressAdapter;
+    private SearchCityAdapter searchCityAdapter;
     private GoogleMap googleMap;
 
     private double latitude;
@@ -154,6 +150,23 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         buildGoogleApiClient();
         inflateSearchAddressAdapter();
         initialiseMapUiSettings();
+
+        /*edtCity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });*/
 
         edtAddress.addTextChangedListener(new TextWatcher() {
 
@@ -230,7 +243,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Override
     public void onResume() {
         super.onResume();
-        googleApiClient.connect();
+        if (googleApiClient!=null) {
+            googleApiClient.connect();
+        }
     }
 
     // GoogleApiClient.ConnectionCallbacks and GoogleApiClient.OnConnectionFailedListener override methods
@@ -317,15 +332,14 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     @OnTextChanged(R.id.edt_merchant_city)
     void onCityChange(CharSequence text) {
-        int position = 0;
+        if (cities!=null && !text.toString().isEmpty()) {
+            hideAllExceptCity();
+            searchCityAdapter.getFilter().filter(text.toString());
 
-        if (cities!=null && cities.size() > 0) {
-            position = cities.indexOf(text.toString());
+            return;
         }
-
-        /*if ( position >= 0) {
-            merchantRequest.setCityId(cities.get(position).getId());
-        }*/
+        searchCityAdapter.getFilter().filter(text.toString());
+        showAll();
     }
 
     @OnTextChanged(R.id.edt_merchant_address)
@@ -351,10 +365,20 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Override
     public void showCities(List<City> cities) {
         this.cities = cities;
+        inflateSearchCityAdapter();
+    }
 
-        /*SpinAdapter arrayAdapter = new SpinAdapter(getContext(), android.R.layout.simple_dropdown_item_1line, this.cities);
-        edtCity.setAdapter(arrayAdapter);*/
+    @Override
+    public void displayError() {
+        edtCity.setError("We don't have service in this city");
+    }
 
+    @Override
+    public void displayCity(int cityId, String cityName) {
+        edtCity.setError(null);
+        edtCity.setText(cityName);
+        merchantRequest.setCityId(cityId);
+        showAll();
     }
 
     private void showLocationPermissionsSnackbar() {
@@ -372,6 +396,13 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         searchAddressRecycler.setLayoutManager(linearLayoutManager);
         searchAddressRecycler.setAdapter(searchAddressAdapter);
+    }
+
+    private void inflateSearchCityAdapter() {
+        searchCityAdapter = new SearchCityAdapter(cities, this);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
+        searchCityRecycler.setLayoutManager(linearLayoutManager);
+        searchCityRecycler.setAdapter(searchCityAdapter);
     }
 
     private void initialiseMapUiSettings() {
@@ -395,6 +426,28 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                 }
             }
         });
+    }
+
+    private void hideAllExceptCity(){
+        edtCity.setError(null);
+        searchCityRecycler.setVisibility(View.VISIBLE);
+        edtAddress.setVisibility(View.GONE);
+        searchAddressRecycler.setVisibility(View.GONE);
+        edtPin.setVisibility(View.GONE);
+        locationLayout.setVisibility(View.GONE);
+        navigationLayout.setVisibility(View.GONE);
+        googleMap.setOnMyLocationChangeListener(this);
+    }
+
+    private void showAll(){
+        edtCity.setError(null);
+        searchCityRecycler.setVisibility(View.GONE);
+        edtAddress.setVisibility(View.VISIBLE);
+        searchAddressRecycler.setVisibility(View.GONE);
+        edtPin.setVisibility(View.VISIBLE);
+        locationLayout.setVisibility(View.VISIBLE);
+        navigationLayout.setVisibility(View.VISIBLE);
+        googleMap.setOnMyLocationChangeListener(null);
     }
 
     private void hidePinAndMap() {

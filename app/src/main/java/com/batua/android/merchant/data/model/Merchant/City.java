@@ -25,6 +25,12 @@ public class City extends BaseModel {
     @Expose
     protected String country;
 
+    public City() {}
+
+    public City(String name) {
+        this.name = name;
+    }
+
     /**
      *
      * @return
