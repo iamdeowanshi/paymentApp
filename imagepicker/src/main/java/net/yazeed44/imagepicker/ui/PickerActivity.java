@@ -478,9 +478,9 @@ public class PickerActivity extends AppCompatActivity {
             imageEntry.isPicked = true;
             sCheckedImages.add(imageEntry);
         } else {
-            Snackbar.make(getContentView(), "You can't check more than " + mPickOptions.limit + " images", Snackbar.LENGTH_SHORT ).show();
+            Snackbar.make(getContentView(), "You can't select more than " + mPickOptions.limit + " images", Snackbar.LENGTH_SHORT ).show();
 //            Toast.makeText(this, "You can't check more than " + mPickOptions.limit + " images", Toast.LENGTH_SHORT).show();
-            Log.i("onPickImage", "You can't check more than " + mPickOptions.limit + " images");
+            Log.i("onPickImage", "You can't select more than " + mPickOptions.limit + " images");
         }
 
     }

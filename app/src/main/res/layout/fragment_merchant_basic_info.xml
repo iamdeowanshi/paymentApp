@@ -30,6 +30,8 @@
                     android:layout_margin="10dp"
                     android:layout_alignParentBottom="true"
                     android:src="@drawable/profile_pic_container"
+                    app:siBorderColor="@color/light_gray"
+                    app:siBorderWidth="2dp"
                     android:layout_alignParentTop="true" />
 
                 <TextView
@@ -246,6 +248,16 @@
                 android:textColor="@color/pink"
                 android:id="@+id/txt_load_next"
                 android:layout_below="@+id/add_images_recycler_view"/>
+
+            <ProgressBar
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/progressBar"
+                android:visibility="gone"
+                android:layout_marginLeft="10dp"
+                android:layout_above="@+id/add_images_recycler_view"
+                android:layout_toRightOf="@+id/txt_add_image" />
 
         </RelativeLayout>
 

@@ -1,8 +1,10 @@
 package com.batua.android.merchant.module.merchant.view.fragment;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,30 +12,30 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Category;
+import com.batua.android.merchant.data.model.Merchant.Gallery;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.ImageUtil;
+import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenter;
+import com.batua.android.merchant.module.merchant.presenter.ImageUploadViewInteractor;
 import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryViewInteractor;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
-import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteractor;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActivity;
-import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
 import com.batua.android.merchant.module.merchant.view.adapter.AddImagesAdapter;
 import com.batua.android.merchant.module.merchant.view.adapter.SpinAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
@@ -47,7 +49,6 @@ import net.yazeed44.imagepicker.util.Picker;
 import org.parceler.Parcels;
 
 import java.io.File;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,20 +57,27 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import timber.log.Timber;
 
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantBasicInfoFragment extends BaseFragment implements Picker.PickListener, RemoveImageClickedListener, MerchantCategoryViewInteractor, ImageUtil.ImageUtilCallback {
+public class MerchantBasicInfoFragment extends BaseFragment implements Picker.PickListener, RemoveImageClickedListener, MerchantCategoryViewInteractor, ImageUtil.ImageUtilCallback, ImageUploadViewInteractor {
 
     private static final String TAG = "Image Multipick";
+    private static final int PROFILE_FLAG = 1;
+    private static final int ADD_IMAGES_FLAG = 2;
     private static int BASIC_INFO_POSITION = 0;
-    private static final int PHOTO_MULTI_SELECT_LIMIT = 10;
+    private static final int PHOTO_MULTI_SELECT_LIMIT = 5;
 
     @Inject Bakery bakery;
     @Inject ImageUtil imageUtil;
     @Inject MerchantPresenter merchantPresenter;
     @Inject MerchantCategoryPresenter categoryPresenter;
+    @Inject ImageUploadPresenter imageUploadPresenter;
 
     @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
     @Bind(R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
@@ -80,14 +88,16 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.edt_merchant_mobile) EditText edtMobile;
     @Bind(R.id.edt_merchant_fee) EditText edtFee;
     @Bind(R.id.input_layout_merchant_email) TextInputLayout inputLayoutEmail;
+    @Bind(R.id.progressBar) ProgressBar progressBar;
 
     private NextClickedListener nextClickedListener;
     private Merchant merchant;
     private MerchantRequest merchantRequest;
 
-    private ArrayList<ImageEntry> selectedImages;
+    private List<String> selectedImages;
     private AddImagesAdapter addImagesAdapter;
     private List<Category> categories;
+    private List<String> galleries = new ArrayList<String>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -105,6 +115,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         super.onViewCreated(view, savedInstanceState);
         Injector.component().inject(this);
         categoryPresenter.attachViewInteractor(this);
+        imageUploadPresenter.attachViewInteractor(this);
         imageUtil.setImageUtilCallback(this);
 
         merchant = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
@@ -190,7 +201,32 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Override
     public void onSuccess(Uri uri, File file) {
         //TODO : call presenter and on success of presenter save url to merchantRequest.
-        Glide.with(this).load(uri).into(profileImage);
+        imageUploadPresenter.uploadImage(file, PROFILE_FLAG);
+    }
+
+    // View Interactor overrides
+    @Override
+    public void showUploadingProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideUploadingProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onMerchantImageUploadSuccess(String merchantImage) {
+        galleries.add(merchantImage);
+        merchantRequest.setImageGallery(galleries);
+        Timber.d(".......", galleries.toString());
+        selectedImages = galleries;
+        populateAdapter(galleries, addImagesrecyclerView);
+    }
+
+    @Override
+    public void onProfileImageUploadSuccess(String merchantImage) {
+        Glide.with(this).load(merchantImage).into(profileImage);
     }
 
     // overidden methods of multipick images
@@ -198,13 +234,18 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     public void onPickedSuccessfully(ArrayList<ImageEntry> images) {
         if (images.size() > 0) {
             showAddImageRecyclerView();
-            selectedImages = images;
-            populateAdapter(selectedImages, addImagesrecyclerView);
+            uploadImage(images);
 
             return;
         }
 
         hideAddImageRecyclerView();
+    }
+
+    private void uploadImage(ArrayList<ImageEntry> selectedImages) {
+        for (ImageEntry image : selectedImages) {
+            imageUploadPresenter.uploadImage(new File(image.path), ADD_IMAGES_FLAG);
+        }
     }
 
     @Override
@@ -234,6 +275,14 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         spinnerMerchantCategory.setSelection(0);
         spinnerMerchantCategory.setAdapter(spinAdapter);
     }
+
+    /*private String getRealPathFromUri(Uri uri) {
+        Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
+        cursor.moveToFirst();
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+
+        return cursor.getString(idx);
+    }*/
 
     private void loadData() {
         edtName.setText(merchant.getName());
@@ -271,7 +320,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         this.nextClickedListener = nextClickedListener;
     }
 
-    private void populateAdapter(List<ImageEntry> customGalleryList, RecyclerView imageRecyclerView) {
+    private void populateAdapter(List<String> customGalleryList, RecyclerView imageRecyclerView) {
         addImagesAdapter = new AddImagesAdapter(customGalleryList, this);
         LinearLayoutManager llayout = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         imageRecyclerView.setLayoutManager(llayout);

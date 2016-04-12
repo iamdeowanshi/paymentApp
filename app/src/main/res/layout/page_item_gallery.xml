@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<com.batua.android.merchant.ui.custom.ZoomImageView
+<com.batua.android.merchant.module.common.view.custom.ZoomImageView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/white"
     android:id="@+id/image_view"
