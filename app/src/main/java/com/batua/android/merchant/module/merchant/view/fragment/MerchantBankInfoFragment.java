@@ -184,7 +184,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
             return false;
         }
 
-        if (merchantRequest.getFee() == null || merchantRequest.getFee() == 0) {
+        if ( merchantRequest.getFee() == 0) {
             return false;
         }
 

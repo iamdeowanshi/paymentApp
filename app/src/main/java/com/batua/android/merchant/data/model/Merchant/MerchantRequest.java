@@ -39,7 +39,7 @@ public class MerchantRequest extends BaseModel {
     private List<String> imageGallery = new ArrayList<String>();
     @SerializedName("fees")
     @Expose
-    private Integer fee;
+    private Double fee;
     @SerializedName("categoryId")
     @Expose
     private Integer categoryId;
@@ -246,7 +246,7 @@ public class MerchantRequest extends BaseModel {
      * @return
      * The fee
      */
-    public Integer getFee() {
+    public double getFee() {
         return fee;
     }
 
@@ -255,7 +255,7 @@ public class MerchantRequest extends BaseModel {
      * @param fee
      * The fee
      */
-    public void setFee(Integer fee) {
+    public void setFee(double fee) {
         this.fee = fee;
     }
 

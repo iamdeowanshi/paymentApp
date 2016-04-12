@@ -48,7 +48,7 @@ public class Merchant extends BaseModel {
     private float averageRating;
     @SerializedName("fees")
     @Expose
-    private Integer fees;
+    private double fees;
     @SerializedName("bankName")
     @Expose
     private String bankName;
@@ -280,7 +280,7 @@ public class Merchant extends BaseModel {
      * @return
      * The fees
      */
-    public Integer getFees() {
+    public double getFees() {
         return fees;
     }
 
@@ -289,7 +289,7 @@ public class Merchant extends BaseModel {
      * @param fees
      * The fees
      */
-    public void setFees(Integer fees) {
+    public void setFees(double fees) {
         this.fees = fees;
     }
 

@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -106,6 +107,7 @@ public   class MerchantLocationInfoFragment extends BaseFragment implements Goog
     @Bind(R.id.edt_merchant_address) EditText edtAddress;
     @Bind(R.id.merchant_location_map) LinearLayout locationLayout;
     @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
+    @Bind(R.id.input_layout_merchant_pin_code) TextInputLayout inputLayoutPin;
 
     private Merchant merchant;
     private MerchantRequest merchantRequest;
@@ -336,8 +338,17 @@ public   class MerchantLocationInfoFragment extends BaseFragment implements Goog
     }
 
     @OnTextChanged(R.id.edt_merchant_pin_code)
-    void onPinChange(int text) {
-        merchantRequest.setPincode(text);
+    void onPinChange(CharSequence text) {
+        if (text.length() != 6) {
+            merchantRequest.setFee(0.0);
+            inputLayoutPin.setErrorEnabled(true);
+            inputLayoutPin.setError("Invalid Pin");
+            return;
+        }
+
+        merchantRequest.setPincode(Integer.parseInt(text.toString()));
+        inputLayoutPin.setErrorEnabled(false);
+
     }
 
 

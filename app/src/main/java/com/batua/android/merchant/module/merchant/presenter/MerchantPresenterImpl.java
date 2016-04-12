@@ -35,6 +35,8 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
         subscribeForNetwork(observable, new ApiObserver<Response<Merchant>>() {
             @Override
             public void onError(Throwable e) {
+                getViewInteractor().onNetworkCallCompleted();
+                getViewInteractor().onNetworkCallError(e);
                 Timber.d(e.toString());
             }
 
@@ -58,7 +60,8 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
         subscribeForNetwork(observable, new ApiObserver<Response<Merchant>>() {
             @Override
             public void onError(Throwable e) {
-
+                getViewInteractor().onNetworkCallCompleted();
+                getViewInteractor().onNetworkCallError(e);
             }
 
             @Override

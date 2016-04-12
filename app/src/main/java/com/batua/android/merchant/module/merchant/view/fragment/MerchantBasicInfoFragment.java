@@ -28,6 +28,7 @@ import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.DecimalFormatUtil;
 import com.batua.android.merchant.module.common.util.ImageUtil;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenter;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadViewInteractor;
@@ -88,7 +89,8 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.edt_merchant_mobile) EditText edtMobile;
     @Bind(R.id.edt_merchant_fee) EditText edtFee;
     @Bind(R.id.input_layout_merchant_email) TextInputLayout inputLayoutEmail;
-    @Bind(R.id.progressBar) ProgressBar progressBar;
+    @Bind(R.id.input_layout_merchant_fee) TextInputLayout inputLayoutFee;
+    @Bind(R.id.progressBar1) ProgressBar progressBar;
 
     private NextClickedListener nextClickedListener;
     private Merchant merchant;
@@ -191,11 +193,20 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @OnTextChanged(R.id.edt_merchant_fee)
     void onFeeChange(CharSequence text) {
         if (text.toString().equalsIgnoreCase("")) {
-            merchantRequest.setFee(null);
+            merchantRequest.setFee(0.0);
+            inputLayoutFee.setErrorEnabled(true);
+            inputLayoutFee.setError("Invalid fee");
             return;
         }
 
-        merchantRequest.setFee(Integer.valueOf(text.toString()));
+        if (Double.valueOf(text.toString()) > 100) {
+            inputLayoutFee.setError("Invalid fee");
+            inputLayoutFee.setErrorEnabled(true);
+            return;
+        }
+        double fee = DecimalFormatUtil.formatToExactTwoDecimal(text.toString());
+        merchantRequest.setFee(fee);
+        inputLayoutFee.setErrorEnabled(false);
     }
 
     @Override

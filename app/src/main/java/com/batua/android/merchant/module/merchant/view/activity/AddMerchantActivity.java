@@ -138,18 +138,22 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
 
     private boolean validateData() {
         if (merchantRequest.getName() == null || merchantRequest.getName().isEmpty()) {
+            bakery.snackShort(getContentView(), "Invalid Name");
             return false;
         }
 
         if ( merchantRequest.getShortCode() == null || merchantRequest.getShortCode().isEmpty()) {
+            bakery.snackShort(getContentView(), "Invalid Shortcode,must be 8 characters");
             return false;
         }
 
-        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty()) {
+        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty() || (merchantRequest.getPhone().length() != 10) ){
+            bakery.snackShort(getContentView(), "Invalid Mobile Number");
             return false;
         }
 
-        if ( merchantRequest.getFee() == null || merchantRequest.getFee() == 0) {
+        if ( merchantRequest.getFee() == 0.0) {
+            bakery.snackShort(getContentView(), "Invalid Fee");
             return false;
         }
 
@@ -163,8 +167,6 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
             presenter.addMerchant(merchantRequest);
             return;
         }
-
-        bakery.snackShort(getContentView(), "Mandatory Basic information are missing");
     }
 
     @Override
