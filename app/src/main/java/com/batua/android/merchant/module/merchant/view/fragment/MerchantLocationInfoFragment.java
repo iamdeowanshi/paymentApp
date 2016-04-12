@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
@@ -64,11 +65,14 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.parceler.Parcels;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -111,11 +115,14 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private SearchAddressAdapter searchAddressAdapter;
     private SearchCityAdapter searchCityAdapter;
     private GoogleMap googleMap;
+    private Marker marker;
 
     private double latitude;
     private double longitude;
+    private String myLocationAddress;
 
     private List<City> cities;
+    private Geocoder geocoder;
 
     // Fragment override methods
     @Override
@@ -153,9 +160,13 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().equals("") && googleApiClient.isConnected()) {
-                    hidePinAndMap();
+                    if (!s.toString().equalsIgnoreCase(myLocationAddress)) {
+                        hidePinAndMap();
+                        searchAddressAdapter.getFilter().filter(s.toString());
+                        return;
+                    }
+                    showPinAndMap();
 
-                    searchAddressAdapter.getFilter().filter(s.toString());
                 } else if (!googleApiClient.isConnected()) {
                     bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_SHORT);
                 } else {
@@ -187,6 +198,10 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                             public void onResult(PlaceBuffer places) {
                                 if (places.getCount() == 1) {
                                     Place selectedPalce = places.get(0);
+                                    if (marker!=null) {
+                                        showDialog("Alert!", "Are you sure to change the Address?", selectedPalce.getLatLng());
+                                        return;
+                                    }
                                     displayAddress(placeDescription, selectedPalce.getLatLng());
                                     bakery.snack(getContentView(), selectedPalce.getLatLng().longitude + "  " + selectedPalce.getLatLng().latitude + ":" + placeDescription, Snackbar.LENGTH_LONG);
                                 } else {
@@ -232,6 +247,10 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     // GoogleApiClient.ConnectionCallbacks and GoogleApiClient.OnConnectionFailedListener override methods
     @Override
     public void onMyLocationChange(Location location) {
+        if (marker!=null) {
+            showDialog("Alert!", "Are you sure to change location?", new LatLng(location.getLatitude(), location.getLongitude()));
+            return;
+        }
         animateCamera(new LatLng(location.getLatitude(), location.getLongitude()), "myLocation");
     }
 
@@ -328,6 +347,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         merchantRequest.setAddress(text.toString());
         merchantRequest.setLongitude(longitude);
         merchantRequest.setLatitude(latitude);
+        Log.d(text.toString(),latitude + " : " + longitude);
     }
 
     @OnTextChanged(R.id.edt_merchant_pin_code)
@@ -407,8 +427,109 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                 } catch (SecurityException e) {
                     Log.d("Location Security", e.toString());
                 }
+
+                googleMap.setOnMyLocationButtonClickListener(new GoogleMap.OnMyLocationButtonClickListener() {
+                    @Override
+                    public boolean onMyLocationButtonClick() {
+
+                        if (marker != null) {
+                            try {
+                                if (!isLocationEnabled()) {
+                                    showSettingsAlert();
+                                    return true;
+                                }
+                                Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+                                if (location != null) {
+                                    LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
+                                    showDialog("Alert!", "Are you sure to change the location?", curentpoint);
+                                    return true;
+                                }
+                            } catch (SecurityException e) {
+                                bakery.snack(getContentView(), "Please enable Location", Snackbar.LENGTH_SHORT);
+                            }
+
+                            return true;
+                        }
+
+                        showCurrentPosition();
+                        return false;
+                    }
+                });
+
+                googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+                    @Override
+                    public void onMapLongClick(LatLng latLng) {
+                        if (marker != null) {
+                            showDialog("Alert!", "Are you sure to change the marker?", latLng);
+                            return;
+                        }
+
+                        addMarker(latLng);
+                    }
+                });
             }
         });
+    }
+
+    private void addMarker(LatLng latLng) {
+        addAddress(latLng);
+        if (marker!=null) {
+            googleMap.clear();
+            marker = googleMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
+                    .position(latLng));
+
+            return;
+        }
+
+        marker = googleMap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
+                .position(latLng));
+
+    }
+
+    private void addAddress(LatLng latLng) {
+        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+        edtAddress.setText(myLocationAddress);
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
+        googleMap.setOnMyLocationChangeListener(null);
+    }
+
+    private void showDialog(String title, final String message, final LatLng latLng) {
+        AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
+        alertbuilder.setTitle(title)
+                    .setMessage(message)
+                    .setCancelable(false)
+                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            if (message.equals("Are you sure to change the Address?")) {
+                                googleMap.clear();
+                                animateCamera(latLng, "address");
+                                dialog.dismiss();
+                                return;
+                            }
+
+                            if (message.equals("Are you sure to change the marker?")) {
+                                googleMap.clear();
+                                addMarker(latLng);
+                                dialog.dismiss();
+                                return;
+                            }
+                            googleMap.clear();
+                            showCurrentPosition();
+                            dialog.dismiss();
+                        }
+                    });
+        AlertDialog alert = alertbuilder.create();
+        alert.show();
     }
 
     private void hideAllExceptCity(){
@@ -438,7 +559,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         edtPin.setVisibility(View.GONE);
         locationLayout.setVisibility(View.GONE);
         navigationLayout.setVisibility(View.GONE);
-        googleMap.setOnMyLocationChangeListener(this);
+        googleMap.setOnMyLocationChangeListener(null);
     }
 
     private void showPinAndMap() {
@@ -458,18 +579,25 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         showPinAndMap();
     }
 
-    private void animateCamera(LatLng curentpoint, String location) {
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(curentpoint).zoom(15).tilt(10).build();
+    private void animateCamera(LatLng latLng, String location) {
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(10).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        googleMap.clear();
+        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+        edtAddress.setText(myLocationAddress);
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
 
         if (location.equals("myLocation")){
+            marker = null;
+            googleMap.setOnMyLocationChangeListener(null);
             return;
         }
 
-        googleMap.addMarker(new MarkerOptions()
+
+        marker = googleMap.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
-                .position(curentpoint));
+                .position(latLng));
+
     }
 
     private void showCurrentPosition() {
@@ -527,6 +655,23 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             }
         });
         alertDialog.show();
+    }
+
+    protected String getCurrentAddress(Double latitude, Double longitude) {
+        List<android.location.Address> addresses;
+        try {
+            geocoder = new Geocoder(getContext(), Locale.ENGLISH);
+            addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            if (Geocoder.isPresent()) {
+                if( addresses != null && addresses.size() > 0) {
+                    return addresses.get(0).getAddressLine(0) + "," + addresses.get(0).getAddressLine(1);
+                }
+            }
+        }catch (IOException e) {
+            Log.e("tag---", e.getMessage());
+        }
+        return "";
+
     }
 
     protected synchronized void buildGoogleApiClient() {
