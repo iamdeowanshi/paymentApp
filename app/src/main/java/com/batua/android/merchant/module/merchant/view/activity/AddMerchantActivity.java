@@ -9,6 +9,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.batua.android.merchant.R;
@@ -17,6 +19,7 @@ import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteractor;
@@ -37,10 +40,12 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
 
     @Inject MerchantPresenter presenter;
     @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.add_or_merchant_tab_layout) TabLayout addMerchantTabLayout;
     @Bind(R.id.add_or__merchant_viewpager) ViewPager addMerchantViewPager;
+    @Bind(R.id.progress) ProgressBar progressBar;
 
     private TextView title;
     private Merchant merchant ;
@@ -75,6 +80,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
 
         switch (id) {
             case R.id.action_save:
+                viewUtil.hideKeyboard(this);
                 onSaveClick();
                 break;
         }
@@ -164,9 +170,24 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     @Override
     public void showMerchant(Merchant response) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Merchant", Parcels.wrap(response));
+        bundle.putParcelable("MerchantDetail", Parcels.wrap(response));
         startActivity(MerchantDetailsActivity.class, bundle);
         finish();
+    }
+
+    @Override
+    public void onNetworkCallProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkCallCompleted() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onNetworkCallError(Throwable e) {
+        progressBar.setVisibility(View.GONE);
     }
 
 }

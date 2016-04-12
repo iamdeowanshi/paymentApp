@@ -80,6 +80,41 @@ public class MerchantRequest extends BaseModel {
     @Expose
     private Integer createdSalesId;
 
+    public MerchantRequest() {
+    }
+
+    public MerchantRequest(Merchant merchant) {
+        if (merchant == null) {
+            return;
+        }
+
+        this.id = merchant.getId();
+        this.name = merchant.getName();
+        this.shortCode = merchant.getShortCode();
+        this.profileImageUrl = merchant.getProfileImageUrl();
+        this.email = merchant.getEmail();
+        this.phone = String.valueOf(merchant.getPhone());
+        this.fee = merchant.getFees();
+        this.categoryId = merchant.getCategoryId();
+        this.address = merchant.getAddress();
+        this.latitude = merchant.getLatitude();
+        this.longitude = merchant.getLongitude();
+        this.accountHolder = merchant.getAccountHolder();
+        this.accountNumber = String.valueOf(merchant.getAccountNumber());
+        this.ifscCode = merchant.getIfscCode();
+        this.bankBranch = merchant.getBranchName();
+        this.bankName = merchant.getBankName();
+        this.status = merchant.getStatus();
+        this.createdSalesId = merchant.getCreatedSalesId();
+
+        if (merchant.getLocation() != null) {
+            this.cityId = merchant.getLocation().getCityId();
+            this.pincode = merchant.getLocation().getPincode();
+        }
+
+        //this.imageGallery = merchant.getGalleries();
+    }
+
     /**
      *
      * @return

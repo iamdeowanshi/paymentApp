@@ -1,5 +1,6 @@
 package com.batua.android.merchant.module.onboard.view.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
@@ -36,6 +37,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
     @Bind(com.batua.android.merchant.R.id.input_layout_email) TextInputLayout inputLayoutEmail;
 
     private SocialAuth socialAuth;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +60,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
     @Override
     public void onSuccess(AuthResult result) {
         socialAuth.disconnect();
+        hideProgress();
         startActivity(HomeActivity.class, null);
     }
 
@@ -90,6 +93,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
+        showProgress();
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
     }
 
@@ -130,4 +134,15 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
         });
     }
 
+    private void showProgress() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Logging in");
+        progressDialog.show();
+    }
+
+    private void hideProgress() {
+        progressDialog.dismiss();
+    }
 }

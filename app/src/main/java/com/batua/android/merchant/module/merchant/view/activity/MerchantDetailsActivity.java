@@ -66,6 +66,10 @@ public class MerchantDetailsActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.batua.android.merchant.R.menu.menu_merchant_details, menu);
 
+        if (merchant.getStatus().toString().equalsIgnoreCase(ACTIVE)) {
+            menu.findItem(com.batua.android.merchant.R.id.action_edit).setVisible(false);
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -76,6 +80,7 @@ public class MerchantDetailsActivity extends BaseActivity {
                 Bundle bundle = new Bundle();
                 bundle.putParcelable("Merchant", Parcels.wrap(merchant));
                 startActivity(EditMerchantActivity.class, bundle);
+                finish();
                 break;
 
             case android.R.id.home:
@@ -145,7 +150,7 @@ public class MerchantDetailsActivity extends BaseActivity {
         }
 
         if (merchant.getProfileImageUrl() != null) {
-            Glide.with(this).load(merchant.getProfileImageUrl()).centerCrop().fitCenter().into(merchantDp);
+            Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).centerCrop().into(merchantDp);
         }
 
         if (merchant.getGalleries().size() == 0) {

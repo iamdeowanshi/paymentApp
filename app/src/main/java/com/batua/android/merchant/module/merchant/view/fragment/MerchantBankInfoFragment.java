@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.batua.android.merchant.R;
@@ -16,6 +17,7 @@ import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteractor;
 import com.batua.android.merchant.module.merchant.util.SpinnerLoad;
@@ -45,12 +47,14 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
     @Inject MerchantPresenter merchantPresenter;
     @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
 
     @Bind(R.id.edt_account_holder) EditText edtAccountHolder;
     @Bind(R.id.edt_account_number) EditText edtAccountNumber;
     @Bind(R.id.spinner_bank) Spinner spinnerBank;
     @Bind(R.id.edt_bank_branch) EditText edtBankBranch;
     @Bind(R.id.edt_ifsc_code) EditText edtIfscCode;
+    @Bind(R.id.progress) ProgressBar progressBar;
 
     private PreviousClickedListener previousClickedListener;
     private Merchant merchant;
@@ -126,7 +130,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
     @Override
     public void showMerchant(Merchant response) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("Merchant", Parcels.wrap(response));
+        bundle.putParcelable("MerchantDetail", Parcels.wrap(response));
         startActivity(MerchantDetailsActivity.class, bundle);
         getActivity().finish();
     }
@@ -138,6 +142,8 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
     @OnClick(R.id.btn_submit)
     void onSubmitClick() {
+        viewUtil.hideKeyboard(getActivity());
+
         if (validateData()) {
             merchantRequest.setStatus("Pending for approval");
             togglePresenter();
@@ -174,7 +180,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
             return false;
         }
 
-        if ( merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty()) {
+        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty()) {
             return false;
         }
 
@@ -190,23 +196,23 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
             return false;
         }
 
-        if ( merchantRequest.getPincode() == null || merchantRequest.getPincode() == 0) {
+        if (merchantRequest.getPincode() == null || merchantRequest.getPincode() == 0) {
             return false;
         }
 
-        if ( merchantRequest.getAccountHolder() == null || merchantRequest.getAccountHolder().isEmpty()) {
+        if (merchantRequest.getAccountHolder() == null || merchantRequest.getAccountHolder().isEmpty()) {
             return false;
         }
 
-        if ( merchantRequest.getAccountNumber() == null || merchantRequest.getAccountNumber().isEmpty()) {
+        if (merchantRequest.getAccountNumber() == null || merchantRequest.getAccountNumber().isEmpty()) {
             return false;
         }
 
-        if ( merchantRequest.getBankBranch() == null || merchantRequest.getBankBranch().isEmpty()) {
+        if (merchantRequest.getBankBranch() == null || merchantRequest.getBankBranch().isEmpty()) {
             return false;
         }
 
-        if ( merchantRequest.getIfscCode() == null || merchantRequest.getIfscCode().isEmpty()) {
+        if (merchantRequest.getIfscCode() == null || merchantRequest.getIfscCode().isEmpty()) {
             return false;
         }
 
@@ -230,23 +236,43 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
     private void loadData() {
         if (merchant.getAccountHolder() != null) {
             edtAccountHolder.setText(merchant.getAccountHolder());
+            merchantRequest.setAccountHolder(merchant.getAccountHolder());
         }
 
         if (merchant.getBankName() != null) {
             spinnerBank.setSelection(bankList.indexOf(merchant.getBankName()));
+            merchantRequest.setBankName(merchant.getBankName());
         }
 
         if (merchant.getAccountNumber() != null) {
             edtAccountNumber.setText(merchant.getAccountNumber().toString());
+            merchantRequest.setAccountNumber(String.valueOf(merchant.getAccountNumber()));
         }
 
         if (merchant.getBranchName() != null) {
             edtBankBranch.setText(merchant.getBranchName());
+            merchantRequest.setBankBranch(merchant.getBranchName());
         }
 
         if (merchant.getIfscCode() != null) {
             edtIfscCode.setText(merchant.getIfscCode());
+            merchantRequest.setIfscCode(merchant.getIfscCode());
         }
+    }
+
+    @Override
+    public void onNetworkCallProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkCallCompleted() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onNetworkCallError(Throwable e) {
+        progressBar.setVisibility(View.GONE);
     }
 
 }

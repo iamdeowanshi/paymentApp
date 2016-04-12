@@ -6,7 +6,7 @@ import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresent
 import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenter;
-import com.batua.android.merchant.module.merchant.presenter.MerchantMerchantCategoryPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 
@@ -33,7 +33,7 @@ public class PresenterModule {
 
     @Provides
     public MerchantCategoryPresenter provideCategoryPresenter() {
-        return new MerchantMerchantCategoryPresenterImpl();
+        return new MerchantCategoryPresenterImpl();
     }
 
     @Provides

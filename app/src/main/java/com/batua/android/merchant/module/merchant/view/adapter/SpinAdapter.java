@@ -2,6 +2,7 @@ package com.batua.android.merchant.module.merchant.view.adapter;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -55,9 +56,10 @@ public class SpinAdapter<T extends BaseModel> extends ArrayAdapter<String> {
 
     private TextView getCustomTextView(int position) {
         TextView textView = new TextView(context);
+        textView.setTextColor(Color.BLACK);
         textView.setPadding(dpToPixel(5), dpToPixel(5), dpToPixel(5), 0);
         textView.setText(list.get(position).toString());
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
         return textView;
     }
 

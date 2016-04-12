@@ -26,6 +26,7 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
 
     @Override
     public void addMerchant(MerchantRequest request) {
+        getViewInteractor().onNetworkCallProgress();
         Observable<Response<Merchant>> observable = api.addMerchant(request, "");
 
         subscribeForNetwork(observable, new ApiObserver<Response<Merchant>>() {
@@ -40,7 +41,7 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
                     Timber.d("error " + response.code());
                     return;
                 }
-
+                getViewInteractor().onNetworkCallCompleted();
                 getViewInteractor().showMerchant(response.body());
             }
         });
@@ -48,6 +49,7 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
 
     @Override
     public void updateMerchant(MerchantRequest request) {
+        getViewInteractor().onNetworkCallProgress();
         Observable<Response<Merchant>> observable = api.updateMerchant(request, "");
 
         subscribeForNetwork(observable, new ApiObserver<Response<Merchant>>() {
@@ -63,6 +65,7 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
                     return;
                 }
 
+                getViewInteractor().onNetworkCallCompleted();
                 getViewInteractor().showMerchant(response.body());
             }
         });

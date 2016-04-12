@@ -88,7 +88,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, MerchantViewInteractor, CityViewInteractor {
+public   class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, CityViewInteractor {
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, 180), new LatLng(85, -180));
@@ -98,7 +98,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
-    @Inject MerchantPresenter merchantPresenter;
     @Inject CityPresenter cityPresenter;
 
     @Bind(R.id.edt_merchant_city) EditText edtCity;
@@ -140,7 +139,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
         Injector.component().inject(this);
         cityPresenter.attachViewInteractor(this);
-        merchantPresenter.attachViewInteractor(this);
         cityPresenter.getCities();
 
         merchant = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
@@ -228,7 +226,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Override
     public void onResume() {
         super.onResume();
-        googleApiClient.connect();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
     }
 
     // GoogleApiClient.ConnectionCallbacks and GoogleApiClient.OnConnectionFailedListener override methods
@@ -338,13 +338,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         merchantRequest.setPincode(text);
     }
 
-    @Override
-    public void showMerchant(Merchant response) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("Merchant", Parcels.wrap(response));
-        startActivity(MerchantDetailsActivity.class, bundle);
-        getActivity().finish();
-    }
 
     @Override
     public void showCities(List<City> cities) {
@@ -511,16 +504,25 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void loadData() {
-        if (merchant.getLocation().getCity() != null) {
-            edtCity.setText(merchant.getLocation().getCity().getName());
-        }
-
         if (merchant.getAddress() != null) {
             edtAddress.setText(merchant.getAddress());
+            merchantRequest.setAddress(merchant.getAddress());
+            merchantRequest.setLatitude(merchant.getLatitude());
+            merchantRequest.setLongitude(merchant.getLongitude());
+        }
+
+        if (merchant.getLocation() == null) {
+            return;
+        }
+
+        if (merchant.getLocation().getCity() != null) {
+            edtCity.setText(merchant.getLocation().getCity().getName());
+            merchantRequest.setCityId(merchant.getLocation().getCityId());
         }
 
         if (merchant.getLocation().getPincode() != null) {
             edtPin.setText(String.valueOf(merchant.getLocation().getPincode()));
+            merchantRequest.setPincode(merchant.getLocation().getPincode());
         }
     }
 

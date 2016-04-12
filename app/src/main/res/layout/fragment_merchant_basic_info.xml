@@ -171,6 +171,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:spinnerMode="dropdown"
+                android:paddingLeft="8dp"
                 android:id="@+id/spinner_merchant_category"
                 android:textColorHint="@color/light_gray"
                 android:layout_below="@+id/input_layout_merchant_mobile"
@@ -190,6 +191,7 @@
                 android:id="@+id/input_layout_merchant_fee"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 app:errorTextAppearance="@style/error_appearance"
                 android:theme="@style/TextLabel"
                 android:layout_below="@+id/view">
@@ -201,6 +203,7 @@
                     android:hint="@string/merchant_fee"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
+                    android:maxLength="2"
                     android:inputType="numberDecimal"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
@@ -212,7 +215,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Image +"
+                android:text="ADD IMAGES +"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginLeft="10dp"

@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -77,6 +79,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.edt_merchant_short_code) EditText edtShortCode;
     @Bind(R.id.edt_merchant_mobile) EditText edtMobile;
     @Bind(R.id.edt_merchant_fee) EditText edtFee;
+    @Bind(R.id.input_layout_merchant_email) TextInputLayout inputLayoutEmail;
 
     private NextClickedListener nextClickedListener;
     private Merchant merchant;
@@ -154,7 +157,19 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     @OnTextChanged(R.id.edt_merchant_email)
     void onEmailChange(CharSequence text) {
-        merchantRequest.setEmail(text.toString());
+        if (edtEmail.getText().toString() == "") {
+            inputLayoutEmail.setErrorEnabled(false);
+            return;
+        }
+
+        if (isValidEmail(text)) {
+            merchantRequest.setEmail(text.toString());
+            inputLayoutEmail.setErrorEnabled(false);
+            return;
+        }
+
+        inputLayoutEmail.setErrorEnabled(true);
+        inputLayoutEmail.setError("Invalid email");
     }
 
     @OnTextChanged(R.id.edt_merchant_mobile)
@@ -163,8 +178,13 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     }
 
     @OnTextChanged(R.id.edt_merchant_fee)
-    void onFeeChange(int text) {
-        merchantRequest.setFee(text);
+    void onFeeChange(CharSequence text) {
+        if (text.toString().equalsIgnoreCase("")) {
+            merchantRequest.setFee(null);
+            return;
+        }
+
+        merchantRequest.setFee(Integer.valueOf(text.toString()));
     }
 
     @Override
@@ -217,19 +237,25 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     private void loadData() {
         edtName.setText(merchant.getName());
+        merchantRequest.setName(merchant.getName());
         edtMobile.setText(merchant.getPhone().toString());
+        merchantRequest.setPhone(String.valueOf(merchant.getPhone()));
         edtShortCode.setText(merchant.getShortCode());
+        merchantRequest.setShortCode(merchant.getShortCode());
         edtFee.setText(String.valueOf(merchant.getFees()));
         if (merchant.getEmail() != null) {
             edtEmail.setText(merchant.getEmail());
+            merchantRequest.setEmail(merchant.getEmail());
         }
 
         if (categories != null) {
             spinnerMerchantCategory.setSelection(categories.indexOf(merchant.getCategoryId()));
+            merchantRequest.setCategoryId(merchant.getCategoryId());
         }
 
         if (merchant.getProfileImageUrl() != null) {
             Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fitCenter().into(profileImage);
+            merchantRequest.setProfileImageUrl(merchant.getProfileImageUrl());
         }
     }
 
@@ -264,6 +290,14 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
                 merchantRequest.setCategoryId(categories.get(spinnerMerchantCategory.getSelectedItemPosition()).getId());
             }
         });
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        }
+
+        return Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 
 }

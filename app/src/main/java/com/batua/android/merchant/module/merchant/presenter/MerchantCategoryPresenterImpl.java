@@ -17,11 +17,11 @@ import timber.log.Timber;
 /**
  * @author Aaditya Deowanshi.
  */
-public class MerchantMerchantCategoryPresenterImpl extends BaseNetworkPresenter<MerchantCategoryViewInteractor> implements MerchantCategoryPresenter {
+public class MerchantCategoryPresenterImpl extends BaseNetworkPresenter<MerchantCategoryViewInteractor> implements MerchantCategoryPresenter {
 
     @Inject BatuaMerchantService api;
 
-    public MerchantMerchantCategoryPresenterImpl() {
+    public MerchantCategoryPresenterImpl() {
         Injector.component().inject(this);
     }
 
