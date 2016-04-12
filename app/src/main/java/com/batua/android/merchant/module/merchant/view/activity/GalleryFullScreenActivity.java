@@ -50,15 +50,15 @@ public class GalleryFullScreenActivity extends BaseActivity {
         title.setText("Gallery Image");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
+/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(com.batua.android.merchant.R.menu.menu_gallery_full_screen, menu);
 
         return super.onCreateOptionsMenu(menu);
-    }
+    }*/
 
-    @Override
+/*    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if ( item.getItemId() == com.batua.android.merchant.R.id.action_delete) {
             finish();
@@ -68,6 +68,6 @@ public class GalleryFullScreenActivity extends BaseActivity {
 
         }
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
 }

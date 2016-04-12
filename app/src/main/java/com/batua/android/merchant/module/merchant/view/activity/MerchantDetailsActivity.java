@@ -53,7 +53,7 @@ public class MerchantDetailsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.merchant.R.layout.activity_merchant_details);
+        setContentView(R.layout.activity_merchant_details);
 
         merchant = Parcels.unwrap(getIntent().getParcelableExtra("MerchantDetail"));
 
@@ -63,7 +63,7 @@ public class MerchantDetailsActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.batua.android.merchant.R.menu.menu_merchant_details, menu);
+        getMenuInflater().inflate(R.menu.menu_merchant_details, menu);
 
         if (merchant.getStatus().toString().equalsIgnoreCase(ACTIVE)) {
             menu.findItem(com.batua.android.merchant.R.id.action_edit).setVisible(false);
@@ -98,7 +98,7 @@ public class MerchantDetailsActivity extends BaseActivity {
     @OnClick(R.id.view_images)
     void onViewImagesClick() {
         Bundle bundle = new Bundle();
-        bundle.putParcelable("GalleryImages", Parcels.wrap(merchant.getGalleries()));
+        bundle.putParcelable("Merchant", Parcels.wrap(merchant));
         startActivity(GalleryImagesActivity.class, bundle);
         finish();
     }

@@ -139,7 +139,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         imageUtil.onActivityResult(requestCode, resultCode, data);
     }
 
-    @OnClick(R.id.img_profile)
+    @OnClick(R.id.txt_upload)
     void onProfileImgClick() {
         imageUtil.getImage(getActivity());
     }
@@ -237,6 +237,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     @Override
     public void onProfileImageUploadSuccess(String merchantImage) {
+        merchantRequest.setProfileImageUrl(merchantImage);
         Glide.with(this).load(merchantImage).into(profileImage);
     }
 

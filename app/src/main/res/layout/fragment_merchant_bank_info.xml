@@ -31,6 +31,7 @@
                     android:hint="@string/account_holder_name"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
+                    android:singleLine="true"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/profile_img_upload_layout"/>
@@ -80,6 +81,7 @@
                 android:id="@+id/input_layout_bank_branch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 app:errorTextAppearance="@style/error_appearance"
                 android:theme="@style/TextLabel"
                 android:layout_below="@+id/view">

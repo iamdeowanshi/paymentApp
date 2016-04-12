@@ -43,6 +43,8 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
             @Override
             public void onResponse(Response<Merchant> response) {
                 if (response.code() != 201) {
+                    getViewInteractor().onNetworkCallCompleted();
+                    getViewInteractor().showError();
                     Timber.d("error " + response.code());
                     return;
                 }
@@ -67,6 +69,8 @@ public class MerchantPresenterImpl extends BaseNetworkPresenter<MerchantViewInte
             @Override
             public void onResponse(Response<Merchant> response) {
                 if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallCompleted();
+                    getViewInteractor().showError();
                     Timber.d("error " + response.code());
                     return;
                 }

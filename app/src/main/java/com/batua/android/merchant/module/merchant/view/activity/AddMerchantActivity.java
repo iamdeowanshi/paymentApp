@@ -178,6 +178,11 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     }
 
     @Override
+    public void showError() {
+        bakery.snackShort(getContentView(), "Invalid data or some fields are missing");
+    }
+
+    @Override
     public void onNetworkCallProgress() {
         progressBar.setVisibility(View.VISIBLE);
     }

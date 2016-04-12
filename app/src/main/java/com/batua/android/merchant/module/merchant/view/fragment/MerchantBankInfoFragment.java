@@ -3,7 +3,6 @@ package com.batua.android.merchant.module.merchant.view.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -28,7 +27,6 @@ import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedL
 
 import org.parceler.Parcels;
 
-import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.List;
 
@@ -105,7 +103,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
     @OnTextChanged(R.id.edt_bank_branch)
     void onBankBranchChange(CharSequence text) {
-        merchantRequest.setBankBranch(text.toString());
+        merchantRequest.setBranchName(text.toString());
     }
 
     @OnTextChanged(R.id.edt_ifsc_code)
@@ -114,25 +112,16 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        switch (id) {
-            case R.id.action_save:
-                merchantRequest.setStatus("Drafted");
-                togglePresenter();
-                break;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void showMerchant(Merchant response) {
         Bundle bundle = new Bundle();
         bundle.putParcelable("MerchantDetail", Parcels.wrap(response));
         startActivity(MerchantDetailsActivity.class, bundle);
         getActivity().finish();
+    }
+
+    @Override
+    public void showError() {
+        bakery.snackShort(getContentView(), "Invalid data or some fields are missing");
     }
 
     @OnClick(R.id.txt_load_previous)
@@ -145,6 +134,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
         viewUtil.hideKeyboard(getActivity());
 
         if (validateData()) {
+            merchantRequest.setCreatedSalesId(3);
             merchantRequest.setStatus("Pending for approval");
             togglePresenter();
 
@@ -208,7 +198,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
             return false;
         }
 
-        if (merchantRequest.getBankBranch() == null || merchantRequest.getBankBranch().isEmpty()) {
+        if (merchantRequest.getBranchName() == null || merchantRequest.getBranchName().isEmpty()) {
             return false;
         }
 
@@ -251,7 +241,7 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
         if (merchant.getBranchName() != null) {
             edtBankBranch.setText(merchant.getBranchName());
-            merchantRequest.setBankBranch(merchant.getBranchName());
+            merchantRequest.setBranchName(merchant.getBranchName());
         }
 
         if (merchant.getIfscCode() != null) {

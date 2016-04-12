@@ -3,7 +3,9 @@ package com.batua.android.merchant.module.onboard.view.activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
@@ -27,7 +29,7 @@ import butterknife.OnClick;
 /**
  * @author Aaditya Deowanshi.
  */
-public class LoginActivity extends BaseActivity implements SocialAuthCallback {
+public class LoginActivity extends BaseActivity implements SocialAuthCallback, ActivityCompat.OnRequestPermissionsResultCallback{
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
@@ -52,6 +54,12 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        socialAuth.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         socialAuth.onActivityResult(requestCode, resultCode, data);
@@ -60,7 +68,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
     @Override
     public void onSuccess(AuthResult result) {
         socialAuth.disconnect();
-        hideProgress();
+        //hideProgress();
         startActivity(HomeActivity.class, null);
     }
 
@@ -93,8 +101,8 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback {
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
-        showProgress();
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
+        //showProgress();
     }
 
     @OnClick(R.id.txt_forgot_password)

@@ -6,7 +6,6 @@ import com.google.gson.annotations.SerializedName;
 
 import org.parceler.Parcel;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,9 +66,9 @@ public class MerchantRequest extends BaseModel {
     @SerializedName("ifscCode")
     @Expose
     private String ifscCode;
-    @SerializedName("bankBranch")
+    @SerializedName("branchName")
     @Expose
-    private String bankBranch;
+    private String branchName;
     @SerializedName("bankName")
     @Expose
     private String bankName;
@@ -102,7 +101,7 @@ public class MerchantRequest extends BaseModel {
         this.accountHolder = merchant.getAccountHolder();
         this.accountNumber = String.valueOf(merchant.getAccountNumber());
         this.ifscCode = merchant.getIfscCode();
-        this.bankBranch = merchant.getBranchName();
+        this.branchName = merchant.getBranchName();
         this.bankName = merchant.getBankName();
         this.status = merchant.getStatus();
         this.createdSalesId = merchant.getCreatedSalesId();
@@ -424,19 +423,19 @@ public class MerchantRequest extends BaseModel {
     /**
      *
      * @return
-     * The bankBranch
+     * The branchName
      */
-    public String getBankBranch() {
-        return bankBranch;
+    public String getBranchName() {
+        return branchName;
     }
 
     /**
      *
-     * @param bankBranch
-     * The bankBranch
+     * @param branchName
+     * The branchName
      */
-    public void setBankBranch(String bankBranch) {
-        this.bankBranch = bankBranch;
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
     /**

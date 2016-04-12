@@ -100,6 +100,7 @@
                     android:layout_height="40dp"
                     android:layout_below="@+id/profile_img_upload_layout"
                     android:layout_marginTop="10dp"
+                    android:maxLength="6"
                     android:hint="@string/merchant_pin_code"
                     android:inputType="number"
                     android:paddingLeft="10dp" />

@@ -17,6 +17,7 @@ import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
+import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
@@ -38,6 +39,7 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
 
     @Inject MerchantPresenter presenter;
     @Inject ViewUtil viewUtil;
+    @Inject Bakery bakery;
 
     @Bind(com.batua.android.merchant.R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.progress) ProgressBar progressBar;
@@ -143,6 +145,11 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
         bundle.putParcelable("MerchantDetail", Parcels.wrap(response));
         startActivity(MerchantDetailsActivity.class, bundle);
         finish();
+    }
+
+    @Override
+    public void showError() {
+        bakery.snackShort(getContentView(), "Invalid data or some fields are missing");
     }
 
     @Override

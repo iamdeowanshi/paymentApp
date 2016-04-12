@@ -2,6 +2,7 @@ package com.batua.android.merchant.module.common.util.social;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
@@ -36,7 +37,7 @@ import timber.log.Timber;
  *         Socail Authentication class.
  */
 
-public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback  {
+public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
 
     public enum SocialType {
         GOOGLE,
@@ -53,6 +54,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     private boolean isResolving = false;
     private boolean shouldResolve = false;
     private GoogleApiClient googleApiClient;
+    private ProgressDialog progressDialog;
 
     private static String[] ACCOUNT_PERMISSION = {Manifest.permission.GET_ACCOUNTS};
 
@@ -101,7 +103,6 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         ActivityCompat.requestPermissions(activity, ACCOUNT_PERMISSION, ACCOUNT_REQUEST_CODE);
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
                                            @NonNull int[] grantResults) {
         if (permissionUtil.verifyPermissions(grantResults)) {
@@ -195,6 +196,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     private void googleLogin() {
         shouldResolve = true;
+        showProgress();
         googleApiClient.connect();
     }
 
@@ -206,6 +208,18 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             googleApiClient.disconnect();
             Timber.d("google logout");
         }
+    }
+
+    private void showProgress() {
+        progressDialog = new ProgressDialog(activity);
+        progressDialog.setCancelable(false);
+        progressDialog.setCanceledOnTouchOutside(false);
+        progressDialog.setMessage("Logging in");
+        progressDialog.show();
+    }
+
+    private void hideProgress() {
+        progressDialog.dismiss();
     }
 
     /**
@@ -246,6 +260,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
                 result.getAuthUser().setAccessToken(token);
                 result.getAuthUser().setEmail(email);
                 callback.onSuccess(result);
+                hideProgress();
             }
         }
     }

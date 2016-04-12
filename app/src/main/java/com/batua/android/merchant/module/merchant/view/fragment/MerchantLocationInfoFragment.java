@@ -80,8 +80,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener,
-        MerchantViewInteractor, CityViewInteractor, CitySelectedListener {
+public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, CityViewInteractor, CitySelectedListener {
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final int LOCATION_REQUEST_CODE = 2;

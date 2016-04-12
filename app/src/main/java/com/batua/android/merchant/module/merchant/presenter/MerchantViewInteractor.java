@@ -11,4 +11,6 @@ public interface MerchantViewInteractor extends NetworkViewInteractor{
 
     void showMerchant(Merchant response);
 
+    void showError();
+
 }
