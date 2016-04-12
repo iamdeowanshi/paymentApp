@@ -26,7 +26,7 @@
                 android:theme="@style/TextLabel"
                 app:errorTextAppearance="@style/error_appearance">
 
-                <AutoCompleteTextView
+                <EditText
                     android:id="@+id/edt_merchant_city"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
@@ -34,10 +34,22 @@
                     android:layout_marginTop="10dp"
                     android:hint="@string/merchant_city"
                     android:paddingLeft="10dp"
+                    android:inputType="textNoSuggestions"
                     android:textColorHint="@color/light_gray"
                     android:textSize="14sp" />
 
             </android.support.design.widget.TextInputLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_search_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/input_layout_merchant_city"
+                android:background="@android:color/transparent"
+                android:scrollbars="vertical"
+                android:visibility="gone" />
 
 
             <android.support.design.widget.TextInputLayout

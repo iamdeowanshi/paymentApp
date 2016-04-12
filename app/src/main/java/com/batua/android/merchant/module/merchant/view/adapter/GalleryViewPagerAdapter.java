@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Gallery;
 import com.batua.android.merchant.injection.Injector;
 import com.bumptech.glide.Glide;
@@ -51,7 +52,7 @@ public class GalleryViewPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup view, int position) {
-        View pageView = LayoutInflater.from(context).inflate(com.batua.android.merchant.R.layout.page_item_gallery, view, false);
+        View pageView = LayoutInflater.from(context).inflate(R.layout.page_item_gallery, view, false);
 
         ViewHolder viewHolder = new ViewHolder(pageView);
         viewHolder.bindData(position);
