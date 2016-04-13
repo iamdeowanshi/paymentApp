@@ -159,50 +159,67 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
     private boolean validateData() {
         if (merchantRequest.getName() == null || merchantRequest.getName().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter name");
             return false;
         }
 
-        if (merchantRequest.getShortCode() == null || merchantRequest.getShortCode().isEmpty()) {
+        if ( merchantRequest.getShortCode() == null || merchantRequest.getShortCode().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter Shortcode (must be 8 characters)");
+            return false;
+        }
+
+        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty() || (merchantRequest.getPhone().length() != 10) ){
+            bakery.snackShort(getContentView(), "Please enter Mobile Number");
+            return false;
+        }
+
+        if ( merchantRequest.getFee() == 0.0) {
+            bakery.snackShort(getContentView(), "Please enter Fee");
+            return false;
+        }
+
+        if (merchantRequest.getProfileImageUrl() == null || merchantRequest.getProfileImageUrl().isEmpty()) {
+            bakery.snackShort(getContentView(), "Upload your profile picture");
             return false;
         }
 
         if (merchantRequest.getEmail() == null || merchantRequest.getEmail().isEmpty()) {
-            return false;
-        }
-
-        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty()) {
-            return false;
-        }
-
-        if ( merchantRequest.getFee() == 0) {
+            bakery.snackShort(getContentView(), "Please enter Email Address");
             return false;
         }
 
         if (merchantRequest.getCityId() == null || merchantRequest.getCityId() == 0) {
+            bakery.snackShort(getContentView(), "Please enter your current city");
             return false;
         }
 
         if (merchantRequest.getAddress() == null || merchantRequest.getAddress().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter current address");
             return false;
         }
 
         if (merchantRequest.getPincode() == null || merchantRequest.getPincode() == 0) {
+            bakery.snackShort(getContentView(), "Please enter pincode");
             return false;
         }
 
         if (merchantRequest.getAccountHolder() == null || merchantRequest.getAccountHolder().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter account holder name");
             return false;
         }
 
         if (merchantRequest.getAccountNumber() == null || merchantRequest.getAccountNumber().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter account number");
             return false;
         }
 
         if (merchantRequest.getBranchName() == null || merchantRequest.getBranchName().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter branch name");
             return false;
         }
 
         if (merchantRequest.getIfscCode() == null || merchantRequest.getIfscCode().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter ifsc code");
             return false;
         }
 

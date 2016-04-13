@@ -43,7 +43,7 @@ import com.batua.android.merchant.module.merchant.view.adapter.AddImagesAdapter;
 import com.batua.android.merchant.module.merchant.view.adapter.SpinAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.RemoveImageClickedListener;
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 import com.github.siyamed.shapeimageview.CircularImageView;
 
 import net.yazeed44.imagepicker.model.ImageEntry;
@@ -60,9 +60,6 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import timber.log.Timber;
 
 /**
@@ -92,6 +89,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.edt_merchant_fee) EditText edtFee;
     @Bind(R.id.input_layout_merchant_email) TextInputLayout inputLayoutEmail;
     @Bind(R.id.input_layout_merchant_fee) TextInputLayout inputLayoutFee;
+    @Bind(R.id.input_layout_merchant_short_code) TextInputLayout inputLayoutShortCode;
     @Bind(R.id.progressBar1) ProgressBar progressBar;
 
     private NextClickedListener nextClickedListener;
@@ -131,7 +129,9 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             loadData();
         }
 
-        hideAddImageRecyclerView();
+        if (merchant == null) {
+            toggleRecyclerViewVisibility(View.GONE);
+        }
         setSpinnerListener();
     }
 
@@ -173,6 +173,14 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     @OnTextChanged(R.id.edt_merchant_short_code)
     void onSHortCodeChange(CharSequence text) {
+        if (text.length() != 8) {
+            inputLayoutShortCode.setErrorEnabled(true);
+            inputLayoutShortCode.setError("ShortCode must be 8 characters long");
+            merchantRequest.setShortCode(null);
+            return;
+        }
+
+        inputLayoutShortCode.setErrorEnabled(false);
         merchantRequest.setShortCode(text.toString());
     }
 
@@ -246,20 +254,20 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Override
     public void onProfileImageUploadSuccess(String merchantImage) {
         merchantRequest.setProfileImageUrl(merchantImage);
-        Glide.with(this).load(merchantImage).into(profileImage);
+        Picasso.with(getActivity()).load(merchantImage).into(profileImage);
     }
 
     // overidden methods of multipick images
     @Override
     public void onPickedSuccessfully(ArrayList<ImageEntry> images) {
         if (images.size() > 0) {
-            showAddImageRecyclerView();
+            toggleRecyclerViewVisibility(View.VISIBLE);
             uploadImage(images);
 
             return;
         }
 
-        hideAddImageRecyclerView();
+        toggleRecyclerViewVisibility(View.GONE);
     }
 
     private void uploadImage(ArrayList<ImageEntry> selectedImages) {
@@ -270,7 +278,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     @Override
     public void onCancel() {
-        Log.i(TAG, "User canceled picker activity");
+        Log.i(TAG, "User cancelled picker activity");
     }
 
     //overidden methods of remove clicked image
@@ -283,7 +291,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         }
 
         if (selectedImages.isEmpty()) {
-            hideAddImageRecyclerView();
+            toggleRecyclerViewVisibility(View.GONE);
         }
     }
 
@@ -295,14 +303,6 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         spinnerMerchantCategory.setSelection(0);
         spinnerMerchantCategory.setAdapter(spinAdapter);
     }
-
-    /*private String getRealPathFromUri(Uri uri) {
-        Cursor cursor = getContext().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-
-        return cursor.getString(idx);
-    }*/
 
     private void loadData() {
         edtName.setText(merchant.getName());
@@ -323,17 +323,23 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         }
 
         if (merchant.getProfileImageUrl() != null) {
-            Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fitCenter().into(profileImage);
+            Picasso.with(getActivity()).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(profileImage);
             merchantRequest.setProfileImageUrl(merchant.getProfileImageUrl());
+        }
+
+        if (merchant.getGalleries() != null && merchant.getGalleries().size() > 0) {
+            galleries = new ArrayList<>();
+            for (Gallery gallery : merchant.getGalleries()) {
+                galleries.add(gallery.getUrl());
+            }
+            merchantRequest.setImageGallery(galleries);
+            populateAdapter(galleries, addImagesrecyclerView);
+            toggleRecyclerViewVisibility(View.VISIBLE);
         }
     }
 
-    private void hideAddImageRecyclerView() {
-        addImagesrecyclerView.setVisibility(View.GONE);
-    }
-
-    private void showAddImageRecyclerView() {
-        addImagesrecyclerView.setVisibility(View.VISIBLE);
+    private void toggleRecyclerViewVisibility(int visiblity) {
+        addImagesrecyclerView.setVisibility(visiblity);
     }
 
     public void setNextClickedListener(NextClickedListener nextClickedListener) {

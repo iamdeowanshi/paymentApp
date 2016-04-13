@@ -173,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_email"
                     android:layout_marginTop="10dp"
-                    android:text="Phone : +91 " />
+                    android:text="Phone No. : +91 " />
 
                 <TextView
                     android:id="@+id/call"

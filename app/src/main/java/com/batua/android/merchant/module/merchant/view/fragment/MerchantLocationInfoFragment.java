@@ -92,31 +92,19 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, 180), new LatLng(85, -180));
     private static final String NO_SERVICE = "No Service!";
 
-    @Inject
-    Bakery bakery;
-    @Inject
-    ViewUtil viewUtil;
-    @Inject
-    CityPresenter cityPresenter;
+    @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
+    @Inject CityPresenter cityPresenter;
 
-    @Bind(R.id.edt_merchant_city)
-    EditText edtCity;
-    @Bind(R.id.edt_merchant_pin_code)
-    EditText edtPin;
-    @Bind(R.id.recyclerView_search_address)
-    RecyclerView searchAddressRecycler;
-    @Bind(R.id.recyclerView_search_city)
-    RecyclerView searchCityRecycler;
-    @Bind(R.id.edt_merchant_address)
-    EditText edtAddress;
-    @Bind(R.id.merchant_location_map)
-    LinearLayout locationLayout;
-    @Bind(R.id.navigation_layout)
-    LinearLayout navigationLayout;
-    @Bind(R.id.input_layout_merchant_pin_code)
-    TextInputLayout inputLayoutPin;
-    @Bind(R.id.input_layout_merchant_city)
-    TextInputLayout inputLayoutMerchantCity;
+    @Bind(R.id.edt_merchant_city) EditText edtCity;
+    @Bind(R.id.edt_merchant_pin_code) EditText edtPin;
+    @Bind(R.id.recyclerView_search_address) RecyclerView searchAddressRecycler;
+    @Bind(R.id.recyclerView_search_city) RecyclerView searchCityRecycler;
+    @Bind(R.id.edt_merchant_address) EditText edtAddress;
+    @Bind(R.id.merchant_location_map) LinearLayout locationLayout;
+    @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
+    @Bind(R.id.input_layout_merchant_pin_code) TextInputLayout inputLayoutPin;
+    @Bind(R.id.input_layout_merchant_city) TextInputLayout inputLayoutMerchantCity;
 
     private Merchant merchant;
     private MerchantRequest merchantRequest;
@@ -664,7 +652,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                     return addresses.get(0).getAddressLine(0) + "," + addresses.get(0).getAddressLine(1);
                 }
             }
-        } catch (IOException e) {
+        }catch (IOException e) {
             Log.e("tag--Address", e.getMessage());
             return "";
         }
