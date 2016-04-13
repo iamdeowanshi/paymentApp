@@ -31,6 +31,11 @@ public class City extends BaseModel {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return name;
+    }
+
     /**
      *
      * @return

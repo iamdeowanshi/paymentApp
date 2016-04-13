@@ -69,6 +69,7 @@
                     android:paddingLeft="10dp"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
+                    android:inputType="textNoSuggestions"
                     android:layout_below="@+id/profile_img_upload_layout"/>
 
             </android.support.design.widget.TextInputLayout>
@@ -91,6 +92,7 @@
                     android:singleLine="true"
                     android:maxLength="8"
                     android:textSize="14sp"
+                    android:inputType="textNoSuggestions"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/view1"/>
 
@@ -109,7 +111,7 @@
                     android:layout_height="40dp"
                     android:id="@+id/edt_merchant_email"
                     android:hint="@string/merchant_email"
-                    android:inputType="textEmailAddress"
+                    android:inputType="textEmailAddress|textNoSuggestions"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
                     android:textSize="14sp"
@@ -210,7 +212,7 @@
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
                     android:maxLength="5"
-                    android:inputType="numberDecimal"
+                    android:inputType="numberDecimal|textNoSuggestions"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/view5"/>

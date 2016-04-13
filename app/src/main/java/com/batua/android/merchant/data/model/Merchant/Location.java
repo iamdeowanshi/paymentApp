@@ -30,7 +30,7 @@ public class Location extends BaseModel {
     @SerializedName("cityId")
     @Expose
     private Integer cityId;
-    @SerializedName("City")
+    @SerializedName("cities")
     @Expose
     private City City;
 
