@@ -84,7 +84,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, GoogleMap.OnMyLocationChangeListener, CityViewInteractor, CitySelectedListener {
+public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, CityViewInteractor, CitySelectedListener {
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final int LOCATION_REQUEST_CODE = 2;
@@ -123,6 +123,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private List<City> cities;
     private Geocoder geocoder;
+    private LatLng addressText;
 
     // Fragment override methods
     @Override
@@ -160,6 +161,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!s.toString().equals("") && googleApiClient.isConnected()) {
+                    edtAddress.setError(null);
                     if (!s.toString().equalsIgnoreCase(myLocationAddress)) {
                         hidePinAndMap();
                         searchAddressAdapter.getFilter().filter(s.toString());
@@ -245,18 +247,11 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     // GoogleApiClient.ConnectionCallbacks and GoogleApiClient.OnConnectionFailedListener override methods
-    @Override
-    public void onMyLocationChange(Location location) {
-        if (marker!=null) {
-            showDialog("Alert!", "Are you sure to change location?", new LatLng(location.getLatitude(), location.getLongitude()));
-            return;
-        }
-        animateCamera(new LatLng(location.getLatitude(), location.getLongitude()), "myLocation");
-    }
 
     @Override
     public void onConnected(Bundle bundle) {
         if (merchant != null && merchant.getAddress() != null) {
+            updateLocation(new LatLng(merchant.getLatitude(), merchant.getLongitude()));
             animateCamera(new LatLng(merchant.getLatitude(), merchant.getLongitude()), "address");
             return;
         }
@@ -344,10 +339,13 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     @OnTextChanged(R.id.edt_merchant_address)
     void onAddressChange(CharSequence text) {
+        if (text.toString().equals("")) {
+            edtAddress.setError("Address cannot be empty");
+        }
         merchantRequest.setAddress(text.toString());
         merchantRequest.setLongitude(longitude);
         merchantRequest.setLatitude(latitude);
-        Log.d(text.toString(),latitude + " : " + longitude);
+        Log.d(text.toString(), latitude + " : " + longitude);
     }
 
     @OnTextChanged(R.id.edt_merchant_pin_code)
@@ -471,31 +469,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         });
     }
 
-    private void addMarker(LatLng latLng) {
-        addAddress(latLng);
-        if (marker!=null) {
-            googleMap.clear();
-            marker = googleMap.addMarker(new MarkerOptions()
-                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
-                    .position(latLng));
-
-            return;
-        }
-
-        marker = googleMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
-                .position(latLng));
-
-    }
-
-    private void addAddress(LatLng latLng) {
-        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
-        edtAddress.setText(myLocationAddress);
-        this.latitude = latLng.latitude;
-        this.longitude = latLng.longitude;
-        googleMap.setOnMyLocationChangeListener(null);
-    }
-
     private void showDialog(String title, final String message, final LatLng latLng) {
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
         alertbuilder.setTitle(title)
@@ -512,6 +485,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                         public void onClick(DialogInterface dialog, int id) {
                             if (message.equals("Are you sure to change the Address?")) {
                                 googleMap.clear();
+                                updateLocation(latLng);
+                                setAddressText(latLng);
                                 animateCamera(latLng, "address");
                                 dialog.dismiss();
                                 return;
@@ -540,7 +515,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         edtPin.setVisibility(View.GONE);
         locationLayout.setVisibility(View.GONE);
         navigationLayout.setVisibility(View.GONE);
-        googleMap.setOnMyLocationChangeListener(this);
     }
 
     private void showAll(){
@@ -551,7 +525,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         edtPin.setVisibility(View.VISIBLE);
         locationLayout.setVisibility(View.VISIBLE);
         navigationLayout.setVisibility(View.VISIBLE);
-        googleMap.setOnMyLocationChangeListener(null);
     }
 
     private void hidePinAndMap() {
@@ -559,7 +532,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         edtPin.setVisibility(View.GONE);
         locationLayout.setVisibility(View.GONE);
         navigationLayout.setVisibility(View.GONE);
-        googleMap.setOnMyLocationChangeListener(null);
     }
 
     private void showPinAndMap() {
@@ -568,36 +540,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         locationLayout.setVisibility(View.VISIBLE);
         navigationLayout.setVisibility(View.VISIBLE);
         viewUtil.hideKeyboard(MerchantLocationInfoFragment.this.getActivity());
-        googleMap.setOnMyLocationChangeListener(null);
-    }
-
-    private void displayAddress(String placeDescription, LatLng latLng) {
-        edtAddress.setText(placeDescription);
-        this.latitude = latLng.latitude;
-        this.longitude = latLng.longitude;
-        animateCamera(latLng, "address");
-        showPinAndMap();
-    }
-
-    private void animateCamera(LatLng latLng, String location) {
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(10).build();
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
-        edtAddress.setText(myLocationAddress);
-        this.latitude = latLng.latitude;
-        this.longitude = latLng.longitude;
-
-        if (location.equals("myLocation")){
-            marker = null;
-            googleMap.setOnMyLocationChangeListener(null);
-            return;
-        }
-
-
-        marker = googleMap.addMarker(new MarkerOptions()
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
-                .position(latLng));
-
     }
 
     private void showCurrentPosition() {
@@ -610,6 +552,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
             if (location != null) {
                 LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
+                updateLocation(curentpoint);
+                setAddressText(curentpoint);
                 animateCamera(curentpoint, "myLocation");
             }
 
@@ -644,7 +588,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         alertDialog.setTitle("GPS settings");
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
         alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog,int which) {
+            public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 MerchantLocationInfoFragment.this.getContext().startActivity(intent);
             }
@@ -695,6 +639,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void loadData() {
         if (merchant.getAddress() != null) {
+			edtAddress.setError(null);
             edtAddress.setText(merchant.getAddress());
             merchantRequest.setAddress(merchant.getAddress());
             merchantRequest.setLatitude(merchant.getLatitude());
@@ -714,6 +659,60 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             edtPin.setText(String.valueOf(merchant.getLocation().getPincode()));
             merchantRequest.setPincode(merchant.getLocation().getPincode());
         }
+    }
+
+    public void setAddressText(LatLng latLng) {
+        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+        edtAddress.setError(null);
+        edtAddress.setText(myLocationAddress);
+    }
+
+    private void addMarker(LatLng latLng) {
+        updateLocation(latLng);
+        setAddressText(latLng);
+        if (marker!=null) {
+            googleMap.clear();
+            marker = googleMap.addMarker(new MarkerOptions()
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
+                    .position(latLng));
+
+            return;
+        }
+
+        marker = googleMap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
+                .position(latLng));
+
+    }
+
+    private void displayAddress(String placeDescription, LatLng latLng) {
+        edtAddress.setError(null);
+        edtAddress.setText(placeDescription);
+        updateLocation(latLng);
+        animateCamera(latLng, "address");
+        showPinAndMap();
+    }
+
+    private void updateLocation(LatLng latLng) {
+        this.latitude = latLng.latitude;
+        this.longitude = latLng.longitude;
+        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+    }
+
+    private void animateCamera(LatLng latLng, String location) {
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(10).build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+        if (location.equals("myLocation")){
+            marker = null;
+            return;
+        }
+
+
+        marker = googleMap.addMarker(new MarkerOptions()
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
+                .position(latLng));
+
     }
 
 }
