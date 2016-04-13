@@ -48,7 +48,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     @Bind(R.id.progress) ProgressBar progressBar;
 
     private TextView title;
-    private Merchant merchant ;
+    private Merchant merchant;
     private MerchantFragmentPagerAdapter adapter;
     private MerchantRequest merchantRequest = new MerchantRequest();
 
@@ -116,7 +116,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        title = (TextView)toolbar.findViewById(com.batua.android.merchant.R.id.toolbar_title);
+        title = (TextView) toolbar.findViewById(com.batua.android.merchant.R.id.toolbar_title);
         title.setText(com.batua.android.merchant.R.string.add_merchant_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
@@ -138,22 +138,22 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
 
     private boolean validateData() {
         if (merchantRequest.getName() == null || merchantRequest.getName().isEmpty()) {
-            bakery.snackShort(getContentView(), "Invalid Name");
+            bakery.snackShort(getContentView(), "Please enter name");
             return false;
         }
 
-        if ( merchantRequest.getShortCode() == null || merchantRequest.getShortCode().isEmpty()) {
-            bakery.snackShort(getContentView(), "Invalid Shortcode,must be 8 characters");
+        if (merchantRequest.getShortCode() == null || merchantRequest.getShortCode().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter Shortcode (must be 8 characters)");
             return false;
         }
 
-        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty() || (merchantRequest.getPhone().length() != 10) ){
-            bakery.snackShort(getContentView(), "Invalid Mobile Number");
+        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty() || (merchantRequest.getPhone().length() != 10)) {
+            bakery.snackShort(getContentView(), "Please enter Mobile Number");
             return false;
         }
 
-        if ( merchantRequest.getFee() == 0.0) {
-            bakery.snackShort(getContentView(), "Invalid Fee");
+        if (merchantRequest.getFee() == 0.0) {
+            bakery.snackShort(getContentView(), "Please enter Fee");
             return false;
         }
 

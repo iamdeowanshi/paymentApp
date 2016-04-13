@@ -309,8 +309,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     void onAddressChange(CharSequence text) {
         if (!text.toString().equals("") && googleApiClient.isConnected()) {
             edtAddress.setError(null);
+            hidePinAndMap();
             if (!text.toString().equalsIgnoreCase(myLocationAddress)) {
-                hidePinAndMap();
                 searchAddressAdapter.getFilter().filter(text.toString());
                 return;
             }
@@ -334,7 +334,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             return;
         }
 
-        if (merchantRequest.getLatitude()!=0.0 && merchantRequest.getLongitude()!=0.0){
+
+        if (!edtAddress.getText().toString().isEmpty() && merchantRequest.getLatitude()!=0.0 && merchantRequest.getLongitude()!=0.0){
             Integer pin = getPinCode(merchantRequest.getLatitude(), merchantRequest.getLongitude());
             if (Integer.parseInt(text.toString())==pin){
                 merchantRequest.setPincode(Integer.parseInt(text.toString()));
@@ -374,6 +375,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                     if (city1.getName().equalsIgnoreCase(city)){
                         edtCity.setText(city1.getName());
                         merchantRequest.setCityId(city1.getId());
+                        return;
                     }
                 }
 
@@ -493,17 +495,15 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                         public void onClick(DialogInterface dialog, int id) {
                             if (message.equals("Are you sure to change the Address?")) {
                                 String editCity = edtCity.getText().toString();
-                                if (!editCity.equals("")) {
-                                    if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
-                                        String city = getCity(latLng.latitude, latLng.longitude);
-                                        if (city!=null || (!city.equals("") && !city.equalsIgnoreCase(editCity))) {
-                                            bakery.snackLong(getContentView(), "Please select an address in your city");
-                                            showAll();
-                                            return;
-                                        }
+                                if (!editCity.isEmpty() && latLng.latitude != 0.0 && latLng.longitude != 0.0) {
+                                    String city = getCity(latLng.latitude, latLng.longitude);
+                                    if (city!=null || (!city.equals("") && !city.equalsIgnoreCase(editCity))) {
+                                        bakery.snackLong(getContentView(), "Please select an address in your city");
+                                        showAll();
                                         return;
                                     }
                                     return;
+
                                 }
                                 googleMap.clear();
                                 updateLocation(latLng);
@@ -751,17 +751,16 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         edtAddress.setError(null);
 
         String editCity = edtCity.getText().toString();
-        if (!editCity.equals("")) {
-            if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
-                String city = getCity(latLng.latitude, latLng.longitude);
-                if (city!=null || (!city.equals("") && !city.equalsIgnoreCase(editCity))) {
-                    bakery.snackLong(getContentView(), "Please select an address in your city");
-                    showAll();
-                    return;
-                }
+
+        if (!editCity.isEmpty() && latLng.latitude != 0.0 && latLng.longitude != 0.0) {
+            String city = getCity(latLng.latitude, latLng.longitude);
+            if (city!=null || (!city.equals("") && !city.equalsIgnoreCase(editCity))) {
+                bakery.snackLong(getContentView(), "Please select an address in your city");
+                showAll();
                 return;
             }
             return;
+
         }
         edtAddress.setText(placeDescription);
         updateLocation(latLng);

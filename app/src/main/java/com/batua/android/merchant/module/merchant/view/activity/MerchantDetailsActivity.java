@@ -14,8 +14,8 @@ import android.widget.TextView;
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.BaseActivity;
-import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -151,7 +151,7 @@ public class MerchantDetailsActivity extends BaseActivity {
         }
 
         if (merchant.getProfileImageUrl() != null) {
-            Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).centerCrop().animate(R.anim.fadein).into(merchantDp);
+            Picasso.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(merchantDp);
         }
 
         if (merchant.getGalleries().size() == 0) {
@@ -162,25 +162,25 @@ public class MerchantDetailsActivity extends BaseActivity {
         galleryLayout.setVisibility(View.VISIBLE);
 
         if (merchant.getGalleries().size() == 1) {
-            Glide.with(this).load(merchant.getGalleries().get(0).getUrl()).centerCrop().into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
             return;
         }
         if (merchant.getGalleries().size() == 2) {
-            Glide.with(this).load(merchant.getGalleries().get(0).getUrl()).centerCrop().into(firstGalleyImage);
-            Glide.with(this).load(merchant.getGalleries().get(1).getUrl()).centerCrop().into(secondGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(1).getUrl()).into(secondGalleyImage);
             return;
         }
         if (merchant.getGalleries().size() == 3) {
-            Glide.with(this).load(merchant.getGalleries().get(0).getUrl()).centerCrop().into(firstGalleyImage);
-            Glide.with(this).load(merchant.getGalleries().get(1).getUrl()).centerCrop().into(secondGalleyImage);
-            Glide.with(this).load(merchant.getGalleries().get(2).getUrl()).centerCrop().into(thirdGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(1).getUrl()).into(secondGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(2).getUrl()).into(thirdGalleyImage);
             return;
         }
         if (merchant.getGalleries().size() == 4) {
-            Glide.with(this).load(merchant.getGalleries().get(0).getUrl()).centerCrop().into(firstGalleyImage);
-            Glide.with(this).load(merchant.getGalleries().get(1).getUrl()).centerCrop().into(secondGalleyImage);
-            Glide.with(this).load(merchant.getGalleries().get(2).getUrl()).centerCrop().into(thirdGalleyImage);
-            Glide.with(this).load(merchant.getGalleries().get(3).getUrl()).centerCrop().into(fourthGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(1).getUrl()).into(secondGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(2).getUrl()).into(thirdGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(3).getUrl()).into(fourthGalleyImage);
             return;
         }
     }
