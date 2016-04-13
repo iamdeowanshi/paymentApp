@@ -14,6 +14,7 @@ import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.ImageUtil;
 import com.bumptech.glide.Glide;
 import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
@@ -71,7 +72,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
 
     @Override
     public void onSuccess(Uri uri, File file) {
-        Glide.with(this).load(uri).into(imgProfile);
+        Picasso.with(this).load(uri).into(imgProfile);
     }
 
 }
