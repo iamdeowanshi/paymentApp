@@ -1,4 +1,4 @@
-package com.batua.android.merchant.module.dashboard.view;
+package com.batua.android.merchant.module.dashboard.view.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 
 import org.parceler.Parcels;
@@ -17,32 +18,31 @@ import butterknife.Bind;
 /**
  * Created by febinp on 01/03/16.
  */
-public class DraftedMerchantFragment extends MerchantFragment{
+public class ActiveMerchantFragment extends MerchantFragment{
+
+    @Bind(R.id.merchant_active_status_recycler_view) RecyclerView merchantActiveRecyclerView;
 
     private View view;
-    private List<Merchant> draftedList;
-
-    @Bind(com.batua.android.merchant.R.id.merchant_drafted_status_recycler_view) RecyclerView merchantDraftedRecyclerView;
+    private List<Merchant> activeList;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        view = inflater.inflate(com.batua.android.merchant.R.layout.fragment_draft, null);;
+        view = inflater.inflate(com.batua.android.merchant.R.layout.fragment_active, null);
 
         onViewCreated(view, null);
-        draftedList = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
-
+        activeList = Parcels.unwrap(this.getArguments().getParcelable("Merchant"));
         populateAdapter();
-        
+
         return view;
     }
 
     @Override
     RecyclerView getMerchantRecyclerView() {
-        return merchantDraftedRecyclerView;
+        return merchantActiveRecyclerView;
     }
 
     List<Merchant> getActiveList() {
-        return draftedList;
+        return activeList;
     }
+
 }

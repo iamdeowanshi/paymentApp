@@ -5,7 +5,6 @@ import android.graphics.Point;
 import android.view.Display;
 import android.view.WindowManager;
 
-
 import com.batua.android.merchant.injection.Injector;
 
 import javax.inject.Inject;

@@ -2,6 +2,7 @@ package com.batua.android.merchant.module.merchant.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,11 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.batua.android.merchant.data.model.Merchant.Gallery;
 import com.batua.android.merchant.module.merchant.view.activity.GalleryFullScreenActivity;
 import com.bumptech.glide.Glide;
+
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +24,12 @@ import java.util.List;
  */
 public class GalleryGridViewAdapter extends ArrayAdapter<String> {
 
-    private ArrayList<String> imageList;
+    private ArrayList<Gallery> imageList;
     private Context context ;
     private int width;
     private SparseBooleanArray selectedItemsIds;
 
-    public GalleryGridViewAdapter(Context context,int resourceId, ArrayList<String> imageList, int width) {
+    public GalleryGridViewAdapter(Context context,int resourceId, ArrayList<Gallery> imageList, int width) {
         super(context, resourceId);
         this.context = context;
         this.imageList = imageList;
@@ -45,7 +49,7 @@ public class GalleryGridViewAdapter extends ArrayAdapter<String> {
 
     @Override
     public String getItem(int position) {
-        return imageList.get(position);
+        return imageList.get(position).getUrl();
     }
 
     @Override
@@ -65,30 +69,7 @@ public class GalleryGridViewAdapter extends ArrayAdapter<String> {
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageView.setLayoutParams(new GridView.LayoutParams(width, width));
 
-        Glide.with(context).load(imageList.get(position)).fitCenter().into(imageView);
-      /*  imageView.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Timber.d("OnLongClick");
-
-                return true;
-            }
-        });*/
-        /*imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Timber.d("OnClick");
-
-            *//*    final Dialog imageDialog = new Dialog(context);
-                imageDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-                imageDialog.setContentView(context.getActivity().getLayoutInflater().inflate(R.layout.page_item_gallery, null));
-                ImageView image = (ImageView) imageDialog.findViewById(R.id.image_view);
-                Glide.with(context).load(imageList.get(position)).into(image);
-                imageDialog.show();
-
-                return;*//*
-            }
-        });*/
+        Glide.with(context).load(imageList.get(position).getUrl()).fitCenter().into(imageView);
 
         imageView.setOnClickListener(new OnImageClickListener(position));
 
@@ -99,34 +80,6 @@ public class GalleryGridViewAdapter extends ArrayAdapter<String> {
     public void remove(String object) {
         imageList.remove(object);
         notifyDataSetChanged();
-    }
-
-    public void toggleSelection(int position) {
-        selectView(position, !selectedItemsIds.get(position));
-    }
-
-    public void selectView(int position, boolean value) {
-        if (value)
-            selectedItemsIds.put(position, value);
-        else
-            selectedItemsIds.delete(position);
-        notifyDataSetChanged();
-    }
-
-    public void removeSelection() {
-        selectedItemsIds = new SparseBooleanArray();
-        notifyDataSetChanged();
-    }
-    public List<String> getWorldPopulation() {
-        return imageList;
-    }
-
-    public int getSelectedCount() {
-        return imageList.size();
-    }
-
-    public SparseBooleanArray getSelectedIds() {
-        return selectedItemsIds;
     }
 
     class OnImageClickListener implements View.OnClickListener {
@@ -143,7 +96,10 @@ public class GalleryGridViewAdapter extends ArrayAdapter<String> {
             // on selecting grid view image
             // launch full screen activity
             Intent i = new Intent(context, GalleryFullScreenActivity.class);
-            i.putExtra("position", position);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("imageList", Parcels.wrap(imageList));
+            bundle.putInt("position", position);
+            i.putExtras(bundle);
             context.startActivity(i);
         }
 

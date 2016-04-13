@@ -1,4 +1,4 @@
-package com.batua.android.merchant.module.dashboard.view;
+package com.batua.android.merchant.module.dashboard.view.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.batua.android.merchant.data.model.Merchant.Merchant;
-import com.batua.android.merchant.data.model.MerchantStatusModel;
 import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
 
 import org.parceler.Parcels;

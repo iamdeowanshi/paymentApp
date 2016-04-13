@@ -31,6 +31,7 @@
                     android:hint="@string/account_holder_name"
                     android:textColorHint="@color/light_gray"
                     android:paddingLeft="10dp"
+                    android:singleLine="true"
                     android:textSize="14sp"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/profile_img_upload_layout"/>
@@ -80,6 +81,7 @@
                 android:id="@+id/input_layout_bank_branch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 app:errorTextAppearance="@style/error_appearance"
                 android:theme="@style/TextLabel"
                 android:layout_below="@+id/view">
@@ -139,10 +141,20 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:text="Submit for approval"
+                android:id="@+id/btn_submit"
                 android:textColor="@color/white"
                 android:background="@drawable/bg_button_pink"
                 android:layout_below="@+id/txt_load_previous"
                 android:layout_centerHorizontal="true"/>
+
+            <ProgressBar
+                android:id="@+id/progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:indeterminateTint="#c5c5c5"
+                android:indeterminateTintMode="src_atop"
+                android:visibility="gone"/>
 
         </RelativeLayout>
     </ScrollView>

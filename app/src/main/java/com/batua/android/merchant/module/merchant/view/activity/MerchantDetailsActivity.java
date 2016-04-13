@@ -14,6 +14,8 @@ import android.widget.TextView;
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.BaseActivity;
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -25,8 +27,8 @@ public class MerchantDetailsActivity extends BaseActivity {
     private static final String ACTIVE = "Active";
     private static final String DRAFTED = "Drafted";
 
-    @Bind(com.batua.android.merchant.R.id.toolbar_title) TextView title;
-    @Bind(com.batua.android.merchant.R.id.toolbar) Toolbar toolbar;
+    @Bind(R.id.toolbar_title) TextView title;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.merchant_detail_scroll_view) ScrollView scrollView;
     @Bind(R.id.txt_short_code) TextView txtShortCode;
     @Bind(R.id.text_address) TextView txtAddress;
@@ -44,14 +46,14 @@ public class MerchantDetailsActivity extends BaseActivity {
     @Bind(R.id.second_image) ImageView secondGalleyImage;
     @Bind(R.id.third_image) ImageView thirdGalleyImage;
     @Bind(R.id.fourth_image) ImageView fourthGalleyImage;
-    @Bind(R.id.fifth_image) ImageView fifthGalleyImage;
+    @Bind(R.id.merchant_dp) CircularImageView merchantDp;
 
     private Merchant merchant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.merchant.R.layout.activity_merchant_details);
+        setContentView(R.layout.activity_merchant_details);
 
         merchant = Parcels.unwrap(getIntent().getParcelableExtra("MerchantDetail"));
 
@@ -61,7 +63,11 @@ public class MerchantDetailsActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(com.batua.android.merchant.R.menu.menu_merchant_details, menu);
+        getMenuInflater().inflate(R.menu.menu_merchant_details, menu);
+
+        if (merchant.getStatus().toString().equalsIgnoreCase(ACTIVE)) {
+            menu.findItem(com.batua.android.merchant.R.id.action_edit).setVisible(false);
+        }
 
         return super.onCreateOptionsMenu(menu);
     }
@@ -70,7 +76,10 @@ public class MerchantDetailsActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case com.batua.android.merchant.R.id.action_edit:
-                startActivity(EditMerchantActivity.class, null);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("Merchant", Parcels.wrap(merchant));
+                startActivity(EditMerchantActivity.class, bundle);
+                finish();
                 break;
 
             case android.R.id.home:
@@ -86,9 +95,11 @@ public class MerchantDetailsActivity extends BaseActivity {
         finish();
     }
 
-    @OnClick(com.batua.android.merchant.R.id.view_images)
+    @OnClick(R.id.view_images)
     void onViewImagesClick() {
-        startActivity(GalleryImagesActivity.class, null);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("Merchant", Parcels.wrap(merchant));
+        startActivity(GalleryImagesActivity.class, bundle);
         finish();
     }
 
@@ -96,15 +107,38 @@ public class MerchantDetailsActivity extends BaseActivity {
         scrollView.setVisibility(View.VISIBLE);
         setToolBar(merchant.getName());
         txtShortCode.setText(merchant.getShortCode());
-        txtAddress.setText(merchant.getAddress());
+        if (merchant.getAddress() != null) {
+            txtAddress.setText(merchant.getAddress());
+        }
+
         txtFees.setText(merchant.getFees() + "%");
-        txtEmail.setText(merchant.getEmail());
+
+        if (merchant.getEmail() != null ) {
+            txtEmail.setText(merchant.getEmail());
+        }
+
         txtCall.setText(merchant.getPhone().toString());
-        txtAccountNumber.setText(merchant.getAccountNumber().toString());
-        txtAccountName.setText(merchant.getAccountHolder());
-        txtBank.setText(merchant.getBankName());
-        txtBranch.setText(merchant.getBranchName());
-        txtIfsc.setText(merchant.getIfscCode());
+
+        if (merchant.getAccountNumber() != null) {
+            txtAccountNumber.setText(merchant.getAccountNumber().toString());
+        }
+
+        if (merchant.getAccountHolder() != null) {
+            txtAccountName.setText(merchant.getAccountHolder());
+        }
+
+        if (merchant.getBankName() != null) {
+            txtBank.setText(merchant.getBankName());
+        }
+
+        if (merchant.getBranchName() != null) {
+            txtBranch.setText(merchant.getBranchName());
+        }
+
+        if (merchant.getIfscCode() != null) {
+            txtIfsc.setText(merchant.getIfscCode());
+        }
+
         String status = merchant.getStatus();
         txtStatus.setText(status);
 
@@ -116,12 +150,39 @@ public class MerchantDetailsActivity extends BaseActivity {
             txtStatus.setTextColor(ContextCompat.getColor(this, R.color.yellow_dark));
         }
 
+        if (merchant.getProfileImageUrl() != null) {
+            Picasso.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(merchantDp);
+        }
+
         if (merchant.getGalleries().size() == 0) {
             galleryLayout.setVisibility(View.GONE);
             return;
         }
 
         galleryLayout.setVisibility(View.VISIBLE);
+
+        if (merchant.getGalleries().size() == 1) {
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            return;
+        }
+        if (merchant.getGalleries().size() == 2) {
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(1).getUrl()).into(secondGalleyImage);
+            return;
+        }
+        if (merchant.getGalleries().size() == 3) {
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(1).getUrl()).into(secondGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(2).getUrl()).into(thirdGalleyImage);
+            return;
+        }
+        if (merchant.getGalleries().size() == 4) {
+            Picasso.with(this).load(merchant.getGalleries().get(0).getUrl()).into(firstGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(1).getUrl()).into(secondGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(2).getUrl()).into(thirdGalleyImage);
+            Picasso.with(this).load(merchant.getGalleries().get(3).getUrl()).into(fourthGalleyImage);
+            return;
+        }
     }
 
     private void setToolBar(String name) {

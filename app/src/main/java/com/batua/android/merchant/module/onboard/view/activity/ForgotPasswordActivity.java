@@ -2,7 +2,6 @@ package com.batua.android.merchant.module.onboard.view.activity;
 
 import android.os.Bundle;
 
-
 import com.batua.android.merchant.module.base.BaseActivity;
 
 import butterknife.OnClick;

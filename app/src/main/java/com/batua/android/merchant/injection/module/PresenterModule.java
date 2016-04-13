@@ -3,6 +3,12 @@ package com.batua.android.merchant.injection.module;
 
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
+import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenter;
+import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenter;
+import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 
@@ -28,8 +34,18 @@ public class PresenterModule {
     }
 
     @Provides
-    public MerchantDetailPresenter provideMerchantDetailPresenter() {
-        return new MerchantDetailPresenterImpl();
+    public MerchantCategoryPresenter provideCategoryPresenter() {
+        return new MerchantCategoryPresenterImpl();
+    }
+
+    @Provides
+    public ImageUploadPresenter provideImageUploadPresenter() {
+        return new ImageUploadPresenterImpl();
+    }
+
+    @Provides
+    public CityPresenter provideCityProvide() {
+        return new CityPresenterImpl();
     }
 
 }

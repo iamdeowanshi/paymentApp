@@ -4,15 +4,13 @@ import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.NetworkViewInteractor;
 import com.batua.android.merchant.module.base.ViewInteractor;
 
-import java.util.List;
-
 /**
  * @author Aaditya Deowanshi.
  */
-public interface MerchantViewInteractor extends ViewInteractor{
+public interface MerchantViewInteractor extends NetworkViewInteractor{
 
-    void merchantAdded(Merchant response);
+    void showMerchant(Merchant response);
 
-    void merchantUpdated(Merchant response);
+    void showError();
 
 }

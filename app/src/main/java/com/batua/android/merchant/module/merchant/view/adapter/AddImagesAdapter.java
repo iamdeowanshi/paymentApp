@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.batua.android.merchant.R;
 import com.batua.android.merchant.module.merchant.view.listener.RemoveImageClickedListener;
 import com.bumptech.glide.Glide;
 
@@ -22,11 +23,11 @@ import butterknife.ButterKnife;
  */
 public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddImagesViewHolder>{
 
-    private List<ImageEntry> customGalleryList;
+    private List<String> customGalleryList;
     private Context context;
     private RemoveImageClickedListener removeImageClickedListener;
 
-    public AddImagesAdapter(List<ImageEntry> customGalleries, RemoveImageClickedListener removeImageClickedListener) {
+    public AddImagesAdapter(List<String> customGalleries, RemoveImageClickedListener removeImageClickedListener) {
         this.customGalleryList = customGalleries;
         this.removeImageClickedListener = removeImageClickedListener;
     }
@@ -34,7 +35,7 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
     @Override
     public AddImagesViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         this.context = viewGroup.getContext();
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(com.batua.android.merchant.R.layout.list_add_images, viewGroup, false);
+        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_add_images, viewGroup, false);
         AddImagesViewHolder addImagesViewHolder = new AddImagesViewHolder(v);
 
         return addImagesViewHolder;
@@ -43,7 +44,7 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
     @Override
     public void onBindViewHolder(AddImagesViewHolder addImagesViewHolder, final int position) {
         Glide.with(context)
-                .load(customGalleryList.get(position).path)
+                .load(customGalleryList.get(position))
                 .centerCrop()
                 .into(addImagesViewHolder.imgMerchantImages);
 
@@ -53,7 +54,6 @@ public class AddImagesAdapter extends RecyclerView.Adapter<AddImagesAdapter.AddI
                 removeImageClickedListener.removeClickedPosition(position);
             }
         });
-
     }
 
     @Override

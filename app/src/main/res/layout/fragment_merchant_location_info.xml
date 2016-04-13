@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:nestedScrollingEnabled="false">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -21,120 +25,145 @@
                 android:id="@+id/input_layout_merchant_city"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:errorTextAppearance="@style/error_appearance"
-                android:theme="@style/TextLabel">
+                android:theme="@style/TextLabel"
+                app:errorTextAppearance="@style/error_appearance">
 
                 <EditText
+                    android:id="@+id/edt_merchant_city"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_city"
-                    android:hint="@string/merchant_city"
-                    android:textColorHint="@color/light_gray"
-                    android:paddingLeft="10dp"
-                    android:textSize="14sp"
+                    android:layout_below="@+id/profile_img_upload_layout"
                     android:layout_marginTop="10dp"
-                    android:layout_below="@+id/profile_img_upload_layout"/>
+                    android:hint="@string/merchant_city"
+                    android:inputType="textNoSuggestions"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"/>
 
             </android.support.design.widget.TextInputLayout>
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_search_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/input_layout_merchant_city"
+                android:background="@android:color/transparent"
+                android:scrollbars="vertical"
+                android:visibility="gone"/>
 
 
             <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_merchant_address"
+                android:id="@+id/input_layout_merchant_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_layout_merchant_city"
+                android:theme="@style/TextLabel"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <EditText
+                    android:id="@+id/edt_merchant_address"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:errorTextAppearance="@style/error_appearance"
-                    android:theme="@style/TextLabel"
-                    android:layout_below="@+id/input_layout_merchant_city">
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/profile_img_upload_layout"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/merchant_address"
+                    android:inputType="textNoSuggestions"
+                    android:maxLines="1"
+                    android:paddingLeft="10dp"
+                    android:textColorHint="@color/light_gray"
+                    android:textSize="14sp"/>
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:id="@+id/edt_merchant_address"
-                        android:hint="@string/merchant_address"
-                        android:textColorHint="@color/light_gray"
-                        android:paddingLeft="10dp"
-                        android:textSize="14sp"
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/profile_img_upload_layout"/>
+            </android.support.design.widget.TextInputLayout>
 
-                </android.support.design.widget.TextInputLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView_search_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/input_layout_merchant_address"
+                android:background="@android:color/transparent"
+                android:scrollbars="vertical"
+                android:visibility="gone"/>
 
-                <android.support.design.widget.TextInputLayout
-                    android:id="@+id/input_layout_merchant_pin_code"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/input_layout_merchant_pin_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/input_layout_merchant_address"
+                android:theme="@style/TextLabel"
+                app:errorTextAppearance="@style/error_appearance">
+
+                <EditText
+                    android:id="@+id/edt_merchant_pin_code"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:errorTextAppearance="@style/error_appearance"
-                    android:theme="@style/TextLabel"
-                    android:layout_below="@+id/input_layout_merchant_address">
+                    android:layout_height="40dp"
+                    android:layout_below="@+id/profile_img_upload_layout"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/merchant_pin_code"
+                    android:inputType="number"
+                    android:maxLength="6"
+                    android:paddingLeft="10dp"/>
 
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:id="@+id/edt_merchant_pin_code"
-                        android:hint="@string/merchant_pin_code"
-                        android:paddingLeft="10dp"
-                        android:inputType="number"
-                        android:layout_marginTop="10dp"
-                        android:layout_below="@+id/profile_img_upload_layout"/>
-
-                </android.support.design.widget.TextInputLayout>
-
-                <LinearLayout
-                    android:id="@+id/merchant_location_map"
-                    android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_below="@+id/input_layout_merchant_pin_code"
-                    android:orientation="horizontal">
-
-                    <fragment
-                        android:id="@+id/map_fragment"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        class="com.google.android.gms.maps.SupportMapFragment">
-                    </fragment>
-
-                </LinearLayout>
+            </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
+                android:id="@+id/merchant_location_map"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_below="@+id/input_layout_merchant_pin_code"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
+
+                <fragment
+                    android:id="@+id/map_fragment"
+                    class="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></fragment>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/navigation_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/merchant_location_map"
-                android:orientation="horizontal"
+                android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp">
+                android:orientation="horizontal">
 
 
                 <TextView
-                    android:layout_weight="1"
+                    android:id="@+id/txt_load_previous"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PREVIOUS"
-                    android:textSize="16sp"
-                    android:paddingRight="10dp"
+                    android:layout_weight="1"
                     android:gravity="right"
-                    android:textStyle="bold"
+                    android:paddingRight="10dp"
+                    android:text="PREVIOUS"
                     android:textColor="@color/pink"
-                    android:id="@+id/txt_load_previous" />
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
                 <TextView
-                    android:layout_weight="1"
+                    android:id="@+id/txt_load_next"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="NEXT"
-                    android:textSize="16sp"
-                    android:textStyle="bold"
-                    android:id="@+id/txt_load_next"
-                    android:textColor="@color/pink"
-                    android:paddingLeft="10dp"
                     android:layout_alignBottom="@+id/txt_load_previous"
-                    android:layout_toRightOf="@+id/txt_load_previous" />
+                    android:layout_toRightOf="@+id/txt_load_previous"
+                    android:layout_weight="1"
+                    android:paddingLeft="10dp"
+                    android:text="NEXT"
+                    android:textColor="@color/pink"
+                    android:textSize="16sp"
+                    android:textStyle="bold"/>
 
 
             </LinearLayout>
 
-            </RelativeLayout>
+        </RelativeLayout>
 
     </ScrollView>
 

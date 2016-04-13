@@ -5,22 +5,6 @@ import com.batua.android.merchant.injection.module.ApiModule;
 import com.batua.android.merchant.injection.module.ApplicationModule;
 import com.batua.android.merchant.injection.module.PresenterModule;
 import com.batua.android.merchant.injection.module.UtilModule;
-import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
-import com.batua.android.merchant.module.dashboard.view.HomeActivity;
-import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
-import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
-import com.batua.android.merchant.module.merchant.view.fragment.MerchantBankInfoFragment;
-import com.batua.android.merchant.module.merchant.view.fragment.MerchantBasicInfoFragment;
-import com.batua.android.merchant.module.merchant.view.fragment.MerchantLocationInfoFragment;
-import com.batua.android.merchant.module.merchant.view.activity.GalleryImagesActivity;
-import com.batua.android.merchant.module.merchant.view.adapter.GalleryViewPagerAdapter;
-import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
-import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActivity;
-import com.batua.android.merchant.module.onboard.view.activity.ForgotPasswordActivity;
-import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
-import com.batua.android.merchant.module.onboard.view.activity.OtpActivity;
-import com.batua.android.merchant.module.onboard.view.activity.ResetPasswordActivity;
-import com.batua.android.merchant.module.profile.view.activity.EditProfileActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.ConnectivityUtil;
 import com.batua.android.merchant.module.common.util.DisplayUtil;
@@ -29,6 +13,25 @@ import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.common.util.social.SocialAuth;
+import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
+import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
+import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenterImpl;
+import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
+import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
+import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActivity;
+import com.batua.android.merchant.module.merchant.view.activity.GalleryImagesActivity;
+import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
+import com.batua.android.merchant.module.merchant.view.adapter.GalleryViewPagerAdapter;
+import com.batua.android.merchant.module.merchant.view.fragment.MerchantBankInfoFragment;
+import com.batua.android.merchant.module.merchant.view.fragment.MerchantBasicInfoFragment;
+import com.batua.android.merchant.module.merchant.view.fragment.MerchantLocationInfoFragment;
+import com.batua.android.merchant.module.onboard.view.activity.ForgotPasswordActivity;
+import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
+import com.batua.android.merchant.module.onboard.view.activity.OtpActivity;
+import com.batua.android.merchant.module.onboard.view.activity.ResetPasswordActivity;
+import com.batua.android.merchant.module.profile.view.activity.EditProfileActivity;
 
 import javax.inject.Singleton;
 
@@ -64,12 +67,12 @@ public interface ApplicationComponent {
     void inject(MerchantDetailsActivity merchantDetailsActivity);
     void inject(MerchantLocationInfoFragment merchantLocationInfoFragment);
 
-
-
     // inject methods for presenter classes
     void inject(MerchantPresenterImpl merchantPresenter);
     void inject(MerchantListPresenterImpl merchantListPresenter);
-    void inject(MerchantDetailPresenterImpl merchantDetailPresenter);
+    void inject(CityPresenterImpl cityPresenter);
+    void inject(MerchantCategoryPresenterImpl categoryPresenter);
+    void inject(ImageUploadPresenterImpl imageUploadPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

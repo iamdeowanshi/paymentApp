@@ -1,11 +1,11 @@
-package com.batua.android.merchant.module.dashboard.view;
+package com.batua.android.merchant.module.dashboard.view.fragment;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.base.BaseFragment;
+import com.batua.android.merchant.module.dashboard.view.adapter.MerchantStatusAdapter;
 
 import java.util.List;
 

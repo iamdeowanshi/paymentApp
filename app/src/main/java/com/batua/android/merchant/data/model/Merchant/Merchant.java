@@ -39,16 +39,16 @@ public class Merchant extends BaseModel {
     private String  address;
     @SerializedName("latitude")
     @Expose
-    private float latitude;
+    private double latitude;
     @SerializedName("longitude")
     @Expose
-    private float longitude;
+    private double longitude;
     @SerializedName("averageRating")
     @Expose
     private float averageRating;
     @SerializedName("fees")
     @Expose
-    private Integer fees;
+    private double fees;
     @SerializedName("bankName")
     @Expose
     private String bankName;
@@ -226,7 +226,7 @@ public class Merchant extends BaseModel {
      * @return
      * The latitude
      */
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
@@ -235,7 +235,7 @@ public class Merchant extends BaseModel {
      * @param latitude
      * The latitude
      */
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
@@ -244,7 +244,7 @@ public class Merchant extends BaseModel {
      * @return
      * The longitude
      */
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
@@ -253,7 +253,7 @@ public class Merchant extends BaseModel {
      * @param longitude
      * The longitude
      */
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
@@ -280,7 +280,7 @@ public class Merchant extends BaseModel {
      * @return
      * The fees
      */
-    public Integer getFees() {
+    public double getFees() {
         return fees;
     }
 
@@ -289,7 +289,7 @@ public class Merchant extends BaseModel {
      * @param fees
      * The fees
      */
-    public void setFees(Integer fees) {
+    public void setFees(double fees) {
         this.fees = fees;
     }
 

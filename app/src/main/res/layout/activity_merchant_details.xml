@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.activity.MerchantDetailsActivity">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -49,11 +48,22 @@
                 android:elevation="@dimen/elevation_depth"
                 android:padding="10dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/upper_layout">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/merchant_dp"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/profile_pic_merch" />
+                    android:src="@drawable/profile_pic_container" />
 
                 <TextView
                     android:id="@+id/text_short_code"
@@ -70,7 +80,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:layout_toRightOf="@+id/text_short_code"
-                    android:text="MR3523"
                     android:textStyle="bold" />
 
                 <TextView
@@ -79,8 +88,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/text_short_code"
                     android:layout_below="@+id/text_short_code"
-                    android:layout_marginTop="5dp"
-                    android:text="JP Nagar Bangalore" />
+                    android:text="NA"
+                    android:layout_marginTop="5dp" />
 
                 <TextView
                     android:id="@+id/text_status"
@@ -91,8 +100,10 @@
                     android:layout_marginTop="5dp"
                     android:text="Drafted"
                     android:textColor="@color/red" />
+                </RelativeLayout>
 
                 <ImageView
+                    android:id="@+id/imageview_location"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -102,11 +113,13 @@
                     android:padding="10dp"
                     android:src="@drawable/place" />
 
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/text_fees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_status"
+                    android:layout_below="@+id/upper_layout"
                     android:layout_marginTop="10dp"
                     android:text="Fees : " />
 
@@ -116,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_fees"
                     android:layout_toRightOf="@+id/text_fees"
-                    android:text="10%"
+                    android:text="NA"
                     android:textStyle="bold" />
 
                 <View
@@ -141,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_email"
                     android:layout_toRightOf="@+id/text_email"
-                    android:text="emailId@test.com"
+                    android:text="NA"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -160,7 +173,7 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/text_email"
                     android:layout_marginTop="10dp"
-                    android:text="Phone : +91 " />
+                    android:text="Phone No. : +91 " />
 
                 <TextView
                     android:id="@+id/call"
@@ -214,7 +227,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_account_no"
                     android:layout_toRightOf="@+id/text_account_no"
-                    android:text="xxxxxxxxxxxx"
+                    android:text="NA"
                     android:textStyle="bold" />
 
                 <TextView
@@ -231,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_account_name"
                     android:layout_toRightOf="@+id/text_account_name"
-                    android:text="John Galt"
+                    android:text="NA"
                     android:textStyle="bold" />
 
                 <TextView
@@ -248,7 +261,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_bank_name"
                     android:layout_toRightOf="@+id/text_bank_name"
-                    android:text="HDFC"
+                    android:text="NA"
                     android:textStyle="bold" />
 
                 <TextView
@@ -265,7 +278,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_bank_branch"
                     android:layout_toRightOf="@+id/text_bank_branch"
-                    android:text="Kormangala Branch"
+                    android:text="NA"
                     android:textStyle="bold" />
 
                 <TextView
@@ -282,7 +295,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignTop="@+id/text_bank_ifsc"
                     android:layout_toRightOf="@+id/text_bank_ifsc"
-                    android:text="HDFC6585"
+                    android:text="NA"
                     android:textStyle="bold" />
             </RelativeLayout>
 
@@ -322,42 +335,35 @@
 
                     <ImageView
                         android:id="@+id/first_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_gallery" />
+                        android:layout_weight="1"/>
 
                     <ImageView
                         android:id="@+id/second_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_gallery" />
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/third_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_gallery" />
+                        android:layout_weight="1" />
 
                     <ImageView
                         android:id="@+id/fourth_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_gallery" />
-
-                    <ImageView
-                        android:id="@+id/fifth_image"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:src="@drawable/img_gallery" />
+                        android:layout_weight="1" />
 
 
                 </LinearLayout>

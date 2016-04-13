@@ -4,12 +4,15 @@ import com.batua.android.merchant.data.model.BaseModel;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Aaditya Deowanshi.
  */
+@Parcel
 public class MerchantRequest extends BaseModel {
 
     @SerializedName("id")
@@ -29,13 +32,13 @@ public class MerchantRequest extends BaseModel {
     private String email;
     @SerializedName("phone")
     @Expose
-    private Integer phone;
+    private String phone;
     @SerializedName("imageGallery")
     @Expose
     private List<String> imageGallery = new ArrayList<String>();
     @SerializedName("fees")
     @Expose
-    private Integer fee;
+    private Double fee;
     @SerializedName("categoryId")
     @Expose
     private Integer categoryId;
@@ -59,13 +62,13 @@ public class MerchantRequest extends BaseModel {
     private String accountHolder;
     @SerializedName("accountNumber")
     @Expose
-    private Integer accountNumber;
+    private String accountNumber;
     @SerializedName("ifscCode")
     @Expose
     private String ifscCode;
-    @SerializedName("bankBranch")
+    @SerializedName("branchName")
     @Expose
-    private String bankBranch;
+    private String branchName;
     @SerializedName("bankName")
     @Expose
     private String bankName;
@@ -75,6 +78,41 @@ public class MerchantRequest extends BaseModel {
     @SerializedName("createdSalesId")
     @Expose
     private Integer createdSalesId;
+
+    public MerchantRequest() {
+    }
+
+    public MerchantRequest(Merchant merchant) {
+        if (merchant == null) {
+            return;
+        }
+
+        this.id = merchant.getId();
+        this.name = merchant.getName();
+        this.shortCode = merchant.getShortCode();
+        this.profileImageUrl = merchant.getProfileImageUrl();
+        this.email = merchant.getEmail();
+        this.phone = String.valueOf(merchant.getPhone());
+        this.fee = merchant.getFees();
+        this.categoryId = merchant.getCategoryId();
+        this.address = merchant.getAddress();
+        this.latitude = merchant.getLatitude();
+        this.longitude = merchant.getLongitude();
+        this.accountHolder = merchant.getAccountHolder();
+        this.accountNumber = String.valueOf(merchant.getAccountNumber());
+        this.ifscCode = merchant.getIfscCode();
+        this.branchName = merchant.getBranchName();
+        this.bankName = merchant.getBankName();
+        this.status = merchant.getStatus();
+        this.createdSalesId = merchant.getCreatedSalesId();
+
+        if (merchant.getLocation() != null) {
+            this.cityId = merchant.getLocation().getCityId();
+            this.pincode = merchant.getLocation().getPincode();
+        }
+
+        //this.imageGallery = merchant.getGalleries();
+    }
 
     /**
      *
@@ -171,7 +209,7 @@ public class MerchantRequest extends BaseModel {
      * @return
      * The phone
      */
-    public Integer getPhone() {
+    public String getPhone() {
         return phone;
     }
 
@@ -180,7 +218,7 @@ public class MerchantRequest extends BaseModel {
      * @param phone
      * The phone
      */
-    public void setPhone(Integer phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
@@ -207,7 +245,7 @@ public class MerchantRequest extends BaseModel {
      * @return
      * The fee
      */
-    public Integer getFee() {
+    public double getFee() {
         return fee;
     }
 
@@ -216,7 +254,7 @@ public class MerchantRequest extends BaseModel {
      * @param fee
      * The fee
      */
-    public void setFee(Integer fee) {
+    public void setFee(double fee) {
         this.fee = fee;
     }
 
@@ -351,7 +389,7 @@ public class MerchantRequest extends BaseModel {
      * @return
      * The accountNumber
      */
-    public Integer getAccountNumber() {
+    public String getAccountNumber() {
         return accountNumber;
     }
 
@@ -360,7 +398,7 @@ public class MerchantRequest extends BaseModel {
      * @param accountNumber
      * The accountNumber
      */
-    public void setAccountNumber(Integer accountNumber) {
+    public void setAccountNumber(String accountNumber) {
         this.accountNumber = accountNumber;
     }
 
@@ -385,19 +423,19 @@ public class MerchantRequest extends BaseModel {
     /**
      *
      * @return
-     * The bankBranch
+     * The branchName
      */
-    public String getBankBranch() {
-        return bankBranch;
+    public String getBranchName() {
+        return branchName;
     }
 
     /**
      *
-     * @param bankBranch
-     * The bankBranch
+     * @param branchName
+     * The branchName
      */
-    public void setBankBranch(String bankBranch) {
-        this.bankBranch = bankBranch;
+    public void setBranchName(String branchName) {
+        this.branchName = branchName;
     }
 
     /**
