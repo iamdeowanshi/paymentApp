@@ -30,7 +30,7 @@ import timber.log.Timber;
 /**
  * @author Aaditya Deowanshi.
  */
-public class ImageUtil implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class ImageUtil {
 
     @Inject Bakery bakery;
     @Inject PermissionUtil permissionUtil;
@@ -118,7 +118,6 @@ public class ImageUtil implements ActivityCompat.OnRequestPermissionsResultCallb
         builder.show();
     }
 
-    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (permissionUtil.verifyPermissions(grantResults)) {
             Timber.d("come here");

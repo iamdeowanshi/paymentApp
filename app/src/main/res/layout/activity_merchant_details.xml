@@ -48,6 +48,17 @@
                 android:elevation="@dimen/elevation_depth"
                 android:padding="10dp">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/upper_layout">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
                 <com.github.siyamed.shapeimageview.CircularImageView
                     android:id="@+id/merchant_dp"
                     android:layout_width="60dp"
@@ -76,7 +87,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignLeft="@+id/text_short_code"
-                    android:layout_toRightOf="@+id/imageview_location"
                     android:layout_below="@+id/text_short_code"
                     android:text="NA"
                     android:layout_marginTop="5dp" />
@@ -90,6 +100,7 @@
                     android:layout_marginTop="5dp"
                     android:text="Drafted"
                     android:textColor="@color/red" />
+                </RelativeLayout>
 
                 <ImageView
                     android:id="@+id/imageview_location"
@@ -102,11 +113,13 @@
                     android:padding="10dp"
                     android:src="@drawable/place" />
 
+                </LinearLayout>
+
                 <TextView
                     android:id="@+id/text_fees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_status"
+                    android:layout_below="@+id/upper_layout"
                     android:layout_marginTop="10dp"
                     android:text="Fees : " />
 
@@ -324,6 +337,7 @@
                         android:id="@+id/first_image"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"/>
 
@@ -331,6 +345,7 @@
                         android:id="@+id/second_image"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1" />
 
@@ -338,6 +353,7 @@
                         android:id="@+id/third_image"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1" />
 
@@ -345,6 +361,7 @@
                         android:id="@+id/fourth_image"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1" />
 

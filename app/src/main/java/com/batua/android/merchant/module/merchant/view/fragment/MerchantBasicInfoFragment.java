@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -66,7 +68,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantBasicInfoFragment extends BaseFragment implements Picker.PickListener, RemoveImageClickedListener, MerchantCategoryViewInteractor, ImageUtil.ImageUtilCallback, ImageUploadViewInteractor {
+public class MerchantBasicInfoFragment extends BaseFragment implements Picker.PickListener, RemoveImageClickedListener, MerchantCategoryViewInteractor, ImageUtil.ImageUtilCallback, ImageUploadViewInteractor, ActivityCompat.OnRequestPermissionsResultCallback {
 
     private static final String TAG = "Image Multipick";
     private static final int PROFILE_FLAG = 1;
@@ -137,6 +139,12 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         imageUtil.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        imageUtil.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @OnClick(R.id.txt_upload)

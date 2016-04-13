@@ -46,7 +46,7 @@ public class MerchantDetailsActivity extends BaseActivity {
     @Bind(R.id.second_image) ImageView secondGalleyImage;
     @Bind(R.id.third_image) ImageView thirdGalleyImage;
     @Bind(R.id.fourth_image) ImageView fourthGalleyImage;
-    @Bind(R.id.merchant_dp) ImageView merchantDp;
+    @Bind(R.id.merchant_dp) CircularImageView merchantDp;
 
     private Merchant merchant;
 
@@ -151,7 +151,7 @@ public class MerchantDetailsActivity extends BaseActivity {
         }
 
         if (merchant.getProfileImageUrl() != null) {
-            Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).centerCrop().into(merchantDp);
+            Glide.with(this).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).centerCrop().animate(R.anim.fadein).into(merchantDp);
         }
 
         if (merchant.getGalleries().size() == 0) {

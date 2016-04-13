@@ -124,6 +124,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         loadDialog.show();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getMerchant("");
+    }
+
     private void loadFragments() {
         homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), merchantList));
         homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
