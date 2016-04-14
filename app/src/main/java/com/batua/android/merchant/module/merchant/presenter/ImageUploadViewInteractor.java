@@ -12,6 +12,10 @@ public interface ImageUploadViewInteractor extends ViewInteractor {
 
     void hideUploadingProgress();
 
+    void showProfileUploadingProgress();
+
+    void hideProfileUploadingProgress();
+
     void onMerchantImageUploadSuccess(String merchantImage);
 
     void onProfileImageUploadSuccess(String merchantImage);

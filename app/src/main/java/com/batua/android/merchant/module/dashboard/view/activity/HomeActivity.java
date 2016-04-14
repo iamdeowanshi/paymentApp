@@ -144,9 +144,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void showProfile() {
         navigationView.setNavigationItemSelectedListener(this);
         View headerLayout = navigationView.inflateHeaderView(com.batua.android.merchant.R.layout.nav_header_main);
-
         ImageView profileimage = (ImageView)headerLayout.findViewById(com.batua.android.merchant.R.id.img_profile);
-
         profileimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

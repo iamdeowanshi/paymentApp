@@ -155,7 +155,7 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
         predictionHolder.prediction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addressSelectedListener.displayAdress(position);
+                addressSelectedListener.displayAddress(position);
             }
         });
 

@@ -3,6 +3,7 @@ package com.batua.android.merchant.module.common.util;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,18 +11,25 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 
 import com.batua.android.merchant.injection.Injector;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.inject.Inject;
 
@@ -40,6 +48,7 @@ public class ImageUtil {
     private static final int REQUEST_CROP       = 102;
 
     private Uri imageCaptureUri;
+    private static File file = null;
 
     private static String[] PERMISSION = {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
 
@@ -56,7 +65,6 @@ public class ImageUtil {
 
     public void getImage(Activity activity) {
         this.activity = activity;
-
         checkPermissions();
     }
 
@@ -130,7 +138,8 @@ public class ImageUtil {
         bakery.snackShort(getContentView(), "Permissions were not granted");
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        this.activity = activity;
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
@@ -138,7 +147,7 @@ public class ImageUtil {
         Uri uri = null;
         switch (requestCode) {
             case REQUEST_CAMERA:
-                performCrop(imageCaptureUri);
+                utilCallback.onSuccess(imageCaptureUri, file);
                 break;
             case REQUEST_GALLERY:
                 performCrop(data.getData());
@@ -153,7 +162,6 @@ public class ImageUtil {
         }
     }
 
-
     public View getContentView() {
         return activity.findViewById(android.R.id.content);
     }
@@ -164,10 +172,11 @@ public class ImageUtil {
      */
     private void openCamera() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        imageCaptureUri = Uri.fromFile(new File(Environment
+        file = new File(Environment
                 .getExternalStorageDirectory(), "tmp_avatar_"
                 + String.valueOf(System.currentTimeMillis())
-                + ".jpg"));
+                + ".jpg");
+        imageCaptureUri = Uri.fromFile(file);
         intent.putExtra(android.provider.MediaStore.EXTRA_OUTPUT,
                 imageCaptureUri);
         intent.putExtra("return-data", true);
