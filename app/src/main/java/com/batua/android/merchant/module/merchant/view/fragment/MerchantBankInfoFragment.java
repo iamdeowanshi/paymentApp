@@ -132,7 +132,6 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
     @OnClick(R.id.btn_submit)
     void onSubmitClick() {
         viewUtil.hideKeyboard(getActivity());
-
         if (validateData()) {
             merchantRequest.setCreatedSalesId(3);
             merchantRequest.setStatus("Pending for approval");
@@ -140,8 +139,6 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
             return;
         }
-
-        bakery.snackShort(getContentView(), "Some data are missing to submit for approval");
     }
 
     public void setPreviousClickedListener(PreviousClickedListener previousClickedListener) {

@@ -172,16 +172,23 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     }
 
     @OnTextChanged(R.id.edt_merchant_short_code)
-    void onSHortCodeChange(CharSequence text) {
-        if (text.length() != 8) {
-            inputLayoutShortCode.setErrorEnabled(true);
-            inputLayoutShortCode.setError("ShortCode must be 8 characters long");
+    void onShortCodeChange(CharSequence text) {
+
+        if (text.toString().isEmpty()) {
+            inputLayoutShortCode.setErrorEnabled(false);
             merchantRequest.setShortCode(null);
             return;
         }
 
-        inputLayoutShortCode.setErrorEnabled(false);
-        merchantRequest.setShortCode(text.toString());
+        if (text.length() == 8) {
+            inputLayoutShortCode.setErrorEnabled(false);
+            merchantRequest.setShortCode(text.toString());
+            return;
+        }
+
+        inputLayoutShortCode.setErrorEnabled(true);
+        inputLayoutShortCode.setError("ShortCode must be 8 characters long");
+        merchantRequest.setShortCode(null);
     }
 
     @OnTextChanged(R.id.edt_merchant_email)
@@ -215,14 +222,21 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             return;
         }
 
-        if (Double.valueOf(text.toString()) > 100) {
+        if (Double.valueOf(text.toString()) > 99.99) {
+            merchantRequest.setFee(0.0);
             inputLayoutFee.setError("Invalid fee");
             inputLayoutFee.setErrorEnabled(true);
             return;
         }
-        double fee = DecimalFormatUtil.formatToExactTwoDecimal(text.toString());
-        merchantRequest.setFee(fee);
-        inputLayoutFee.setErrorEnabled(false);
+
+        if (Double.valueOf(text.toString()) <= 99.99) {
+            double fee = DecimalFormatUtil.formatToExactTwoDecimal(text.toString());
+            merchantRequest.setFee(fee);
+            inputLayoutFee.setErrorEnabled(false);
+            return;
+        }
+
+        merchantRequest.setFee(0.0);
     }
 
     @Override
@@ -332,6 +346,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             for (Gallery gallery : merchant.getGalleries()) {
                 galleries.add(gallery.getUrl());
             }
+            selectedImages = galleries;
             merchantRequest.setImageGallery(galleries);
             populateAdapter(galleries, addImagesrecyclerView);
             toggleRecyclerViewVisibility(View.VISIBLE);

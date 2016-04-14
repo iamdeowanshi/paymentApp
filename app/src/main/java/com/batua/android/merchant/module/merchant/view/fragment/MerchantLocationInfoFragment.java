@@ -16,9 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,17 +33,14 @@ import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
 import com.batua.android.merchant.module.merchant.presenter.CityViewInteractor;
-import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
-import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteractor;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActivity;
-import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
 import com.batua.android.merchant.module.merchant.view.adapter.SearchCityAdapter;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.merchant.view.adapter.SearchAddressAdapter;
-import com.batua.android.merchant.module.merchant.view.listener.AutoCompleteRecyclerItemClickListener;
+import com.batua.android.merchant.module.merchant.view.listener.AddressSelectedListener;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.CitySelectedListener;
 import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedListener;
@@ -84,7 +79,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, CityViewInteractor, CitySelectedListener {
+public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, CityViewInteractor, CitySelectedListener, AddressSelectedListener {
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final int LOCATION_REQUEST_CODE = 2;
@@ -153,35 +148,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         buildGoogleApiClient();
         inflateSearchAddressAdapter();
         initialiseMapUiSettings();
-
-        searchAddressRecycler.addOnItemTouchListener(new AutoCompleteRecyclerItemClickListener(this.getContext(), new AutoCompleteRecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        showPinAndMap();
-
-                        final SearchAddressAdapter.PlaceAutocomplete item = searchAddressAdapter.getItem(position);
-                        final String placeDescription = String.valueOf(item.description);
-                        final String placeId = String.valueOf(item.placeId);
-                        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, placeId);
-                        placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-                            @Override
-                            public void onResult(PlaceBuffer places) {
-                                if (places.getCount() == 1) {
-                                    Place selectedPalce = places.get(0);
-                                    if (marker != null) {
-                                        showDialog("Alert!", "Are you sure to change the Address?", selectedPalce.getLatLng());
-                                        return;
-                                    }
-                                    displayAddress(placeDescription, selectedPalce.getLatLng());
-                                    bakery.snack(getContentView(), selectedPalce.getLatLng().longitude + "  " + selectedPalce.getLatLng().latitude + ":" + placeDescription, Snackbar.LENGTH_LONG);
-                                } else {
-                                    bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_SHORT);
-                                }
-                            }
-                        });
-                    }
-                })
-        );
 
         locationLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -319,6 +285,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
         if (!text.toString().equals("") && googleApiClient.isConnected()) {
             edtAddress.setError(null);
+
             if (!text.toString().equalsIgnoreCase(myLocationAddress)) {
                 hidePinAndMap();
                 if (searchAddressAdapter!=null) {
@@ -327,10 +294,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                 return;
             }
             showPinAndMap();
-        } else if (!googleApiClient.isConnected()) {
-            bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_LONG);
         } else if (edtAddress.isFocused() && text.toString().equals("")) {
             edtAddress.setError("Address cannot be empty");
+            showPinAndMap();
         } else {
             merchantRequest.setAddress(text.toString());
             showPinAndMap();
@@ -339,23 +305,16 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     @OnTextChanged(R.id.edt_merchant_pin_code)
     void onPinChange(CharSequence text) {
+
+        if (!edtPin.isFocused()) {
+            inputLayoutPin.setErrorEnabled(false);
+            return;
+        }
+
         if (text.length() != 6) {
             merchantRequest.setFee(0.0);
             inputLayoutPin.setErrorEnabled(true);
             inputLayoutPin.setError("Invalid Pin");
-            return;
-        }
-
-        if (merchantRequest.getLatitude() != 0.0 && merchantRequest.getLongitude() != 0.0) {
-            Integer pin = getPinCode(merchantRequest.getLatitude(), merchantRequest.getLongitude());
-            if (Integer.parseInt(text.toString()) == pin) {
-                merchantRequest.setPincode(Integer.parseInt(text.toString()));
-                inputLayoutPin.setErrorEnabled(false);
-
-                return;
-            }
-            inputLayoutPin.setErrorEnabled(true);
-            inputLayoutPin.setError("Pin mismatch with location");
             return;
         }
 
@@ -409,6 +368,35 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         showAll();
     }
 
+    @Override
+    public void displayAdress(int position) {
+
+        final SearchAddressAdapter.PlaceAutocomplete item = searchAddressAdapter.getItem(position);
+        if (item!=null) {
+            final String placeDescription = String.valueOf(item.description);
+            final String placeId = String.valueOf(item.placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, placeId);
+            placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                @Override
+                public void onResult(PlaceBuffer places) {
+                    if (places.getCount() > 0) {
+                        Place selectedPalce = places.get(0);
+                        if (marker != null) {
+                            showDialog("Alert!", "Are you sure to change the Address?", selectedPalce.getLatLng());
+                            return;
+                        }
+                        displayAddress(placeDescription, selectedPalce.getLatLng());
+                    } else {
+                        bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_SHORT);
+                    }
+                }
+            });
+            return;
+        }
+        bakery.snackShort(getContentView(), "Sorry! Couldn't fetch address");
+
+    }
+
     private void showLocationPermissionsSnackbar() {
         Snackbar.make(getContentView(), "Location permission is required to continue!", Snackbar.LENGTH_LONG)
                 .setAction("ALLOW", new View.OnClickListener() {
@@ -420,7 +408,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void inflateSearchAddressAdapter() {
-        searchAddressAdapter = new SearchAddressAdapter(this.getContext(), R.layout.search_address, googleApiClient, BOUNDS, null);
+        searchAddressAdapter = new SearchAddressAdapter(this.getContext(), R.layout.search_address, googleApiClient, BOUNDS, null, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         searchAddressRecycler.setLayoutManager(linearLayoutManager);
         searchAddressRecycler.setAdapter(searchAddressAdapter);
@@ -783,6 +771,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             }
             return;
         }
+
         edtAddress.setText(placeDescription);
         updateLocation(latLng);
         animateCamera(latLng, "address");
