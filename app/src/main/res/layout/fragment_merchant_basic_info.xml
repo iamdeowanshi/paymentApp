@@ -48,6 +48,13 @@
                     android:layout_toRightOf="@+id/img_profile"
                     android:layout_toEndOf="@+id/img_profile" />
 
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_upload"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@+id/img_profile"/>
+
             </RelativeLayout>
 
             <android.support.design.widget.TextInputLayout

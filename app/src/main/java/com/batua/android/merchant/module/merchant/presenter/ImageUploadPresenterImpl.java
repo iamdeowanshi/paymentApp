@@ -38,28 +38,39 @@ public class ImageUploadPresenterImpl extends BaseNetworkPresenter<ImageUploadVi
         MultipartBody.Part body = MultipartBody.Part.createFormData("image", file.getName(), requestFile);
 
         // upload
-        getViewInteractor().showUploadingProgress();
+        if (flag == PROFILE_FLAG) {
+            getViewInteractor().showProfileUploadingProgress();
+        }else {
+            getViewInteractor().showUploadingProgress();
+        }
         Observable<Response<String>> observable = api.uploadPhoto("",body);
 
         // on Response
         subscribeForNetwork(observable, new ApiObserver<Response<String>>() {
             @Override
             public void onError(Throwable e) {
-                getViewInteractor().hideUploadingProgress();
+                if (flag == PROFILE_FLAG) {
+                    getViewInteractor().hideProfileUploadingProgress();
+                }else {
+                    getViewInteractor().hideUploadingProgress();
+                }
                 Log.e(".......", e.toString());
             }
 
             @Override
             public void onResponse(Response<String> response) {
-                getViewInteractor().hideUploadingProgress();
+
                 if (response.code() != 200) {
                     Timber.d("error " + response.code());
                     return;
                 }
 
                 if (flag == PROFILE_FLAG) {
+                    getViewInteractor().hideProfileUploadingProgress();
                     getViewInteractor().onProfileImageUploadSuccess(response.body());
                     return;
+                }else {
+                    getViewInteractor().hideUploadingProgress();
                 }
 
                 getViewInteractor().onMerchantImageUploadSuccess(response.body());

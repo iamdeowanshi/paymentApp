@@ -92,6 +92,7 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(HomeActivity.class, null);
+        finish();
     }
 
     @Override

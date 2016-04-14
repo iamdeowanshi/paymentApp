@@ -3,6 +3,7 @@ package com.batua.android.merchant.module.merchant.view.fragment;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -91,6 +92,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.input_layout_merchant_fee) TextInputLayout inputLayoutFee;
     @Bind(R.id.input_layout_merchant_short_code) TextInputLayout inputLayoutShortCode;
     @Bind(R.id.progressBar1) ProgressBar progressBar;
+    @Bind(R.id.progress_upload) ProgressBar progressUpload;
 
     private NextClickedListener nextClickedListener;
     private Merchant merchant;
@@ -138,7 +140,11 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageUtil.onActivityResult(requestCode, resultCode, data);
+        /*if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
+            imageUtil.onActivityResult(requestCode, resultCode, data);
+            return;
+        }*/
+        imageUtil.onActivityResult(this.getActivity(), requestCode, resultCode, data);
     }
 
     @Override
@@ -254,6 +260,16 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Override
     public void hideUploadingProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProfileUploadingProgress() {
+        progressUpload.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProfileUploadingProgress() {
+        progressUpload.setVisibility(View.GONE);
     }
 
     @Override

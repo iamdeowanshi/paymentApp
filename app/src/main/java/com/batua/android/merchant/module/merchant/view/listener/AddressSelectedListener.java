@@ -5,5 +5,5 @@ package com.batua.android.merchant.module.merchant.view.listener;
  */
 public interface AddressSelectedListener {
 
-    void displayAdress(int position);
+    void displayAddress(int position);
 }
