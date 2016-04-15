@@ -2,6 +2,7 @@ package com.batua.android.merchant.module.profile.view.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -67,7 +68,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageUtil.onActivityResult(requestCode, resultCode, data);
+        imageUtil.onActivityResult(this, requestCode, resultCode, data);
     }
 
     @Override

@@ -16,9 +16,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,17 +33,14 @@ import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
 import com.batua.android.merchant.module.merchant.presenter.CityViewInteractor;
-import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
-import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteractor;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.merchant.view.activity.EditMerchantActivity;
-import com.batua.android.merchant.module.merchant.view.activity.MerchantDetailsActivity;
 import com.batua.android.merchant.module.merchant.view.adapter.SearchCityAdapter;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.merchant.view.adapter.SearchAddressAdapter;
-import com.batua.android.merchant.module.merchant.view.listener.AutoCompleteRecyclerItemClickListener;
+import com.batua.android.merchant.module.merchant.view.listener.AddressSelectedListener;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.CitySelectedListener;
 import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedListener;
@@ -84,7 +79,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 02/03/16.
  */
-public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, CityViewInteractor, CitySelectedListener {
+public class MerchantLocationInfoFragment extends BaseFragment implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, CityViewInteractor, CitySelectedListener, AddressSelectedListener {
 
     private static final int LOCATION_INFO_POSITION = 1;
     private static final int LOCATION_REQUEST_CODE = 2;
@@ -120,7 +115,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private List<City> cities;
     private Geocoder geocoder;
-    private LatLng addressText;
 
     // Fragment override methods
     @Override
@@ -154,35 +148,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         inflateSearchAddressAdapter();
         initialiseMapUiSettings();
 
-        searchAddressRecycler.addOnItemTouchListener(new AutoCompleteRecyclerItemClickListener(this.getContext(), new AutoCompleteRecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        showPinAndMap();
-
-                        final SearchAddressAdapter.PlaceAutocomplete item = searchAddressAdapter.getItem(position);
-                        final String placeDescription = String.valueOf(item.description);
-                        final String placeId = String.valueOf(item.placeId);
-                        PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, placeId);
-                        placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
-                            @Override
-                            public void onResult(PlaceBuffer places) {
-                                if (places.getCount() == 1) {
-                                    Place selectedPalce = places.get(0);
-                                    if (marker!=null) {
-                                        showDialog("Alert!", "Are you sure to change the Address?", selectedPalce.getLatLng());
-                                        return;
-                                    }
-                                    displayAddress(placeDescription, selectedPalce.getLatLng());
-                                    bakery.snack(getContentView(), selectedPalce.getLatLng().longitude + "  " + selectedPalce.getLatLng().latitude + ":" + placeDescription, Snackbar.LENGTH_LONG);
-                                } else {
-                                    bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_SHORT);
-                                }
-                            }
-                        });
-                    }
-                })
-        );
-
         locationLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -215,11 +180,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     // GoogleApiClient.ConnectionCallbacks and GoogleApiClient.OnConnectionFailedListener override methods
-
     @Override
     public void onConnected(Bundle bundle) {
         if (merchant != null && merchant.getAddress() != null) {
-            updateLocation(new LatLng(merchant.getLatitude(), merchant.getLongitude()));
             animateCamera(new LatLng(merchant.getLatitude(), merchant.getLongitude()), "address");
             return;
         }
@@ -284,67 +247,72 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     @OnClick(R.id.txt_load_next)
-    public void onNextClicked(){
+    public void onNextClicked() {
         nextClickedListener.nextClicked(LOCATION_INFO_POSITION);
     }
 
     @OnClick(R.id.txt_load_previous)
-    public void onPreviousClicked(){
+    public void onPreviousClicked() {
         previousClickedListener.previousClicked(LOCATION_INFO_POSITION);
     }
 
     @OnTextChanged(R.id.edt_merchant_city)
     void onCityChange(CharSequence text) {
-        if (cities!=null && !text.toString().isEmpty()) {
-            hideAllExceptCity();
-            searchCityAdapter.getFilter().filter(text.toString());
 
+        if (cities != null && !text.toString().isEmpty()) {
+            hideAllExceptCity();
+            if (searchCityRecycler != null && searchCityAdapter!=null) {
+                searchCityAdapter.getFilter().filter(text.toString());
+            }
             return;
         }
-        searchCityAdapter.getFilter().filter(text.toString());
+
+        if (searchCityRecycler != null && searchCityAdapter!=null) {
+            searchCityAdapter.getFilter().filter(text.toString());
+        }
         showAll();
     }
 
     @OnTextChanged(R.id.edt_merchant_address)
     void onAddressChange(CharSequence text) {
+
+        if (googleApiClient == null) {
+            return;
+        }
+
         if (!text.toString().equals("") && googleApiClient.isConnected()) {
             edtAddress.setError(null);
-            hidePinAndMap();
+            merchantRequest.setAddress(text.toString());
             if (!text.toString().equalsIgnoreCase(myLocationAddress)) {
-                searchAddressAdapter.getFilter().filter(text.toString());
+                hidePinAndMap();
+                if (searchAddressAdapter!=null) {
+                    searchAddressAdapter.getFilter().filter(text.toString());
+                }
                 return;
             }
             showPinAndMap();
-
-        } else if (!googleApiClient.isConnected()) {
-            bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_LONG);
         } else if (edtAddress.isFocused() && text.toString().equals("")) {
             edtAddress.setError("Address cannot be empty");
+            merchantRequest.setAddress(null);
+            showPinAndMap();
         } else {
             merchantRequest.setAddress(text.toString());
+            showPinAndMap();
         }
     }
 
     @OnTextChanged(R.id.edt_merchant_pin_code)
     void onPinChange(CharSequence text) {
+
+        if (!edtPin.isFocused()) {
+            inputLayoutPin.setErrorEnabled(false);
+            return;
+        }
+
         if (text.length() != 6) {
             merchantRequest.setFee(0.0);
             inputLayoutPin.setErrorEnabled(true);
             inputLayoutPin.setError("Invalid Pin");
-            return;
-        }
-
-
-        if (!edtAddress.getText().toString().isEmpty() && merchantRequest.getLatitude()!=0.0 && merchantRequest.getLongitude()!=0.0){
-            Integer pin = getPinCode(merchantRequest.getLatitude(), merchantRequest.getLongitude());
-            if (Integer.parseInt(text.toString())==pin){
-                merchantRequest.setPincode(Integer.parseInt(text.toString()));
-                inputLayoutPin.setErrorEnabled(false);
-
-                return;
-            }
-            inputLayoutPin.setErrorEnabled(true);
-            inputLayoutPin.setError("Pin mismatch with location");
             return;
         }
 
@@ -366,30 +334,67 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     @Override
     public void displayCity(int cityId, String cityName) {
-        if(merchantRequest.getLatitude()!=0.0 && merchantRequest.getLongitude()!=0.0){
-            String city = getCity(merchantRequest.getLatitude(), merchantRequest.getLongitude());
-            if (city!=null || (!city.equals("") && !cityName.equalsIgnoreCase(city))) {
-                bakery.snackLong(getContentView(), "Please select a city that has your address");
+        if (!edtAddress.getText().toString().isEmpty()) {
+            if (merchantRequest.getLatitude() != 0.0 && merchantRequest.getLongitude() != 0.0) {
+                String city = getCity(merchantRequest.getLatitude(), merchantRequest.getLongitude());
+                if (!city.equals("") && !cityName.equalsIgnoreCase(city)) {
+                    edtCity.setError(null);
+                    bakery.snackLong(getContentView(), "Please select a city that has your address");
+                    showAll();
 
-                for (City city1: cities) {
-                    if (city1.getName().equalsIgnoreCase(city)){
+                    return;
+                }
+
+                for (City city1 : cities) {
+                    if (city1.getName().equalsIgnoreCase(city)) {
                         edtCity.setText(city1.getName());
+                        edtCity.setError(null);
                         merchantRequest.setCityId(city1.getId());
+                        showAll();
+
                         return;
                     }
                 }
 
                 edtCity.setText(city);
+                edtCity.setError("We don't have service in this city");
                 showAll();
+
                 return;
             }
-            return;
         }
 
         edtCity.setError(null);
         edtCity.setText(cityName);
         merchantRequest.setCityId(cityId);
         showAll();
+    }
+
+    @Override
+    public void displayAddress(int position) {
+        final SearchAddressAdapter.PlaceAutocomplete item = searchAddressAdapter.getItem(position);
+        if (item!=null) {
+            final String placeDescription = String.valueOf(item.description);
+            final String placeId = String.valueOf(item.placeId);
+            PendingResult<PlaceBuffer> placeResult = Places.GeoDataApi.getPlaceById(googleApiClient, placeId);
+            placeResult.setResultCallback(new ResultCallback<PlaceBuffer>() {
+                @Override
+                public void onResult(PlaceBuffer places) {
+                    if (places.getCount() > 0) {
+                        Place selectedPalce = places.get(0);
+                        if (marker != null) {
+                            showDialog("Alert!", "Are you sure to change the Address?", selectedPalce.getLatLng());
+                            return;
+                        }
+                        displayAddress(placeDescription, selectedPalce.getLatLng());
+                    } else {
+                        bakery.snack(getContentView(), NO_SERVICE, Snackbar.LENGTH_SHORT);
+                    }
+                }
+            });
+            return;
+        }
+        bakery.snackShort(getContentView(), "Sorry! Couldn't fetch address");
     }
 
     private void showLocationPermissionsSnackbar() {
@@ -403,7 +408,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void inflateSearchAddressAdapter() {
-        searchAddressAdapter = new SearchAddressAdapter(this.getContext(), R.layout.search_address, googleApiClient, BOUNDS, null);
+        searchAddressAdapter = new SearchAddressAdapter(this.getContext(), R.layout.search_address, googleApiClient, BOUNDS, null, this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this.getContext());
         searchAddressRecycler.setLayoutManager(linearLayoutManager);
         searchAddressRecycler.setAdapter(searchAddressAdapter);
@@ -442,10 +447,12 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
                         if (marker != null) {
                             try {
+
                                 if (!isLocationEnabled()) {
                                     showSettingsAlert();
                                     return true;
                                 }
+
                                 Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
                                 if (location != null) {
                                     LatLng curentpoint = new LatLng(location.getLatitude(), location.getLongitude());
@@ -471,7 +478,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                             showDialog("Alert!", "Are you sure to change the marker?", latLng);
                             return;
                         }
-
                         addMarker(latLng);
                     }
                 });
@@ -482,53 +488,53 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private void showDialog(String title, final String message, final LatLng latLng) {
         AlertDialog.Builder alertbuilder = new AlertDialog.Builder(getContext());
         alertbuilder.setTitle(title)
-                    .setMessage(message)
-                    .setCancelable(false)
-                    .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            if (message.equals("Are you sure to change the Address?")) {
-                                String editCity = edtCity.getText().toString();
-                                if (!editCity.isEmpty() && latLng.latitude != 0.0 && latLng.longitude != 0.0) {
+                .setMessage(message)
+                .setCancelable(false)
+                .setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        if (message.equals("Are you sure to change the Address?")) {
+                            String editCity = edtCity.getText().toString();
+                            if (!editCity.equals("")) {
+                                if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
                                     String city = getCity(latLng.latitude, latLng.longitude);
-                                    if (city!=null || (!city.equals("") && !city.equalsIgnoreCase(editCity))) {
+                                    if (!city.equals("") && !city.equalsIgnoreCase(editCity)) {
                                         bakery.snackLong(getContentView(), "Please select an address in your city");
                                         showAll();
                                         return;
                                     }
-                                    return;
-
                                 }
-                                googleMap.clear();
-                                updateLocation(latLng);
-                                setAddressText(latLng);
-                                animateCamera(latLng, "address");
-                                dialog.dismiss();
-                                return;
-                            }
-
-                            if (message.equals("Are you sure to change the marker?")) {
-                                googleMap.clear();
-                                addMarker(latLng);
-                                dialog.dismiss();
-                                return;
                             }
                             googleMap.clear();
-                            showCurrentPosition();
+                            updateLocation(latLng);
+                            setAddressText(latLng);
+                            animateCamera(latLng, "address");
                             dialog.dismiss();
+                            return;
                         }
-                    });
+
+                        if (message.equals("Are you sure to change the marker?")) {
+                            googleMap.clear();
+                            addMarker(latLng);
+                            dialog.dismiss();
+                            return;
+                        }
+                        googleMap.clear();
+                        showCurrentPosition();
+                        dialog.dismiss();
+                    }
+                });
         AlertDialog alert = alertbuilder.create();
         alert.show();
     }
 
-    private void hideAllExceptCity(){
+    private void hideAllExceptCity() {
         edtCity.setError(null);
         searchCityRecycler.setVisibility(View.VISIBLE);
         edtAddress.setVisibility(View.GONE);
@@ -538,7 +544,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         navigationLayout.setVisibility(View.GONE);
     }
 
-    private void showAll(){
+    private void showAll() {
         edtCity.setError(null);
         searchCityRecycler.setVisibility(View.GONE);
         edtAddress.setVisibility(View.VISIBLE);
@@ -566,7 +572,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void showCurrentPosition() {
         try {
-            if ( ! isLocationEnabled()) {
+            if (!isLocationEnabled()) {
                 showSettingsAlert();
                 return;
             }
@@ -586,12 +592,13 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     public boolean isLocationEnabled() {
         int locationMode = 0;
-        String locationProviders;
+        String locationProviders="";
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             try {
-                locationMode = Settings.Secure.getInt(this.getContext().getContentResolver(), Settings.Secure.LOCATION_MODE);
-
+                if (this.getContext()!=null) {
+                    locationMode = Settings.Secure.getInt(this.getContext().getContentResolver(), Settings.Secure.LOCATION_MODE);
+                }
             } catch (Settings.SettingNotFoundException e) {
                 e.printStackTrace();
                 return false;
@@ -599,13 +606,15 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
             return locationMode != Settings.Secure.LOCATION_MODE_OFF;
 
-        }else{
-            locationProviders = Settings.Secure.getString(this.getContext().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+        } else {
+            if (this.getContext()!=null) {
+                locationProviders = Settings.Secure.getString(this.getContext().getContentResolver(), Settings.Secure.LOCATION_PROVIDERS_ALLOWED);
+            }
             return !TextUtils.isEmpty(locationProviders);
         }
     }
 
-    public void showSettingsAlert(){
+    public void showSettingsAlert() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(this.getContext());
         alertDialog.setTitle("GPS settings");
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
@@ -629,7 +638,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             geocoder = new Geocoder(getContext(), Locale.ENGLISH);
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (Geocoder.isPresent()) {
-                if( addresses != null && addresses.size() > 0) {
+                if (addresses != null && addresses.size() > 0) {
                     return addresses.get(0).getAddressLine(0) + "," + addresses.get(0).getAddressLine(1);
                 }
             }
@@ -647,36 +656,15 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             geocoder = new Geocoder(getContext(), Locale.ENGLISH);
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
             if (Geocoder.isPresent()) {
-                if( addresses != null && addresses.size() > 0) {
+                if (addresses != null && addresses.size() > 0) {
                     return addresses.get(0).getLocality();
                 }
             }
-        }catch (IOException e) {
+        } catch (IOException e) {
             Log.e("tag--City", e.getMessage());
             return "";
         }
         return "";
-
-    }
-
-    private Integer getPinCode(Double latitude, Double longitude) {
-        List<android.location.Address> addresses;
-        try {
-            geocoder = new Geocoder(getContext(), Locale.ENGLISH);
-            addresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if (Geocoder.isPresent()) {
-                if( addresses != null && addresses.size() > 0) {
-                    if (addresses.get(0).getPostalCode()!=null) {
-                        Log.e("tag--PIN", addresses.get(0).getPostalCode());
-                        return Integer.parseInt(addresses.get(0).getPostalCode());
-                    }
-                }
-            }
-        }catch (IOException e) {
-            Log.e("tag--PIN", e.getMessage());
-            return 0;
-        }
-        return 0;
 
     }
 
@@ -701,7 +689,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
     private void loadData() {
         if (merchant.getAddress() != null) {
-			edtAddress.setError(null);
+            edtAddress.setError(null);
             edtAddress.setText(merchant.getAddress());
             merchantRequest.setAddress(merchant.getAddress());
             merchantRequest.setLatitude(merchant.getLatitude());
@@ -714,6 +702,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
 
         if (merchant.getLocation().getCity() != null) {
             edtCity.setText(merchant.getLocation().getCity().getName());
+            Log.d("tag--city", merchant.getLocation().getCity().getName());
             merchantRequest.setCityId(merchant.getLocation().getCityId());
         }
 
@@ -732,7 +721,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private void addMarker(LatLng latLng) {
         updateLocation(latLng);
         setAddressText(latLng);
-        if (marker!=null) {
+        if (marker != null) {
             googleMap.clear();
             marker = googleMap.addMarker(new MarkerOptions()
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
@@ -751,17 +740,17 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         edtAddress.setError(null);
 
         String editCity = edtCity.getText().toString();
-
-        if (!editCity.isEmpty() && latLng.latitude != 0.0 && latLng.longitude != 0.0) {
-            String city = getCity(latLng.latitude, latLng.longitude);
-            if (city!=null || (!city.equals("") && !city.equalsIgnoreCase(editCity))) {
-                bakery.snackLong(getContentView(), "Please select an address in your city");
-                showAll();
-                return;
+        if (!editCity.equals("")) {
+            if (latLng.latitude != 0.0 && latLng.longitude != 0.0) {
+                String city = getCity(latLng.latitude, latLng.longitude);
+                if (!city.equals("") && !city.equalsIgnoreCase(editCity)) {
+                    bakery.snackLong(getContentView(), "Please select an address in your city");
+                    showAll();
+                    return;
+                }
             }
-            return;
-
         }
+
         edtAddress.setText(placeDescription);
         updateLocation(latLng);
         animateCamera(latLng, "address");
@@ -778,7 +767,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(10).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
-        if (location.equals("myLocation")){
+        if (location.equals("myLocation")) {
             marker = null;
             return;
         }

@@ -101,8 +101,10 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
-        socialAuth.login(SocialAuth.SocialType.GOOGLE);
+        /*socialAuth.login(SocialAuth.SocialType.GOOGLE);*/
         //showProgress();
+        startActivity(HomeActivity.class, null);
+        finish();
     }
 
     @OnClick(R.id.txt_forgot_password)
