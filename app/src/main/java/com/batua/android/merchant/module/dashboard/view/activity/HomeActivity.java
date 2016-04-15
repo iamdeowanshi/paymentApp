@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -27,7 +28,6 @@ import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
-import com.batua.android.merchant.module.common.view.custom.LoadingView;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
 import com.batua.android.merchant.module.dashboard.view.adapter.HomeFragmentPagerAdapter;
@@ -35,11 +35,13 @@ import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActiv
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnTextChanged;
 import timber.log.Timber;
 
 /**
@@ -64,12 +66,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private TextView title;
     private ActionBarDrawerToggle toggle;
-    private List<Merchant> merchantList;
+    private List<Merchant> unFilteredMerchantList;
+    private List<Merchant> filteredMerchantList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.merchant.R.layout.activity_home);
+        setContentView(R.layout.activity_home);
         Injector.component().inject(this);
         presenter.attachViewInteractor(this);
 
@@ -130,8 +133,43 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         presenter.getMerchant("");
     }
 
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void merchantList(List<Merchant> merchants) {
+        this.unFilteredMerchantList = merchants;
+        this.filteredMerchantList = merchants;
+        loadFragments();
+    }
+
+    @OnTextChanged(R.id.txt_search)
+    public void searchMerchant(CharSequence filterText){
+        if (!filterText.toString().isEmpty()) {
+            filteredMerchantList = new ArrayList<>();
+            for (Merchant merchant : unFilteredMerchantList) {
+                if (merchant.getName().contains(filterText) || merchant.getShortCode().contains(filterText)) {
+                    filteredMerchantList.add(merchant);
+                    loadFragments();
+                }
+            }
+
+            return;
+        }
+
+        filteredMerchantList = unFilteredMerchantList;
+        loadFragments();
+    }
+
     private void loadFragments() {
-        homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), merchantList));
+        homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), filteredMerchantList));
         homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         homeTabLayout.post(new Runnable() {
             @Override
@@ -143,8 +181,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void showProfile() {
         navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(com.batua.android.merchant.R.layout.nav_header_main);
-        ImageView profileimage = (ImageView)headerLayout.findViewById(com.batua.android.merchant.R.id.img_profile);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        ImageView profileimage = (ImageView)headerLayout.findViewById(R.id.img_profile);
         profileimage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,22 +201,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         toolbar.setNavigationIcon(com.batua.android.merchant.R.drawable.menu);
-    }
-
-    @Override
-    public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void merchantList(List<Merchant> merchants) {
-        this.merchantList = merchants;
-        loadFragments();
     }
 
     private void checkLocationPermission() {

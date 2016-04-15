@@ -8,6 +8,8 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.ResultReceiver;
 import android.provider.Settings;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -44,6 +46,7 @@ import com.batua.android.merchant.module.merchant.view.listener.AddressSelectedL
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.CitySelectedListener;
 import com.batua.android.merchant.module.merchant.view.listener.PreviousClickedListener;
+import com.batua.android.merchant.module.merchant.view.service.FindAddressService;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
@@ -86,6 +89,10 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final LatLngBounds BOUNDS = new LatLngBounds(new LatLng(-85, 180), new LatLng(85, -180));
     private static final String NO_SERVICE = "No Service!";
+    public static final String RECEIVER = "RECEIVER";
+    public static final int SUCCESS_RESULT = 0;
+    public static final String RESULT_DATA_KEY = "RESULT_DATA_KEY";
+    public static final String LOCATION_DATA_EXTRA = "LOCATION_DATA_EXTRA";
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
@@ -112,6 +119,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private GoogleMap googleMap;
     private Marker marker;
     private String myLocationAddress;
+
+    private AddressResultReceiver resultReceiver;
 
     private List<City> cities;
     private Geocoder geocoder;
@@ -632,8 +641,8 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         alertDialog.show();
     }
 
-    private String getCurrentAddress(Double latitude, Double longitude) {
-        List<android.location.Address> addresses;
+    private void getCurrentAddress(Double latitude, Double longitude) {
+        /*List<android.location.Address> addresses;
         try {
             geocoder = new Geocoder(getContext(), Locale.ENGLISH);
             addresses = geocoder.getFromLocation(latitude, longitude, 1);
@@ -646,7 +655,11 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             Log.e("tag--Address", e.getMessage());
             return "";
         }
-        return "";
+        return "";*/
+        Location location = new Location("current Address");
+        location.setLatitude(latitude);
+        location.setLongitude(longitude);
+        startIntentService(location);
 
     }
 
@@ -713,7 +726,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     public void setAddressText(LatLng latLng) {
-        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+        getCurrentAddress(latLng.latitude, latLng.longitude);
         edtAddress.setError(null);
         edtAddress.setText(myLocationAddress);
     }
@@ -760,7 +773,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     private void updateLocation(LatLng latLng) {
         merchantRequest.setLatitude(latLng.latitude);
         merchantRequest.setLongitude(latLng.longitude);
-        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+        getCurrentAddress(latLng.latitude, latLng.longitude);
     }
 
     private void animateCamera(LatLng latLng, String location) {
@@ -775,6 +788,33 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         marker = googleMap.addMarker(new MarkerOptions()
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.location_pin))
                 .position(latLng));
+    }
+
+    class AddressResultReceiver extends ResultReceiver {
+        public AddressResultReceiver(Handler handler) {
+            super(handler);
+        }
+
+        @Override
+        protected void onReceiveResult(int resultCode, Bundle resultData) {
+            String address = resultData.getString(RESULT_DATA_KEY);
+
+            // Show a toast message if an address was found.
+            if (resultCode == SUCCESS_RESULT) {
+                myLocationAddress = address;
+                return;
+            }
+
+            bakery.snackShort(getContentView(), "No matching address Found");
+        }
+    }
+
+    protected void startIntentService(Location location) {
+        resultReceiver = new AddressResultReceiver(new Handler());
+        Intent intent = new Intent(this.getActivity(), FindAddressService.class);
+        intent.putExtra(RECEIVER, resultReceiver);
+        intent.putExtra(LOCATION_DATA_EXTRA, location);
+        getActivity().startService(intent);
     }
 
 }
