@@ -119,7 +119,7 @@
 
                 <fragment
                     android:id="@+id/map_fragment"
-                    class="com.google.android.gms.maps.SupportMapFragment"
+                    class="com.batua.android.merchant.module.merchant.view.fragment.CustomMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"></fragment>
 
