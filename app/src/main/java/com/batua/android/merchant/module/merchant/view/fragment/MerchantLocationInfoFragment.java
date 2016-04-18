@@ -99,7 +99,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
     @Bind(R.id.input_layout_merchant_pin_code) TextInputLayout inputLayoutPin;
     @Bind(R.id.input_layout_merchant_city) TextInputLayout inputLayoutMerchantCity;
-    @Bind(R.id.scrollView) ScrollView locationFragmentScrollView;
+    @Bind(R.id.scrollView_location) ScrollView locationFragmentScrollView;
 
     private Merchant merchant;
     private MerchantRequest merchantRequest;
@@ -411,7 +411,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setZoomControlsEnabled(true);
                     googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    googleMap.getUiSettings().setRotateGesturesEnabled(false);
+                    googleMap.getUiSettings().setRotateGesturesEnabled(true);
                     googleMap.getUiSettings().setZoomGesturesEnabled(true);
                     googleMap.getUiSettings().setCompassEnabled(false);
                     googleMap.getUiSettings().setMapToolbarEnabled(false);
@@ -633,10 +633,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
             return "";
         }
         return "";
-        /*Location location = new Location("current Address");
-        location.setLatitude(latitude);
-        location.setLongitude(longitude);
-        startIntentService(location);*/
 
     }
 
@@ -754,7 +750,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void animateCamera(LatLng latLng, String location) {
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(10).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(70).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         if (location.equals("myLocation")) {

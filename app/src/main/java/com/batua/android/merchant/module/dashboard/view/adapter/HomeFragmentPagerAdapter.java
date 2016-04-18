@@ -25,10 +25,10 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     private static final String DRAFTED = "Drafted";
     private static final String PENDING = "Pending for approval";
 
-    private static List<Merchant> merchantList;
-    private static List<Merchant> activeList = new ArrayList<>();
-    private static List<Merchant> pendingList = new ArrayList<>();
-    private static List<Merchant> draftedList = new ArrayList<>();
+    private List<Merchant> merchantList;
+    private List<Merchant> activeList = new ArrayList<>();
+    private List<Merchant> pendingList = new ArrayList<>();
+    private List<Merchant> draftedList = new ArrayList<>();
 
     private int active;
     private int drafted;

@@ -2,6 +2,7 @@ package com.batua.android.merchant.module.merchant.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,7 +23,7 @@ public class CustomMapFragment extends SupportMapFragment {
 
         TouchableWrapper frameLayout = new TouchableWrapper(getActivity());
 
-        frameLayout.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        frameLayout.setBackgroundColor(ContextCompat.getColor(getActivity(),android.R.color.transparent));
 
         ((ViewGroup) layout).addView(frameLayout,
                 new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -35,7 +36,7 @@ public class CustomMapFragment extends SupportMapFragment {
     }
 
     public interface OnTouchListener {
-        public abstract void onTouch();
+        void onTouch();
     }
 
     public class TouchableWrapper extends FrameLayout {

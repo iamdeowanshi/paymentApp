@@ -41,6 +41,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnPageChange;
 import butterknife.OnTextChanged;
 import timber.log.Timber;
 
@@ -51,6 +52,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 4;
+    private static int SELECTED_PAGE = 2;
 
     @Inject MerchantListPresenter presenter;
     @Inject Bakery bakery;
@@ -155,7 +157,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         if (!filterText.toString().isEmpty()) {
             filteredMerchantList = new ArrayList<>();
             for (Merchant merchant : unFilteredMerchantList) {
-                if (merchant.getName().contains(filterText) || merchant.getShortCode().contains(filterText)) {
+                if (merchant.getName().toLowerCase().contains(filterText.toString().toLowerCase())
+                        || merchant.getShortCode().toLowerCase().contains(filterText.toString().toLowerCase())) {
                     filteredMerchantList.add(merchant);
                     loadFragments();
                 }
@@ -168,8 +171,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         loadFragments();
     }
 
+    @OnPageChange(R.id.home_viewpager)
+    public void onPageSelected(int position){
+        SELECTED_PAGE = position;
+    }
+
     private void loadFragments() {
+
         homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), filteredMerchantList));
+        homeViewPager.setCurrentItem(SELECTED_PAGE);
         homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         homeTabLayout.post(new Runnable() {
             @Override
@@ -198,7 +208,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         title = (TextView)toolbar.findViewById(R.id.toolbar_title);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
         toolbar.setNavigationIcon(com.batua.android.merchant.R.drawable.menu);
     }
