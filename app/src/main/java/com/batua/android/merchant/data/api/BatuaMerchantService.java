@@ -5,6 +5,7 @@ import com.batua.android.merchant.data.model.Merchant.Category;
 import com.batua.android.merchant.data.model.Merchant.City;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
+import com.batua.android.merchant.data.model.Merchant.User;
 
 import java.util.List;
 
@@ -45,5 +46,11 @@ public interface BatuaMerchantService {
     @Multipart
     @POST(Config.UPLOAD_IMAGE)
     Observable<Response<String>> uploadPhoto(@Header("Access-Token") String header, @Part MultipartBody.Part imageFile);
+
+    @GET(Config.PROFILE)
+    Observable<Response<User>> getProfile(@Path("salesagentId") int salesId, @Header("Access-Token") String header);
+
+    @PUT(Config.PROFILE)
+    Observable<Response<User>> updateProfile(@Path("salesagentId") int salesId, @Body User user, @Header("Access-Token") String header);
 
 }

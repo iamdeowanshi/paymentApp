@@ -44,4 +44,7 @@ public class Config {
     public static final String LIST_MERCHANT = "/api/salesagent/{salesAgentId}/merchant";
     public static final String UPLOAD_IMAGE = "/api/image/upload/";
 
+    public static final String PROFILE = "/api/salesagent/{salesagentId}/profile";
+
+
 }

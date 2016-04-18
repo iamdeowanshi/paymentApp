@@ -31,7 +31,9 @@ import com.batua.android.merchant.module.onboard.view.activity.ForgotPasswordAct
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.onboard.view.activity.OtpActivity;
 import com.batua.android.merchant.module.onboard.view.activity.ResetPasswordActivity;
+import com.batua.android.merchant.module.profile.presenter.ProfilePresenterImpl;
 import com.batua.android.merchant.module.profile.view.activity.EditProfileActivity;
+import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
 
 import javax.inject.Singleton;
 
@@ -61,6 +63,7 @@ public interface ApplicationComponent {
     void inject(AddMerchantActivity addMerchantActivity);
     void inject(EditMerchantActivity editMerchantActivity);
     void inject(HomeActivity homeActivity);
+    void inject(ProfileActivity profileActivity);
 
     void inject(MerchantBasicInfoFragment merchantBasicInfoFragment);
     void inject(MerchantBankInfoFragment merchantBankInfoFragment);
@@ -73,6 +76,8 @@ public interface ApplicationComponent {
     void inject(CityPresenterImpl cityPresenter);
     void inject(MerchantCategoryPresenterImpl categoryPresenter);
     void inject(ImageUploadPresenterImpl imageUploadPresenter);
+    void inject(ProfilePresenterImpl profilePresenter);
+
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

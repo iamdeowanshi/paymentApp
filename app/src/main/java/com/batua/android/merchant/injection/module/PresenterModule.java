@@ -11,6 +11,8 @@ import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPres
 import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
+import com.batua.android.merchant.module.profile.presenter.ProfilePresenter;
+import com.batua.android.merchant.module.profile.presenter.ProfilePresenterImpl;
 
 import dagger.Module;
 import dagger.Provides;
@@ -46,6 +48,11 @@ public class PresenterModule {
     @Provides
     public CityPresenter provideCityProvide() {
         return new CityPresenterImpl();
+    }
+
+    @Provides
+    public ProfilePresenter provideProfilePresenter() {
+        return new ProfilePresenterImpl();
     }
 
 }

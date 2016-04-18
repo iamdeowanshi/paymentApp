@@ -1,10 +1,8 @@
 package com.batua.android.merchant.module.merchant.view.fragment;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -44,7 +42,6 @@ import com.batua.android.merchant.module.merchant.view.adapter.SpinAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.RemoveImageClickedListener;
 import com.squareup.picasso.Picasso;
-import com.github.siyamed.shapeimageview.CircularImageView;
 
 import net.yazeed44.imagepicker.model.ImageEntry;
 import net.yazeed44.imagepicker.util.Picker;
@@ -81,7 +78,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
     @Bind(R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
-    @Bind(R.id.edt_merchant_email) EditText edtEmail;
+    @Bind(R.id.txt_merchant_email) EditText edtEmail;
     @Bind(R.id.img_profile) ImageView profileImage;
     @Bind(R.id.edt_merchant_name) EditText edtName;
     @Bind(R.id.edt_merchant_short_code) EditText edtShortCode;
@@ -184,7 +181,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         merchantRequest.setShortCode(text.toString());
     }
 
-    @OnTextChanged(R.id.edt_merchant_email)
+    @OnTextChanged(R.id.txt_merchant_email)
     void onEmailChange(CharSequence text) {
         if (edtEmail.getText().toString() == "") {
             inputLayoutEmail.setErrorEnabled(false);
