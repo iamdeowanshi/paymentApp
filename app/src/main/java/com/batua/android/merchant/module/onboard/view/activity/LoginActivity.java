@@ -12,31 +12,39 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.batua.android.merchant.R;
+import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.common.util.social.AuthResult;
 import com.batua.android.merchant.module.common.util.social.SocialAuth;
 import com.batua.android.merchant.module.common.util.social.SocialAuthCallback;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
+import com.batua.android.merchant.module.onboard.presenter.LoginPresenter;
+import com.batua.android.merchant.module.onboard.presenter.LoginViewInteractor;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
  * @author Aaditya Deowanshi.
  */
-public class LoginActivity extends BaseActivity implements SocialAuthCallback, ActivityCompat.OnRequestPermissionsResultCallback{
+public class LoginActivity extends BaseActivity implements SocialAuthCallback, ActivityCompat.OnRequestPermissionsResultCallback, LoginViewInteractor {
 
     @Inject Bakery bakery;
     @Inject ViewUtil viewUtil;
+    @Inject LoginPresenter loginPresenter;
+    @Inject PreferenceUtil preferenceUtil;
 
-    @Bind(com.batua.android.merchant.R.id.edt_email) EditText edtEmail;
-    @Bind(com.batua.android.merchant.R.id.img_logo) ImageView imgLogo;
-    @Bind(com.batua.android.merchant.R.id.input_layout_email) TextInputLayout inputLayoutEmail;
+    @Bind(R.id.edt_email) EditText edtEmail;
+    @Bind(R.id.img_logo) ImageView imgLogo;
+    @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
+    @Bind(R.id.input_password) EditText edtPassword;
 
     private SocialAuth socialAuth;
     private ProgressDialog progressDialog;
@@ -44,9 +52,10 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.merchant.R.layout.activity_login);
+        setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         Injector.component().inject(this);
-
+        loginPresenter.attachViewInteractor(this);
 
         socialAuth = new SocialAuth(this);
         socialAuth.setCallback(this);
@@ -62,7 +71,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        socialAuth.onActivityResult(requestCode, resultCode, data);
+        socialAuth.onActivityResult(this, requestCode, resultCode, data);
     }
 
     @Override
@@ -88,7 +97,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
         if (isValid) {
-            startActivity(HomeActivity.class, null);
+            loginPresenter.normalLogin(edtEmail.getText().toString(), edtPassword.getText().toString());
             inputLayoutEmail.setErrorEnabled(false);
 
             return;
@@ -152,5 +161,26 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
 
     private void hideProgress() {
         progressDialog.dismiss();
+    }
+
+    @Override
+    public void onLoginSuccessful(User user) {
+        preferenceUtil.save(preferenceUtil.USER, user);
+        startActivityClearTop(HomeActivity.class, null);
+    }
+
+    @Override
+    public void onNetworkCallProgress() {
+        showProgress();
+    }
+
+    @Override
+    public void onNetworkCallCompleted() {
+        hideProgress();
+    }
+
+    @Override
+    public void onNetworkCallError(Throwable e) {
+
     }
 }

@@ -18,40 +18,49 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
-import com.batua.android.merchant.module.common.view.custom.LoadingView;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenter;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutViewInteractor;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
 import com.batua.android.merchant.module.dashboard.view.adapter.HomeFragmentPagerAdapter;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+
 import timber.log.Timber;
 
 /**
  * Created by febinp on 28/10/15.
  */
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MerchantListViewInteractor{
+public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MerchantListViewInteractor, LogoutViewInteractor {
 
     private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 4;
 
-    @Inject MerchantListPresenter presenter;
+    @Inject MerchantListPresenter merchantListPresenter;
     @Inject Bakery bakery;
+    @Inject PreferenceUtil preferenceUtil;
+    @Inject LogoutPresenter logoutPresenter;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
@@ -65,19 +74,27 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private TextView title;
     private ActionBarDrawerToggle toggle;
     private List<Merchant> merchantList;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.merchant.R.layout.activity_home);
+        setContentView(R.layout.activity_home);
+        ButterKnife.bind(this);
         Injector.component().inject(this);
-        presenter.attachViewInteractor(this);
+        merchantListPresenter.attachViewInteractor(this);
+        logoutPresenter.attachViewInteractor(this);
+
+        user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+
+        if (user == null) {
+            startActivityClearTop(LoginActivity.class, null);
+        }
 
         showProfile();
-
         setToolBar();
 
-        presenter.getMerchant("");
+        merchantListPresenter.getMerchant("");
     }
 
     @Override
@@ -94,9 +111,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     public boolean onNavigationItemSelected(MenuItem menuItem) {
         int id = menuItem.getItemId();
 
-        switch(id) {
+        switch (id) {
             case R.id.nav_logout:
-                startActivity(LoginActivity.class, null);
+                logoutPresenter.logout("", user.getId());
                 break;
         }
 
@@ -107,7 +124,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_add_merchant:
                 checkLocationPermission();
                 return true;
@@ -127,7 +144,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.getMerchant("");
+        merchantListPresenter.getMerchant("");
     }
 
     private void loadFragments() {
@@ -143,28 +160,32 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private void showProfile() {
         navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(com.batua.android.merchant.R.layout.nav_header_main);
+        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
 
-        ImageView profileimage = (ImageView)headerLayout.findViewById(com.batua.android.merchant.R.id.img_profile);
+        ImageView imageDp = (ImageView) headerLayout.findViewById(R.id.img_profile);
+        TextView txtName = (TextView) headerLayout.findViewById(R.id.txt_display_name);
+        LinearLayout profileLayout = (LinearLayout) headerLayout.findViewById(R.id.profile_bg_relative_layout);
 
-        profileimage.setOnClickListener(new View.OnClickListener() {
+        Picasso.with(this).load(user.getProfileImageUrl()).into(imageDp);
+        txtName.setText(user.getName());
+
+        profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(ProfileActivity.class, null);
             }
         });
-
     }
 
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        title = (TextView)toolbar.findViewById(R.id.toolbar_title);
+        title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        toolbar.setNavigationIcon(com.batua.android.merchant.R.drawable.menu);
+        toolbar.setNavigationIcon(R.drawable.menu);
     }
 
     @Override
@@ -235,6 +256,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                         checkLocationPermission();
                     }
                 });
+    }
+
+    @Override
+    public void onLogout() {
+        preferenceUtil.remove(preferenceUtil.USER);
+        startActivityClearTop(LoginActivity.class, null);
     }
 
 }

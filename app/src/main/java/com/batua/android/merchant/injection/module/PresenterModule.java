@@ -1,6 +1,8 @@
 package com.batua.android.merchant.injection.module;
 
 
+import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenter;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenterImpl;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenter;
@@ -11,6 +13,8 @@ import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPres
 import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.LoginPresenter;
+import com.batua.android.merchant.module.onboard.presenter.LoginPresenterImpl;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenter;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenterImpl;
 
@@ -53,6 +57,16 @@ public class PresenterModule {
     @Provides
     public ProfilePresenter provideProfilePresenter() {
         return new ProfilePresenterImpl();
+    }
+
+    @Provides
+    public LoginPresenter provideLoginPresenter() {
+        return new LoginPresenterImpl();
+    }
+
+    @Provides
+    public LogoutPresenter provideLogoutPresenter() {
+        return new LogoutPresenterImpl();
     }
 
 }

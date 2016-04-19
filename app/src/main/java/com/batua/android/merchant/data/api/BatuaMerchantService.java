@@ -10,10 +10,10 @@ import com.batua.android.merchant.data.model.Merchant.User;
 import java.util.List;
 
 import okhttp3.MultipartBody;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
@@ -52,5 +52,17 @@ public interface BatuaMerchantService {
 
     @PUT(Config.PROFILE)
     Observable<Response<User>> updateProfile(@Path("salesagentId") int salesId, @Body User user, @Header("Access-Token") String header);
+
+    @FormUrlEncoded
+    @POST(Config.NORMAL_LOGIN)
+    Observable<Response<User>> normalLogin(@Field("email") String email, @Field("password") String password);
+
+    @FormUrlEncoded
+    @POST(Config.SOCIAL_LOGIN)
+    Observable<Response<User>> socialLogin(@Field("email") String email,@Field("socialId") String socialId, @Field("accessToken") String accessToken);
+
+    @FormUrlEncoded
+    @PUT(Config.LOGOUT)
+    Observable<Response<String>> logout(@Field("deviceId") String deviceId, @Field("userId") int id);
 
 }

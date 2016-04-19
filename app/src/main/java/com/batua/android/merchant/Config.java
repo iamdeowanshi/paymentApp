@@ -46,5 +46,11 @@ public class Config {
 
     public static final String PROFILE = "/api/salesagent/{salesagentId}/profile";
 
+    public static final String NORMAL_LOGIN = "/api/salesagent/normal/login";
+    public static final String LOGOUT = "/api/salesagent/logout";
+    public static final String SOCIAL_LOGIN = "/api/salesagent/social/login";
+    public static final String PASSWORD_RESET = "/api/salesagent/resetpassword";
+    public static final String VERIFY_OTP = "/api/salesagent/verifyotp";
+
 
 }

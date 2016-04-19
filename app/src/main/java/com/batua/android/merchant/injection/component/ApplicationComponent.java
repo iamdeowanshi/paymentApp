@@ -13,6 +13,8 @@ import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.common.util.social.SocialAuth;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenter;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenterImpl;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
@@ -27,6 +29,7 @@ import com.batua.android.merchant.module.merchant.view.adapter.GalleryViewPagerA
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantBankInfoFragment;
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantBasicInfoFragment;
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantLocationInfoFragment;
+import com.batua.android.merchant.module.onboard.presenter.LoginPresenterImpl;
 import com.batua.android.merchant.module.onboard.view.activity.ForgotPasswordActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.onboard.view.activity.OtpActivity;
@@ -77,6 +80,8 @@ public interface ApplicationComponent {
     void inject(MerchantCategoryPresenterImpl categoryPresenter);
     void inject(ImageUploadPresenterImpl imageUploadPresenter);
     void inject(ProfilePresenterImpl profilePresenter);
+    void inject(LoginPresenterImpl loginPresenter);
+    void inject(LogoutPresenterImpl logoutPresenter);
 
 
     // inject methods for util classes

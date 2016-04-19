@@ -144,7 +144,9 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        this.activity = activity;
+
         if (requestCode == RC_SIGN_IN) {
             if (resultCode != Activity.RESULT_OK) {
                 shouldResolve = false;
