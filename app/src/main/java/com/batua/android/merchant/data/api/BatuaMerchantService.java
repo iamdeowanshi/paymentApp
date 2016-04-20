@@ -59,7 +59,7 @@ public interface BatuaMerchantService {
 
     @FormUrlEncoded
     @POST(Config.SOCIAL_LOGIN)
-    Observable<Response<User>> socialLogin(@Field("email") String email,@Field("socialId") String socialId, @Field("accessToken") String accessToken);
+    Observable<Response<User>> socialLogin(@Field("email") String email,@Field("googleId") String socialId);
 
     @FormUrlEncoded
     @PUT(Config.LOGOUT)

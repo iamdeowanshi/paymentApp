@@ -11,4 +11,6 @@ public interface LoginViewInteractor extends NetworkViewInteractor {
 
     void onLoginSuccessful(User user);
 
+    void onLoginFailed(String message);
+
 }

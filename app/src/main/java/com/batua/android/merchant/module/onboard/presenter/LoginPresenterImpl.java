@@ -41,8 +41,13 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
             public void onResponse(Response<User> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
+                if (response.code() == 400) {
+                    getViewInteractor().onLoginFailed("Invalid email or password!");
+                }
+
                 if (response.code() != 200) {
                     getViewInteractor().onNetworkCallError(new NetworkErrorException("Error on network: " + response.code()));
+                    return;
                 }
 
                 getViewInteractor().onLoginSuccessful(response.body());
@@ -51,10 +56,10 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
     }
 
     @Override
-    public void socialLogin(String email, String accessToken, String socialId) {
+    public void socialLogin(String email, String socialId) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<User>> observable = api.socialLogin(email, socialId, accessToken);
+        Observable<Response<User>> observable = api.socialLogin(email, socialId);
 
         subscribeForNetwork(observable, new ApiObserver<Response<User>>() {
             @Override
@@ -67,8 +72,14 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
             public void onResponse(Response<User> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
+                if (response.code() == 400) {
+                    getViewInteractor().onLoginFailed("Not a registered user");
+                    return;
+                }
+
                 if (response.code() != 200) {
                     getViewInteractor().onNetworkCallError(new NetworkErrorException("Error on network: " + response.code()));
+                    return;
                 }
 
                 getViewInteractor().onLoginSuccessful(response.body());

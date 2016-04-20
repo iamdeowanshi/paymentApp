@@ -9,5 +9,5 @@ public interface LoginPresenter extends Presenter<LoginViewInteractor> {
 
     void normalLogin(String email, String password);
 
-    void socialLogin(String email, String accessToken, String socialId);
+    void socialLogin(String email, String socialId);
 }

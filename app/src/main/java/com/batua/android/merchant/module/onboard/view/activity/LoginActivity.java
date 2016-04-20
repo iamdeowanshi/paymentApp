@@ -8,6 +8,7 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -30,6 +31,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
+import timber.log.Timber;
 
 /**
  * @author Aaditya Deowanshi.
@@ -45,6 +48,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @Bind(R.id.img_logo) ImageView imgLogo;
     @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
     @Bind(R.id.input_password) EditText edtPassword;
+    @Bind(R.id.btn_login) Button btnLogin;
 
     private SocialAuth socialAuth;
     private ProgressDialog progressDialog;
@@ -77,8 +81,8 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @Override
     public void onSuccess(AuthResult result) {
         socialAuth.disconnect();
-        //hideProgress();
-        startActivity(HomeActivity.class, null);
+        hideProgress();
+        loginPresenter.socialLogin(result.getAuthUser().getEmail(), result.getAuthUser().getSocialId());
     }
 
     @Override
@@ -94,12 +98,17 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @OnClick(R.id.btn_login)
     void onLoginClick() {
         viewUtil.hideKeyboard(this);
-        boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
-        if (isValid) {
+        if (edtPassword.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter your password");
+            return;
+        }
+
+        boolean isUserIdValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
+
+        if (isUserIdValid) {
             loginPresenter.normalLogin(edtEmail.getText().toString(), edtPassword.getText().toString());
             inputLayoutEmail.setErrorEnabled(false);
-
             return;
         }
 
@@ -111,7 +120,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
-        //showProgress();
+        showProgress();
     }
 
     @OnClick(R.id.txt_forgot_password)
@@ -170,6 +179,11 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     }
 
     @Override
+    public void onLoginFailed(String message) {
+        bakery.snackShort(getContentView(), message);
+    }
+
+    @Override
     public void onNetworkCallProgress() {
         showProgress();
     }
@@ -181,6 +195,6 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
 
     @Override
     public void onNetworkCallError(Throwable e) {
-
+        Timber.d(e.toString());
     }
 }
