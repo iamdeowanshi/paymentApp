@@ -95,13 +95,13 @@ public class OtpActivity extends BaseActivity implements OtpViewInteractor, Veri
 
     @Override
     public void onNetworkCallError(Throwable e) {
-        bakery.snackShort(getContentView(), "Network Error !");
+        bakery.snackShort(getContentView(), e.getMessage());
     }
 
     @Override
-    public void onVerificationSuccess(Integer id) {
+    public void onVerificationSuccess(String id) {
         Bundle bundle = new Bundle();
-        bundle.putInt("UserId", id);
+        bundle.putInt("UserId", Integer.parseInt(id));
         startActivity(ResetPasswordActivity.class, bundle);
         finish();
     }

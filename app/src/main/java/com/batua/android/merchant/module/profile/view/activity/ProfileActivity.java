@@ -92,7 +92,7 @@ public class ProfileActivity extends BaseActivity{
 
     private void loadUser(User user) {
         this.user = user;
-        Picasso.with(this).load(user.getProfileImageUrl()).into(imgProfile);
+        Picasso.with(this).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imgProfile);
         txtDisplayName.setText(user.getName());
         txtMerchantEmail.setText(user.getEmail());
     }

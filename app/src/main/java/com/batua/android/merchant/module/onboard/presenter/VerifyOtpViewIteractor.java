@@ -7,7 +7,7 @@ import com.batua.android.merchant.module.base.NetworkViewInteractor;
  */
 public interface VerifyOtpViewIteractor extends NetworkViewInteractor {
 
-    void onVerificationSuccess(Integer id);
+    void onVerificationSuccess(String id);
 
     void onVerificationFailure();
 

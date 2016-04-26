@@ -1,6 +1,7 @@
 package com.batua.android.merchant.injection.component;
 
 import com.batua.android.merchant.BatuaApplication;
+import com.batua.android.merchant.data.api.ApiErrorParser;
 import com.batua.android.merchant.injection.module.ApiModule;
 import com.batua.android.merchant.injection.module.ApplicationModule;
 import com.batua.android.merchant.injection.module.PresenterModule;
@@ -58,6 +59,7 @@ import dagger.Component;
 })
 public interface ApplicationComponent {
     void inject(BatuaApplication batuaApplication);
+    void inject(ApiErrorParser apiErrorParser);
 
     // inject methods for view classes
     void inject(LoginActivity loginActivity);

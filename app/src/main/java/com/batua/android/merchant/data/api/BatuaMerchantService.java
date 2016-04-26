@@ -71,7 +71,7 @@ public interface BatuaMerchantService {
 
     @FormUrlEncoded
     @PUT(Config.VERIFY_OTP)
-    Observable<Response<Integer>> verifyOtp(@Field("phone") String phone, @Field("otp") String otp, @Field("deviceId") String deviceId);
+    Observable<Response<String>> verifyOtp(@Field("phone") String phone, @Field("otp") String otp, @Field("deviceId") String deviceId);
 
     @FormUrlEncoded
     @PUT(Config.PASSWORD_RESET)

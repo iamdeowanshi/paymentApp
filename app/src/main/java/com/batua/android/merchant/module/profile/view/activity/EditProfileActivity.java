@@ -19,6 +19,7 @@ import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.ImageUtil;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenter;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadViewInteractor;
@@ -60,7 +61,6 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     @Bind(R.id.progress) ProgressBar progressBar;
     @Bind(R.id.input_layout_merchant_confirm_password) TextInputLayout inputLayoutMerchantConfirmPassword;
 
-    private TextView title;
     private User user;
 
     @Override
@@ -90,7 +90,6 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -102,12 +101,16 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
 
     @Override
     public void onSuccess(Uri uri, File file) {
-        Picasso.with(this).load(uri).into(imgProfile);
         imageUploadPresenter.uploadImage(file, PROFILE_FLAG);
     }
 
     @OnClick({R.id.txt_upload, R.id.txt_save_basic_info})
     public void onClick(View view) {
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
         switch (view.getId()) {
             case R.id.txt_upload:
                 imageUtil.getImage(this);
@@ -152,7 +155,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     }
 
     private void loadUser(User user) {
-        Picasso.with(this).load(user.getProfileImageUrl()).into(imgProfile);
+        Picasso.with(this).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imgProfile);
         txtDisplayName.setText(user.getName());
         txtEmailTitle.setText(user.getEmail());
     }
@@ -179,6 +182,16 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     @Override
     public void hideUploadingProgress() {
         progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void showProfileUploadingProgress() {
+
+    }
+
+    @Override
+    public void hideProfileUploadingProgress() {
+
     }
 
     @Override

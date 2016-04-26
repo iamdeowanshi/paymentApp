@@ -134,15 +134,12 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
             return;
         }
 
-
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
-        finish();
     }
 
     @OnClick(R.id.txt_forgot_password)
     void onForgotPasswordClick() {
         startActivity(ForgotPasswordActivity.class, null);
-        finish();
     }
 
     public final static boolean isValidEmail(CharSequence target) {

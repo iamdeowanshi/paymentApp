@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
         android:id="@+id/profile_bg_relative_layout"
         android:orientation="horizontal">
 
@@ -16,10 +16,9 @@
             android:layout_width="58dp"
             android:layout_height="58dp"
             android:id="@+id/img_profile"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/agent_prof_pic_small" />
 
         <TextView
@@ -30,7 +29,7 @@
             android:id="@+id/txt_display_name"
             android:text="John galt agent"
             android:textSize="18dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:textStyle="bold"/>
 
     </LinearLayout>

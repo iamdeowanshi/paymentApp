@@ -27,9 +27,9 @@ public class VerifyOtpPresenterImpl extends BaseNetworkPresenter<VerifyOtpViewIt
     public void verifyOtp(String mobile, String otp) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<Integer>> observable = api.verifyOtp(mobile, otp, "");
+        Observable<Response<String>> observable = api.verifyOtp(mobile, otp, "");
 
-        subscribeForNetwork(observable, new ApiObserver<Response<Integer>>() {
+        subscribeForNetwork(observable, new ApiObserver<Response<String>>() {
             @Override
             public void onError(Throwable e) {
                 getViewInteractor().onNetworkCallCompleted();
@@ -37,10 +37,11 @@ public class VerifyOtpPresenterImpl extends BaseNetworkPresenter<VerifyOtpViewIt
             }
 
             @Override
-            public void onResponse(Response<Integer> response) {
+            public void onResponse(Response<String> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
                 if (response.code() == 401) {
+                    String error = response.body();
                     getViewInteractor().onVerificationFailure();
                     return;
                 }

@@ -2,6 +2,8 @@ package com.batua.android.merchant.module.onboard.presenter;
 
 import android.accounts.NetworkErrorException;
 
+import com.batua.android.merchant.data.api.ApiErrorParser;
+import com.batua.android.merchant.data.api.ApiErrorResponse;
 import com.batua.android.merchant.data.api.ApiObserver;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.batua.android.merchant.data.model.Merchant.User;
@@ -21,6 +23,7 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
 
     @Inject BatuaMerchantService api;
     @Inject PreferenceUtil preferenceUtil;
+    @Inject ApiErrorParser errorParser;
 
     private String deviceId;
 
@@ -46,16 +49,17 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
             public void onResponse(Response<User> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
-                if (response.code() == 400) {
-                    getViewInteractor().onLoginFailed("Invalid email or password!");
-                }
-
-                if (response.code() != 200) {
-                    getViewInteractor().onNetworkCallError(new NetworkErrorException("Error on network: " + response.code()));
+                if (response.isSuccessful()) {
+                    getViewInteractor().onLoginSuccessful(response.body());
                     return;
                 }
 
-                getViewInteractor().onLoginSuccessful(response.body());
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
+
+                if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
+                    return;
+                }
             }
         });
     }
@@ -77,18 +81,18 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
             public void onResponse(Response<User> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
-                if (response.code() == 400) {
-                    getViewInteractor().onLoginFailed("Not a registered user");
-                    return;
+                if (response.isSuccessful()) {
+                    getViewInteractor().onLoginSuccessful(response.body());
                 }
+
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
 
                 if (response.code() != 200) {
-                    getViewInteractor().onNetworkCallError(new NetworkErrorException("Error on network: " + response.code()));
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
                     return;
                 }
-
-                getViewInteractor().onLoginSuccessful(response.body());
             }
         });
     }
+
 }

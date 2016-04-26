@@ -3,8 +3,10 @@ package com.batua.android.merchant.module.dashboard.presenter;
 import com.batua.android.merchant.data.api.ApiObserver;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseNetworkPresenter;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
 
 import java.util.List;
 
@@ -20,6 +22,7 @@ import timber.log.Timber;
 public class MerchantListPresenterImpl extends BaseNetworkPresenter<MerchantListViewInteractor> implements MerchantListPresenter {
 
     @Inject BatuaMerchantService api;
+    @Inject PreferenceUtil preferenceUtil;
 
     public MerchantListPresenterImpl() {
         Injector.component().inject(this);
@@ -29,7 +32,9 @@ public class MerchantListPresenterImpl extends BaseNetworkPresenter<MerchantList
     public void getMerchant(String header) {
         getViewInteractor().showProgress();
 
-        Observable<Response<List<Merchant>>> observable = api.getMerchants(3, "");
+        User user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+
+        Observable<Response<List<Merchant>>> observable = api.getMerchants(user.getId(), user.getAccessToken());
 
         subscribeForNetwork(observable, new ApiObserver<Response<List<Merchant>>>() {
             @Override

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.os.Handler;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
@@ -72,12 +73,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
     @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.progress) ProgressBar progressBar;
-
-
     @Bind(R.id.home_tab_layout) TabLayout homeTabLayout;
     @Bind(R.id.home_viewpager) ViewPager homeViewPager;
 
-    private TextView title;
     private ActionBarDrawerToggle toggle;
     private User user;
     private String deviceId;
@@ -97,10 +95,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         if (user == null) {
             startActivityClearTop(LoginActivity.class, null);
+            finish();
         }
 
-        showProfile();
         setToolBar();
+        showProfile();
 
         if (!InternetUtil.hasInternetConnection(this)){
             showNoInternetTitleDialog(this);
@@ -108,7 +107,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
             return;
         }
 
-        presenter.getMerchant("");
+        merchantListPresenter.getMerchant("");
     }
 
     @Override
@@ -133,6 +132,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                     break;
                 }
                 logoutPresenter.logout(deviceId, user.getId());
+                drawer.closeDrawer(GravityCompat.START);
                 break;
         }
 
@@ -228,13 +228,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         TextView txtName = (TextView) headerLayout.findViewById(R.id.txt_display_name);
         LinearLayout profileLayout = (LinearLayout) headerLayout.findViewById(R.id.profile_bg_relative_layout);
 
-        Picasso.with(this).load(user.getProfileImageUrl()).into(imageDp);
+        Picasso.with(this).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imageDp);
         txtName.setText(user.getName());
 
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(ProfileActivity.class, null);
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            startActivity(ProfileActivity.class, null);
+                        }
+                    }).start();
             }
         });
     }
@@ -242,7 +247,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private void setToolBar() {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);

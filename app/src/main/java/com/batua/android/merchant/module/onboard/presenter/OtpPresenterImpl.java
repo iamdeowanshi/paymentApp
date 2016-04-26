@@ -2,10 +2,17 @@ package com.batua.android.merchant.module.onboard.presenter;
 
 import android.accounts.NetworkErrorException;
 
+import com.batua.android.merchant.data.api.ApiErrorParser;
+import com.batua.android.merchant.data.api.ApiErrorResponse;
 import com.batua.android.merchant.data.api.ApiObserver;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseNetworkPresenter;
+import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.IOException;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,6 +25,7 @@ import rx.Observable;
 public class OtpPresenterImpl extends BaseNetworkPresenter<OtpViewInteractor> implements OtpPresenter {
 
     @Inject BatuaMerchantService api;
+    @Inject ApiErrorParser errorParser;
 
     public OtpPresenterImpl() {
         Injector.component().inject(this);
@@ -40,11 +48,17 @@ public class OtpPresenterImpl extends BaseNetworkPresenter<OtpViewInteractor> im
             public void onResponse(Response<String> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
-                if (response.code() != 200) {
-                    getViewInteractor().onNetworkCallError(new NetworkErrorException("Error on network: " + response.code()));
+                if (response.isSuccessful()) {
+                    getViewInteractor().onOtpSent();
+                    return;
                 }
 
-                getViewInteractor().onOtpSent();
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
+
+                if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
+                    return;
+                }
             }
         });
     }

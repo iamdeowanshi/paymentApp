@@ -9,6 +9,7 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.onboard.presenter.OtpPresenter;
 import com.batua.android.merchant.module.onboard.presenter.OtpViewInteractor;
 
@@ -22,6 +23,8 @@ public class ForgotPasswordActivity extends BaseActivity implements OtpViewInter
 
     @Inject OtpPresenter presenter;
     @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
+
     @Bind(R.id.edt_number) EditText edtNumber;
     @Bind(R.id.progress) ProgressBar progress;
 
@@ -29,7 +32,6 @@ public class ForgotPasswordActivity extends BaseActivity implements OtpViewInter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
-        ButterKnife.bind(this);
         Injector.component().inject(this);
 
         presenter.attachViewInteractor(this);
@@ -37,6 +39,7 @@ public class ForgotPasswordActivity extends BaseActivity implements OtpViewInter
 
     @OnClick(R.id.btn_send_otp)
     void onSendClick() {
+        viewUtil.hideKeyboard(this);
         presenter.sendOtp(edtNumber.getText().toString());
     }
 
@@ -59,7 +62,7 @@ public class ForgotPasswordActivity extends BaseActivity implements OtpViewInter
 
     @Override
     public void onNetworkCallError(Throwable e) {
-        bakery.snackShort(getContentView(), "Network Error !");
+        bakery.snackShort(getContentView(), e.getMessage());
     }
 
 }
