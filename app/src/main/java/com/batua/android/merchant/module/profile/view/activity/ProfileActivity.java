@@ -11,7 +11,7 @@ import com.batua.android.merchant.module.base.BaseActivity;
 import butterknife.Bind;
 
 /**
- * Created by febinp on 03/03/16.
+ * Created by Arnold on 03/03/16.
  */
 public class ProfileActivity extends BaseActivity {
 
