@@ -1,4 +1,4 @@
-package com.batua.android.merchant.module.onboard.presenter;
+package com.batua.android.merchant.module.profile.presenter;
 
 import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.module.base.NetworkViewInteractor;
@@ -7,10 +7,9 @@ import com.batua.android.merchant.module.base.ViewInteractor;
 /**
  * @author Aaditya Deowanshi.
  */
-public interface LoginViewInteractor extends NetworkViewInteractor {
+public interface ProfileViewInteractor extends NetworkViewInteractor {
 
-    void onLoginSuccessful(User user);
+    void showProfile(User user);
 
-    void onLoginFailed(String message);
-
+    void incorrectPassword();
 }

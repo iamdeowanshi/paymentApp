@@ -125,7 +125,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_email"
+                    android:id="@+id/txt_merchant_email"
                     android:hint="@string/merchant_email"
                     android:inputType="textEmailAddress|textNoSuggestions"
                     android:textColorHint="@color/light_gray"

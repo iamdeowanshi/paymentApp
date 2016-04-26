@@ -37,7 +37,7 @@ import timber.log.Timber;
  *         Socail Authentication class.
  */
 
-public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener{
+public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     public enum SocialType {
         GOOGLE,
@@ -123,11 +123,13 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
                     .execute(Plus.AccountApi.getAccountName(googleApiClient));
         } catch (NullPointerException e) {
             callback.onError(e);
+            hideProgress();
         }
     }
 
     @Override
-    public void onConnectionSuspended(int i) {}
+    public void onConnectionSuspended(int i) {
+    }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -140,11 +142,14 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             } catch (IntentSender.SendIntentException e) {
                 isResolving = false;
                 callback.onError(e);
+                hideProgress();
             }
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        this.activity = activity;
+
         if (requestCode == RC_SIGN_IN) {
             if (resultCode != Activity.RESULT_OK) {
                 shouldResolve = false;
@@ -196,8 +201,8 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     private void googleLogin() {
         shouldResolve = true;
-        showProgress();
         googleApiClient.connect();
+        showProgress();
     }
 
     /**
@@ -243,10 +248,12 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             try {
                 token = GoogleAuthUtil.getToken(activity, accountName, scopes);
             } catch (IOException e) {
+                hideProgress();
                 callback.onError(e);
             } catch (UserRecoverableAuthException e) {
                 activity.startActivityForResult(e.getIntent(), REQ_SIGN_IN_REQUIRED);
             } catch (GoogleAuthException e) {
+                hideProgress();
                 callback.onError(e);
             }
 

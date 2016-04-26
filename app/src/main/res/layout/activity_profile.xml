@@ -55,8 +55,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="30dp"
                     android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/splash_logo"/>
+                    android:layout_marginRight="10dp"/>
 
                 <TextView
                     android:id="@+id/txt_display_name"
@@ -65,7 +64,6 @@
                     android:layout_gravity="bottom"
                     android:paddingBottom="10dp"
                     android:paddingTop="10dp"
-                    android:text="John galt agent"
                     android:textSize="18dp"
                     android:textStyle="bold"/>
 
@@ -106,12 +104,20 @@
                 android:layout_weight="1"
                 android:paddingBottom="10dp"
                 android:paddingTop="10dp"
-                android:text="John galt agent"
                 android:textSize="@dimen/text_size_14"
                 android:textStyle="bold"/>
 
         </RelativeLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="#c5c5c5"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"/>
 
 </RelativeLayout>
