@@ -29,7 +29,7 @@ public class MerchantStatusAdapter extends RecyclerView.Adapter<MerchantStatusAd
     private MerchantClickListener merchantClickListener;
 
     private static String ACTIVE_STATUS="Active";
-    private static String PENDING_STATUS="Pending";
+    private static String PENDING_STATUS="Pending for approval";
     private static String DRAFTED_STATUS="Drafted";
 
     public MerchantStatusAdapter(List<Merchant> merchantList) {

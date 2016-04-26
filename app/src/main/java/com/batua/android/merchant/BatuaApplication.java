@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.injection.module.ApplicationModule;
+import com.batua.android.merchant.module.base.BaseActivity;
 
 import timber.log.Timber;
 
@@ -13,6 +14,8 @@ import timber.log.Timber;
  * @author Farhan Ali
  */
 public class  BatuaApplication extends Application {
+
+    private BaseActivity currentActivity = null;
 
     @Override
     public void onCreate() {

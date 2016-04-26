@@ -27,6 +27,7 @@ import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
@@ -82,6 +83,12 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         setToolBar();
 
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
         presenter.getMerchant("");
     }
 
@@ -101,6 +108,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch(id) {
             case R.id.nav_logout:
+                if (!InternetUtil.hasInternetConnection(this)){
+                    showNoInternetTitleDialog(this);
+
+                    break;
+                }
                 startActivity(LoginActivity.class, null);
                 break;
         }

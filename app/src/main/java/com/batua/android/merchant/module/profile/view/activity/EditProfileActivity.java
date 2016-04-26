@@ -37,7 +37,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     private TextView title;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(com.batua.android.merchant.R.layout.activity_edit_profile);
         Injector.component().inject(this);

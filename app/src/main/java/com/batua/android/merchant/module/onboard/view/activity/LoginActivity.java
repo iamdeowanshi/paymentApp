@@ -15,6 +15,7 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.common.util.social.AuthResult;
 import com.batua.android.merchant.module.common.util.social.SocialAuth;
@@ -87,6 +88,12 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
         viewUtil.hideKeyboard(this);
         boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
         if (isValid) {
             startActivity(HomeActivity.class, null);
             inputLayoutEmail.setErrorEnabled(false);
@@ -103,6 +110,12 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
         viewUtil.hideKeyboard(this);
         /*socialAuth.login(SocialAuth.SocialType.GOOGLE);*/
         //showProgress();
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
         startActivity(HomeActivity.class, null);
         finish();
     }
