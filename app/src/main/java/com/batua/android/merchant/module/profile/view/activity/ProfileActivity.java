@@ -27,7 +27,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Created by febinp on 03/03/16.
+ * Created by Arnold on 03/03/16.
  */
 public class ProfileActivity extends BaseActivity{
 

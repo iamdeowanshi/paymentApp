@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.batua.android.merchant.R;
+import com.batua.android.merchant.module.merchant.view.listener.AddressSelectedListener;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
@@ -35,16 +36,18 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
     private LatLngBounds latLngBounds;
     private AutocompleteFilter autocompleteFilter;
 
+    private AddressSelectedListener addressSelectedListener;
     private Context context;
     private int layout;
 
     public SearchAddressAdapter(Context context, int resource, GoogleApiClient googleApiClient,
-                                LatLngBounds bounds, AutocompleteFilter filter) {
+                                LatLngBounds bounds, AutocompleteFilter filter, AddressSelectedListener addressSelectedListener) {
         this.context = context;
         layout = resource;
         this.googleApiClient = googleApiClient;
         latLngBounds = bounds;
         autocompleteFilter = filter;
+        this.addressSelectedListener = addressSelectedListener;
     }
 
     /**
@@ -148,6 +151,15 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
     public void onBindViewHolder(PredictionHolder predictionHolder, final int position) {
 
         predictionHolder.prediction.setText(resultList.get(position).description);
+
+        predictionHolder.prediction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addressSelectedListener.displayAddress(position);
+            }
+        });
+
+
     }
 
     @Override
@@ -159,8 +171,10 @@ public class SearchAddressAdapter extends RecyclerView.Adapter<SearchAddressAdap
     }
 
     public PlaceAutocomplete getItem(int position) {
-
-        return resultList.get(position);
+        if (resultList.size()>0) {
+            return resultList.get(position);
+        }
+        return null;
     }
 
     public class PredictionHolder extends RecyclerView.ViewHolder {

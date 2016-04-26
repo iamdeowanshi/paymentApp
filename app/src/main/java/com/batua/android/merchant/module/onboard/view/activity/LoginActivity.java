@@ -19,6 +19,7 @@ import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PreferenceUtil;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.common.util.social.AuthResult;
 import com.batua.android.merchant.module.common.util.social.SocialAuth;
@@ -99,6 +100,12 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     void onLoginClick() {
         viewUtil.hideKeyboard(this);
 
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
         if (edtPassword.getText().toString().isEmpty()) {
             bakery.snackShort(getContentView(), "Please enter your password");
             return;
@@ -119,7 +126,17 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @OnClick(R.id.btn_gplus)
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
+        /*socialAuth.login(SocialAuth.SocialType.GOOGLE);*/
+        //showProgress();
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
+
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
+        finish();
     }
 
     @OnClick(R.id.txt_forgot_password)

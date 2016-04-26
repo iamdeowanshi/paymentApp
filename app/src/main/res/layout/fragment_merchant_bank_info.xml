@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white_bg">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -33,6 +33,7 @@
                     android:paddingLeft="10dp"
                     android:singleLine="true"
                     android:textSize="14sp"
+                    android:inputType="textNoSuggestions"
                     android:layout_marginTop="10dp"
                     android:layout_below="@+id/profile_img_upload_layout"/>
 

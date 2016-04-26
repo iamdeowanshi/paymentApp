@@ -4,19 +4,27 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white_bg">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:id="@+id/scrollView_basic"
         android:background="@android:color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="@dimen/elevation_depth">
-
 
             <RelativeLayout
                 android:id="@+id/profile_img_upload_layout"
@@ -47,6 +55,14 @@
                     android:layout_alignBottom="@+id/img_profile"
                     android:layout_toRightOf="@+id/img_profile"
                     android:layout_toEndOf="@+id/img_profile" />
+
+                <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/progress_upload"
+                    android:visibility="gone"
+                    android:layout_toRightOf="@+id/img_profile"/>
 
             </RelativeLayout>
 

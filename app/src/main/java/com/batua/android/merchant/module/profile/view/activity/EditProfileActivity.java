@@ -2,6 +2,7 @@ package com.batua.android.merchant.module.profile.view.activity;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -63,7 +64,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     private User user;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         ButterKnife.bind(this);
@@ -96,7 +97,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageUtil.onActivityResult(requestCode, resultCode, data);
+        imageUtil.onActivityResult(this, requestCode, resultCode, data);
     }
 
     @Override

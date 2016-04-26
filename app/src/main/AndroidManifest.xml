@@ -25,14 +25,13 @@
 
     <!--for multi select images -->
 
-
-
     <application
         android:name=".BatuaApplication"
         android:allowBackup="true"
         android:icon="@drawable/img_batua_icon"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -57,16 +56,19 @@
         </activity>
         <activity android:name=".module.profile.view.activity.ProfileActivity">
         </activity>
-        <activity android:name=".module.profile.view.activity.EditProfileActivity">
+        <activity android:name=".module.profile.view.activity.EditProfileActivity"
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name=".module.onboard.view.activity.ResetPasswordActivity">
         </activity>
 		<activity android:name=".module.dashboard.view.activity.HomeActivity">
         </activity>
         <activity android:name=".module.merchant.view.activity.AddMerchantActivity"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden"
+            android:configChanges="orientation|screenSize">
         </activity>
-        <activity android:name=".module.merchant.view.activity.EditMerchantActivity">
+        <activity android:name=".module.merchant.view.activity.EditMerchantActivity"
+            android:configChanges="orientation|screenSize">
         </activity>
         <activity android:name=".module.merchant.view.activity.MerchantDetailsActivity">
         </activity>

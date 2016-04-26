@@ -1,6 +1,7 @@
 package com.batua.android.merchant.module.merchant.view.activity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -18,6 +19,7 @@ import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
@@ -85,11 +87,13 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
 
         switch (id) {
             case R.id.action_save:
-                merchantRequest.setCreatedSalesId(3);
-                merchantRequest.setId(merchant.getId());
-                merchantRequest.setStatus(merchant.getStatus());
                 viewUtil.hideKeyboard(this);
-                presenter.updateMerchant(merchantRequest);
+                if (!InternetUtil.hasInternetConnection(this)){
+                    showNoInternetTitleDialog(this);
+
+                    break;
+                }
+                onSaveClick();
                 break;
         }
 
@@ -165,6 +169,39 @@ public class EditMerchantActivity extends BaseActivity implements NextClickedLis
     @Override
     public void onNetworkCallError(Throwable e) {
         progressBar.setVisibility(View.GONE);
+    }
+
+    private void onSaveClick() {
+        if (validateData()) {
+            merchantRequest.setStatus("Drafted");
+            merchantRequest.setCreatedSalesId(3);
+            presenter.updateMerchant(merchantRequest);
+            return;
+        }
+    }
+
+    private boolean validateData() {
+        if (merchantRequest.getName() == null || merchantRequest.getName().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter name");
+            return false;
+        }
+
+        if (merchantRequest.getShortCode() == null || merchantRequest.getShortCode().isEmpty()) {
+            bakery.snackShort(getContentView(), "Please enter Shortcode (must be 8 characters)");
+            return false;
+        }
+
+        if (merchantRequest.getPhone() == null || merchantRequest.getPhone().isEmpty() || (merchantRequest.getPhone().length() != 10)) {
+            bakery.snackShort(getContentView(), "Please enter Mobile Number");
+            return false;
+        }
+
+        if (merchantRequest.getFee() == 0.0) {
+            bakery.snackShort(getContentView(), "Please enter Fee");
+            return false;
+        }
+
+        return true;
     }
 
 }

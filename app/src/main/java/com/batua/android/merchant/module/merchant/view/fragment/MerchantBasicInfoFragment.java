@@ -2,7 +2,10 @@ package com.batua.android.merchant.module.merchant.view.fragment;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -18,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.batua.android.merchant.R;
@@ -88,6 +92,9 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.input_layout_merchant_fee) TextInputLayout inputLayoutFee;
     @Bind(R.id.input_layout_merchant_short_code) TextInputLayout inputLayoutShortCode;
     @Bind(R.id.progressBar1) ProgressBar progressBar;
+    @Bind(R.id.progress_upload) ProgressBar progressUpload;
+    @Bind(R.id.progressBar_center) ProgressBar progressBarCenter;
+    @Bind(R.id.scrollView_basic) ScrollView scrollView;
 
     private NextClickedListener nextClickedListener;
     private Merchant merchant;
@@ -97,6 +104,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     private AddImagesAdapter addImagesAdapter;
     private List<Category> categories;
     private List<String> galleries = new ArrayList<String>();
+    private List<Gallery> galleryList = new ArrayList<Gallery>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -123,6 +131,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         categoryPresenter.getCategory();
 
         if (merchant != null) {
+            hideView();
             loadData();
         }
 
@@ -135,7 +144,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        imageUtil.onActivityResult(requestCode, resultCode, data);
+        imageUtil.onActivityResult(this.getActivity(), requestCode, resultCode, data);
     }
 
     @Override
@@ -169,16 +178,23 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     }
 
     @OnTextChanged(R.id.edt_merchant_short_code)
-    void onSHortCodeChange(CharSequence text) {
-        if (text.length() != 8) {
-            inputLayoutShortCode.setErrorEnabled(true);
-            inputLayoutShortCode.setError("ShortCode must be 8 characters long");
+    void onShortCodeChange(CharSequence text) {
+
+        if (text.toString().isEmpty()) {
+            inputLayoutShortCode.setErrorEnabled(false);
             merchantRequest.setShortCode(null);
             return;
         }
 
-        inputLayoutShortCode.setErrorEnabled(false);
-        merchantRequest.setShortCode(text.toString());
+        if (text.length() == 8) {
+            inputLayoutShortCode.setErrorEnabled(false);
+            merchantRequest.setShortCode(text.toString());
+            return;
+        }
+
+        inputLayoutShortCode.setErrorEnabled(true);
+        inputLayoutShortCode.setError("ShortCode must be 8 characters long");
+        merchantRequest.setShortCode(null);
     }
 
     @OnTextChanged(R.id.txt_merchant_email)
@@ -212,14 +228,21 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             return;
         }
 
-        if (Double.valueOf(text.toString()) > 100) {
+        if (Double.valueOf(text.toString()) > 99.99) {
+            merchantRequest.setFee(0.0);
             inputLayoutFee.setError("Invalid fee");
             inputLayoutFee.setErrorEnabled(true);
             return;
         }
-        double fee = DecimalFormatUtil.formatToExactTwoDecimal(text.toString());
-        merchantRequest.setFee(fee);
-        inputLayoutFee.setErrorEnabled(false);
+
+        if (Double.valueOf(text.toString()) <= 99.99) {
+            double fee = DecimalFormatUtil.formatToExactTwoDecimal(text.toString());
+            merchantRequest.setFee(fee);
+            inputLayoutFee.setErrorEnabled(false);
+            return;
+        }
+
+        merchantRequest.setFee(0.0);
     }
 
     @Override
@@ -240,9 +263,20 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     }
 
     @Override
+    public void showProfileUploadingProgress() {
+        progressUpload.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProfileUploadingProgress() {
+        progressUpload.setVisibility(View.GONE);
+    }
+
+    @Override
     public void onMerchantImageUploadSuccess(String merchantImage) {
         galleries.add(merchantImage);
         merchantRequest.setImageGallery(galleries);
+        merchant.setGalleries(galleryList);
         Timber.d(".......", galleries.toString());
         selectedImages = galleries;
         populateAdapter(galleries, addImagesrecyclerView);
@@ -301,6 +335,21 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         spinnerMerchantCategory.setAdapter(spinAdapter);
     }
 
+    private void showView(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.setVisibility(View.VISIBLE);
+                progressBarCenter.setVisibility(View.GONE);
+            }
+        }, 2000);
+    }
+
+    private void hideView(){
+        scrollView.setVisibility(View.GONE);
+        progressBarCenter.setVisibility(View.VISIBLE);
+    }
+
     private void loadData() {
         edtName.setText(merchant.getName());
         merchantRequest.setName(merchant.getName());
@@ -309,6 +358,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         edtShortCode.setText(merchant.getShortCode());
         merchantRequest.setShortCode(merchant.getShortCode());
         edtFee.setText(String.valueOf(merchant.getFees()));
+        merchantRequest.setFee(merchant.getFees());
         if (merchant.getEmail() != null) {
             edtEmail.setText(merchant.getEmail());
             merchantRequest.setEmail(merchant.getEmail());
@@ -324,15 +374,30 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             merchantRequest.setProfileImageUrl(merchant.getProfileImageUrl());
         }
 
-        if (merchant.getGalleries() != null && merchant.getGalleries().size() > 0) {
+        if (merchantRequest.getImageGallery()!=null && merchantRequest.getImageGallery().size() > 0 ) {
+
+            populateAdapter(merchantRequest.getImageGallery(), addImagesrecyclerView);
+            toggleRecyclerViewVisibility(View.VISIBLE);
+            showView();
+
+            return;
+        }
+
+        if(merchant.getGalleries() != null && merchant.getGalleries().size() > 0) {
             galleries = new ArrayList<>();
             for (Gallery gallery : merchant.getGalleries()) {
                 galleries.add(gallery.getUrl());
             }
+            selectedImages = galleries;
             merchantRequest.setImageGallery(galleries);
             populateAdapter(galleries, addImagesrecyclerView);
             toggleRecyclerViewVisibility(View.VISIBLE);
+            showView();
+
+            return;
         }
+
+        showView();
     }
 
     private void toggleRecyclerViewVisibility(int visiblity) {

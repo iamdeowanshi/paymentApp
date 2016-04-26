@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -28,6 +29,7 @@ import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenter;
@@ -40,6 +42,7 @@ import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -47,6 +50,8 @@ import javax.inject.Inject;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
+import butterknife.OnPageChange;
+import butterknife.OnTextChanged;
 import timber.log.Timber;
 
 /**
@@ -56,6 +61,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 4;
+    private static int SELECTED_PAGE = 2;
 
     @Inject MerchantListPresenter merchantListPresenter;
     @Inject Bakery bakery;
@@ -73,15 +79,15 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     private TextView title;
     private ActionBarDrawerToggle toggle;
-    private List<Merchant> merchantList;
     private User user;
     private String deviceId;
+    private List<Merchant> unFilteredMerchantList;
+    private List<Merchant> filteredMerchantList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        ButterKnife.bind(this);
         Injector.component().inject(this);
         merchantListPresenter.attachViewInteractor(this);
         logoutPresenter.attachViewInteractor(this);
@@ -96,7 +102,13 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         showProfile();
         setToolBar();
 
-        merchantListPresenter.getMerchant("");
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
+        presenter.getMerchant("");
     }
 
     @Override
@@ -115,6 +127,11 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id) {
             case R.id.nav_logout:
+                if (!InternetUtil.hasInternetConnection(this)){
+                    showNoInternetTitleDialog(this);
+
+                    break;
+                }
                 logoutPresenter.logout(deviceId, user.getId());
                 break;
         }
@@ -149,8 +166,51 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         merchantListPresenter.getMerchant("");
     }
 
+    @Override
+    public void showProgress() {
+        progressBar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void hideProgress() {
+        progressBar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void merchantList(List<Merchant> merchants) {
+        this.unFilteredMerchantList = merchants;
+        this.filteredMerchantList = merchants;
+        loadFragments();
+    }
+
+    @OnTextChanged(R.id.txt_search)
+    public void searchMerchant(CharSequence filterText){
+        if (!filterText.toString().isEmpty()) {
+            filteredMerchantList = new ArrayList<>();
+            for (Merchant merchant : unFilteredMerchantList) {
+                if (merchant.getName().toLowerCase().contains(filterText.toString().toLowerCase())
+                        || merchant.getShortCode().toLowerCase().contains(filterText.toString().toLowerCase())) {
+                    filteredMerchantList.add(merchant);
+                    loadFragments();
+                }
+            }
+
+            return;
+        }
+
+        filteredMerchantList = unFilteredMerchantList;
+        loadFragments();
+    }
+
+    @OnPageChange(R.id.home_viewpager)
+    public void onPageSelected(int position){
+        SELECTED_PAGE = position;
+    }
+
     private void loadFragments() {
-        homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), merchantList));
+
+        homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), filteredMerchantList));
+        homeViewPager.setCurrentItem(SELECTED_PAGE);
         homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         homeTabLayout.post(new Runnable() {
             @Override
@@ -184,26 +244,10 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         getSupportActionBar().setTitle("");
         title = (TextView) toolbar.findViewById(R.id.toolbar_title);
         toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+                this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
         toolbar.setNavigationIcon(R.drawable.menu);
-    }
-
-    @Override
-    public void showProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void hideProgress() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void merchantList(List<Merchant> merchants) {
-        this.merchantList = merchants;
-        loadFragments();
     }
 
     private void checkLocationPermission() {

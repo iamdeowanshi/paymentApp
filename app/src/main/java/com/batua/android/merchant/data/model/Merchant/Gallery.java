@@ -24,6 +24,7 @@ public class Gallery extends BaseModel {
     @SerializedName("MerchantsGalleries")
     @Expose
     public MerchantGallery merchantGallery;
+
     /**
      *
      * @return

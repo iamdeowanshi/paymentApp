@@ -14,8 +14,10 @@ import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
+import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.base.BaseFragment;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantViewInteractor;
@@ -133,6 +135,12 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
     void onSubmitClick() {
         viewUtil.hideKeyboard(getActivity());
 
+        if (!InternetUtil.hasInternetConnection(getActivity())){
+            ((BaseActivity)getActivity()).showNoInternetTitleDialog(getActivity());
+
+            return;
+        }
+
         if (validateData()) {
             merchantRequest.setCreatedSalesId(3);
             merchantRequest.setStatus("Pending for approval");
@@ -140,8 +148,6 @@ public class MerchantBankInfoFragment extends BaseFragment implements MerchantVi
 
             return;
         }
-
-        bakery.snackShort(getContentView(), "Some data are missing to submit for approval");
     }
 
     public void setPreviousClickedListener(PreviousClickedListener previousClickedListener) {
