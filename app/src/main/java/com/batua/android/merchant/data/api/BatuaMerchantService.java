@@ -55,14 +55,26 @@ public interface BatuaMerchantService {
 
     @FormUrlEncoded
     @POST(Config.NORMAL_LOGIN)
-    Observable<Response<User>> normalLogin(@Field("email") String email, @Field("password") String password);
+    Observable<Response<User>> normalLogin(@Field("email") String email, @Field("password") String password, @Field("deviceId") String deviceId);
 
     @FormUrlEncoded
     @POST(Config.SOCIAL_LOGIN)
-    Observable<Response<User>> socialLogin(@Field("email") String email,@Field("googleId") String socialId);
+    Observable<Response<User>> socialLogin(@Field("email") String email,@Field("googleId") String socialId, @Field("deviceId") String deviceId);
 
     @FormUrlEncoded
     @PUT(Config.LOGOUT)
     Observable<Response<String>> logout(@Field("deviceId") String deviceId, @Field("userId") int id);
+
+    @FormUrlEncoded
+    @PUT(Config.SEND_OTP)
+    Observable<Response<String>> sendOtp(@Field("phone") String phone);
+
+    @FormUrlEncoded
+    @PUT(Config.VERIFY_OTP)
+    Observable<Response<Integer>> verifyOtp(@Field("phone") String phone, @Field("otp") String otp, @Field("deviceId") String deviceId);
+
+    @FormUrlEncoded
+    @PUT(Config.PASSWORD_RESET)
+    Observable<Response<String>> resetPassword(@Field("password") String password, @Field("userId") int userId);
 
 }

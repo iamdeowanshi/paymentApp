@@ -18,6 +18,7 @@ import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.ImageUtil;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenter;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadViewInteractor;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenter;
@@ -46,6 +47,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     @Inject Bakery bakery;
     @Inject ProfilePresenter presenter;
     @Inject ImageUploadPresenter imageUploadPresenter;
+    @Inject PreferenceUtil preferenceUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.img_profile) CircularImageView imgProfile;
@@ -118,17 +120,19 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("User", Parcels.wrap(user));
-        startActivity(ProfileActivity.class, bundle);
+        startActivity(ProfileActivity.class, null);
     }
 
     @Override
     public void showProfile(User user) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("User", Parcels.wrap(user));
-        startActivity(ProfileActivity.class, bundle);
+        preferenceUtil.save(preferenceUtil.USER, user);
+        startActivity(ProfileActivity.class, null);
         finish();
+    }
+
+    @Override
+    public void incorrectPassword() {
+        bakery.snackShort(getContentView(), "Invalid password entered");
     }
 
     @Override
@@ -143,7 +147,7 @@ public class EditProfileActivity extends BaseActivity implements ImageUtil.Image
 
     @Override
     public void onNetworkCallError(Throwable e) {
-        bakery.snackShort(getContentView(), "Invalid password entered");
+        bakery.snackShort(getContentView(), "Network Error !");
     }
 
     private void loadUser(User user) {

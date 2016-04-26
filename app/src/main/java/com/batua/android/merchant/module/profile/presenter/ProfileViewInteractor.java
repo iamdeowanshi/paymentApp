@@ -10,4 +10,6 @@ import com.batua.android.merchant.module.base.ViewInteractor;
 public interface ProfileViewInteractor extends NetworkViewInteractor {
 
     void showProfile(User user);
+
+    void incorrectPassword();
 }

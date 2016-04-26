@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.User;
@@ -81,7 +82,6 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     @Override
     public void onSuccess(AuthResult result) {
         socialAuth.disconnect();
-        hideProgress();
         loginPresenter.socialLogin(result.getAuthUser().getEmail(), result.getAuthUser().getSocialId());
     }
 
@@ -92,7 +92,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
 
     @Override
     public void onError(Throwable throwable) {
-
+        bakery.toastShort(throwable.getMessage());
     }
 
     @OnClick(R.id.btn_login)
@@ -120,7 +120,6 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
     void onGPlusLogin() {
         viewUtil.hideKeyboard(this);
         socialAuth.login(SocialAuth.SocialType.GOOGLE);
-        showProgress();
     }
 
     @OnClick(R.id.txt_forgot_password)
@@ -164,7 +163,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
         progressDialog = new ProgressDialog(this);
         progressDialog.setCancelable(false);
         progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setMessage("Logging in");
+        progressDialog.setMessage("Signing in");
         progressDialog.show();
     }
 
@@ -195,6 +194,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        bakery.snackShort(getContentView(), "Network Error !");
         Timber.d(e.toString());
     }
 }

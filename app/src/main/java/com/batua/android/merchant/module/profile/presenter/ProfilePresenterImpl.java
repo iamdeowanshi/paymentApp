@@ -36,13 +36,12 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
 
             @Override
             public void onResponse(Response<User> response) {
+                getViewInteractor().onNetworkCallCompleted();
                 if (response.code() != 200) {
-                    getViewInteractor().onNetworkCallCompleted();
                     Timber.d("error " + response.code());
                     return;
                 }
 
-                getViewInteractor().onNetworkCallCompleted();
                 getViewInteractor().showProfile(response.body());
             }
         });
@@ -61,16 +60,18 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
 
             @Override
             public void onResponse(Response<User> response) {
+                getViewInteractor().onNetworkCallCompleted();
+
                 if (response.code() == 400) {
-                    getViewInteractor().onNetworkCallError(null);
+                    getViewInteractor().incorrectPassword();
+                    return;
                 }
+
                 if (response.code() != 200) {
-                    getViewInteractor().onNetworkCallCompleted();
                     Timber.d("error " + response.code());
                     return;
                 }
 
-                getViewInteractor().onNetworkCallCompleted();
                 getViewInteractor().showProfile(response.body());
             }
         });

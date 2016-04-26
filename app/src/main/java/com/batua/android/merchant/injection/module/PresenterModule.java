@@ -15,6 +15,12 @@ import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenterImpl;
 import com.batua.android.merchant.module.onboard.presenter.LoginPresenter;
 import com.batua.android.merchant.module.onboard.presenter.LoginPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.OtpPresenter;
+import com.batua.android.merchant.module.onboard.presenter.OtpPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.ResetPasswordPresenter;
+import com.batua.android.merchant.module.onboard.presenter.ResetPasswordPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.VerifyOtpPresenter;
+import com.batua.android.merchant.module.onboard.presenter.VerifyOtpPresenterImpl;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenter;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenterImpl;
 
@@ -67,6 +73,21 @@ public class PresenterModule {
     @Provides
     public LogoutPresenter provideLogoutPresenter() {
         return new LogoutPresenterImpl();
+    }
+
+    @Provides
+    public VerifyOtpPresenter provideVerifyOtpPresenter() {
+        return new VerifyOtpPresenterImpl();
+    }
+
+    @Provides
+    public ResetPasswordPresenter provideResetPasswordPresenter() {
+        return new ResetPasswordPresenterImpl();
+    }
+
+    @Provides
+    public OtpPresenter provideOtpPresenter() {
+        return new OtpPresenterImpl();
     }
 
 }

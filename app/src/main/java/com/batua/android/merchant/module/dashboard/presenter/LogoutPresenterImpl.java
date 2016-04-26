@@ -4,6 +4,7 @@ import com.batua.android.merchant.data.api.ApiObserver;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseNetworkPresenter;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
 
 import javax.inject.Inject;
 
@@ -15,8 +16,7 @@ import rx.Observable;
  */
 public class LogoutPresenterImpl extends BaseNetworkPresenter<LogoutViewInteractor> implements LogoutPresenter {
 
-    @Inject
-    BatuaMerchantService api;
+    @Inject BatuaMerchantService api;
 
     public LogoutPresenterImpl() {
         Injector.component().inject(this);

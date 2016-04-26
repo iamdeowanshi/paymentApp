@@ -51,6 +51,7 @@ public class Config {
     public static final String SOCIAL_LOGIN = "/api/salesagent/social/login";
     public static final String PASSWORD_RESET = "/api/salesagent/resetpassword";
     public static final String VERIFY_OTP = "/api/salesagent/verifyotp";
+    public static final String SEND_OTP = "/api/salesagent/forgotpassword";
 
 
 }

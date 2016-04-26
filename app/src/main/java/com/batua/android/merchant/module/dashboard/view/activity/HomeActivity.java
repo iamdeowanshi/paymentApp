@@ -75,6 +75,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     private ActionBarDrawerToggle toggle;
     private List<Merchant> merchantList;
     private User user;
+    private String deviceId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +87,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         logoutPresenter.attachViewInteractor(this);
 
         user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+        deviceId = preferenceUtil.readString(preferenceUtil.DEVICE_ID, "");
 
         if (user == null) {
             startActivityClearTop(LoginActivity.class, null);
@@ -113,7 +115,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
         switch (id) {
             case R.id.nav_logout:
-                logoutPresenter.logout("", user.getId());
+                logoutPresenter.logout(deviceId, user.getId());
                 break;
         }
 

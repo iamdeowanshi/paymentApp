@@ -13,6 +13,7 @@ import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenter;
 import com.batua.android.merchant.module.profile.presenter.ProfileViewInteractor;
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -28,10 +29,11 @@ import butterknife.ButterKnife;
 /**
  * Created by febinp on 03/03/16.
  */
-public class ProfileActivity extends BaseActivity implements ProfileViewInteractor {
+public class ProfileActivity extends BaseActivity{
 
     @Inject ProfilePresenter presenter;
     @Inject Bakery bakery;
+    @Inject PreferenceUtil preferenceUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.img_profile) CircularImageView imgProfile;
@@ -48,15 +50,12 @@ public class ProfileActivity extends BaseActivity implements ProfileViewInteract
         ButterKnife.bind(this);
         Injector.component().inject(this);
 
-        user = Parcels.unwrap(getIntent().getParcelableExtra("User"));
+        user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
         setToolBar();
         if (user != null) {
             loadUser(user);
             return;
         }
-
-        presenter.attachViewInteractor(this);
-        presenter.getProfile(3);
     }
 
     private void setToolBar() {
@@ -78,7 +77,6 @@ public class ProfileActivity extends BaseActivity implements ProfileViewInteract
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         switch (item.getItemId()) {
             case R.id.action_edit:
                 Bundle bundle = new Bundle();
@@ -92,30 +90,11 @@ public class ProfileActivity extends BaseActivity implements ProfileViewInteract
         }
     }
 
-    @Override
-    public void showProfile(User user) {
-        loadUser(user);
-    }
-
-    @Override
-    public void onNetworkCallProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onNetworkCallCompleted() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onNetworkCallError(Throwable e) {
-        bakery.toastShort(e.toString());
-    }
-
     private void loadUser(User user) {
         this.user = user;
         Picasso.with(this).load(user.getProfileImageUrl()).into(imgProfile);
         txtDisplayName.setText(user.getName());
         txtMerchantEmail.setText(user.getEmail());
     }
+
 }

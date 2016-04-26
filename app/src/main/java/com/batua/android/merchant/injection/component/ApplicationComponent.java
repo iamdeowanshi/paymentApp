@@ -30,10 +30,14 @@ import com.batua.android.merchant.module.merchant.view.fragment.MerchantBankInfo
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantBasicInfoFragment;
 import com.batua.android.merchant.module.merchant.view.fragment.MerchantLocationInfoFragment;
 import com.batua.android.merchant.module.onboard.presenter.LoginPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.OtpPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.ResetPasswordPresenterImpl;
+import com.batua.android.merchant.module.onboard.presenter.VerifyOtpPresenterImpl;
 import com.batua.android.merchant.module.onboard.view.activity.ForgotPasswordActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.onboard.view.activity.OtpActivity;
 import com.batua.android.merchant.module.onboard.view.activity.ResetPasswordActivity;
+import com.batua.android.merchant.module.onboard.view.activity.SplashActivity;
 import com.batua.android.merchant.module.profile.presenter.ProfilePresenterImpl;
 import com.batua.android.merchant.module.profile.view.activity.EditProfileActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
@@ -67,6 +71,7 @@ public interface ApplicationComponent {
     void inject(EditMerchantActivity editMerchantActivity);
     void inject(HomeActivity homeActivity);
     void inject(ProfileActivity profileActivity);
+    void inject(SplashActivity splashActivity);
 
     void inject(MerchantBasicInfoFragment merchantBasicInfoFragment);
     void inject(MerchantBankInfoFragment merchantBankInfoFragment);
@@ -82,6 +87,9 @@ public interface ApplicationComponent {
     void inject(ProfilePresenterImpl profilePresenter);
     void inject(LoginPresenterImpl loginPresenter);
     void inject(LogoutPresenterImpl logoutPresenter);
+    void inject(OtpPresenterImpl otpPresenter);
+    void inject(VerifyOtpPresenterImpl verifyOtpPresenter);
+    void inject(ResetPasswordPresenterImpl resetPasswordPresenter);
 
 
     // inject methods for util classes

@@ -14,6 +14,7 @@ import javax.inject.Inject;
 public class PreferenceUtil {
 
     public static final String USER = "_USER";
+    public static final String DEVICE_ID = "_DEVICE_ID";
 
     @Inject Context context;
     @Inject Gson gson;
