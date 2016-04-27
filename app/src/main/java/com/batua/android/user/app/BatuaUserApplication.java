@@ -27,6 +27,7 @@ public class BatuaUserApplication extends Application {
         Timber.plant(new Timber.DebugTree());
     }
 
+    @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
         MultiDex.install(this);

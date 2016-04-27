@@ -1,7 +1,9 @@
 package com.batua.android.user.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
@@ -10,10 +12,15 @@ import com.batua.android.user.R;
 import com.batua.android.user.app.base.BaseActivity;
 import com.batua.android.user.ui.adapter.LoginFragmentPagerAdpater;
 import com.batua.android.user.util.ViewUtil;
+import com.batua.android.user.util.social.AuthResult;
+import com.batua.android.user.util.social.SocialAuth;
+import com.batua.android.user.util.social.SocialAuthCallback;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnClick;
+import timber.log.Timber;
 
 public class LoginActivity extends BaseActivity {
 
@@ -30,7 +37,18 @@ public class LoginActivity extends BaseActivity {
         injectDependencies();
 
         loadFragments();
+        setListeners();
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void setListeners() {
         viewUtil.keyboardListener(this, new ViewUtil.KeyboardVisibilityEventListener() {
             @Override
             public void onVisibilityChanged(boolean isOpen) {

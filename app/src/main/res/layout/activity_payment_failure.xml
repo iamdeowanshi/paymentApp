@@ -26,13 +26,13 @@
         android:layout_margin="10dp"
         android:fillViewport="true">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@+id/toolbar"
             android:background="@color/red_dark"
-            android:orientation="vertical"
             android:padding="10dp"
+            android:orientation="vertical"
             android:textColor="@android:color/white">
 
             <RelativeLayout
@@ -41,10 +41,36 @@
                 android:layout_height="wrap_content">
 
                 <TextView
+                    android:id="@+id/text_payment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Payment Failed"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_error_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_payment"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:layout_marginBottom="@dimen/text_size_20"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text="@string/error_msg_transaction"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/text_size_16"/>
+
+                <TextView
                     android:id="@+id/text__merchant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pizza Hut"
+                    android:layout_below="@+id/text_error_msg"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_18"
                     android:textStyle="bold"/>
@@ -76,23 +102,10 @@
                     android:textStyle="bold"/>
 
                 <TextView
-                    android:id="@+id/text_error_msg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text__merchant_address"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:text="@string/error_msg_transaction"
-                    android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_20"/>
-
-                <TextView
                     android:id="@+id/text_rupee_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text_error_msg"
+                    android:layout_below="@+id/text__merchant_address"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:padding="5dp"
@@ -129,6 +142,8 @@
                     android:text="12/12/2015"
                     android:textColor="@android:color/white"/>
 
+
+
             </RelativeLayout>
 
             <RelativeLayout
@@ -145,7 +160,6 @@
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_12"
                     android:textStyle="bold"/>
-
                 <TextView
                     android:id="@+id/promo_amount"
                     android:layout_width="wrap_content"
@@ -169,6 +183,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:paddingBottom="30dp"
                     android:src="@drawable/retry_btn"/>
 
 
@@ -186,6 +201,8 @@
 
             </RelativeLayout>
 
-        </LinearLayout>
+        </RelativeLayout>
+
     </ScrollView>
+
 </RelativeLayout>

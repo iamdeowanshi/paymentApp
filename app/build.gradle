@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 23
@@ -19,6 +20,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+}
+
+repositories {
+    mavenCentral()
 }
 
 dependencies {
@@ -60,4 +68,10 @@ dependencies {
 
     //circular image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+
+    //Facebook Sdk
+    compile 'com.facebook.android:facebook-android-sdk:4.7.0'
+
+    //Google Api
+    compile 'com.google.android.gms:play-services:8.3.0'
 }

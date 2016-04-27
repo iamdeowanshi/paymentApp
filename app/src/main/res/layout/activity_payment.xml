@@ -123,6 +123,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:isScrollContainer="false"
+                    android:layout_below="@+id/payment_tab_layout"
                     android:layout_gravity="fill_horizontal"
                     android:padding="@dimen/text_size_12"/>
 

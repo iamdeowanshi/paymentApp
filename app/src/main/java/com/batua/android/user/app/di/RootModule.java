@@ -13,7 +13,9 @@ import com.batua.android.user.ui.fragment.LoginFragment;
 import com.batua.android.user.ui.fragment.SignUpFragment;
 import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ConnectivityUtil;
+import com.batua.android.user.util.PermissionUtil;
 import com.batua.android.user.util.PreferenceUtil;
+import com.batua.android.user.util.social.SocialAuth;
 
 import javax.inject.Singleton;
 
@@ -49,7 +51,9 @@ import dagger.Provides;
                 // Utilities
                 PreferenceUtil.class,
                 Bakery.class,
+                SocialAuth.class,
                 ConnectivityUtil.class,
+                PermissionUtil.class
         }
 )
 public class RootModule {

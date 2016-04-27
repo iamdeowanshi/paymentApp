@@ -123,7 +123,7 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
 
         RelativeLayout.LayoutParams amountLayoutLayoutParams = (RelativeLayout.LayoutParams) amountLayout.getLayoutParams();
         amountLayoutLayoutParams.addRule(RelativeLayout.CENTER_VERTICAL,1);
-        amountLayoutLayoutParams.removeRule(RelativeLayout.ABOVE);
+        amountLayoutLayoutParams.addRule(RelativeLayout.ABOVE, 0);
         amountLayoutLayoutParams.setMargins(getPx(60), getPx(0),0, getPx(0));
         amountLayout.setLayoutParams(amountLayoutLayoutParams);
     }
