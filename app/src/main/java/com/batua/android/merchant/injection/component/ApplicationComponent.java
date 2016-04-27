@@ -18,6 +18,7 @@ import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenterImpl;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenterImpl;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
+import com.batua.android.merchant.module.dashboard.view.fragment.NavigationFragment;
 import com.batua.android.merchant.module.merchant.presenter.CityPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.ImageUploadPresenterImpl;
 import com.batua.android.merchant.module.merchant.presenter.MerchantCategoryPresenterImpl;
@@ -79,6 +80,7 @@ public interface ApplicationComponent {
     void inject(MerchantBankInfoFragment merchantBankInfoFragment);
     void inject(MerchantDetailsActivity merchantDetailsActivity);
     void inject(MerchantLocationInfoFragment merchantLocationInfoFragment);
+    void inject(NavigationFragment navigationFragment);
 
     // inject methods for presenter classes
     void inject(MerchantPresenterImpl merchantPresenter);

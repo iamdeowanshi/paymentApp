@@ -38,6 +38,7 @@ import com.batua.android.merchant.module.dashboard.presenter.LogoutViewInteracto
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
 import com.batua.android.merchant.module.dashboard.view.adapter.HomeFragmentPagerAdapter;
+import com.batua.android.merchant.module.dashboard.view.fragment.NavigationFragment;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
@@ -58,7 +59,7 @@ import timber.log.Timber;
 /**
  * Created by febinp on 28/10/15.
  */
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MerchantListViewInteractor, LogoutViewInteractor {
+public class HomeActivity extends BaseActivity implements MerchantListViewInteractor {
 
     private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 4;
@@ -67,20 +68,18 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Inject MerchantListPresenter merchantListPresenter;
     @Inject Bakery bakery;
     @Inject PreferenceUtil preferenceUtil;
-    @Inject LogoutPresenter logoutPresenter;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.progress) ProgressBar progressBar;
     @Bind(R.id.home_tab_layout) TabLayout homeTabLayout;
     @Bind(R.id.home_viewpager) ViewPager homeViewPager;
 
     private ActionBarDrawerToggle toggle;
     private User user;
-    private String deviceId;
     private List<Merchant> unFilteredMerchantList;
     private List<Merchant> filteredMerchantList;
+    private NavigationFragment navigationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,10 +87,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         setContentView(R.layout.activity_home);
         Injector.component().inject(this);
         merchantListPresenter.attachViewInteractor(this);
-        logoutPresenter.attachViewInteractor(this);
 
         user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
-        deviceId = preferenceUtil.readString(preferenceUtil.DEVICE_ID, "");
 
         if (user == null) {
             startActivityClearTop(LoginActivity.class, null);
@@ -99,7 +96,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         setToolBar();
-        showProfile();
+        initializeNavigation();
 
         if (!InternetUtil.hasInternetConnection(this)){
             showNoInternetTitleDialog(this);
@@ -118,27 +115,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         menu.findItem(R.id.action_save).setVisible(false);
 
         return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        int id = menuItem.getItemId();
-
-        switch (id) {
-            case R.id.nav_logout:
-                if (!InternetUtil.hasInternetConnection(this)){
-                    showNoInternetTitleDialog(this);
-
-                    break;
-                }
-                logoutPresenter.logout(deviceId, user.getId());
-                drawer.closeDrawer(GravityCompat.START);
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
     }
 
     @Override
@@ -220,28 +196,9 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
         });
     }
 
-    private void showProfile() {
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
-
-        ImageView imageDp = (ImageView) headerLayout.findViewById(R.id.img_profile);
-        TextView txtName = (TextView) headerLayout.findViewById(R.id.txt_display_name);
-        LinearLayout profileLayout = (LinearLayout) headerLayout.findViewById(R.id.profile_bg_relative_layout);
-
-        Picasso.with(this).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imageDp);
-        txtName.setText(user.getName());
-
-        profileLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            startActivity(ProfileActivity.class, null);
-                        }
-                    }).start();
-            }
-        });
+    private void initializeNavigation() {
+        navigationFragment = (NavigationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+        navigationFragment.initializeDrawer(drawer);
     }
 
     private void setToolBar() {
@@ -306,12 +263,6 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
                         checkLocationPermission();
                     }
                 });
-    }
-
-    @Override
-    public void onLogout() {
-        preferenceUtil.remove(preferenceUtil.USER);
-        startActivityClearTop(LoginActivity.class, null);
     }
 
 }
