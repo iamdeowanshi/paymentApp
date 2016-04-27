@@ -4,19 +4,27 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@color/white_bg">
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressBar_center"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
+        android:id="@+id/scrollView_basic"
         android:background="@android:color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:elevation="@dimen/elevation_depth">
-
 
             <RelativeLayout
                 android:id="@+id/profile_img_upload_layout"
@@ -49,6 +57,7 @@
                     android:layout_toEndOf="@+id/img_profile" />
 
                 <ProgressBar
+                    style="?android:attr/progressBarStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/progress_upload"
@@ -116,7 +125,7 @@
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:id="@+id/edt_merchant_email"
+                    android:id="@+id/txt_merchant_email"
                     android:hint="@string/merchant_email"
                     android:inputType="textEmailAddress|textNoSuggestions"
                     android:textColorHint="@color/light_gray"

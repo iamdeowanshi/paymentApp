@@ -44,4 +44,14 @@ public class Config {
     public static final String LIST_MERCHANT = "/api/salesagent/{salesAgentId}/merchant";
     public static final String UPLOAD_IMAGE = "/api/image/upload/";
 
+    public static final String PROFILE = "/api/salesagent/{salesagentId}/profile";
+
+    public static final String NORMAL_LOGIN = "/api/salesagent/normal/login";
+    public static final String LOGOUT = "/api/salesagent/logout";
+    public static final String SOCIAL_LOGIN = "/api/salesagent/social/login";
+    public static final String PASSWORD_RESET = "/api/salesagent/resetpassword";
+    public static final String VERIFY_OTP = "/api/salesagent/verifyotp";
+    public static final String SEND_OTP = "/api/salesagent/forgotpassword";
+
+
 }

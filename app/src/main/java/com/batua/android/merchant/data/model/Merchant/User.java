@@ -24,6 +24,25 @@ public class User extends BaseModel {
     @SerializedName("email")
     @Expose
     private String email;
+    @SerializedName("currentPassword")
+    @Expose
+    private String currentPassword;
+    @SerializedName("profileImageUrl")
+    @Expose
+    private String profileImageUrl;
+    @SerializedName("newPassword")
+    @Expose
+    private String newPassword;
+    @SerializedName("token")
+    private String accessToken;
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
 
     /**
      *
@@ -95,5 +114,29 @@ public class User extends BaseModel {
      */
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getProfileImageUrl() {
+        return profileImageUrl;
+    }
+
+    public void setProfileImageUrl(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
+    }
+
+    public String getNewPassword() {
+        return newPassword;
+    }
+
+    public void setNewPassword(String newPassword) {
+        this.newPassword = newPassword;
+    }
+
+    public String getCurrentPassword() {
+        return currentPassword;
+    }
+
+    public void setCurrentPassword(String currentPassword) {
+        this.currentPassword = currentPassword;
     }
 }

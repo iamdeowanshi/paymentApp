@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/profile_bg_relative_layout"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="match_parent"
     android:orientation="vertical"
+    android:clickable="true"
     android:background="@drawable/side_menu_bg">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="90dp"
+        android:id="@+id/profile_bg_relative_layout"
         android:orientation="horizontal">
 
         <com.github.siyamed.shapeimageview.CircularImageView
             android:layout_width="58dp"
             android:layout_height="58dp"
             android:id="@+id/img_profile"
-            android:layout_marginTop="30dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
+            android:layout_gravity="center_vertical"
             android:src="@drawable/agent_prof_pic_small" />
 
         <TextView
@@ -30,7 +30,7 @@
             android:id="@+id/txt_display_name"
             android:text="John galt agent"
             android:textSize="18dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="center_vertical"
             android:textStyle="bold"/>
 
     </LinearLayout>
@@ -39,6 +39,34 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="@color/gray"/>
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/logout">
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/logout" />
+
+        <TextView
+            android:id="@+id/txt_navigationName"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_toRightOf="@+id/img_logo"
+            android:gravity="center"
+            android:paddingRight="20dp"
+            android:text="@string/logout_title"
+            android:textSize="@dimen/text_size_16"
+            android:textColor="@color/gray" />
+
+    </RelativeLayout>
 
 
 </LinearLayout>

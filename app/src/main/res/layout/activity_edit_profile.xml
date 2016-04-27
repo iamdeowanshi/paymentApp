@@ -3,7 +3,7 @@
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/white"
+                android:background="@color/white_bg"
                 android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
@@ -126,7 +126,7 @@
                 android:textSize="14sp"/>
 
             <TextView
-                android:id="@+id/edt_merchant_email"
+                android:id="@+id/txt_merchant_email"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_below="@+id/profile_img_upload_layout"
@@ -143,7 +143,7 @@
                 android:id="@+id/input_layout_merchant_current_password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/edt_merchant_email"
+                android:layout_below="@+id/txt_merchant_email"
                 android:theme="@style/TextLabel"
                 app:errorTextAppearance="@style/error_appearance">
 
@@ -225,5 +225,14 @@
         </RelativeLayout>
 
     </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:indeterminateTint="#c5c5c5"
+        android:indeterminateTintMode="src_atop"
+        android:visibility="gone"/>
 
 </RelativeLayout>

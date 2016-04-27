@@ -1,18 +1,18 @@
 package com.batua.android.merchant.module.base;
 
 import android.app.Activity;
-import android.app.ActivityManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.batua.android.merchant.BatuaApplication;
 import com.batua.android.merchant.Config;
-import com.batua.android.merchant.R;
-
-import java.util.List;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 
 import butterknife.ButterKnife;
 
@@ -23,7 +23,11 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
+    private final String NO_INTERNET_TITTLE = "No Internet";
+    private final String NO_INTERNET_MESSAGE = "Please Check your Connection";
+
     private int orientation = Config.ORIENTATION_DEFAULT;
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -92,7 +96,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param activityClass Class<? extends Activity>
      * @param bundle Bundle
      */
-    protected void startActivityClearTop(Class<? extends Activity> activityClass, Bundle bundle) {
+    public void startActivityClearTop(Class<? extends Activity> activityClass, Bundle bundle) {
         Intent intent = new Intent(this, activityClass);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
@@ -146,6 +150,31 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected View getContentView() {
         return findViewById(android.R.id.content);
+    }
+
+    public void showNoInternetTitleDialog(Activity currentActivity){
+
+        if ( currentActivity!= null) {
+            AlertDialog.Builder alertbuilder = new AlertDialog.Builder(currentActivity);
+
+            alertbuilder.setTitle(NO_INTERNET_TITTLE)
+                    .setMessage(NO_INTERNET_MESSAGE)
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            checkInternetConnection();
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = alertbuilder.create();
+            alert.show();
+        }
+    }
+
+    private void checkInternetConnection(){
+        if(!(InternetUtil.hasInternetConnection(getApplicationContext()))){
+            showNoInternetTitleDialog(this);
+        }
     }
 
 }

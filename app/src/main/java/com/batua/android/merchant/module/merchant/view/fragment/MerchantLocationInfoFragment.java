@@ -19,11 +19,11 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.City;
@@ -55,7 +55,6 @@ import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -100,6 +99,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     @Bind(R.id.navigation_layout) LinearLayout navigationLayout;
     @Bind(R.id.input_layout_merchant_pin_code) TextInputLayout inputLayoutPin;
     @Bind(R.id.input_layout_merchant_city) TextInputLayout inputLayoutMerchantCity;
+    @Bind(R.id.scrollView_location) ScrollView locationFragmentScrollView;
 
     private Merchant merchant;
     private MerchantRequest merchantRequest;
@@ -147,28 +147,6 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
         buildGoogleApiClient();
         inflateSearchAddressAdapter();
         initialiseMapUiSettings();
-
-        locationLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        v.requestFocus();
-                        break;
-                    case MotionEvent.ACTION_CANCEL:
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        v.requestFocus();
-                        break;
-                }
-
-                return true;
-            }
-        });
     }
 
     @Override
@@ -422,9 +400,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void initialiseMapUiSettings() {
-        SupportMapFragment supportMapFragment = (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
+        CustomMapFragment customMapFragment = (CustomMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment);
         // Getting GoogleMap object from the fragment
-        supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+        customMapFragment.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 // Enabling MyLocation in Google Map
@@ -433,7 +411,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                     googleMap.setMyLocationEnabled(true);
                     googleMap.getUiSettings().setZoomControlsEnabled(true);
                     googleMap.getUiSettings().setMyLocationButtonEnabled(true);
-                    googleMap.getUiSettings().setRotateGesturesEnabled(false);
+                    googleMap.getUiSettings().setRotateGesturesEnabled(true);
                     googleMap.getUiSettings().setZoomGesturesEnabled(true);
                     googleMap.getUiSettings().setCompassEnabled(false);
                     googleMap.getUiSettings().setMapToolbarEnabled(false);
@@ -481,6 +459,14 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
                         addMarker(latLng);
                     }
                 });
+
+                ((CustomMapFragment) getChildFragmentManager().findFragmentById(R.id.map_fragment))
+                        .setListener(new CustomMapFragment.OnTouchListener() {
+                            @Override
+                            public void onTouch() {
+                                locationFragmentScrollView.requestDisallowInterceptTouchEvent(true);
+                            }
+                        });
             }
         });
     }
@@ -713,9 +699,9 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     public void setAddressText(LatLng latLng) {
-        myLocationAddress = getCurrentAddress(latLng.latitude, latLng.longitude);
+        String address = getCurrentAddress(latLng.latitude, latLng.longitude);
         edtAddress.setError(null);
-        edtAddress.setText(myLocationAddress);
+        edtAddress.setText(address);
     }
 
     private void addMarker(LatLng latLng) {
@@ -764,7 +750,7 @@ public class MerchantLocationInfoFragment extends BaseFragment implements Google
     }
 
     private void animateCamera(LatLng latLng, String location) {
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(10).build();
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(latLng).zoom(15).tilt(70).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
         if (location.equals("myLocation")) {

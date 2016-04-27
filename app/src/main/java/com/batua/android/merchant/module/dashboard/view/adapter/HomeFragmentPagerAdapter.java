@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.batua.android.merchant.data.model.Merchant.Merchant;
 import com.batua.android.merchant.module.dashboard.view.fragment.ActiveMerchantFragment;
@@ -18,7 +19,7 @@ import java.util.List;
 /**
  * Created by febinp on 02/03/16.
  */
-public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
+public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
 
     private static final String ACTIVE = "Active";
     private static final String DRAFTED = "Drafted";
@@ -71,28 +72,32 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
     }
 
     private void setMerchantList() {
-        for (Merchant merchant  :merchantList) {
-            switch (merchant.getStatus()) {
-                case ACTIVE:
-                    activeList.add(merchant);
-                    break;
-                case DRAFTED:
-                    draftedList.add(merchant);
-                    break;
-                case PENDING:
-                    pendingList.add(merchant);
-            }
-        }
+        activeList = new ArrayList<>();
+        draftedList = new ArrayList<>();
+        pendingList = new ArrayList<>();
 
-        active = activeList.size();
-        drafted = draftedList.size();
-        pending = pendingList.size();
+        if (merchantList!=null) {
+            for (Merchant merchant  :merchantList) {
+                switch (merchant.getStatus()) {
+                    case ACTIVE:
+                        activeList.add(merchant);
+                        break;
+                    case DRAFTED:
+                        draftedList.add(merchant);
+                        break;
+                    case PENDING:
+                        pendingList.add(merchant);
+                }
+            }
+
+            active = activeList.size();
+            drafted = draftedList.size();
+            pending = pendingList.size();
+        }
     }
 
     @Override
-
     public CharSequence getPageTitle(int position) {
-
         switch (position) {
             case 0:
                 return "Active" + "("+ active + ")";
@@ -104,4 +109,8 @@ public class HomeFragmentPagerAdapter extends FragmentPagerAdapter {
         return null;
     }
 
+    @Override
+    public int getItemPosition(Object object) {
+        return POSITION_NONE;
+    }
 }

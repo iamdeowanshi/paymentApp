@@ -19,6 +19,7 @@ import com.batua.android.merchant.data.model.Merchant.MerchantRequest;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.ViewUtil;
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.merchant.presenter.MerchantPresenter;
@@ -81,6 +82,11 @@ public class AddMerchantActivity extends BaseActivity implements NextClickedList
         switch (id) {
             case R.id.action_save:
                 viewUtil.hideKeyboard(this);
+                if (!InternetUtil.hasInternetConnection(this)){
+                    showNoInternetTitleDialog(this);
+
+                    break;
+                }
                 onSaveClick();
                 break;
         }

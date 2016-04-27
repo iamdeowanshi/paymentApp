@@ -1,6 +1,7 @@
 package com.batua.android.merchant.injection.module;
 
 import com.batua.android.merchant.Config;
+import com.batua.android.merchant.data.api.ApiErrorParser;
 import com.batua.android.merchant.data.api.BatuaMerchantService;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -50,6 +51,11 @@ public class ApiModule {
                 .build();
 
         return retrofit.create(BatuaMerchantService.class);
+    }
+
+    @Provides
+    public ApiErrorParser provideErrorParser() {
+        return new ApiErrorParser();
     }
 
     @Provides

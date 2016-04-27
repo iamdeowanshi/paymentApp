@@ -17,67 +17,94 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.os.Handler;
 
 import com.batua.android.merchant.R;
 import com.batua.android.merchant.data.model.Merchant.Merchant;
+import com.batua.android.merchant.data.model.Merchant.User;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.base.BaseActivity;
 import com.batua.android.merchant.module.common.util.Bakery;
+import com.batua.android.merchant.module.common.util.InternetUtil;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
-import com.batua.android.merchant.module.common.view.custom.LoadingView;
+import com.batua.android.merchant.module.common.util.PreferenceUtil;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutPresenter;
+import com.batua.android.merchant.module.dashboard.presenter.LogoutViewInteractor;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListPresenter;
 import com.batua.android.merchant.module.dashboard.presenter.MerchantListViewInteractor;
 import com.batua.android.merchant.module.dashboard.view.adapter.HomeFragmentPagerAdapter;
+import com.batua.android.merchant.module.dashboard.view.fragment.NavigationFragment;
 import com.batua.android.merchant.module.merchant.view.activity.AddMerchantActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
+import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
+
+import butterknife.OnPageChange;
+import butterknife.OnTextChanged;
 import timber.log.Timber;
 
 /**
  * Created by febinp on 28/10/15.
  */
-public class HomeActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, MerchantListViewInteractor{
+public class HomeActivity extends BaseActivity implements MerchantListViewInteractor {
 
     private static final String[] LOCATION_PERMISSION = {Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION};
     private static final int LOCATION_REQUEST_CODE = 4;
+    private static int SELECTED_PAGE = 2;
 
-    @Inject MerchantListPresenter presenter;
+    @Inject MerchantListPresenter merchantListPresenter;
     @Inject Bakery bakery;
+    @Inject PreferenceUtil preferenceUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.drawer_layout) DrawerLayout drawer;
-    @Bind(R.id.nav_view) NavigationView navigationView;
     @Bind(R.id.progress) ProgressBar progressBar;
-
-
     @Bind(R.id.home_tab_layout) TabLayout homeTabLayout;
     @Bind(R.id.home_viewpager) ViewPager homeViewPager;
 
-    private TextView title;
     private ActionBarDrawerToggle toggle;
-    private List<Merchant> merchantList;
+    private User user;
+    private List<Merchant> unFilteredMerchantList;
+    private List<Merchant> filteredMerchantList;
+    private NavigationFragment navigationFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.merchant.R.layout.activity_home);
+        setContentView(R.layout.activity_home);
         Injector.component().inject(this);
-        presenter.attachViewInteractor(this);
+        merchantListPresenter.attachViewInteractor(this);
 
-        showProfile();
+        user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+
+        if (user == null) {
+            startActivityClearTop(LoginActivity.class, null);
+            finish();
+        }
 
         setToolBar();
+        initializeNavigation();
 
-        presenter.getMerchant("");
+        if (!InternetUtil.hasInternetConnection(this)){
+            showNoInternetTitleDialog(this);
+
+            return;
+        }
+
+        merchantListPresenter.getMerchant("");
     }
 
     @Override
@@ -91,23 +118,8 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem menuItem) {
-        int id = menuItem.getItemId();
-
-        switch(id) {
-            case R.id.nav_logout:
-                startActivity(LoginActivity.class, null);
-                break;
-        }
-
-        drawer.closeDrawer(GravityCompat.START);
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_add_merchant:
                 checkLocationPermission();
                 return true;
@@ -127,42 +139,7 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.getMerchant("");
-    }
-
-    private void loadFragments() {
-        homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), merchantList));
-        homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        homeTabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                homeTabLayout.setupWithViewPager(homeViewPager);
-            }
-        });
-    }
-
-    private void showProfile() {
-        navigationView.setNavigationItemSelectedListener(this);
-        View headerLayout = navigationView.inflateHeaderView(com.batua.android.merchant.R.layout.nav_header_main);
-        ImageView profileimage = (ImageView)headerLayout.findViewById(com.batua.android.merchant.R.id.img_profile);
-        profileimage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(ProfileActivity.class, null);
-            }
-        });
-
-    }
-
-    private void setToolBar() {
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        title = (TextView)toolbar.findViewById(R.id.toolbar_title);
-        toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-        toolbar.setNavigationIcon(com.batua.android.merchant.R.drawable.menu);
+        merchantListPresenter.getMerchant("");
     }
 
     @Override
@@ -177,8 +154,61 @@ public class HomeActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public void merchantList(List<Merchant> merchants) {
-        this.merchantList = merchants;
+        this.unFilteredMerchantList = merchants;
+        this.filteredMerchantList = merchants;
         loadFragments();
+    }
+
+    @OnTextChanged(R.id.txt_search)
+    public void searchMerchant(CharSequence filterText){
+        if (!filterText.toString().isEmpty()) {
+            filteredMerchantList = new ArrayList<>();
+            for (Merchant merchant : unFilteredMerchantList) {
+                if (merchant.getName().toLowerCase().contains(filterText.toString().toLowerCase())
+                        || merchant.getShortCode().toLowerCase().contains(filterText.toString().toLowerCase())) {
+                    filteredMerchantList.add(merchant);
+                    loadFragments();
+                }
+            }
+
+            return;
+        }
+
+        filteredMerchantList = unFilteredMerchantList;
+        loadFragments();
+    }
+
+    @OnPageChange(R.id.home_viewpager)
+    public void onPageSelected(int position){
+        SELECTED_PAGE = position;
+    }
+
+    private void loadFragments() {
+
+        homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), filteredMerchantList));
+        homeViewPager.setCurrentItem(SELECTED_PAGE);
+        homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+        homeTabLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                homeTabLayout.setupWithViewPager(homeViewPager);
+            }
+        });
+    }
+
+    private void initializeNavigation() {
+        navigationFragment = (NavigationFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_drawer);
+        navigationFragment.initializeDrawer(drawer);
+    }
+
+    private void setToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, com.batua.android.merchant.R.string.navigation_drawer_open, com.batua.android.merchant.R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+        toolbar.setNavigationIcon(R.drawable.menu);
     }
 
     private void checkLocationPermission() {

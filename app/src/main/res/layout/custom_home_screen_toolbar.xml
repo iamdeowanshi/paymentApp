@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,7 +23,6 @@
             android:padding="5dp"
             android:hint="@string/search_merchant_hint"
             android:background="@drawable/search_box"
+            android:inputType="textNoSuggestions"
             android:id="@+id/txt_search"/>
-
-
     </android.support.v7.widget.Toolbar>

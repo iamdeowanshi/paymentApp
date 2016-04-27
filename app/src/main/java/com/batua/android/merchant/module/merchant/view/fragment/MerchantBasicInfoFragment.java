@@ -1,10 +1,10 @@
 package com.batua.android.merchant.module.merchant.view.fragment;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 
 import com.batua.android.merchant.R;
@@ -45,7 +46,6 @@ import com.batua.android.merchant.module.merchant.view.adapter.SpinAdapter;
 import com.batua.android.merchant.module.merchant.view.listener.NextClickedListener;
 import com.batua.android.merchant.module.merchant.view.listener.RemoveImageClickedListener;
 import com.squareup.picasso.Picasso;
-import com.github.siyamed.shapeimageview.CircularImageView;
 
 import net.yazeed44.imagepicker.model.ImageEntry;
 import net.yazeed44.imagepicker.util.Picker;
@@ -82,7 +82,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
 
     @Bind(R.id.spinner_merchant_category) Spinner spinnerMerchantCategory;
     @Bind(R.id.add_images_recycler_view) RecyclerView addImagesrecyclerView;
-    @Bind(R.id.edt_merchant_email) EditText edtEmail;
+    @Bind(R.id.txt_merchant_email) EditText edtEmail;
     @Bind(R.id.img_profile) ImageView profileImage;
     @Bind(R.id.edt_merchant_name) EditText edtName;
     @Bind(R.id.edt_merchant_short_code) EditText edtShortCode;
@@ -93,6 +93,8 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Bind(R.id.input_layout_merchant_short_code) TextInputLayout inputLayoutShortCode;
     @Bind(R.id.progressBar1) ProgressBar progressBar;
     @Bind(R.id.progress_upload) ProgressBar progressUpload;
+    @Bind(R.id.progressBar_center) ProgressBar progressBarCenter;
+    @Bind(R.id.scrollView_basic) ScrollView scrollView;
 
     private NextClickedListener nextClickedListener;
     private Merchant merchant;
@@ -102,6 +104,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     private AddImagesAdapter addImagesAdapter;
     private List<Category> categories;
     private List<String> galleries = new ArrayList<String>();
+    private List<Gallery> galleryList = new ArrayList<Gallery>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -128,6 +131,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         categoryPresenter.getCategory();
 
         if (merchant != null) {
+            hideView();
             loadData();
         }
 
@@ -140,10 +144,6 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        /*if (Build.VERSION.SDK_INT == Build.VERSION_CODES.LOLLIPOP) {
-            imageUtil.onActivityResult(requestCode, resultCode, data);
-            return;
-        }*/
         imageUtil.onActivityResult(this.getActivity(), requestCode, resultCode, data);
     }
 
@@ -197,7 +197,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         merchantRequest.setShortCode(null);
     }
 
-    @OnTextChanged(R.id.edt_merchant_email)
+    @OnTextChanged(R.id.txt_merchant_email)
     void onEmailChange(CharSequence text) {
         if (edtEmail.getText().toString() == "") {
             inputLayoutEmail.setErrorEnabled(false);
@@ -276,6 +276,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
     public void onMerchantImageUploadSuccess(String merchantImage) {
         galleries.add(merchantImage);
         merchantRequest.setImageGallery(galleries);
+        merchant.setGalleries(galleryList);
         Timber.d(".......", galleries.toString());
         selectedImages = galleries;
         populateAdapter(galleries, addImagesrecyclerView);
@@ -334,6 +335,21 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         spinnerMerchantCategory.setAdapter(spinAdapter);
     }
 
+    private void showView(){
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.setVisibility(View.VISIBLE);
+                progressBarCenter.setVisibility(View.GONE);
+            }
+        }, 2000);
+    }
+
+    private void hideView(){
+        scrollView.setVisibility(View.GONE);
+        progressBarCenter.setVisibility(View.VISIBLE);
+    }
+
     private void loadData() {
         edtName.setText(merchant.getName());
         merchantRequest.setName(merchant.getName());
@@ -342,6 +358,7 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
         edtShortCode.setText(merchant.getShortCode());
         merchantRequest.setShortCode(merchant.getShortCode());
         edtFee.setText(String.valueOf(merchant.getFees()));
+        merchantRequest.setFee(merchant.getFees());
         if (merchant.getEmail() != null) {
             edtEmail.setText(merchant.getEmail());
             merchantRequest.setEmail(merchant.getEmail());
@@ -357,7 +374,16 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             merchantRequest.setProfileImageUrl(merchant.getProfileImageUrl());
         }
 
-        if (merchant.getGalleries() != null && merchant.getGalleries().size() > 0) {
+        if (merchantRequest.getImageGallery()!=null && merchantRequest.getImageGallery().size() > 0 ) {
+
+            populateAdapter(merchantRequest.getImageGallery(), addImagesrecyclerView);
+            toggleRecyclerViewVisibility(View.VISIBLE);
+            showView();
+
+            return;
+        }
+
+        if(merchant.getGalleries() != null && merchant.getGalleries().size() > 0) {
             galleries = new ArrayList<>();
             for (Gallery gallery : merchant.getGalleries()) {
                 galleries.add(gallery.getUrl());
@@ -366,7 +392,12 @@ public class MerchantBasicInfoFragment extends BaseFragment implements Picker.Pi
             merchantRequest.setImageGallery(galleries);
             populateAdapter(galleries, addImagesrecyclerView);
             toggleRecyclerViewVisibility(View.VISIBLE);
+            showView();
+
+            return;
         }
+
+        showView();
     }
 
     private void toggleRecyclerViewVisibility(int visiblity) {
