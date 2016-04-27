@@ -1,11 +1,20 @@
 package com.batua.android.user.util.social;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.view.View;
 
+import com.batua.android.user.app.di.Injector;
+import com.batua.android.user.util.Bakery;
+import com.batua.android.user.util.PermissionUtil;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -28,6 +37,8 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 import timber.log.Timber;
 
 /**
@@ -36,7 +47,7 @@ import timber.log.Timber;
  *         Socail Authentication class.
  */
 
-public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback {
 
     public enum SocialType {
         GOOGLE,
@@ -45,11 +56,17 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     private static final int RC_SIGN_IN = 0;
     private static final int REQ_SIGN_IN_REQUIRED = 55664;
+    private final static int ACCOUNT_REQUEST_CODE = 0;
+
+    @Inject PermissionUtil permissionUtil;
+    @Inject Bakery bakery;
 
     private boolean isResolving = false;
     private boolean shouldResolve = false;
     private GoogleApiClient googleApiClient;
     private CallbackManager fbCallbackManager;
+
+    private static String[] ACCOUNT_PERMISSION = {Manifest.permission.GET_ACCOUNTS};
 
     private Activity activity;
     private SocialType socialType;
@@ -59,6 +76,59 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         this.activity = activity;
         initGoogleClient();
         initFacebookClient();
+        Injector.instance().inject(this);
+    }
+
+    public View getContentView() {
+        return activity.findViewById(android.R.id.content);
+    }
+
+    /**
+     * Checking for Account Permission, applicable from Android 6 and above.
+     */
+    private void checkAccount() {
+        if (ActivityCompat.checkSelfPermission(activity, ACCOUNT_PERMISSION[0]) != PackageManager.PERMISSION_GRANTED) {
+            requestAccountPermission();
+
+            return;
+        }
+
+        googleLogin();
+    }
+
+    /**
+     * Requesting for runtime permission, applicable from Android 6 and above.
+     */
+    private void requestAccountPermission() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(activity, ACCOUNT_PERMISSION[0])) {
+            bakery.snack(getContentView(), "Contact permission are required for Login", Snackbar.LENGTH_INDEFINITE, "Try Again", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(activity, ACCOUNT_PERMISSION, ACCOUNT_REQUEST_CODE);
+                }
+            });
+
+            return;
+        }
+
+        ActivityCompat.requestPermissions(activity, ACCOUNT_PERMISSION, ACCOUNT_REQUEST_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        if (permissionUtil.verifyPermissions(grantResults)) {
+            googleLogin();
+
+            return;
+        }
+
+        bakery.snackShort(getContentView(), "Permissions were not granted");
+    }
+
+    private void googleLogin() {
+        shouldResolve = true;
+        googleApiClient.connect();
     }
 
     // Google Api callbacks

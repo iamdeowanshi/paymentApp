@@ -87,7 +87,8 @@ public class LoginFragment extends BaseFragment implements SocialAuthCallback {
                 break;
 
             case R.id.btn_fb:
-                socialAuth.login(SocialAuth.SocialType.FACEBOOK);
+                startActivity(HomeActivity.class, null);
+                //socialAuth.login(SocialAuth.SocialType.FACEBOOK);
                 break;
 
             case R.id.btn_gplus:

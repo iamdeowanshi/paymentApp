@@ -61,4 +61,8 @@
     <style name="RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
         <item name="colorControlHighlight">@android:color/transparent</item>
     </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 </resources>

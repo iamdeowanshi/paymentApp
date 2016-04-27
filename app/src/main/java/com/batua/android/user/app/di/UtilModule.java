@@ -2,6 +2,7 @@ package com.batua.android.user.app.di;
 
 import com.batua.android.user.util.Bakery;
 import com.batua.android.user.util.ConnectivityUtil;
+import com.batua.android.user.util.PermissionUtil;
 import com.batua.android.user.util.PreferenceUtil;
 import com.batua.android.user.util.ViewUtil;
 import com.batua.android.user.util.social.SocialAuth;
@@ -46,4 +47,9 @@ public class UtilModule {
         return new ViewUtil();
     }
 
+    @Provides
+    @Singleton
+    public PermissionUtil providePermissionUtil() {
+        return new PermissionUtil();
+    }
 }
