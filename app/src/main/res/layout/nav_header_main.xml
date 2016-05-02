@@ -21,7 +21,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
-            android:background="@drawable/drawer_profile_image" />
+            android:src="@drawable/drawer_profile_image" />
 
         <TextView
             android:layout_width="match_parent"

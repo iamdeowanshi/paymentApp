@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
-import com.batua.android.user.app.base.BaseFragment;
 import com.batua.android.user.data.model.Navigation;
-import com.batua.android.user.data.model.TransactionHistory;
-import com.batua.android.user.ui.activity.ContactUsActivity;
-import com.batua.android.user.ui.activity.ProfileActivity;
-import com.batua.android.user.ui.activity.TransactionHistoryActivity;
-import com.batua.android.user.ui.activity.WalletActivity;
+import com.tecsol.batua.user.module.base.BaseFragment;
+import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
+import com.tecsol.batua.user.module.support.activity.ContactUsActivity;
+import com.tecsol.batua.user.module.transaction.view.activity.TransactionHistoryActivity;
+import com.tecsol.batua.user.module.wallet.view.activity.WalletActivity;
 
 import butterknife.Bind;
 import butterknife.OnClick;

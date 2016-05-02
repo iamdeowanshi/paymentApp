@@ -1,108 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:orientation="vertical"
-                android:padding="@dimen/text_size_16"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_mobile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/TextLabel"
-        app:errorTextAppearance="@style/error_appearance">
-
-        <EditText
-            android:id="@+id/edt_mobile"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_mobile"
-            android:inputType="phone"
-            android:textSize="@dimen/text_size_16"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/input_layout_mobile"
-        android:theme="@style/TextLabel"
-        app:errorTextAppearance="@style/error_appearance">
-
-        <EditText
-            android:id="@+id/edt_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_only_email"
-            android:inputType="textEmailAddress"
-            android:textSize="@dimen/text_size_16"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/input_layout_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/input_layout_email"
-        android:theme="@style/TextLabel">
-
-        <EditText
-            android:id="@+id/input_password"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:textSize="@dimen/text_size_16"/>
-
-    </android.support.design.widget.TextInputLayout>
-
-
-    <Button
-        android:id="@+id/btn_login"
-        android:layout_width="140dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/input_layout_password"
-        android:text="Sign Up"
-        android:textSize="14sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:background="@drawable/bg_button_pink"
-        android:layout_centerHorizontal="true"/>
+            android:layout_height="match_parent"
+            android:id="@+id/scroll_view"
+            android:fillViewport="true">
 
     <LinearLayout
-        android:id="@+id/layout_social_buttons"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/text_size_16">
 
-        <Button
-            android:id="@+id/btn_fb"
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_mobile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:text="@string/fb_signup"
-            android:layout_weight="1"
-            android:background="@drawable/bg_button_fb"/>
+            android:theme="@style/TextLabel"
+            app:errorTextAppearance="@style/error_appearance">
 
-        <View
-            android:layout_width="10dp"
-            android:layout_height="wrap_content"/>
+            <EditText
+                android:id="@+id/edt_mobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_mobile"
+                android:inputType="phone"
+                android:textSize="@dimen/text_size_16"/>
 
-        <Button
-            android:id="@+id/btn_gplus"
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAllCaps="false"
-            android:layout_weight="1"
+            android:layout_below="@+id/input_layout_mobile"
+            android:theme="@style/TextLabel"
+            app:errorTextAppearance="@style/error_appearance">
+
+            <EditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_only_email"
+                android:inputType="textEmailAddress"
+                android:textSize="@dimen/text_size_16"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/input_layout_email"
+            android:theme="@style/TextLabel">
+
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:textSize="@dimen/text_size_16"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+
+        <Button
+            android:id="@+id/btn_sign_up"
+            android:layout_width="140dp"
+            android:layout_height="36dp"
+            android:layout_below="@+id/input_layout_password"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="100dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bg_button_pink"
+            android:text="Sign Up"
             android:textColor="@color/white"
-            android:text="@string/google_signup"
-            android:background="@drawable/bg_button_gplus"/>
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar"
+            android:visibility="gone"
+            android:layout_gravity="center_horizontal"/>
+
+        <LinearLayout
+            android:id="@+id/layout_social_buttons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="bottom"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_sign_up_fb"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="bottom"
+                android:textSize="@dimen/text_size_12"
+                android:background="@drawable/bg_button_fb"
+                android:text="@string/fb_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"/>
+
+            <Button
+                android:id="@+id/btn_sign_up_gplus"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:textSize="@dimen/text_size_12"
+                android:background="@drawable/bg_button_gplus"
+                android:text="@string/google_signup"
+                android:textAllCaps="false"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
 
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

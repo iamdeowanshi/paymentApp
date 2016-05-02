@@ -12,5 +12,6 @@
     <dimen name="text_size_18_to_pix">16sp</dimen>
     <dimen name="text_size_25">25dp</dimen>
     <dimen name="text_size_20">20dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

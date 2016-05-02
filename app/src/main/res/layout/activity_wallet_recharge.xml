@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.batua.android.user.ui.activity.WalletRechargeActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/sky_blue"
+        android:elevation="@dimen/elevation_depth"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_title_font_size"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:id="@+id/amount_layout"
+        android:elevation="@dimen/elevation_depth"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+        android:background="@android:color/white">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:id="@+id/balance_layout"
+            android:layout_centerHorizontal="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingRight="3dp"
+                android:textSize="@dimen/text_size_20"
+                android:textColor="@color/black"
+                android:text="@string/text_wallet_balance"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_20"
+                android:textColor="@color/black"
+                android:text="2000"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/TextLabel"
+            android:layout_marginTop="20dp"
+            android:hint="Enter Amount"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:textSize="@dimen/text_size_20"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:inputType="number"
+            android:layout_below="@+id/balance_layout"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:isScrollContainer="false"
+        android:layout_below="@+id/amount_layout"
+        android:layout_marginBottom="@dimen/text_size_12"
+        android:layout_marginLeft="@dimen/text_size_12"
+        android:layout_marginRight="@dimen/text_size_12"
+        android:background="@android:color/white"
+        android:elevation="@dimen/elevation_depth"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/wallet_tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/white"
+            android:elevation="2dp"
+            app:tabGravity="fill"
+            app:tabIndicatorColor="@color/sky_blue"
+            app:tabSelectedTextColor="@color/sky_blue"
+            app:tabTextAppearance="@style/tab_layout_font_style"
+            app:tabTextColor="@color/sky_blue_light"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/wallet_viewpager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isScrollContainer="false"
+            android:layout_below="@+id/wallet_tab_layout"
+            android:layout_gravity="fill_horizontal"
+            android:padding="@dimen/text_size_12"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>

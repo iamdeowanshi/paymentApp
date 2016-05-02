@@ -4,7 +4,7 @@
     <color name="primary_blue">#3949AB</color>
     <color name="sky_blue">#33ACE0</color>
     <color name="sky_blue_dark">#2f9dcc</color>
-    <color name="sky_blue_light">#b0e7ff</color>
+    <color name="sky_blue_light">#79d0f5</color>
     <color name="primary_blue_dark">#283593</color>
     <color name="primary_blue_light">#C5CAE9</color>
 	<color name="pink">#FF4081</color>
@@ -21,6 +21,7 @@
     <color name="blue_extra_light">#C5CAE9</color>
     <color name="yellow_dark">#F9AD23</color>
     <color name="red">#D34836</color>
+    <color name="red_dark">#ca392c</color>
     <color name="red_selected">#c44433</color>
     <color name="black">#000</color>
     <color name="tool_bar_blue">#2196f3</color>

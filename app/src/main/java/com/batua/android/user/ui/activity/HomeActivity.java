@@ -14,10 +14,10 @@ import android.view.Gravity;
 import android.view.MenuItem;
 
 import com.batua.android.user.R;
-import com.batua.android.user.app.base.BaseActivity;
-import com.batua.android.user.data.model.MerchantDetail;
-import com.batua.android.user.ui.adapter.MerchantListAdapter;
 import com.batua.android.user.ui.fragment.NavigationFragment;
+import com.tecsol.batua.user.data.model.Merchant.Merchant;
+import com.tecsol.batua.user.module.base.BaseActivity;
+import com.tecsol.batua.user.module.dashboard.view.adapter.MerchantListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class HomeActivity extends BaseActivity {
 
     private ActionBarDrawerToggle toggle;
     private MerchantListAdapter merchantListAdapter;
-    private List<MerchantDetail> merchantDetailList = new ArrayList<MerchantDetail>();
+    private List<Merchant> merchantDetailList = new ArrayList<>();
     private NavigationFragment navigationFragment;
 
     @Override
@@ -64,9 +64,6 @@ public class HomeActivity extends BaseActivity {
     }
 
     private void fillMerchantList() {
-        merchantDetailList.add(new MerchantDetail("Pizza Hut", 5.0f, 10, "JP Nagar Bangalore", "1km"));
-        merchantDetailList.add(new MerchantDetail("Health and Glow", 3.0f, 10, "JP Nagar Bangalore", "2km"));
-
         merchantListAdapter = new MerchantListAdapter(merchantDetailList);
         LinearLayoutManager llayout = new LinearLayoutManager(this);
         merchantListRecyclerView.setLayoutManager(llayout);

@@ -29,13 +29,17 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_below="@id/toolbar"
         android:elevation="@dimen/elevation_depth"
         android:background="@android:color/white">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
         <RelativeLayout
@@ -109,7 +113,7 @@
 
 
         <EditText
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="30dp"
             android:layout_marginLeft="15dp"
@@ -117,7 +121,7 @@
             android:text="johngalt@gmail.com"
             android:textColorHint="@color/gray"
             android:paddingLeft="5dp"
-            android:gravity="center"
+            android:gravity="left|center_vertical"
             android:textSize="@dimen/text_size_16"
             android:background="@android:color/transparent"
             android:layout_below="@+id/profile_img_upload_layout" />
@@ -212,6 +216,8 @@
             android:layout_below="@+id/layout_merchant_mobile" />
 
     </RelativeLayout>
+
+    </ScrollView>
 
 
 </RelativeLayout>
