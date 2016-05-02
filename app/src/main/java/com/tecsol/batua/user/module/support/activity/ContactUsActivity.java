@@ -1,0 +1,48 @@
+package com.tecsol.batua.user.module.support.activity;
+
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+
+import com.batua.android.user.R;
+import com.tecsol.batua.user.module.base.BaseActivity;
+import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
+
+import butterknife.Bind;
+import butterknife.OnClick;
+
+/**
+ * @author Arnold Laishram.
+ */
+public class ContactUsActivity extends BaseActivity {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_contact_us);
+
+        setToolBar();
+    }
+
+    @OnClick(R.id.btn_submit)
+    void submitQuery(){
+        startActivity(HomeActivity.class, null);
+        finish();
+    }
+
+    private void setToolBar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+    }
+
+}
