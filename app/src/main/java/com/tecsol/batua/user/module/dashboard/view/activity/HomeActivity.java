@@ -63,10 +63,9 @@ public class HomeActivity extends LocationFetchActivity implements HomeViewInter
             for (Merchant merchant : unFilteredMerchantDetailList) {
                 if (merchant.getName().toLowerCase().contains(searchMerchant.toString().toLowerCase())) {
                     filteredMerchantDetailList.add(merchant);
-                    fillMerchantList();
                 }
             }
-
+            fillMerchantList();
             return;
         }
 
