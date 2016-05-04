@@ -13,13 +13,14 @@ import javax.inject.Inject;
 
 public class PreferenceUtil {
 
-    @Inject
-    Context context;
-    @Inject
-    Gson gson;
+    public static final String DEVICE_ID = "DEVICE_ID";
 
     private SharedPreferences preferences;
     public static final String USER = "USER";
+    public static final String LAST_LOCATION = "LAST_LOCATION";
+
+    @Inject Context context;
+    @Inject Gson gson;
 
     public PreferenceUtil() {
         Injector.component().inject(this);

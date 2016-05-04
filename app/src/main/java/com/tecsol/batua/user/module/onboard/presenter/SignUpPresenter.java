@@ -10,6 +10,7 @@ public interface SignUpPresenter extends Presenter<SignUpViewInteractor> {
 
     void normalSignUp(User user);
 
-    void socialSignUp(String email, String name, String googleId);
+    void socialGoogleSignUp(String email, String name, String googleId);
 
+    void socialFacebookSignUp(String email, String name, String facebook);
 }

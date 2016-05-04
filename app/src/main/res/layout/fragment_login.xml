@@ -75,13 +75,6 @@
             android:textSize="14sp"
             android:textStyle="bold"/>
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/progressBar2"
-            android:visibility="gone"
-            android:layout_gravity="center_horizontal" />
-
         <LinearLayout
             android:id="@+id/layout_social_buttons"
             android:layout_width="match_parent"

@@ -61,10 +61,41 @@ public class SignUpPresenterImpl extends BaseNetworkPresenter<SignUpViewInteract
     }
 
     @Override
-    public void socialSignUp(String email, String name, String googleId) {
+    public void socialGoogleSignUp(String email, String name, String googleId) {
         getViewInteractor().onNetworkCallProgress();
 
         Observable<Response<CustomResponse>> observable = api.socialGoogleSignUp(email, name, googleId);
+
+        subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
+            @Override
+            public void onError(Throwable e) {
+                getViewInteractor().onNetworkCallCompleted();
+                getViewInteractor().onNetworkCallError(e);
+            }
+
+            @Override
+            public void onResponse(Response<CustomResponse> response) {
+                getViewInteractor().onNetworkCallCompleted();
+
+                if (response.isSuccessful()) {
+                    getViewInteractor().onSocialSignUpSuccess(response.body().getUserId());
+                }
+
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
+
+                if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
+                    return;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void socialFacebookSignUp(String email, String name, String facebook) {
+        getViewInteractor().onNetworkCallProgress();
+
+        Observable<Response<CustomResponse>> observable = api.socialFaceBookSignUp(email, name, facebook);
 
         subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
             @Override

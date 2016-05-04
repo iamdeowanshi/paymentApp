@@ -96,6 +96,10 @@ public class Merchant extends BaseModel{
     @Expose
     private Location Location;
 
+    @SerializedName("distance")
+    @Expose
+    private float distance;
+
     /**
      *
      * @return
@@ -564,4 +568,11 @@ public class Merchant extends BaseModel{
         this.Location = Location;
     }
 
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
 }

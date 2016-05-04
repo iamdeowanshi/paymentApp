@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
             android:paddingBottom="10dp"
-            android:id="@+id/txt_display_name"
+            android:id="@+id/edt_display_name"
             android:text="John galt agent"
             android:textSize="18dp"
             android:layout_gravity="bottom"

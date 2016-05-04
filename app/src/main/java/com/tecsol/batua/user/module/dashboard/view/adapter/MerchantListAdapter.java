@@ -18,6 +18,7 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.tecsol.batua.user.data.model.Merchant.Gallery;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
+import com.tecsol.batua.user.module.common.util.DecimalFormatUtil;
 import com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity;
 import com.tecsol.batua.user.module.review.view.activity.ReviewActivity;
 
@@ -70,7 +71,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
 
         //merchantDetailViewHolder.txtReviewedNum.setText("(" + merchant.getReviewedNum().toString() + ")");
         merchantDetailViewHolder.txtMerchantAddress.setText(merchant.getAddress());
-        //merchantDetailViewHolder.txtDistance.setText(merchant.getDistance());
+        merchantDetailViewHolder.txtDistance.setText(DecimalFormatUtil.formatToExactTwoDecimal(merchant.getDistance())+" km");
 
         merchantDetailViewHolder.itemView.setOnClickListener(new MerchantClickListener(merchant));
 

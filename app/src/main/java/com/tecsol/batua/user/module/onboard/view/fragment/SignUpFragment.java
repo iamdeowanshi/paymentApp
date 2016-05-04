@@ -1,33 +1,22 @@
 package com.tecsol.batua.user.module.onboard.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
-import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseFragment;
 import com.tecsol.batua.user.module.common.util.Bakery;
-import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
-import com.tecsol.batua.user.module.common.util.social.AuthResult;
 import com.tecsol.batua.user.module.common.util.social.SocialAuth;
-import com.tecsol.batua.user.module.common.util.social.SocialAuthCallback;
-import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.SignUpViewInteractor;
-import com.tecsol.batua.user.module.onboard.view.activity.MobileNumberActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity;
-
-import java.math.BigInteger;
 
 import javax.inject.Inject;
 
@@ -38,20 +27,16 @@ import butterknife.OnTextChanged;
 /**
  * @author Arnold.
  */
-public class SignUpFragment extends BaseFragment implements SignUpViewInteractor, SocialAuthCallback{
+public class SignUpFragment extends BaseFragment {
 
     @Inject ViewUtil viewUtil;
     @Inject Bakery bakery;
-    @Inject SignUpPresenter signUpPresenter;
 
     @Bind(R.id.edt_mobile) EditText edtMobile;
     @Bind(R.id.edt_email) EditText edtEmail;
     @Bind(R.id.input_layout_mobile) TextInputLayout inputLayoutMobile;
     @Bind(R.id.input_layout_email) TextInputLayout inputLayoutEmail;
     @Bind(R.id.edt_password) EditText edtPassword;
-    @Bind(R.id.progressBar) ProgressBar progressBar;
-
-    private SocialAuth socialAuth;
 
     @OnClick({R.id.btn_sign_up, R.id.btn_sign_up_fb, R.id.btn_sign_up_gplus})
     public void onClick(View view) {
@@ -61,17 +46,11 @@ public class SignUpFragment extends BaseFragment implements SignUpViewInteractor
                 break;
 
             case R.id.btn_sign_up_fb:
+                ((OnBoardActivity)getActivity()).socialSignUp(SocialAuth.SocialType.FACEBOOK_SIGNUP);
                 break;
 
             case R.id.btn_sign_up_gplus:
-                viewUtil.hideKeyboard(getActivity());
-                if (!InternetUtil.hasInternetConnection(getActivity())){
-                    ((OnBoardActivity)getActivity()).showNoInternetTitleDialog(getActivity());
-
-                    return;
-                }
-
-                socialAuth.login(SocialAuth.SocialType.GOOGLE_SIGNUP);
+                ((OnBoardActivity)getActivity()).socialSignUp(SocialAuth.SocialType.GOOGLE_SIGNUP);
                 break;
         }
     }
@@ -105,7 +84,6 @@ public class SignUpFragment extends BaseFragment implements SignUpViewInteractor
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Injector.component().inject(this);
-        signUpPresenter.attachViewInteractor(this);
     }
 
     @Override
@@ -116,77 +94,10 @@ public class SignUpFragment extends BaseFragment implements SignUpViewInteractor
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        socialAuth = new SocialAuth(getActivity());
-        socialAuth.setCallback(this);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        socialAuth.onActivityResult(requestCode, resultCode, data);
-    }
-
-    //overidden method of presenter
-    @Override
-    public void onNormalSignUpSuccess(String message) {
-        showDailog(getActivity(), "Success", "Please verify your phone");
-        startActivity(MobileNumberActivity.class, null);
-        getActivity().finish();
-    }
-
-    @Override
-    public void onSocialSignUpSuccess(Integer userId) {
-        showDailog(getActivity(), "Success", "Please verify your phone");
-        startActivity(MobileNumberActivity.class, null);
-        getActivity().finish();
-    }
-
-    @Override
-    public void onNetworkCallProgress() {
-        progressBar.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public void onNetworkCallCompleted() {
-        progressBar.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onNetworkCallError(Throwable e) {
-        progressBar.setVisibility(View.GONE);
-        bakery.snackShort(getContentView(), e.getMessage());
-    }
-
-    // overidden methods of SocialAuth
-    @Override
-    public void onSocialConnectionSuccess(AuthResult result) {
-        Log.d("result-email", result.getAuthUser().getEmail());
-        socialAuth.disconnect();
-        signUpPresenter.socialSignUp(result.getAuthUser().getEmail(), result.getAuthUser().getFirstName() + result.getAuthUser().getLastName(), result.getAuthUser().getSocialId());
-    }
-
-    @Override
-    public void onCancel() {
-
-    }
-
-    @Override
-    public void onError(Throwable throwable) {
-        bakery.toastShort(throwable.getMessage());
     }
 
     private void performNormalSignUp() {
         viewUtil.hideKeyboard(getActivity());
-        Long mobile = 0l;
-        try {
-            mobile = Long.valueOf(edtMobile.getText().toString());
-        } catch (NumberFormatException e){
-            bakery.snackShort(getContentView(), "Invalid Phone");
-        }
-
-        String email = edtEmail.getText().toString();
-        String password = edtPassword.getText().toString();
 
         if (!(isValidNumber(edtMobile.getText()) || isValidEmail(edtEmail.getText()))){
             bakery.snackShort(getContentView(), "Invalid email or mobile number");
@@ -199,13 +110,16 @@ public class SignUpFragment extends BaseFragment implements SignUpViewInteractor
             return;
         }
 
+        Long mobile = Long.valueOf(edtMobile.getText().toString());
+        String email = edtEmail.getText().toString();
+        String password = edtPassword.getText().toString();
+
         if (mobile.longValue()!=0){
             User user = new User(mobile.longValue(), email, password);
-            signUpPresenter.normalSignUp(user);
+            ((OnBoardActivity)getActivity()).normalSignUp(user);
             return;
         }
         bakery.snackShort(getContentView(), "Invalid Phone");
-
     }
 
     private final static boolean isValidEmail(CharSequence target) {
@@ -218,6 +132,12 @@ public class SignUpFragment extends BaseFragment implements SignUpViewInteractor
 
     private final static boolean isValidNumber(CharSequence target) {
         if (target == null || target.toString().isEmpty() || target.length() != 10) {
+            return false;
+        }
+
+        try {
+            Long.valueOf(target.toString());
+        } catch (NumberFormatException e){
             return false;
         }
 

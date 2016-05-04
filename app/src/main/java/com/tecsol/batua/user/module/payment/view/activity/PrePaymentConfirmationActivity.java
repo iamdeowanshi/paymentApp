@@ -21,6 +21,7 @@ import com.batua.android.user.R;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
+import com.tecsol.batua.user.module.common.util.DecimalFormatUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 
 import org.parceler.Parcels;
@@ -142,7 +143,7 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
         if (merchant!=null) {
             txtMerchantTitle.setText(merchant.getName());
             txtMerchantAddress.setText(merchant.getAddress());
-            //txtDistance.setText(merchant.);
+            txtDistance.setText(DecimalFormatUtil.formatToExactTwoDecimal(merchant.getDistance())+" km");
             LayerDrawable stars = (LayerDrawable) ratingBar.getProgressDrawable();
             if (merchant.getAverageRating() != 5.0f) {
                 stars.getDrawable(2).setColorFilter(Color.rgb(249, 173, 35), PorterDuff.Mode.SRC_ATOP);

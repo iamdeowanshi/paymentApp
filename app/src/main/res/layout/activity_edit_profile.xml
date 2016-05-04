@@ -58,6 +58,16 @@
                 android:background="@drawable/drawer_profile_image"
                 android:layout_alignParentTop="true" />
 
+            <ProgressBar
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/progressBar4"
+                android:layout_marginTop="45dp"
+                android:layout_marginLeft="45dp"
+                android:visibility="gone"/>
+
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -68,7 +78,7 @@
                 android:textColor="@color/pink"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="10dp"
-                android:layout_below="@+id/txt_display_name"
+                android:layout_below="@+id/edt_display_name"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
@@ -78,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
-                android:id="@+id/txt_display_name"
+                android:id="@+id/edt_display_name"
                 android:text="John Galt Agent"
                 android:textSize="16dp"
                 android:textStyle="bold"
@@ -94,7 +104,7 @@
                 android:layout_height="1dp"
                 android:id="@+id/view1"
                 android:layout_marginRight="5dp"
-                android:layout_below="@id/txt_display_name"
+                android:layout_below="@id/edt_display_name"
                 android:background="@color/blue_dark"
                 android:layout_toRightOf="@+id/img_profile" />
 
@@ -174,7 +184,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="1">
 
-                <EditText
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:id="@+id/edt_user_phone_num"
@@ -214,6 +224,14 @@
             android:id="@+id/btn_save_profile"
             android:background="@color/pink"
             android:layout_below="@+id/layout_merchant_mobile" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressBar5"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"/>
 
     </RelativeLayout>
 

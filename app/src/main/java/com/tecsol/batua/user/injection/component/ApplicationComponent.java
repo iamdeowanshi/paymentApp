@@ -17,15 +17,24 @@ import com.tecsol.batua.user.module.common.util.social.SocialAuth;
 import com.tecsol.batua.user.module.dashboard.presenter.HomePresenterImpl;
 import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
 import com.tecsol.batua.user.module.dashboard.view.fragment.NavigationFragment;
+import com.tecsol.batua.user.module.onboard.presenter.ImageUploadPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.LoginPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.OtpPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.SavePinPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenterImpl;
+import com.tecsol.batua.user.module.onboard.view.activity.MobileNumberActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OtpActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.ResetPasswordActivity;
+import com.tecsol.batua.user.module.onboard.view.activity.SplashActivity;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragment;
 import com.tecsol.batua.user.module.onboard.view.fragment.SignUpFragment;
 import com.tecsol.batua.user.module.payment.view.activity.PaymentSuccessActivity;
 import com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity;
+import com.tecsol.batua.user.module.profile.presenter.ProfilePresenterImpl;
+import com.tecsol.batua.user.module.profile.view.activity.EditProfileActivity;
+import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
 import com.tecsol.batua.user.module.review.presenter.ReviewPresenterImpl;
 
 import javax.inject.Singleton;
@@ -55,12 +64,21 @@ public interface ApplicationComponent {
     void inject(LoginFragment loginFragment);
     void inject(SignUpFragment signUpFragment);
     void inject(NavigationFragment navigationFragment);
+    void inject(ProfileActivity profileActivity);
+    void inject(MobileNumberActivity mobileNumberActivity);
+    void inject(EditProfileActivity editProfileActivity);
+    void inject(SplashActivity splashActivity);
 
     // inject methods for presenter classes
     void inject(SignUpPresenterImpl loginPresenter);
     void inject(LoginPresenterImpl loginPresenter);
     void inject(HomePresenterImpl homePresenter);
     void inject(ReviewPresenterImpl reviewPresenter);
+    void inject(SavePinPresenterImpl savePinPresenter);
+    void inject(OtpPresenterImpl otpPresenter);
+    void inject(VerifyOtpPresenterImpl verifyOtpPresenter);
+    void inject(ProfilePresenterImpl profilePresenter);
+    void inject(ImageUploadPresenterImpl imageUploadPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

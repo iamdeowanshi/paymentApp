@@ -60,10 +60,41 @@ public class LoginPresenterImpl extends BaseNetworkPresenter<LoginViewInteractor
     }
 
     @Override
-    public void socialLogin(String email, String deviceid, String facebookId, String googleId) {
+    public void socialGoogleLogin(String email, String deviceid, String googleId) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<User>> observable = api.socialGoogleLogin(email, deviceid, facebookId, googleId);
+        Observable<Response<User>> observable = api.socialGoogleLogin(email, deviceid, googleId);
+
+        subscribeForNetwork(observable, new ApiObserver<Response<User>>() {
+            @Override
+            public void onError(Throwable e) {
+                getViewInteractor().onNetworkCallCompleted();
+                getViewInteractor().onNetworkCallError(e);
+            }
+
+            @Override
+            public void onResponse(Response<User> response) {
+                getViewInteractor().onNetworkCallCompleted();
+
+                if (response.isSuccessful()) {
+                    getViewInteractor().onSocialLoginSuccess(response.body());
+                }
+
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
+
+                if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
+                    return;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void socialFacebookLogin(String email, String deviceId, String facebookId) {
+        getViewInteractor().onNetworkCallProgress();
+
+        Observable<Response<User>> observable = api.socialFaceBookLogin(email, deviceId, facebookId);
 
         subscribeForNetwork(observable, new ApiObserver<Response<User>>() {
             @Override

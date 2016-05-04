@@ -109,7 +109,8 @@
     </string-array>
 
     //facebook id
-    <string name="facebook_app_id">1697066873847337</string>
+    <string name="facebook_app_id">1619016125090093</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="gcm_projectnumber">348607505068</string>
 
 </resources>

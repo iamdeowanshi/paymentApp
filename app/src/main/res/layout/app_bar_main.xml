@@ -21,6 +21,7 @@
         android:layout_below="@id/app_bar_layout"
         android:background="@color/white"
         android:scrollbars="vertical"
+        android:visibility="gone"
         android:id="@+id/merchant_list_recycler_view"/>
 
     <ProgressBar

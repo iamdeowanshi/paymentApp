@@ -27,6 +27,7 @@ public class Config {
     //--------------------------------------------------------------------------------
     public static final String API_BASE_URL_PRODUCTION = "";
     public static final String API_BASE_URL_DEVELOP = "http://52.36.228.74:1337/";
+    public static final String API_BASE_URL_LOCAL = "http://192.168.2.152:1337/";
     public static final String API_BASE_URL_MOCK = "http://android-training.getsandbox.com/";
 
     // Active base url
@@ -44,10 +45,17 @@ public class Config {
     public static final String NORMAL_LOGIN = "api/user/normal/login";
     public static final String SOCIAL_LOGIN = "api/user/social/login";
 
-    public static final String GET_MERCHANTS = "api/user/{userId}/merchant/";
+    public static final String GET_MERCHANTS = "api/user/{userId}/merchant/{merchantId}/latitude/{latitude}/longitude/{longitude}/";
 
-    public static final String GET_PARTICULAR_MERCHANTS = "api/user/{userId}/merchant/{merchantId}/";
+    public static final String GET_PARTICULAR_MERCHANTS = "api/user/{userId}/merchant/{merchantId}/latitude/{latitude}/longitude/{longitude}/";
 
-    public static final String GET_MERCHANT_REVIEW = "/api/ratereview/user/{userId}/merchant/{merchantId}/";
+    public static final String SAVE_PIN = "user/savePin";
 
+    public static final String SEND_SIGN_UP_OTP = "api/user/signup/sendotp";
+
+    public static final String VERIFY_SIGN_UP_OTP = "api/user/signup/verifyotp";
+
+    public static final String UPDATE_PROFILE = "api/user/profile";
+
+    public static final String UPLOAD_IMAGE = "/api/image/upload";
 }

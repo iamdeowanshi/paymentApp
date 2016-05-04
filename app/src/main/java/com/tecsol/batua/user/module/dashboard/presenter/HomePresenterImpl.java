@@ -33,10 +33,10 @@ public class HomePresenterImpl extends BaseNetworkPresenter<HomeViewInteractor> 
     }
 
     @Override
-    public void getMerchants(int id) {
+    public void getMerchants(int id, int merchantId, double latitude, double longitude) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<List<Merchant>>> observable = api.getMerchants(id);
+        Observable<Response<List<Merchant>>> observable = api.getMerchants(id, merchantId, latitude, longitude);
 
         subscribeForNetwork(observable, new ApiObserver<Response<List<Merchant>>>() {
             @Override

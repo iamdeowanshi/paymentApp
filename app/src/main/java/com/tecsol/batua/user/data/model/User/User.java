@@ -39,6 +39,12 @@ public class User extends BaseModel {
     @SerializedName("updatedAt")
     private String date;
 
+    @SerializedName("isPinActivated")
+    private boolean isPinActivated;
+
+    @SerializedName("isPinSet")
+    private boolean isPinSet;
+
     public User() {
     }
 
@@ -159,4 +165,21 @@ public class User extends BaseModel {
     public void setDate(String date) {
         this.date = date;
     }
+
+    public boolean isPinActivated() {
+        return isPinActivated;
+    }
+
+    public void setIsPinActivated(boolean isPinActivated) {
+        this.isPinActivated = isPinActivated;
+    }
+
+    public boolean isPinSet() {
+        return isPinSet;
+    }
+
+    public void setIsPinSet(boolean isPinSet) {
+        this.isPinSet = isPinSet;
+    }
+
 }

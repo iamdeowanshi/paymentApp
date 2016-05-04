@@ -60,11 +60,11 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     private static final int RC_SIGN_UP = 1;
     private static int REQUEST_CODE;
     private static final int REQ_SIGN_IN_REQUIRED = 55664;
+    private static final int REQ_LOG_IN_REQUIRED = 55665;
     private final static int ACCOUNT_REQUEST_CODE = 2;
 
     @Inject PermissionUtil permissionUtil;
-    @Inject
-    Bakery bakery;
+    @Inject Bakery bakery;
 
     private boolean isResolving = false;
     private boolean shouldResolve = false;
@@ -77,8 +77,9 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     private SocialType socialType;
     private SocialAuthCallback callback;
 
-    public SocialAuth(Activity activity) {
+    public SocialAuth(Activity activity, SocialType type) {
         this.activity = activity;
+        this.socialType = type;
         initGoogleClient();
         initFacebookClient();
         Injector.component().inject(this);
@@ -176,8 +177,12 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             googleApiClient.connect();
         }
 
-        if (requestCode == REQ_SIGN_IN_REQUIRED && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
             // Retrieving access token after sign in.
+            if (!googleApiClient.isConnected()) {
+                googleApiClient.connect();
+                return;
+            }
             new RetrieveTokenTask(Plus.PeopleApi.getCurrentPerson(googleApiClient).toString(), Plus.AccountApi.getAccountName(googleApiClient))
                     .execute(Plus.AccountApi.getAccountName(googleApiClient));
         }
@@ -214,7 +219,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
                         String token = loginResult.getAccessToken().getToken();
-                        AuthResult result = new AuthResult(object.toString(), SocialType.FACEBOOK_LOGIN);
+                        AuthResult result = new AuthResult(object.toString(), SocialAuth.this.socialType);
                         result.getAuthUser().setAccessToken(token);
                         callback.onSocialConnectionSuccess(result);
                     }
@@ -250,20 +255,18 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         switch (socialType) {
             case GOOGLE_LOGIN:
                 REQUEST_CODE = RC_SIGN_IN;
-                shouldResolve = true;
-                googleApiClient.connect();
+                checkAccount();
                 break;
             case GOOGLE_SIGNUP:
                 REQUEST_CODE = RC_SIGN_UP;
-                shouldResolve = true;
-                googleApiClient.connect();
+                checkAccount();
                 break;
             case FACEBOOK_LOGIN:
-                REQUEST_CODE = RC_SIGN_IN;
+                REQUEST_CODE = REQ_LOG_IN_REQUIRED;
                 LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "user_friends", "email"));
                 break;
             case FACEBOOK_SIGNUP:
-                REQUEST_CODE = RC_SIGN_UP;
+                REQUEST_CODE = REQ_SIGN_IN_REQUIRED;
                 LoginManager.getInstance().logInWithReadPermissions(activity, Arrays.asList("public_profile", "user_friends", "email"));
                 break;
         }
@@ -311,7 +314,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
             } catch (IOException e) {
                 callback.onError(e);
             } catch (UserRecoverableAuthException e) {
-                activity.startActivityForResult(e.getIntent(), REQ_SIGN_IN_REQUIRED);
+                activity.startActivityForResult(e.getIntent(), REQUEST_CODE);
             } catch (GoogleAuthException e) {
                 callback.onError(e);
             }
@@ -322,7 +325,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         @Override
         protected void onPostExecute(String token) {
             if (token != null) {
-                AuthResult result = new AuthResult(jsonData, SocialType.GOOGLE_LOGIN);
+                AuthResult result = new AuthResult(jsonData, socialType);
                 result.getAuthUser().setAccessToken(token);
                 result.getAuthUser().setEmail(email);
                 callback.onSocialConnectionSuccess(result);
