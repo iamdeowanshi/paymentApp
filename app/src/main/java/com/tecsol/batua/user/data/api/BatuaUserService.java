@@ -3,7 +3,9 @@ package com.tecsol.batua.user.data.api;
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
 import com.tecsol.batua.user.data.model.Merchant.Review;
-import com.tecsol.batua.user.data.model.Otp;
+import com.tecsol.batua.user.data.model.User.ChangePassword;
+import com.tecsol.batua.user.data.model.User.Otp;
+import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.data.model.User.User;
 
@@ -16,7 +18,6 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -72,6 +73,24 @@ public interface BatuaUserService {
 
     @PUT(Config.UPDATE_PROFILE)
     Observable<Response<User>> updateProfile(@Body User user);
+
+    @GET(Config.GET_PROFILE)
+    Observable<Response<User>> getPinStatus(@Path("userId") int userId);
+
+    @PUT(Config.SET_PIN)
+    Observable<Response<String>> setPin(@Body Pin pin);
+
+    @PUT(Config.UPDATE_PIN_STATUS)
+    Observable<Response<User>> updatePinStatus(@Body Pin pin);
+
+    @PUT(Config.CHANGE_PIN)
+    Observable<Response<CustomResponse>> changePin(@Body Pin pin);
+
+    @PUT(Config.LOGIN_BY_PIN)
+    Observable<Response<User>> loginByPin(@Body Pin pin, @Header("Access-Token") String accessToken);
+
+    @PUT(Config.CHANGE_PASSWORD)
+    Observable<Response<CustomResponse>> changePassword(@Body ChangePassword changePassword);
 
     @Multipart
     @POST(Config.UPLOAD_IMAGE)

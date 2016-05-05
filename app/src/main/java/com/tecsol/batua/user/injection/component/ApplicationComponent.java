@@ -1,8 +1,6 @@
 package com.tecsol.batua.user.injection.component;
 
 import com.tecsol.batua.user.data.api.ApiErrorParser;
-import com.tecsol.batua.user.data.api.ApiErrorResponse;
-import com.tecsol.batua.user.data.model.Navigation;
 import com.tecsol.batua.user.injection.module.ApiModule;
 import com.tecsol.batua.user.injection.module.ApplicationModule;
 import com.tecsol.batua.user.injection.module.PresenterModule;
@@ -17,22 +15,31 @@ import com.tecsol.batua.user.module.common.util.social.SocialAuth;
 import com.tecsol.batua.user.module.dashboard.presenter.HomePresenterImpl;
 import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
 import com.tecsol.batua.user.module.dashboard.view.fragment.NavigationFragment;
+import com.tecsol.batua.user.module.onboard.presenter.ChangePasswordPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.ChangePinPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.ImageUploadPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.LoginPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.OtpPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.PinLoginPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.SavePinPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenterImpl;
+import com.tecsol.batua.user.module.onboard.view.activity.ChangePasswordActivity;
+import com.tecsol.batua.user.module.onboard.view.activity.ChangePinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.MobileNumberActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OtpActivity;
+import com.tecsol.batua.user.module.onboard.view.activity.PinLoginActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.ResetPasswordActivity;
+import com.tecsol.batua.user.module.onboard.view.activity.SetPinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.SplashActivity;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragment;
 import com.tecsol.batua.user.module.onboard.view.fragment.SignUpFragment;
 import com.tecsol.batua.user.module.payment.view.activity.PaymentSuccessActivity;
 import com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity;
+import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenterImpl;
 import com.tecsol.batua.user.module.profile.presenter.ProfilePresenterImpl;
+import com.tecsol.batua.user.module.profile.presenter.SetPinPresenterImpl;
 import com.tecsol.batua.user.module.profile.view.activity.EditProfileActivity;
 import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
 import com.tecsol.batua.user.module.review.presenter.ReviewPresenterImpl;
@@ -68,6 +75,10 @@ public interface ApplicationComponent {
     void inject(MobileNumberActivity mobileNumberActivity);
     void inject(EditProfileActivity editProfileActivity);
     void inject(SplashActivity splashActivity);
+    void inject(SetPinActivity setPinActivity);
+    void inject(ChangePinActivity changePinActivity);
+    void inject(PinLoginActivity pinLoginActivity);
+    void inject(ChangePasswordActivity changePasswordActivity);
 
     // inject methods for presenter classes
     void inject(SignUpPresenterImpl loginPresenter);
@@ -79,6 +90,11 @@ public interface ApplicationComponent {
     void inject(VerifyOtpPresenterImpl verifyOtpPresenter);
     void inject(ProfilePresenterImpl profilePresenter);
     void inject(ImageUploadPresenterImpl imageUploadPresenter);
+    void inject(SetPinPresenterImpl setPinPresenter);
+    void inject(PinStatusPresenterImpl pinStatusPresenter);
+    void inject(ChangePinPresenterImpl changePinPresenter);
+    void inject(PinLoginPresenterImpl pinLoginPresenter);
+    void inject(ChangePasswordPresenterImpl changePasswordPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

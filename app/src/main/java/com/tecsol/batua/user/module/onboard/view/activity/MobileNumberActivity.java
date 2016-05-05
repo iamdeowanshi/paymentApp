@@ -7,7 +7,7 @@ import android.widget.ProgressBar;
 
 
 import com.batua.android.user.R;
-import com.tecsol.batua.user.data.model.Otp;
+import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;

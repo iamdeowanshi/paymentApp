@@ -243,6 +243,14 @@
             android:layout_marginBottom="30dp"
             android:layout_below="@+id/view3"/>
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pin_status_progressBar"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package com.tecsol.batua.user.data.model;
+package com.tecsol.batua.user.data.model.User;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,7 +8,6 @@ import com.google.gson.annotations.SerializedName;
 public class Otp {
 
     @SerializedName("phone")
-
     private long phone;
 
     @SerializedName("otp")

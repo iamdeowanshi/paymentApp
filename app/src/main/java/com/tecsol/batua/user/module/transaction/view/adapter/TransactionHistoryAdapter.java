@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tecsol.batua.user.data.model.TransactionHistory;
+import com.tecsol.batua.user.data.model.User.TransactionHistory;
 import com.tecsol.batua.user.module.payment.view.activity.PaymentActivity;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,21 +15,21 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:src="@drawable/img_batua_icon_text"/>
+        android:src="@drawable/img_batua_icon_text" />
 
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@+id/img_logo">
+        android:layout_below="@+id/img_logo"
+        android:layout_margin="10dp">
 
         <LinearLayout
+            android:id="@+id/set_pin_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/set_pin_layout"
-            android:layout_marginTop="50dp">
+            android:layout_marginTop="50dp"
+            android:orientation="horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
@@ -43,10 +42,11 @@
                     android:id="@+id/edt_first_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:hint="X"
                     android:inputType="number"
-                    android:background="@android:color/transparent"
+                    android:maxLength="1"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
 
@@ -69,10 +69,11 @@
                     android:id="@+id/edt_second_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:gravity="center"
-                    android:inputType="number"
                     android:background="@android:color/transparent"
+                    android:gravity="center"
                     android:hint="X"
+                    android:inputType="number"
+                    android:maxLength="1"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
 
@@ -95,10 +96,11 @@
                     android:id="@+id/edt_third_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:hint="X"
                     android:inputType="number"
-                    android:background="@android:color/transparent"
+                    android:maxLength="1"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
 
@@ -121,10 +123,11 @@
                     android:id="@+id/edt_fourth_pin"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:background="@android:color/transparent"
                     android:gravity="center"
                     android:hint="X"
                     android:inputType="number"
-                    android:background="@android:color/transparent"
+                    android:maxLength="1"
                     android:textColor="@android:color/black"
                     android:textSize="@dimen/text_size_16" />
 
@@ -140,29 +143,37 @@
 
         <TextView
             android:id="@+id/txt_forgot_pin"
-            android:layout_marginTop="30dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:textColor="@color/sky_blue_dark"
-            android:textStyle="bold"
-            android:layout_marginRight="10dp"
             android:layout_below="@+id/set_pin_layout"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="30dp"
             android:text="@string/forgot_pin"
-            android:textSize="16sp"/>
+            android:textColor="@color/sky_blue_dark"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btn_enter"
             android:layout_width="140dp"
             android:layout_height="36dp"
-            android:layout_marginTop="30dp"
-            android:text="Enter"
             android:layout_below="@+id/txt_forgot_pin"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
             android:background="@drawable/bg_button_pink"
-            android:layout_centerHorizontal="true"/>
+            android:text="Enter"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pin_login_progressBar"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

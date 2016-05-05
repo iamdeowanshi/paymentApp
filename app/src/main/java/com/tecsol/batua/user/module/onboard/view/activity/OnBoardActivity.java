@@ -246,7 +246,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
                 // permissions are granted
                 preferenceUtil.save(preferenceUtil.USER, user);
                 if (user.isPinActivated() && user.isPinSet()) {
-                    startActivity(SetPinActivity.class, null);
+                    startActivity(PinLoginActivity.class, null);
                     finish();
                     return;
                 }

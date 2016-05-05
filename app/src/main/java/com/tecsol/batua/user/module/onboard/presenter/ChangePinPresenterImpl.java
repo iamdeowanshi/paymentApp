@@ -2,9 +2,11 @@ package com.tecsol.batua.user.module.onboard.presenter;
 
 import android.accounts.NetworkErrorException;
 
+import com.tecsol.batua.user.data.api.ApiErrorParser;
+import com.tecsol.batua.user.data.api.ApiErrorResponse;
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
-import com.tecsol.batua.user.data.model.User.Otp;
+import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
@@ -15,21 +17,22 @@ import retrofit2.Response;
 import rx.Observable;
 
 /**
- * @author Aaditya Deowanshi.
+ * @author Arnold.
  */
-public class VerifyOtpPresenterImpl extends BaseNetworkPresenter<VerifyOtpViewIteractor> implements VerifyOtpPresenter {
+public class ChangePinPresenterImpl extends BaseNetworkPresenter<ChangePinViewInteractor> implements ChangePinPresenter {
 
     @Inject BatuaUserService api;
+    @Inject ApiErrorParser errorParser;
 
-    public VerifyOtpPresenterImpl() {
+    public ChangePinPresenterImpl() {
         Injector.component().inject(this);
     }
 
     @Override
-    public void verifySignUpOtp(Otp otp) {
+    public void changePin(Pin pin) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<CustomResponse>> observable = api.verifySignUpOtp(otp);
+        Observable<Response<CustomResponse>> observable = api.changePin(pin);
 
         subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
             @Override
@@ -42,17 +45,19 @@ public class VerifyOtpPresenterImpl extends BaseNetworkPresenter<VerifyOtpViewIt
             public void onResponse(Response<CustomResponse> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
-                if (response.code() == 401) {
-                    getViewInteractor().onVerificationFailure();
+                if (response.isSuccessful()) {
+                    getViewInteractor().onChangePinSuccess();
                     return;
                 }
 
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
+
                 if (response.code() != 200) {
-                    getViewInteractor().onNetworkCallError(new NetworkErrorException("Error : " + response.code()));
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
                     return;
                 }
-                getViewInteractor().onVerificationSuccess();
             }
         });
     }
+
 }

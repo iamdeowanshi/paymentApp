@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.batua.android.user.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
-import com.tecsol.batua.user.data.model.Navigation;
+import com.tecsol.batua.user.data.model.User.Navigation;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseFragment;
@@ -21,8 +21,6 @@ import com.tecsol.batua.user.module.support.activity.ContactUsActivity;
 import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
 import com.tecsol.batua.user.module.transaction.view.activity.TransactionHistoryActivity;
 import com.tecsol.batua.user.module.wallet.view.activity.WalletActivity;
-
-import java.io.File;
 
 import javax.inject.Inject;
 

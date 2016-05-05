@@ -1,4 +1,4 @@
-package com.tecsol.batua.user.module.profile.presenter;
+package com.tecsol.batua.user.module.onboard.presenter;
 
 import android.accounts.NetworkErrorException;
 
@@ -6,11 +6,10 @@ import com.tecsol.batua.user.data.api.ApiErrorParser;
 import com.tecsol.batua.user.data.api.ApiErrorResponse;
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
+import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginViewInteractor;
 
 import javax.inject.Inject;
 
@@ -18,22 +17,22 @@ import retrofit2.Response;
 import rx.Observable;
 
 /**
- * @author Aaditya Deowanshi.
+ * @author Arnold.
  */
-public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewInteractor> implements ProfilePresenter {
+public class PinLoginPresenterImpl extends BaseNetworkPresenter<PinLoginViewInteractor> implements PinLoginPresenter {
 
     @Inject BatuaUserService api;
     @Inject ApiErrorParser errorParser;
 
-    public ProfilePresenterImpl() {
+    public PinLoginPresenterImpl() {
         Injector.component().inject(this);
     }
 
     @Override
-    public void updateProfile(User user) {
+    public void loginByPin(Pin pin, String accessToken) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<User>> observable = api.updateProfile(user);
+        Observable<Response<User>> observable = api.loginByPin(pin, accessToken);
 
         subscribeForNetwork(observable, new ApiObserver<Response<User>>() {
             @Override
@@ -47,7 +46,7 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
                 getViewInteractor().onNetworkCallCompleted();
 
                 if (response.isSuccessful()) {
-                    getViewInteractor().onProfileUpdated(response.body());
+                    getViewInteractor().onPinLoginSuccess(response.body());
                     return;
                 }
 

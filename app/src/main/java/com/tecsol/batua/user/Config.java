@@ -57,5 +57,18 @@ public class Config {
 
     public static final String UPDATE_PROFILE = "api/user/profile";
 
-    public static final String UPLOAD_IMAGE = "/api/image/upload";
+    public static final String GET_PROFILE = "api/user/{userId}/profile";
+
+    public static final String SET_PIN = "api/user/pin/reset";
+
+    public static final String UPLOAD_IMAGE = "api/image/upload";
+
+    public static final String UPDATE_PIN_STATUS = "api/user/pin/status";
+
+    public static final String CHANGE_PIN = "api/user/pin/change";
+
+    public static final String LOGIN_BY_PIN = "api/user/pin/login";
+
+    public static final String CHANGE_PASSWORD = "api/user/changepassword";
+
 }

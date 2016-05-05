@@ -3,7 +3,7 @@ package com.tecsol.batua.user.module.wallet.view.fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.tecsol.batua.user.data.model.WalletTransaction;
+import com.tecsol.batua.user.data.model.User.WalletTransaction;
 import com.tecsol.batua.user.module.base.BaseFragment;
 import com.tecsol.batua.user.module.wallet.view.adapter.WalletTransactionAdapter;
 

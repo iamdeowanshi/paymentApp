@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
-import com.tecsol.batua.user.data.model.WalletTransaction;
+import com.tecsol.batua.user.data.model.User.WalletTransaction;
 
 import java.util.List;
 

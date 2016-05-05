@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-import com.tecsol.batua.user.data.model.WalletTransaction;
+import com.tecsol.batua.user.data.model.User.WalletTransaction;
 
 import java.util.ArrayList;
 import java.util.List;

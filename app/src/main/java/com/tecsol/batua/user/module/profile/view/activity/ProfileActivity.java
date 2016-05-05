@@ -4,17 +4,23 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
+import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
+import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.onboard.view.activity.ChangePasswordActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.ChangePinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.SetPinActivity;
+import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenter;
+import com.tecsol.batua.user.module.profile.presenter.PinStatusViewInteractor;
 
 import javax.inject.Inject;
 
@@ -24,14 +30,16 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class ProfileActivity extends BaseActivity {
+public class ProfileActivity extends BaseActivity implements PinStatusViewInteractor{
 
     @Inject PreferenceUtil preferenceUtil;
+    @Inject Bakery bakery;
+    @Inject PinStatusPresenter pinStatusPresenter;
 
-    private String ENABLE = "ENABLE";
-    private String DISABLE = "DISABLE";
-    private String SET_PIN = "Set PIN";
-    private String CHANGE_PIN = "Change PIN";
+    private final String ENABLE = "ENABLE";
+    private final String DISABLE = "DISABLE";
+    private final String SET_PIN = "Set PIN";
+    private final String CHANGE_PIN = "Change PIN";
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.txt_enable_pin) TextView txtEnablePin;
@@ -39,6 +47,9 @@ public class ProfileActivity extends BaseActivity {
     @Bind(R.id.edt_display_name) TextView txtName;
     @Bind(R.id.txt_merchant_email) TextView txtMerchantEmail;
     @Bind(R.id.txt_merchant_phone) TextView txtPhone;
+    @Bind(R.id.pin_status_progressBar) ProgressBar pinStatusProgressbar;
+
+    private User user;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -46,32 +57,41 @@ public class ProfileActivity extends BaseActivity {
         setContentView(com.batua.android.user.R.layout.activity_profile);
 
         Injector.component().inject(this);
+        pinStatusPresenter.attachViewInteractor(this);
 
         setToolBar();
         initializeProfile();
-        initializePinSettings();
+        getPinStatus();
     }
 
-    private void initializeProfile() {
-        User user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
-        txtName.setText(user.getName());
-        txtMerchantEmail.setText(user.getEmail());
-        txtPhone.setText(user.getPhone()+"");
-    }
-
-    @OnClick(com.batua.android.user.R.id.txt_enable_pin)
+    @OnClick(R.id.txt_enable_pin)
     void enablePin(){
         String pinState = txtEnablePin.getText().toString();
+
+        if(user == null){
+            user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
+        }
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         if (pinState.equals(ENABLE)) {
-            txtEnablePin.setText(DISABLE);
-            txtEnablePin.setTextColor(Color.parseColor("#FF4081")); // Pink Color
-            showPinAction();
+            Pin pin = new Pin();
+            pin.setUserId(user.getId());
+            pin.setIsPinActivated(true);
+
+            pinStatusPresenter.updatePinStatus(pin);
 
             return;
         }
-        txtEnablePin.setText(ENABLE);
-        txtEnablePin.setTextColor(Color.parseColor("#2196f3")); // Blue Color
-        hidePinAction();
+
+        Pin pin = new Pin();
+        pin.setUserId(user.getId());
+        pin.setIsPinActivated(false);
+
+        pinStatusPresenter.updatePinStatus(pin);
     }
 
     @OnClick(R.id.txt_set_or_change_pin)
@@ -85,20 +105,102 @@ public class ProfileActivity extends BaseActivity {
         startActivity(ChangePinActivity.class, null);
     }
 
-    @OnClick(com.batua.android.user.R.id.img_edit_profile)
+    @OnClick(R.id.img_edit_profile)
     void editProfile(){
         startActivity(EditProfileActivity.class, null);
     }
 
-    @OnClick(com.batua.android.user.R.id.btn_logout)
+    @OnClick(R.id.btn_logout)
     void logout(){
         startActivity(OnBoardActivity.class, null);
         finish();
     }
 
-    @OnClick(com.batua.android.user.R.id.txt_change_password)
+    @OnClick(R.id.txt_change_password)
     void changePassword(){
         startActivity(ChangePasswordActivity.class, null);
+    }
+
+    @Override
+    public void onPinStatusRecieved(User user) {
+
+        this.user.setIsPinActivated(user.isPinActivated());
+        this.user.setIsPinSet(user.isPinSet());
+        preferenceUtil.save(preferenceUtil.USER, this.user);
+
+        if (user.isPinActivated() && !user.isPinSet()) {
+            txtEnablePin.setText(DISABLE);
+            txtSetOrChangePin.setText(SET_PIN);
+            txtEnablePin.setTextColor(Color.parseColor("#FF4081")); // Pink Color
+            showPinAction();
+            return;
+        }
+
+        if (user.isPinActivated() && user.isPinSet()) {
+            txtEnablePin.setText(DISABLE);
+            txtSetOrChangePin.setText(CHANGE_PIN);
+            txtEnablePin.setTextColor(Color.parseColor("#FF4081")); // Pink Color
+            showPinAction();
+            return;
+        }
+
+        txtEnablePin.setText(ENABLE);
+        txtEnablePin.setTextColor(Color.parseColor("#2196f3")); // blue Color
+        hidePinAction();
+    }
+
+    @Override
+    public void onPinStatusChanged(User user) {
+        this.user.setIsPinActivated(user.isPinActivated());
+        preferenceUtil.save(preferenceUtil.USER, this.user);
+
+        if (user.isPinActivated()) {
+            txtEnablePin.setText(DISABLE);
+            txtEnablePin.setTextColor(Color.parseColor("#FF4081")); // Pink Color
+            showPinAction();
+            if (!this.user.isPinSet()) {
+                txtSetOrChangePin.setText(SET_PIN);
+                return;
+            }
+            txtSetOrChangePin.setText(CHANGE_PIN);
+            return;
+        }
+        txtEnablePin.setText(ENABLE);
+        txtEnablePin.setTextColor(Color.parseColor("#2196f3")); // blue Color
+        hidePinAction();
+
+    }
+
+    @Override
+    public void onNetworkCallProgress() {
+        pinStatusProgressbar.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkCallCompleted() {
+        pinStatusProgressbar.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onNetworkCallError(Throwable e) {
+        pinStatusProgressbar.setVisibility(View.GONE);
+        bakery.snackShort(getContentView(), e.getMessage());
+    }
+
+    private void getPinStatus() {
+        user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+        pinStatusPresenter.getPinStatus(user.getId());
+    }
+
+    private void initializeProfile() {
+        User user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+        txtName.setText(user.getName());
+        txtMerchantEmail.setText(user.getEmail());
+        txtPhone.setText(user.getPhone() + "");
     }
 
     private void setToolBar() {
@@ -111,18 +213,6 @@ public class ProfileActivity extends BaseActivity {
                 onBackPressed();
             }
         });
-    }
-
-    private void initializePinSettings() {
-        User user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
-        if (user.isPinActivated() && user.isPinSet()) {
-            txtEnablePin.setText(ENABLE);
-            hidePinAction();
-            return;
-        }
-
-        showPinAction();
-        txtSetOrChangePin.setText(CHANGE_PIN);
     }
 
     private void hidePinAction(){

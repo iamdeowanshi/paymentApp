@@ -51,6 +51,8 @@
                 android:textColorHint="@color/light_gray"
                 android:paddingLeft="10dp"
                 android:textSize="@dimen/text_size_16"
+                android:maxLength="4"
+                android:inputType="number"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/view1"/>
 
@@ -72,6 +74,8 @@
                 android:textColorHint="@color/light_gray"
                 android:paddingLeft="10dp"
                 android:textSize="@dimen/text_size_16"
+                android:maxLength="4"
+                android:inputType="number"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/input_layout_merchant_current_password"/>
 
@@ -93,6 +97,8 @@
                 android:textColorHint="@color/light_gray"
                 android:paddingLeft="10dp"
                 android:textSize="@dimen/text_size_16"
+                android:maxLength="4"
+                android:inputType="number"
                 android:layout_marginTop="10dp"
                 android:layout_below="@+id/view3"/>
 
@@ -114,6 +120,13 @@
             android:background="@color/pink"
             android:layout_below="@+id/input_layout_merchant_confirm_pin"/>
 
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/change_pin_progressBar"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>

@@ -1,6 +1,6 @@
 package com.tecsol.batua.user.module.onboard.presenter;
 
-import com.tecsol.batua.user.data.model.Otp;
+import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.module.base.Presenter;
 
 /**

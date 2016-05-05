@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.tecsol.batua.user.data.model.TransactionHistory;
+import com.tecsol.batua.user.data.model.User.TransactionHistory;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.transaction.view.adapter.TransactionHistoryAdapter;
 

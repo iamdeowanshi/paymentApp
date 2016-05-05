@@ -1,4 +1,4 @@
-package com.tecsol.batua.user.data.model;
+package com.tecsol.batua.user.data.model.User;
 
 /**
  * @author Arnold Laishram.

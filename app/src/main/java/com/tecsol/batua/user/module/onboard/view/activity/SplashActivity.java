@@ -59,11 +59,12 @@ public class SplashActivity extends BaseActivity {
             return;
         }
 
-        if (checkStatusGooglePlayService()) {
-            Log.v("GCM PlayServices", " " + String.valueOf(checkStatusGooglePlayService()));
-            getRegId_AndSave();
+        if (preferenceUtil.readString(preferenceUtil.DEVICE_ID, "") == null || preferenceUtil.readString(preferenceUtil.DEVICE_ID, "").isEmpty()){
+            if (checkStatusGooglePlayService()) {
+                Log.v("GCM PlayServices", " " + String.valueOf(checkStatusGooglePlayService()));
+                getRegId_AndSave();
+            }
         }
-
     }
 
     private void proceedToLogin() {

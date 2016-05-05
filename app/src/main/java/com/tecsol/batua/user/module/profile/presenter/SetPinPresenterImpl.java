@@ -6,11 +6,9 @@ import com.tecsol.batua.user.data.api.ApiErrorParser;
 import com.tecsol.batua.user.data.api.ApiErrorResponse;
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
-import com.tecsol.batua.user.data.model.User.User;
+import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginViewInteractor;
 
 import javax.inject.Inject;
 
@@ -18,24 +16,24 @@ import retrofit2.Response;
 import rx.Observable;
 
 /**
- * @author Aaditya Deowanshi.
+ * @author Arnold.
  */
-public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewInteractor> implements ProfilePresenter {
+public class SetPinPresenterImpl extends BaseNetworkPresenter<SetPinViewInteractor> implements SetPinPresenter {
 
     @Inject BatuaUserService api;
     @Inject ApiErrorParser errorParser;
 
-    public ProfilePresenterImpl() {
+    public SetPinPresenterImpl() {
         Injector.component().inject(this);
     }
 
     @Override
-    public void updateProfile(User user) {
+    public void setPin(Pin pin) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<User>> observable = api.updateProfile(user);
+        Observable<Response<String>> observable = api.setPin(pin);
 
-        subscribeForNetwork(observable, new ApiObserver<Response<User>>() {
+        subscribeForNetwork(observable, new ApiObserver<Response<String>>() {
             @Override
             public void onError(Throwable e) {
                 getViewInteractor().onNetworkCallCompleted();
@@ -43,11 +41,11 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
             }
 
             @Override
-            public void onResponse(Response<User> response) {
+            public void onResponse(Response<String> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
                 if (response.isSuccessful()) {
-                    getViewInteractor().onProfileUpdated(response.body());
+                    getViewInteractor().onPinSet(response.body());
                     return;
                 }
 
@@ -60,5 +58,4 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
             }
         });
     }
-
 }
