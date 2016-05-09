@@ -53,16 +53,25 @@ public class ChangePinActivity extends BaseActivity implements ChangePinViewInte
     @OnClick(R.id.btn_update_pin)
     void updatePin(){
         viewUtil.hideKeyboard(this);
-        if (!edtCurrentPin.getText().toString().isEmpty()) {
-            if (edtNewPin.getText().toString().isEmpty()) {
-                bakery.snackShort(getContentView(), "New PIN cannot be empty");
-                return;
-            }
 
-            if (!edtNewPin.getText().toString().isEmpty() && edtConfirmPin.getText().toString().isEmpty()) {
-                bakery.snackShort(getContentView(), "Confirm PIN cannot be empty");
-                return;
-            }
+        if (edtCurrentPin.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "Current PIN cannot be empty");
+            return;
+        }
+
+        if (edtNewPin.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "New PIN cannot be empty");
+            return;
+        }
+
+        if (edtNewPin.getText().toString().length()!=4){
+            bakery.snackShort(getContentView(), "New PIN must be 4 digit");
+            return;
+        }
+
+        if (!edtNewPin.getText().toString().isEmpty() && edtConfirmPin.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "Confirm PIN cannot be empty");
+            return;
         }
 
         if (isPinValid()) {
@@ -113,6 +122,7 @@ public class ChangePinActivity extends BaseActivity implements ChangePinViewInte
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
     }

@@ -1,11 +1,16 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
+import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
@@ -21,6 +26,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 public class PinLoginActivity extends BaseActivity implements PinLoginViewInteractor{
 
@@ -57,6 +63,33 @@ public class PinLoginActivity extends BaseActivity implements PinLoginViewIntera
         bakery.snackShort(getContentView(), "Please enter a valid PIN");
     }
 
+    @OnClick(R.id.txt_forgot_pin)
+    void getForgotPin(){
+        Config.OTP_REQUEST_ACTIVITY = Config.FORGOT_PIN_ACTIVITY;
+        startActivity(MobileNumberActivity.class, null);
+    }
+
+    @OnTextChanged(R.id.edt_first_pin)
+    void getFirstPin(CharSequence firstPin){
+        if (firstPin.toString().length()==1) {
+            edtSecondPin.requestFocus();
+        }
+    }
+
+    @OnTextChanged(R.id.edt_second_pin)
+    void getSecondPin(CharSequence secondPin){
+        if (secondPin.toString().length()== 1) {
+            edtThirdPin.requestFocus();
+        }
+    }
+
+    @OnTextChanged(R.id.edt_third_pin)
+    void getThirdPin(CharSequence thirdPin){
+        if (thirdPin.toString().length()== 1) {
+            edtFourthPin.requestFocus();
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,6 +119,7 @@ public class PinLoginActivity extends BaseActivity implements PinLoginViewIntera
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         setPinProgress.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
     }

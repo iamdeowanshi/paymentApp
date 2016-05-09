@@ -36,6 +36,7 @@ public class NavigationFragment extends BaseFragment {
 
     @Bind(R.id.txt_wallet_amount) TextView txtWalletAmount;
     @Bind(R.id.img_profile) CircularImageView imgProfile;
+    @Bind(R.id.txt_display_name) TextView txtDisplayName;
 
     private DrawerLayout drawer;
     private Navigation navigation;
@@ -56,13 +57,17 @@ public class NavigationFragment extends BaseFragment {
 
         Injector.component().inject(this);
 
-        User user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
-        if (user!=null){
-            Picasso.with(getContext()).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imgProfile);
-        }
+        loadNavigationDetails();
+
 
         navigation = new Navigation("\u20B9 2000.00");
         txtWalletAmount.setText(navigation.getWalletAmount());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadNavigationDetails();
     }
 
     @OnClick(R.id.nav_header_layout)
@@ -112,6 +117,14 @@ public class NavigationFragment extends BaseFragment {
 
     public void initializeDrawer(DrawerLayout drawer){
         this.drawer = drawer;
+    }
+
+    private void loadNavigationDetails() {
+        User user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
+        if (user!=null){
+            txtDisplayName.setText(user.getName());
+            Picasso.with(getContext()).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imgProfile);
+        }
     }
 
 }

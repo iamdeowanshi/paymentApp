@@ -12,4 +12,6 @@ public interface PinStatusViewInteractor extends NetworkViewInteractor {
 
     void onPinStatusChanged(User user);
 
+    void onLoggedOutSuccess(String message);
+
 }

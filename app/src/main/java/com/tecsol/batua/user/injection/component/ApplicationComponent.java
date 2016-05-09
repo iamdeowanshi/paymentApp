@@ -21,7 +21,7 @@ import com.tecsol.batua.user.module.onboard.presenter.ImageUploadPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.LoginPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.OtpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.PinLoginPresenterImpl;
-import com.tecsol.batua.user.module.onboard.presenter.SavePinPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.ResetPasswordPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.view.activity.ChangePasswordActivity;
@@ -31,6 +31,7 @@ import com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OtpActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.PinLoginActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.ResetPasswordActivity;
+import com.tecsol.batua.user.module.onboard.view.activity.ResetPinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.SetPinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.SplashActivity;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragment;
@@ -79,13 +80,13 @@ public interface ApplicationComponent {
     void inject(ChangePinActivity changePinActivity);
     void inject(PinLoginActivity pinLoginActivity);
     void inject(ChangePasswordActivity changePasswordActivity);
+    void inject(ResetPinActivity resetPinActivity);
 
     // inject methods for presenter classes
     void inject(SignUpPresenterImpl loginPresenter);
     void inject(LoginPresenterImpl loginPresenter);
     void inject(HomePresenterImpl homePresenter);
     void inject(ReviewPresenterImpl reviewPresenter);
-    void inject(SavePinPresenterImpl savePinPresenter);
     void inject(OtpPresenterImpl otpPresenter);
     void inject(VerifyOtpPresenterImpl verifyOtpPresenter);
     void inject(ProfilePresenterImpl profilePresenter);
@@ -95,6 +96,7 @@ public interface ApplicationComponent {
     void inject(ChangePinPresenterImpl changePinPresenter);
     void inject(PinLoginPresenterImpl pinLoginPresenter);
     void inject(ChangePasswordPresenterImpl changePasswordPresenter);
+    void inject(ResetPasswordPresenterImpl resetPasswordPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

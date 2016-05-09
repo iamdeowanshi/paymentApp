@@ -8,12 +8,15 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
+import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
+import com.tecsol.batua.user.module.common.util.ViewUtil;
+import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
 import com.tecsol.batua.user.module.onboard.presenter.OtpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.OtpViewInteractor;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenter;
@@ -28,7 +31,7 @@ import butterknife.OnClick;
 public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor, OtpViewInteractor, IncomingSmsListener.OnSmsReceivedListener {
 
     @Inject Bakery bakery;
-
+    @Inject ViewUtil viewUtil;
     @Inject OtpPresenter otpPresenter;
     @Inject VerifyOtpPresenter verifyOtpPresenter;
     @Inject PreferenceUtil preferenceUtil;
@@ -58,21 +61,45 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
     void onResendClick() {
         Otp otp = new Otp();
         otp.setPhone(mobileNo);
-        otp.setUserId(((User)preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
-        otpPresenter.sendSignUpOtp(otp);
+
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+            otpPresenter.sendForgotPasswordOrPinOtp(otp);
+            return;
+        }
+
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+            otp.setType("resend");
+            otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
+            otpPresenter.sendSignUpOtp(otp);
+            return;
+        }
     }
 
     @OnClick(R.id.btn_submit)
     void onSubmitClick() {
         Otp otp = new Otp();
+        otp.setPhone(mobileNo);
         try {
             otp.setOtp(Long.parseLong(edtOtp.getText().toString()));
         }catch (NumberFormatException e){
+            viewUtil.hideKeyboard(this);
             bakery.snackShort(getContentView(), "Invalid OTP");
             return;
         }
-        otp.setPhone(mobileNo);
-        verifyOtpPresenter.verifySignUpOtp(otp);
+
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+            verifyOtpPresenter.verifyForgotPinPasswordOtp(otp);
+            return;
+        }
+
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+            verifyOtpPresenter.verifySignUpOtp(otp);
+            return;
+        }
     }
 
     @Override
@@ -101,16 +128,40 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
     }
 
 
-    // overidden method of VerifyOtpViewIteractor
+    // overidden method of VerifyOtpViewInteractor
     @Override
-    public void onVerificationSuccess() {
+    public void onSignUpOtpVerificationSuccess() {
         startActivity(OnBoardActivity.class, null);
         finish();
     }
 
     @Override
-    public void onVerificationFailure() {
+    public void onForgotPasswordPinVerificationSuccess(Integer userid) {
+        Bundle bundle = new Bundle();
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY) {
+            bundle.putInt("UserId", userid);
+            startActivity(ResetPasswordActivity.class, bundle);
+            finish();
+        }
 
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY) {
+            bundle.putInt("UserId", userid);
+            startActivity(ResetPinActivity.class, bundle);
+            finish();
+        }
+
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+            startActivity(HomeActivity.class, bundle);
+            finish();
+        }
+
+
+    }
+
+    @Override
+    public void onVerificationFailure() {
+        viewUtil.hideKeyboard(this);
+        bakery.snackShort(getContentView(), "Invalid OTP");
     }
 
     @Override
@@ -125,6 +176,7 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         progress.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
     }
@@ -132,7 +184,8 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
     // overidden method of OtpViewInteractor
     @Override
     public void onOtpSent() {
-        bakery.snackShort(getContentView(), "Otp has been successfully");
+        viewUtil.hideKeyboard(this);
+        bakery.snackShort(getContentView(), "Otp has been sent successfully");
     }
 
     // overidden method of OnSmsReceivedListener

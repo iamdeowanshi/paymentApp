@@ -19,6 +19,13 @@ public class Otp {
     @SerializedName("userId")
     private Integer userId;
 
+    @SerializedName("type")
+    private String type;
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public Integer getUserId() {
         return userId;
     }

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
@@ -39,10 +40,7 @@ public class ApiModule {
 
     @Provides
     @Singleton
-    public BatuaUserService provideApi(
-            OkHttpClient client,
-            Converter.Factory converterFactory,
-            CallAdapter.Factory callAdapterFactory) {
+    public BatuaUserService provideApi(OkHttpClient client, Converter.Factory converterFactory, CallAdapter.Factory callAdapterFactory) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Config.API_BASE_URL)
                 .client(client)
@@ -83,7 +81,9 @@ public class ApiModule {
     @Singleton
     public OkHttpClient provideOkHttpClient(List<Interceptor> interceptors) {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
+        builder.connectTimeout(10, TimeUnit.SECONDS);
+        builder.readTimeout(10, TimeUnit.SECONDS);
+        builder.writeTimeout(10, TimeUnit.SECONDS);
         for (Interceptor interceptor : interceptors) {
             builder.addInterceptor(interceptor);
         }

@@ -10,4 +10,8 @@ public interface OtpPresenter extends Presenter<OtpViewInteractor> {
 
     void sendSignUpOtp(Otp otp);
 
+    void sendForgotPasswordOrPinOtp(Otp otp);
+
+
+
 }

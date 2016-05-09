@@ -33,6 +33,9 @@ public interface BatuaUserService {
     @POST(Config.NORMAL_SIGN_UP)
     Observable<Response<CustomResponse>> normalSignUp(@Body User user);
 
+    @PUT(Config.LOG_OUT_USER)
+    Observable<Response<CustomResponse>> logoutUser(@Header("Access-Token") String accessToken, @Body Pin pin);
+
     @FormUrlEncoded
     @POST(Config.SOCIAL_SIGN_UP)
     Observable<Response<CustomResponse>> socialGoogleSignUp(@Field("email") String email, @Field("name") String password, @Field("googleId") String googleId);
@@ -68,8 +71,14 @@ public interface BatuaUserService {
     @PUT(Config.SEND_SIGN_UP_OTP)
     Observable<Response<CustomResponse>> sendSignUpOtp(@Body Otp otp);
 
+    @PUT(Config.SEND_FORGOT_PIN_PASSWORD_OTP)
+    Observable<Response<CustomResponse>> sendForgotPinPasswordOtp(@Body Otp otp);
+
     @PUT(Config.VERIFY_SIGN_UP_OTP)
     Observable<Response<CustomResponse>> verifySignUpOtp(@Body Otp otp);
+
+    @PUT(Config.VERIFY_FORGOT_PIN_OR_PASSWORD_OTP)
+    Observable<Response<CustomResponse>> verifyForgotPinPasswordOtp(@Body Otp otp);
 
     @PUT(Config.UPDATE_PROFILE)
     Observable<Response<User>> updateProfile(@Body User user);
@@ -77,7 +86,7 @@ public interface BatuaUserService {
     @GET(Config.GET_PROFILE)
     Observable<Response<User>> getPinStatus(@Path("userId") int userId);
 
-    @PUT(Config.SET_PIN)
+    @PUT(Config.SET_RESET_PIN)
     Observable<Response<String>> setPin(@Body Pin pin);
 
     @PUT(Config.UPDATE_PIN_STATUS)
@@ -91,6 +100,9 @@ public interface BatuaUserService {
 
     @PUT(Config.CHANGE_PASSWORD)
     Observable<Response<CustomResponse>> changePassword(@Body ChangePassword changePassword);
+
+    @PUT(Config.RESET_PASSWORD)
+    Observable<Response<CustomResponse>> resetPassword(@Body ChangePassword changePassword);
 
     @Multipart
     @POST(Config.UPLOAD_IMAGE)

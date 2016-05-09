@@ -7,7 +7,9 @@ import com.tecsol.batua.user.module.base.NetworkViewInteractor;
  */
 public interface VerifyOtpViewIteractor extends NetworkViewInteractor {
 
-    void onVerificationSuccess();
+    void onSignUpOtpVerificationSuccess();
+
+    void onForgotPasswordPinVerificationSuccess(Integer userid);
 
     void onVerificationFailure();
 

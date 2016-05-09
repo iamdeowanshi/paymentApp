@@ -55,17 +55,27 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
     @OnClick(R.id.btn_update_password)
     void updatePassword() {
         viewUtil.hideKeyboard(this);
-        if (!edtCurrentPassword.getText().toString().isEmpty()) {
-            if (edtNewPassword.getText().toString().isEmpty()) {
-                bakery.snackShort(getContentView(), "New Password cannot be empty");
-                return;
-            }
 
-            if (!edtNewPassword.getText().toString().isEmpty() && edtConfirmPassword.getText().toString().isEmpty()) {
-                bakery.snackShort(getContentView(), "Confirm Password cannot be empty");
-                return;
-            }
+        if (edtCurrentPassword.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "Current Password cannot be empty");
+            return;
         }
+
+        if (edtNewPassword.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "New Password cannot be empty");
+            return;
+        }
+
+        if (edtNewPassword.getText().toString().length() < 6) {
+            bakery.snackShort(getContentView(), "New Password must be minimum of 6 characters");
+            return;
+        }
+
+        if (!edtNewPassword.getText().toString().isEmpty() && edtConfirmPassword.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "Confirm Password cannot be empty");
+            return;
+        }
+
 
         if (isPasswordValid()) {
             ChangePassword changePassword = new ChangePassword();
@@ -115,6 +125,7 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         changePasswordProgress.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
     }

@@ -22,6 +22,7 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import butterknife.OnTextChanged;
 
 /**
  * @author Arnold Laishram.
@@ -68,6 +69,27 @@ public class SetPinActivity extends BaseActivity implements SetPinViewInteractor
         }
 
         bakery.snackShort(getContentView(), "Please enter a valid PIN");
+    }
+
+    @OnTextChanged(R.id.edt_first_pin)
+    void getFirstPin(CharSequence firstPin){
+        if (firstPin.toString().length()==1) {
+            edtSecondPin.requestFocus();
+        }
+    }
+
+    @OnTextChanged(R.id.edt_second_pin)
+    void getSecondPin(CharSequence secondPin){
+        if (secondPin.toString().length()== 1) {
+            edtThirdPin.requestFocus();
+        }
+    }
+
+    @OnTextChanged(R.id.edt_third_pin)
+    void getThirdPin(CharSequence thirdPin){
+        if (thirdPin.toString().length()== 1) {
+            edtFourthPin.requestFocus();
+        }
     }
 
     @Override

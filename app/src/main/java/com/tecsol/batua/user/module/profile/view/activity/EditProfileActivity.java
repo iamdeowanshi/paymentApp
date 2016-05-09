@@ -21,6 +21,7 @@ import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.ImageUtil;
 import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
+import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.presenter.ImageUploadPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.ImageUploadViewInteractor;
 import com.tecsol.batua.user.module.profile.presenter.ProfilePresenter;
@@ -43,6 +44,7 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
     @Inject ImageUploadPresenter imageUploadPresenter;
     @Inject Bakery bakery;
     @Inject PreferenceUtil preferenceUtil;
+    @Inject ViewUtil viewUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.img_profile) CircularImageView imgProfile;
@@ -53,6 +55,7 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
     @Bind(R.id.progressBar5) ProgressBar progressBar;
 
     private User user = new User();
+    private User savedUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +66,8 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
         imageUploadPresenter.attachViewInteractor(this);
 
         setToolBar();
-        loadProfileData((User) preferenceUtil.read(preferenceUtil.USER, User.class));
+        savedUser = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+        loadProfileData(savedUser);
 
         imageUtil.setImageUtilCallback(this);
     }
@@ -72,6 +76,7 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
         txtNum.setText(user.getPhone()+"");
         edtMerchantEmail.setText(user.getEmail());
         edtName.setText(user.getName());
+        Picasso.with(this).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fit().into(imgProfile);
         if(user.getEmail() == null || user.getEmail().isEmpty()){
             edtMerchantEmail.setFocusable(true);
             return;
@@ -96,7 +101,11 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
             return;
         }
 
-        user.setEmail(edtMerchantEmail.getText().toString());
+        if (savedUser.getEmail().isEmpty()) {
+            user.setEmail(edtMerchantEmail.getText().toString());
+        }
+
+        user.setName(edtName.getText().toString());
         user.setId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
         profilePresenter.updateProfile(user);
     }
@@ -116,12 +125,11 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
     // overidden methods od Profile Update
     @Override
     public void onProfileUpdated(User user) {
-        User savedUser = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
+        savedUser = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
         savedUser.setProfileImageUrl(user.getProfileImageUrl());
         savedUser.setPhone(user.getPhone());
         savedUser.setName(user.getName());
         preferenceUtil.save(preferenceUtil.USER, savedUser);
-        startActivity(ProfileActivity.class, null);
         finish();
     }
 
@@ -137,6 +145,7 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
     }

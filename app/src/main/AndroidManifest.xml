@@ -23,6 +23,9 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
+    <!-- Call Permission -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
         android:name="com.tecsol.batua.user.BatuaUserApplication"
         android:allowBackup="true"
@@ -81,6 +84,8 @@
         <activity android:name="com.tecsol.batua.user.module.support.activity.ContactUsActivity">
         </activity>
         <activity android:name="com.tecsol.batua.user.module.transaction.view.activity.TransactionHistoryActivity">
+        </activity>
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.ResetPinActivity">
         </activity>
         <activity
             android:name="com.tecsol.batua.user.module.payment.view.activity.PaymentSuccessActivity"

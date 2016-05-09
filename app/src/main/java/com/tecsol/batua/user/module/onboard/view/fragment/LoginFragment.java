@@ -1,5 +1,6 @@
 package com.tecsol.batua.user.module.onboard.view.fragment;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.batua.android.user.R;
+import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseFragment;
 import com.tecsol.batua.user.module.common.util.Bakery;
@@ -65,6 +67,7 @@ public class LoginFragment extends BaseFragment {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.txt_forgot_password:
+                Config.OTP_REQUEST_ACTIVITY = Config.FORGOT_PASSWORD_ACTIVITY;
                 startActivity(MobileNumberActivity.class, null);
                 break;
 
@@ -90,20 +93,27 @@ public class LoginFragment extends BaseFragment {
 
     private void performLogin() {
         viewUtil.hideKeyboard(getActivity());
-        String email = edtEmail.getText().toString();
-        String password = edtPassword.getText().toString();
-        String deviceId = preferenceUtil.readString(preferenceUtil.DEVICE_ID, "");
-        boolean isValid = isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText());
 
-        if (isValid) {
-            ((OnBoardActivity)getActivity()).normalLogin(email, password, deviceId);
-            inputLayoutEmail.setErrorEnabled(false);
-
+        if (edtEmail.getText().toString().isEmpty()) {
+            bakery.snackShort(getContentView(), "Email or mobile cannot be empty");
             return;
         }
 
-        inputLayoutEmail.setErrorEnabled(true);
-        inputLayoutEmail.setError("Invalid email or mobile number");
+        if (edtPassword.getText().toString().isEmpty() || edtPassword.getText().toString().length() < 6) {
+            bakery.snackShort(getContentView(), "Password must be minimum 6 characters");
+            return;
+        }
+
+        if (isValidEmail(edtEmail.getText()) || isValidNumber(edtEmail.getText())) {
+            String email = edtEmail.getText().toString();
+            String password = edtPassword.getText().toString();
+            String deviceId = preferenceUtil.readString(preferenceUtil.DEVICE_ID, "");
+
+            ((OnBoardActivity)getActivity()).normalLogin(email, password, deviceId);
+            return;
+        }
+
+        bakery.snackShort(getContentView(), "Invalid email or mobile number");
     }
 
     private final static boolean isValidEmail(CharSequence target) {

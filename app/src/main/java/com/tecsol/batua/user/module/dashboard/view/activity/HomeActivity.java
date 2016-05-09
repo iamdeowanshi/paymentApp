@@ -17,6 +17,7 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
+import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.common.view.activity.LocationFetchActivity;
 import com.tecsol.batua.user.module.dashboard.presenter.HomePresenter;
 import com.tecsol.batua.user.module.dashboard.presenter.HomeViewInteractor;
@@ -41,6 +42,7 @@ public class HomeActivity extends LocationFetchActivity implements HomeViewInter
 
     @Inject HomePresenter homePresenter;
     @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
     @Inject PreferenceUtil preferenceUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
@@ -121,6 +123,7 @@ public class HomeActivity extends LocationFetchActivity implements HomeViewInter
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         merchantListRecyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
         if (e.getMessage()== null || e.getMessage().isEmpty()){

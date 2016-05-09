@@ -15,6 +15,13 @@ public class ChangePassword {
     @SerializedName("newPassword")
     private String newPassword;
 
+    @SerializedName("password")
+    private String password;
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public void setCurrentPassword(String currentPassword) {
         this.currentPassword = currentPassword;
     }

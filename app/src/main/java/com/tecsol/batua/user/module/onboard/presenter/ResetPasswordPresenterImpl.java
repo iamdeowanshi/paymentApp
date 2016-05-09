@@ -6,8 +6,8 @@ import com.tecsol.batua.user.data.api.ApiErrorParser;
 import com.tecsol.batua.user.data.api.ApiErrorResponse;
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
-import com.tecsol.batua.user.data.model.Merchant.Review;
-import com.tecsol.batua.user.data.model.User.User;
+import com.tecsol.batua.user.data.model.User.ChangePassword;
+import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
 
@@ -17,24 +17,24 @@ import retrofit2.Response;
 import rx.Observable;
 
 /**
- * @author Aaditya Deowanshi.
+ * @author Arnold.
  */
-public class SavePinPresenterImpl extends BaseNetworkPresenter<SavePinViewInteractor> implements SavePinPresenter {
+public class ResetPasswordPresenterImpl extends BaseNetworkPresenter<ResetPasswordViewInteractor> implements ResetPasswordPresenter {
 
     @Inject BatuaUserService api;
     @Inject ApiErrorParser errorParser;
 
-    public SavePinPresenterImpl() {
+    public ResetPasswordPresenterImpl() {
         Injector.component().inject(this);
     }
 
     @Override
-    public void savePin(int userId, String pin) {
+    public void resetPassword(ChangePassword changePassword) {
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<Review>> observable = api.savePin(userId, pin);
+        Observable<Response<CustomResponse>> observable = api.resetPassword(changePassword);
 
-        subscribeForNetwork(observable, new ApiObserver<Response<Review>>() {
+        subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
             @Override
             public void onError(Throwable e) {
                 getViewInteractor().onNetworkCallCompleted();
@@ -42,11 +42,11 @@ public class SavePinPresenterImpl extends BaseNetworkPresenter<SavePinViewIntera
             }
 
             @Override
-            public void onResponse(Response<Review> response) {
+            public void onResponse(Response<CustomResponse> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
                 if (response.isSuccessful()) {
-                    getViewInteractor().onSavePinSuccess();
+                    getViewInteractor().onPasswordReset(response.body().getMessage());
                     return;
                 }
 
@@ -59,5 +59,4 @@ public class SavePinPresenterImpl extends BaseNetworkPresenter<SavePinViewIntera
             }
         });
     }
-
 }

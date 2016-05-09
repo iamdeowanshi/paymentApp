@@ -55,11 +55,15 @@ public class Config {
 
     public static final String VERIFY_SIGN_UP_OTP = "api/user/signup/verifyotp";
 
+    public static final String VERIFY_FORGOT_PIN_OR_PASSWORD_OTP = "api/user/verifyotp";
+
     public static final String UPDATE_PROFILE = "api/user/profile";
 
     public static final String GET_PROFILE = "api/user/{userId}/profile";
 
-    public static final String SET_PIN = "api/user/pin/reset";
+    public static final String SET_RESET_PIN = "api/user/pin/reset";
+
+    public static final String RESET_PASSWORD = "api/user/resetpassword";
 
     public static final String UPLOAD_IMAGE = "api/image/upload";
 
@@ -70,5 +74,17 @@ public class Config {
     public static final String LOGIN_BY_PIN = "api/user/pin/login";
 
     public static final String CHANGE_PASSWORD = "api/user/changepassword";
+
+    public static final String LOG_OUT_USER = "api/user/logout";
+
+    public static final String SEND_FORGOT_PIN_PASSWORD_OTP = "api/user/forgotpassword";
+
+    public static int OTP_REQUEST_ACTIVITY = 0;
+    public static int FORGOT_PIN_ACTIVITY = 1;
+    public static int FORGOT_PASSWORD_ACTIVITY = 2;
+    public static int PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY = 3;
+    public static int PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY = 4;
+
+
 
 }

@@ -29,6 +29,8 @@
     <string name="resend_otp">Resend OTP</string>
     <string name="new_password">Enter new password</string>
     <string name="confirm_password">Confirm password</string>
+    <string name="new_pin">Enter new PIN</string>
+    <string name="confirm_pin">Confirm PIN</string>
     <string name="add_merchant_title">Add Merchant</string>
     <string name="merchant_name">Merchant Name</string>
     <string name="merchant_short_code">Merchant Short Code</string>

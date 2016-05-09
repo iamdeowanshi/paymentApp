@@ -73,6 +73,7 @@ public class SignUpFragment extends BaseFragment {
     @OnTextChanged(R.id.edt_mobile)
     void verifyMobile(CharSequence mobile){
         inputLayoutMobile.setErrorEnabled(false);
+
         if (!isValidNumber(mobile)) {
             inputLayoutMobile.setErrorEnabled(true);
             inputLayoutMobile.setError("Invalid Mobile");
@@ -99,14 +100,18 @@ public class SignUpFragment extends BaseFragment {
     private void performNormalSignUp() {
         viewUtil.hideKeyboard(getActivity());
 
-        if (!(isValidNumber(edtMobile.getText()) || isValidEmail(edtEmail.getText()))){
-            bakery.snackShort(getContentView(), "Invalid email or mobile number");
-
+        if (!isValidNumber(edtMobile.getText().toString())){
+            bakery.snackShort(getContentView(), "Invalid mobile number");
             return;
         }
 
-        if (edtPassword.getText().toString().isEmpty()) {
-            bakery.snackShort(getContentView(), "Password cannot be empty");
+        if (!isValidEmail(edtEmail.getText().toString())) {
+            bakery.snackShort(getContentView(), "Invalid email");
+            return;
+        }
+
+        if (edtPassword.getText().toString().isEmpty() || edtPassword.getText().toString().length() <6) {
+            bakery.snackShort(getContentView(), "Password must be minimum 6 characters");
             return;
         }
 

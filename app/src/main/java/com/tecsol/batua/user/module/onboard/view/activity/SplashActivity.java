@@ -15,6 +15,7 @@ import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
+import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
 
 import java.io.IOException;
 
@@ -32,7 +33,6 @@ public class SplashActivity extends BaseActivity {
 
     @Inject PreferenceUtil preferenceUtil;
 
-    private String androidId;
     private User user;
     private GoogleCloudMessaging gcm;
     private Dialog dialog;
@@ -68,6 +68,17 @@ public class SplashActivity extends BaseActivity {
     }
 
     private void proceedToLogin() {
+        user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
+        if (user!=null && preferenceUtil.readBoolean(preferenceUtil.IS_LOGGED_IN, false)) {
+            if (user.isPinSet() && user.isPinActivated()) {
+                startActivity(PinLoginActivity.class, null);
+                finish();
+                return;
+            }
+            startActivity(HomeActivity.class, null);
+            finish();
+            return;
+        }
         startActivity(OnBoardActivity.class, null);
         finish();
     }

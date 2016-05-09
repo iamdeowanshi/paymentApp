@@ -51,7 +51,38 @@ public class VerifyOtpPresenterImpl extends BaseNetworkPresenter<VerifyOtpViewIt
                     getViewInteractor().onNetworkCallError(new NetworkErrorException("Error : " + response.code()));
                     return;
                 }
-                getViewInteractor().onVerificationSuccess();
+                getViewInteractor().onSignUpOtpVerificationSuccess();
+            }
+        });
+    }
+
+    @Override
+    public void verifyForgotPinPasswordOtp(Otp otp) {
+        getViewInteractor().onNetworkCallProgress();
+
+        Observable<Response<CustomResponse>> observable = api.verifyForgotPinPasswordOtp(otp);
+
+        subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
+            @Override
+            public void onError(Throwable e) {
+                getViewInteractor().onNetworkCallCompleted();
+                getViewInteractor().onNetworkCallError(e);
+            }
+
+            @Override
+            public void onResponse(Response<CustomResponse> response) {
+                getViewInteractor().onNetworkCallCompleted();
+
+                if (response.code() == 401) {
+                    getViewInteractor().onVerificationFailure();
+                    return;
+                }
+
+                if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException("Error : " + response.code()));
+                    return;
+                }
+                getViewInteractor().onForgotPasswordPinVerificationSuccess(response.body().getUserId());
             }
         });
     }

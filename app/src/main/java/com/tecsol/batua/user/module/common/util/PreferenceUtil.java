@@ -14,6 +14,7 @@ import javax.inject.Inject;
 public class PreferenceUtil {
 
     public static final String DEVICE_ID = "DEVICE_ID";
+    public static final String IS_LOGGED_IN = "IS_LOGGED_IN";
 
     private SharedPreferences preferences;
     public static final String USER = "USER";

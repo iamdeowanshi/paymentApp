@@ -10,4 +10,6 @@ public interface VerifyOtpPresenter extends Presenter<VerifyOtpViewIteractor> {
 
     void verifySignUpOtp(Otp otp);
 
+    void verifyForgotPinPasswordOtp(Otp otp);
+
 }

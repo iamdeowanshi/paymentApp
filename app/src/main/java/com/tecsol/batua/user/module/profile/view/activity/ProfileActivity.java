@@ -4,10 +4,12 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.batua.android.user.R;
+import com.squareup.picasso.Picasso;
 import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
@@ -15,6 +17,7 @@ import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
+import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.view.activity.ChangePasswordActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.ChangePinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity;
@@ -34,6 +37,7 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
 
     @Inject PreferenceUtil preferenceUtil;
     @Inject Bakery bakery;
+    @Inject ViewUtil viewUtil;
     @Inject PinStatusPresenter pinStatusPresenter;
 
     private final String ENABLE = "ENABLE";
@@ -47,6 +51,7 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
     @Bind(R.id.edt_display_name) TextView txtName;
     @Bind(R.id.txt_merchant_email) TextView txtMerchantEmail;
     @Bind(R.id.txt_merchant_phone) TextView txtPhone;
+    @Bind(R.id.img_profile) ImageView imgProfile;
     @Bind(R.id.pin_status_progressBar) ProgressBar pinStatusProgressbar;
 
     private User user;
@@ -54,11 +59,23 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.batua.android.user.R.layout.activity_profile);
+        setContentView(R.layout.activity_profile);
 
         Injector.component().inject(this);
         pinStatusPresenter.attachViewInteractor(this);
 
+        if(user == null){
+            user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
+        }
+
+        setToolBar();
+        initializeProfile();
+        getPinStatus();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         setToolBar();
         initializeProfile();
         getPinStatus();
@@ -67,10 +84,6 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
     @OnClick(R.id.txt_enable_pin)
     void enablePin(){
         String pinState = txtEnablePin.getText().toString();
-
-        if(user == null){
-            user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
-        }
 
         if (!InternetUtil.hasInternetConnection(this)) {
             showNoInternetTitleDialog(this);
@@ -112,6 +125,13 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
 
     @OnClick(R.id.btn_logout)
     void logout(){
+        if (user!=null) {
+            Pin pin = new Pin();
+            pin.setUserId(user.getId());
+            pin.setDeviceId(preferenceUtil.readString(preferenceUtil.DEVICE_ID, ""));
+            pinStatusPresenter.logOut(pin);
+            return;
+        }
         startActivity(OnBoardActivity.class, null);
         finish();
     }
@@ -172,6 +192,15 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
     }
 
     @Override
+    public void onLoggedOutSuccess(String message) {
+        preferenceUtil.remove(preferenceUtil.USER);
+        preferenceUtil.remove(preferenceUtil.IS_LOGGED_IN);
+        preferenceUtil.remove(preferenceUtil.LAST_LOCATION);
+        startActivity(OnBoardActivity.class, null);
+        finish();
+    }
+
+    @Override
     public void onNetworkCallProgress() {
         pinStatusProgressbar.setVisibility(View.VISIBLE);
     }
@@ -183,6 +212,11 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        if (e.getMessage().equals("UserId, Token And DeviceId Required")) {
+            startActivity(OnBoardActivity.class, null);
+            finish();
+        }
+        viewUtil.hideKeyboard(this);
         pinStatusProgressbar.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
     }
@@ -201,6 +235,7 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
         txtName.setText(user.getName());
         txtMerchantEmail.setText(user.getEmail());
         txtPhone.setText(user.getPhone() + "");
+        Picasso.with(this).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fit().into(imgProfile);
     }
 
     private void setToolBar() {

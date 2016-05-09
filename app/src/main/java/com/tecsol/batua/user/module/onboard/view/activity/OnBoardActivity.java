@@ -1,7 +1,9 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -12,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
@@ -30,11 +36,16 @@ import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpViewInteractor;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragmentPagerAdpater;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 import butterknife.Bind;
+import butterknife.OnPageChange;
 
 public class OnBoardActivity extends BaseActivity implements SocialAuthCallback, SignUpViewInteractor, LoginViewInteractor {
+
+    private static int ONBOARD_PAGE_NUM = 0;
 
     @Inject ViewUtil viewUtil;
     @Inject SignUpPresenter signUpPresenter;
@@ -74,6 +85,11 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         socialAuth.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @OnPageChange(R.id.home_viewpager)
+    public void onPageSelected(int position){
+        ONBOARD_PAGE_NUM = position;
     }
 
     // overidden methods of SocialAuth
@@ -127,6 +143,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     // overidden methods of SignUpViewInteractor
     @Override
     public void onNormalSignUpSuccess(String message) {
+        Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY;
         Bundle bundle =  new Bundle();
         bundle.putLong("Mobile", signUpUser.getPhone());
         startActivity(OtpActivity.class, bundle);
@@ -135,6 +152,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
 
     @Override
     public void onSocialSignUpSuccess(Integer userId) {
+        Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY;
         User user = new User();
         user.setId(userId);
         preferenceUtil.save(preferenceUtil.USER, user);
@@ -154,7 +172,23 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
+
+        if (e ==  null) {
+            return;
+        }
+
+        if (e.getMessage() ==  null) {
+            return;
+        }
+
+        if (e.getMessage().equals("Mobile number not verified")) {
+            Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY;
+            startActivity(MobileNumberActivity.class, null);
+            finish();
+            return;
+        }
         bakery.snackShort(getContentView(), e.getMessage());
     }
 
@@ -181,6 +215,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
                 onBoardTabLayout.setupWithViewPager(onBoardViewpager);
             }
         });
+        onBoardViewpager.setCurrentItem(ONBOARD_PAGE_NUM);
     }
 
     public void socialSignUp(SocialAuth.SocialType socialType) {
@@ -244,6 +279,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
             @Override
             public void onPermissionGranted(String[] grantedPermissions) {
                 // permissions are granted
+                preferenceUtil.save(preferenceUtil.IS_LOGGED_IN, true);
                 preferenceUtil.save(preferenceUtil.USER, user);
                 if (user.isPinActivated() && user.isPinSet()) {
                     startActivity(PinLoginActivity.class, null);

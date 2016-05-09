@@ -14,8 +14,8 @@ import com.tecsol.batua.user.module.onboard.presenter.OtpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.OtpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.PinLoginPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.PinLoginPresenterImpl;
-import com.tecsol.batua.user.module.onboard.presenter.SavePinPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.SavePinPresenterImpl;
+import com.tecsol.batua.user.module.onboard.presenter.ResetPasswordPresenter;
+import com.tecsol.batua.user.module.onboard.presenter.ResetPasswordPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenter;
@@ -51,11 +51,6 @@ public class PresenterModule {
     @Provides
     public HomePresenter provideHomePresenter() {
         return new HomePresenterImpl();
-    }
-
-    @Provides
-    public SavePinPresenter provideSavePresenter() {
-        return new SavePinPresenterImpl();
     }
 
     @Provides
@@ -101,6 +96,11 @@ public class PresenterModule {
     @Provides
     public ChangePasswordPresenter provideChangePasswordPresenter() {
         return new ChangePasswordPresenterImpl();
+    }
+
+    @Provides
+    public ResetPasswordPresenter provideResetPasswordPresenter() {
+        return new ResetPasswordPresenterImpl();
     }
 
 }

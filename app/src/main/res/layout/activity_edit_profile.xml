@@ -55,7 +55,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:background="@drawable/drawer_profile_image"
+                android:src="@drawable/profile_pic_container"
                 android:layout_alignParentTop="true" />
 
             <ProgressBar
@@ -89,7 +89,6 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:id="@+id/edt_display_name"
-                android:text="John Galt Agent"
                 android:textSize="16dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="5dp"

@@ -31,8 +31,39 @@ public class OtpPresenterImpl extends BaseNetworkPresenter<OtpViewInteractor> im
     @Override
     public void sendSignUpOtp(Otp otp) {
         getViewInteractor().onNetworkCallProgress();
-
         Observable<Response<CustomResponse>> observable = api.sendSignUpOtp(otp);
+
+        subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
+            @Override
+            public void onError(Throwable e) {
+                getViewInteractor().onNetworkCallCompleted();
+                getViewInteractor().onNetworkCallError(e);
+            }
+
+            @Override
+            public void onResponse(Response<CustomResponse> response) {
+                getViewInteractor().onNetworkCallCompleted();
+
+                if (response.isSuccessful()) {
+                    getViewInteractor().onOtpSent();
+                    return;
+                }
+
+                ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
+
+                if (response.code() != 200) {
+                    getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
+                    return;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void sendForgotPasswordOrPinOtp(Otp otp) {
+        getViewInteractor().onNetworkCallProgress();
+
+        Observable<Response<CustomResponse>> observable = api.sendForgotPinPasswordOtp(otp);
 
         subscribeForNetwork(observable, new ApiObserver<Response<CustomResponse>>() {
             @Override
