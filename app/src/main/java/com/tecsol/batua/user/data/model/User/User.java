@@ -45,6 +45,13 @@ public class User extends BaseModel {
     @SerializedName("isPinSet")
     private boolean isPinSet;
 
+    @SerializedName("isPhoneVerified")
+    private boolean isPhoneVerified;
+
+    @SerializedName("userId")
+    @Expose
+    private Integer userId;
+
     public User() {
     }
 
@@ -182,4 +189,19 @@ public class User extends BaseModel {
         this.isPinSet = isPinSet;
     }
 
+    public boolean isPhoneVerified() {
+        return isPhoneVerified;
+    }
+
+    public void setIsPhoneVerified(boolean isPhoneVerified) {
+        this.isPhoneVerified = isPhoneVerified;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
 }

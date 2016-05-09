@@ -1,12 +1,9 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
 import android.Manifest;
-import android.app.Dialog;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
@@ -14,9 +11,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
@@ -35,8 +29,6 @@ import com.tecsol.batua.user.module.onboard.presenter.LoginViewInteractor;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpViewInteractor;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragmentPagerAdpater;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -174,21 +166,6 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
-
-        if (e ==  null) {
-            return;
-        }
-
-        if (e.getMessage() ==  null) {
-            return;
-        }
-
-        if (e.getMessage().equals("Mobile number not verified")) {
-            Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY;
-            startActivity(MobileNumberActivity.class, null);
-            finish();
-            return;
-        }
         bakery.snackShort(getContentView(), e.getMessage());
     }
 
@@ -279,8 +256,19 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
             @Override
             public void onPermissionGranted(String[] grantedPermissions) {
                 // permissions are granted
-                preferenceUtil.save(preferenceUtil.IS_LOGGED_IN, true);
+                if (user.getPhone() != 0l) {
+                    user.setIsPhoneVerified(true);
+                }
                 preferenceUtil.save(preferenceUtil.USER, user);
+
+                if (!user.isPhoneVerified()) {
+                    Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY;
+                    startActivity(MobileNumberActivity.class, null);
+                    finish();
+                    return;
+                }
+
+                preferenceUtil.save(preferenceUtil.IS_LOGGED_IN, true);
                 if (user.isPinActivated() && user.isPinSet()) {
                     startActivity(PinLoginActivity.class, null);
                     finish();

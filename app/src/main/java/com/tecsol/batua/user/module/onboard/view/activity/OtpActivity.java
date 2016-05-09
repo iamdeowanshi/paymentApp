@@ -63,17 +63,22 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
         otp.setPhone(mobileNo);
 
         if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY) {
             otpPresenter.sendForgotPasswordOrPinOtp(otp);
             return;
         }
 
-        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY ) {
             otp.setType("resend");
             otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
             otpPresenter.sendSignUpOtp(otp);
             return;
+        }
+
+        if (Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+            otp.setType("resend");
+            otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getUserId());
+            otpPresenter.sendSignUpOtp(otp);
         }
     }
 
@@ -90,13 +95,13 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
         }
 
         if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ) {
             verifyOtpPresenter.verifyForgotPinPasswordOtp(otp);
             return;
         }
 
-        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
             verifyOtpPresenter.verifySignUpOtp(otp);
             return;
         }
@@ -151,7 +156,7 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
         }
 
         if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
-            startActivity(HomeActivity.class, bundle);
+            startActivity(OnBoardActivity.class, null);
             finish();
         }
 
