@@ -10,155 +10,171 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/tool_bar_blue"
-        app:titleTextAppearance="?attr/titleTextAppearance"
-        android:theme="@style/AppTheme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:contentInsetLeft="0dp"
         android:elevation="@dimen/elevation_depth"
+        android:theme="@style/AppTheme"
         app:contentInsetStart="0dp"
-        android:contentInsetLeft="0dp">
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance">
 
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Set PIN"
-            android:textSize="@dimen/toolbar_title_font_size"
-            android:textColor="@color/white"
             android:background="@android:color/transparent"
-            android:id="@+id/toolbar_title" />
+            android:text="Set PIN"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_title_font_size" />
 
     </android.support.v7.widget.Toolbar>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:layout_margin="10dp"
-        android:elevation="@dimen/elevation_depth"
-        android:layout_below="@+id/toolbar">
+        android:elevation="@dimen/elevation_depth">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:id="@+id/set_pin_layout"
-        android:layout_marginTop="20dp">
-
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/set_pin_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1">
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/edt_first_pin"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:hint="X"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_16" />
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
 
-            <View
-                android:id="@+id/view1"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/edt_first_pin"
-                android:background="@color/blue_dark" />
-        </RelativeLayout>
+                <EditText
+                    android:id="@+id/edt_first_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="X"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
 
-        <RelativeLayout
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/edt_first_pin"
+                    android:background="@color/blue_dark" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edt_second_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="X"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/edt_second_pin"
+                    android:background="@color/blue_dark" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edt_third_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="X"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/edt_third_pin"
+                    android:background="@color/blue_dark" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1">
+
+                <EditText
+                    android:id="@+id/edt_fourth_pin"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@android:color/transparent"
+                    android:gravity="center"
+                    android:hint="X"
+                    android:inputType="numberPassword"
+                    android:maxLength="1"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/text_size_16" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@+id/edt_fourth_pin"
+                    android:background="@color/blue_dark" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/set_pin_layout"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="40dp"
+            android:background="@color/pink"
+            android:text="@string/save_title"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_18"
+            android:textStyle="bold" />
+
+        <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/edt_second_pin"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:background="@android:color/transparent"
-                android:hint="X"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_16" />
-
-            <View
-                android:id="@+id/view2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/edt_second_pin"
-                android:background="@color/blue_dark" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/edt_third_pin"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:hint="X"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_16" />
-
-            <View
-                android:id="@+id/view3"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/edt_third_pin"
-                android:background="@color/blue_dark" />
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/edt_fourth_pin"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center"
-                android:hint="X"
-                android:background="@android:color/transparent"
-                android:textColor="@android:color/black"
-                android:textSize="@dimen/text_size_16" />
-
-            <View
-                android:id="@+id/view4"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/edt_fourth_pin"
-                android:background="@color/blue_dark" />
-        </RelativeLayout>
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/save_title"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:textSize="@dimen/text_size_18"
-        android:layout_marginTop="40dp"
-        android:layout_marginBottom="50dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_centerHorizontal="true"
-        android:background="@color/pink"
-        android:layout_below="@+id/set_pin_layout"/>
+            android:id="@+id/set_pin_progressBar"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

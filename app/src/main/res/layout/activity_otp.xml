@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -16,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:src="@drawable/img_batua_icon_text"/>
+        android:src="@drawable/img_batua_icon_text" />
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/input_layout_otp"
@@ -32,33 +31,41 @@
             android:layout_height="wrap_content"
             android:hint="@string/otp"
             android:inputType="number"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
     </android.support.design.widget.TextInputLayout>
 
     <TextView
-        android:id="@+id/txt_resend_otp"
-        android:layout_marginTop="10dp"
+        android:id="@+id/txt_otp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:textColor="@color/sky_blue"
         android:layout_below="@+id/input_layout_otp"
+        android:layout_marginTop="10dp"
         android:text="@string/resend_otp"
-        android:textSize="18sp"/>
+        android:textColor="@color/sky_blue"
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="140dp"
         android:layout_height="36dp"
+        android:layout_below="@+id/txt_otp"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_below="@+id/txt_resend_otp"
-        android:text="Submit"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
         android:background="@drawable/bg_button_pink"
+        android:text="Submit"
         android:textAllCaps="true"
-        android:layout_centerHorizontal="true"/>
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/txt_otp"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -3,10 +3,31 @@
           package="com.batua.android.user">
 
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.READ_PROFILE"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+
     <uses-permission android:name="android.permission.INTERNET"/>
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+    <!-- Recieve SMS permissions-->
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
+
+    <!-- Camera and storage permissions-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <!-- Call Permission -->
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
     <application
-        android:name=".app.BatuaUserApplication"
+        android:name="com.tecsol.batua.user.BatuaUserApplication"
         android:allowBackup="true"
         android:icon="@drawable/img_batua_logo_small"
         android:label="@string/app_name"
@@ -19,62 +40,72 @@
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"/>
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MobileNumberActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.OnBoardActivity">
         </activity>
-        <activity android:name=".ui.activity.OtpActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.MobileNumberActivity">
         </activity>
-        <activity android:name=".ui.activity.ResetPasswordActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.OtpActivity">
         </activity>
-        <activity android:name=".ui.activity.HomeActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.ResetPasswordActivity">
+        </activity>
+        <activity android:name="com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity">
         </activity>
         <activity
-            android:name=".ui.activity.PrePaymentConfirmationActivity"
+            android:name="com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity"
             android:theme="@style/BlueTheme"
-            android:windowSoftInputMode="adjustUnspecified">
+            android:windowSoftInputMode="stateHidden|adjustResize">
         </activity>
         <activity
-            android:name=".ui.activity.ReviewActivity"
+            android:name="com.tecsol.batua.user.module.review.view.activity.ReviewActivity"
             android:theme="@style/BlueTheme">
         </activity>
         <activity
-            android:name=".ui.activity.PaymentActivity"
+            android:name="com.tecsol.batua.user.module.payment.view.activity.PaymentActivity"
             android:theme="@style/BlueTheme"/>
-        <activity android:name=".ui.activity.WalletActivity">
+        <activity android:name="com.tecsol.batua.user.module.wallet.view.activity.WalletActivity">
         </activity>
-        <activity android:name=".ui.activity.ProfileActivity">
+        <activity android:name="com.tecsol.batua.user.module.profile.view.activity.ProfileActivity">
         </activity>
-        <activity android:name=".ui.activity.SetPinActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.SetPinActivity">
         </activity>
-        <activity android:name=".ui.activity.EditProfileActivity">
+        <activity android:name="com.tecsol.batua.user.module.profile.view.activity.EditProfileActivity">
         </activity>
-        <activity android:name=".ui.activity.ChangePinActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.ChangePinActivity">
         </activity>
-        <activity android:name=".ui.activity.ChangePasswordActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.ChangePasswordActivity">
         </activity>
-        <activity android:name=".ui.activity.ContactUsActivity">
+        <activity android:name="com.tecsol.batua.user.module.support.activity.ContactUsActivity">
         </activity>
-        <activity android:name=".ui.activity.TransactionHistoryActivity">
+        <activity android:name="com.tecsol.batua.user.module.transaction.view.activity.TransactionHistoryActivity">
+        </activity>
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.ResetPinActivity">
         </activity>
         <activity
-            android:name=".ui.activity.PaymentSuccessActivity"
+            android:name="com.tecsol.batua.user.module.payment.view.activity.PaymentSuccessActivity"
             android:theme="@style/PaymentStatus"
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity
-            android:name=".ui.activity.PaymentFailureActivity"
+            android:name="com.tecsol.batua.user.module.payment.view.activity.PaymentFailureActivity"
             android:theme="@style/PaymentStatus">
         </activity>
-        <activity android:name=".ui.activity.WalletRechargeActivity">
+        <activity android:name="com.tecsol.batua.user.module.wallet.view.activity.WalletRechargeActivity">
         </activity>
-        <activity android:name=".ui.activity.PinLoginActivity">
+        <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.PinLoginActivity">
         </activity>
+
+        <receiver android:name="com.tecsol.batua.user.module.onboard.service.IncomingSmsListener">
+            <intent-filter>
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
