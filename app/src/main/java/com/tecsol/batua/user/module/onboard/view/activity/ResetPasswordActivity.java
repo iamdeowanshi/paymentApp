@@ -11,6 +11,7 @@ import com.tecsol.batua.user.data.model.User.ChangePassword;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.presenter.ResetPasswordPresenter;
@@ -45,9 +46,19 @@ public class ResetPasswordActivity extends BaseActivity implements ResetPassword
         userId = getIntent().getExtras().getInt("UserId");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(com.batua.android.user.R.id.btn_confirm)
     void onConfirmClick() {
         viewUtil.hideKeyboard(this);
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
 
         if (edtPassword.getText().toString().isEmpty()) {
             bakery.snackShort(getContentView(), "New Password cannot be empty");
@@ -101,6 +112,16 @@ public class ResetPasswordActivity extends BaseActivity implements ResetPassword
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         resetProgress.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 

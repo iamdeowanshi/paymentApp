@@ -16,6 +16,7 @@ import com.tecsol.batua.user.data.model.Merchant.Merchant;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.common.view.activity.LocationFetchActivity;
@@ -91,11 +92,19 @@ public class HomeActivity extends LocationFetchActivity implements HomeViewInter
         onNetworkCallProgress();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
 
     @Override
     public void locationDetected(Location location) {
         onNetworkCallCompleted();
         if (user!=null) {
+            if (!InternetUtil.hasInternetConnection(this)) {
+                showNoInternetTitleDialog(this);
+                return;
+            }
             homePresenter.getMerchants(user.getId(), NO_MERCHANT_FILTER, location.getLatitude(), location.getLongitude());
             return;
         }
@@ -126,7 +135,13 @@ public class HomeActivity extends LocationFetchActivity implements HomeViewInter
         viewUtil.hideKeyboard(this);
         merchantListRecyclerView.setVisibility(View.GONE);
         progressBar.setVisibility(View.GONE);
+
         if (e.getMessage()== null || e.getMessage().isEmpty()){
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
             return;
         }
         bakery.snackShort(getContentView(), e.getMessage());

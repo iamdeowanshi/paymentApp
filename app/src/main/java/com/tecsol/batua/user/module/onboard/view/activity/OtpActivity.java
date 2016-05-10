@@ -14,6 +14,7 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
@@ -59,26 +60,43 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
 
     @OnClick(R.id.txt_otp)
     void onResendClick() {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         Otp otp = new Otp();
         otp.setPhone(mobileNo);
 
         if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY) {
             otpPresenter.sendForgotPasswordOrPinOtp(otp);
             return;
         }
 
-        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY ) {
             otp.setType("resend");
             otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
             otpPresenter.sendSignUpOtp(otp);
             return;
         }
+
+        if (Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+            otp.setType("resend");
+            otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getUserId());
+            otpPresenter.sendSignUpOtp(otp);
+        }
     }
 
     @OnClick(R.id.btn_submit)
     void onSubmitClick() {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         Otp otp = new Otp();
         otp.setPhone(mobileNo);
         try {
@@ -90,13 +108,13 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
         }
 
         if ( Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
-                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ) {
             verifyOtpPresenter.verifyForgotPinPasswordOtp(otp);
             return;
         }
 
-        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+        if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
             verifyOtpPresenter.verifySignUpOtp(otp);
             return;
         }
@@ -151,7 +169,7 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
         }
 
         if ( Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
-            startActivity(HomeActivity.class, bundle);
+            startActivity(OnBoardActivity.class, null);
             finish();
         }
 
@@ -178,6 +196,16 @@ public class OtpActivity extends BaseActivity implements VerifyOtpViewIteractor,
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         progress.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 

@@ -12,6 +12,7 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.presenter.ChangePinPresenter;
@@ -50,6 +51,11 @@ public class ChangePinActivity extends BaseActivity implements ChangePinViewInte
         setToolBar();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(R.id.btn_update_pin)
     void updatePin(){
         viewUtil.hideKeyboard(this);
@@ -80,8 +86,13 @@ public class ChangePinActivity extends BaseActivity implements ChangePinViewInte
             pin.setNewPin(Integer.parseInt(edtNewPin.getText().toString()));
             pin.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
             pin.setIsPinActivated(true);
-            changePinPresenter.changePin(pin);
 
+            if (!InternetUtil.hasInternetConnection(this)) {
+                showNoInternetTitleDialog(this);
+                return;
+            }
+
+            changePinPresenter.changePin(pin);
             return;
         }
 
@@ -124,6 +135,16 @@ public class ChangePinActivity extends BaseActivity implements ChangePinViewInte
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 }

@@ -72,6 +72,11 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
         imageUtil.setImageUtilCallback(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void loadProfileData(User user) {
         txtNum.setText(user.getPhone()+"");
         edtMerchantEmail.setText(user.getEmail());
@@ -96,6 +101,12 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
 
     @OnClick(R.id.btn_save_profile)
     void saveProfile() {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         if (!isValidEmail(edtMerchantEmail.getText().toString())) {
             bakery.snackShort(getContentView(), "Invalid email");
             return;
@@ -147,6 +158,16 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 
@@ -170,6 +191,11 @@ public class EditProfileActivity extends BaseActivity implements ProfileViewInte
     // overidden methods of ImageUtil
     @Override
     public void onSuccess(Uri uri, File file) {
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         imageUploadPresenter.uploadImage(file);
     }
 

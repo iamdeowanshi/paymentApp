@@ -74,6 +74,11 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         setToolBar();
@@ -83,6 +88,12 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
 
     @OnClick(R.id.txt_enable_pin)
     void enablePin(){
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         String pinState = txtEnablePin.getText().toString();
 
         if (!InternetUtil.hasInternetConnection(this)) {
@@ -125,6 +136,12 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
 
     @OnClick(R.id.btn_logout)
     void logout(){
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         if (user!=null) {
             Pin pin = new Pin();
             pin.setUserId(user.getId());
@@ -212,10 +229,21 @@ public class ProfileActivity extends BaseActivity implements PinStatusViewIntera
 
     @Override
     public void onNetworkCallError(Throwable e) {
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
         if (e.getMessage().equals("UserId, Token And DeviceId Required")) {
             startActivity(OnBoardActivity.class, null);
             finish();
         }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         viewUtil.hideKeyboard(this);
         pinStatusProgressbar.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());

@@ -13,6 +13,7 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.presenter.ChangePasswordPresenter;
@@ -52,6 +53,11 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
         setToolBar();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(R.id.btn_update_password)
     void updatePassword() {
         viewUtil.hideKeyboard(this);
@@ -83,8 +89,12 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
             changePassword.setNewPassword(edtNewPassword.getText().toString());
             changePassword.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
 
-            changePasswordPresenter.changePassword(changePassword);
+            if (!InternetUtil.hasInternetConnection(this)) {
+                showNoInternetTitleDialog(this);
+                return;
+            }
 
+            changePasswordPresenter.changePassword(changePassword);
             return;
         }
 
@@ -127,6 +137,16 @@ public class ChangePasswordActivity extends BaseActivity implements ChangePasswo
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         changePasswordProgress.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 

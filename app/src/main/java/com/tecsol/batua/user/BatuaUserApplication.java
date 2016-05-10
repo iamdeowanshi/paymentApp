@@ -6,6 +6,7 @@ import android.support.multidex.MultiDex;
 
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.injection.module.ApplicationModule;
+import com.tecsol.batua.user.module.base.BaseActivity;
 
 import timber.log.Timber;
 
@@ -13,6 +14,8 @@ import timber.log.Timber;
  * @author Farhan Ali
  */
 public class BatuaUserApplication extends Application {
+
+    private BaseActivity currentActivity = null;
 
     @Override
     public void onCreate() {
@@ -32,5 +35,11 @@ public class BatuaUserApplication extends Application {
         MultiDex.install(this);
     }
 
+    public BaseActivity getCurrentActivity(){
+        return currentActivity;
+    }
+    public void setCurrentActivity(BaseActivity mCurrentActivity){
+        this.currentActivity = mCurrentActivity;
+    }
 
 }
