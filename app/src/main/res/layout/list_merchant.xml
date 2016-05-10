@@ -5,8 +5,8 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
-    android:background="@android:color/white"
     android:elevation="@dimen/elevation_depth"
+    android:background="@drawable/bg_layout_shadow"
     android:orientation="horizontal"
     android:padding="10dp">
 
@@ -16,7 +16,7 @@
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/drawer_profile_image" />
+        android:src="@drawable/profile_pic_container" />
 
     <LinearLayout
         android:layout_width="match_parent"

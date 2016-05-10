@@ -1,6 +1,7 @@
 package com.tecsol.batua.user.module.base;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -16,10 +17,13 @@ import android.view.MenuItem;
 import android.view.View;
 
 
+import com.tecsol.batua.user.BatuaUserApplication;
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.module.common.callback.PermissionCallback;
 import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
+
+import org.parceler.transfuse.annotations.BroadcastReceiver;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +39,9 @@ import butterknife.ButterKnife;
  *
  * @author Farhan Ali
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity{
+
+    protected BatuaUserApplication mMyApp;
 
     private int orientation = Config.ORIENTATION_DEFAULT;
     private final String NO_INTERNET_TITTLE = "No Internet";
@@ -48,6 +54,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onStart();
         //noinspection WrongConstant
         setRequestedOrientation(orientation);
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mMyApp = (BatuaUserApplication)this.getApplicationContext();
     }
 
     @Override
@@ -159,6 +171,26 @@ public abstract class BaseActivity extends AppCompatActivity {
         return ! hasPermission;
     }
 
+    protected void onResume() {
+        super.onResume();
+        mMyApp.setCurrentActivity(this);
+    }
+
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+    protected void onDestroy() {
+        clearReferences();
+        super.onDestroy();
+    }
+
+    private void clearReferences(){
+        Activity currActivity = mMyApp.getCurrentActivity();
+        if (this.equals(currActivity))
+            mMyApp.setCurrentActivity(null);
+    }
+
     /**
      * Binds the viewInteractor objects within the activity.
      */
@@ -266,10 +298,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         return findViewById(android.R.id.content);
     }
 
-    public void showNoInternetTitleDialog(Activity currentActivity){
+    public void showNoInternetTitleDialog(Context context){
 
-        if ( currentActivity!= null) {
-            AlertDialog.Builder alertbuilder = new AlertDialog.Builder(currentActivity);
+        if ( context!= null) {
+            AlertDialog.Builder alertbuilder = new AlertDialog.Builder(context);
 
             alertbuilder.setTitle(NO_INTERNET_TITTLE)
                     .setMessage(NO_INTERNET_MESSAGE)
