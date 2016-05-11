@@ -142,6 +142,9 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     public void onConnected(Bundle bundle) {
         shouldResolve = false;
         try {
+            if (googleApiClient == null) {
+                initGoogleClient();
+            }
             new RetrieveTokenTask(Plus.PeopleApi.getCurrentPerson(googleApiClient).toString(), Plus.AccountApi.getAccountName(googleApiClient))
                     .execute(Plus.AccountApi.getAccountName(googleApiClient));
         } catch (NullPointerException e) {
@@ -178,6 +181,11 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         }
 
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+
+            if (googleApiClient == null) {
+                initGoogleClient();
+            }
+
             // Retrieving access token after sign in.
             if (!googleApiClient.isConnected()) {
                 googleApiClient.connect();

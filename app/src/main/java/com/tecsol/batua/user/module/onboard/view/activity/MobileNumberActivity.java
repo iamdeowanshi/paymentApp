@@ -1,14 +1,12 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-
 
 import com.batua.android.user.R;
 import com.tecsol.batua.user.Config;

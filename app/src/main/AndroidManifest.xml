@@ -107,11 +107,11 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.tecsol.batua.user.module.common.receiver.InternetStatusReciever" >
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
+        <!--<receiver android:name="com.tecsol.batua.user.module.common.receiver.InternetStatusReciever" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
     </application>
 

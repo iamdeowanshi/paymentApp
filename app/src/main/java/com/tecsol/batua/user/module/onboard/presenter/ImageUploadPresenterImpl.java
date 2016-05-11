@@ -1,7 +1,5 @@
 package com.tecsol.batua.user.module.onboard.presenter;
 
-import android.util.Log;
-
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
 import com.tecsol.batua.user.injection.Injector;

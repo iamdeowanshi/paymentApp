@@ -3,6 +3,7 @@ package com.tecsol.batua.user.module.payment.view.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -13,6 +14,7 @@ import android.graphics.drawable.LayerDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +22,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -29,16 +32,17 @@ import com.batua.android.user.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
+import com.tecsol.batua.user.data.model.Merchant.PromoCode;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.callback.PermissionCallback;
 import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.DecimalFormatUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
+import com.tecsol.batua.user.module.payment.presenter.DiscountPresenter;
+import com.tecsol.batua.user.module.payment.presenter.DiscountViewInteractor;
 
 import org.parceler.Parcels;
-
-import java.io.File;
 
 import javax.inject.Inject;
 
@@ -48,12 +52,13 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class PrePaymentConfirmationActivity extends BaseActivity {
+public class PrePaymentConfirmationActivity extends BaseActivity implements DiscountViewInteractor{
 
     final String[] CALL_PERMISSION = {Manifest.permission.CALL_PHONE};
 
     @Inject ViewUtil viewUtil;
     @Inject Bakery bakery;
+    @Inject DiscountPresenter discountPresenter;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.edt_enter_amount) EditText edtAmount;
@@ -65,6 +70,7 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
     @Bind(R.id.rating_review) RatingBar ratingBar;
     @Bind(R.id.txt_reviewed_num) TextView txtReviewedNumber;
     @Bind(R.id.img_background) ImageView imgBackground;
+    @Bind(R.id.discount_progressBar) ProgressBar discountProgress;
 
     private Merchant merchant;
 
@@ -73,6 +79,7 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pre_payment_confirmation);
         Injector.component().inject(this);
+        discountPresenter.attachViewInteractor(this);
 
         setToolBar();
         viewUtil.keyboardListener(this, new ViewUtil.KeyboardVisibilityEventListener() {
@@ -104,9 +111,19 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
 
         TextView positiveButton = (TextView) dialog.findViewById(R.id.button_ok);
         TextView negativeButton = (TextView) dialog.findViewById(R.id.button_cancel);
+        final EditText edtPromocode = (EditText) dialog.findViewById(R.id.edt_promocode);
         positiveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (edtPromocode.getText().toString().isEmpty()) {
+                    viewUtil.hideKeyboard(PrePaymentConfirmationActivity.this);
+                    bakery.snackShort(getContentView(), "Promocode cannot be empty");
+                    return;
+                }
+                PromoCode promoCode = new PromoCode();
+                promoCode.setPromocode(edtPromocode.getText().toString());
+                promoCode.setMerchantId(merchant.getId());
+                discountPresenter.validatePromocode(promoCode);
                 dialog.dismiss();
             }
         });
@@ -225,6 +242,54 @@ public class PrePaymentConfirmationActivity extends BaseActivity {
 
     private int getPx(int dimensionDp) {
          return (int) viewUtil.convertDpToPx(this, dimensionDp);
+    }
+
+    @Override
+    public void onValidPromocode(PromoCode promoCode) {
+        showAppliedPromocodeDialog();
+    }
+
+    @Override
+    public void onNetworkCallProgress() {
+        discountProgress.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void onNetworkCallCompleted() {
+        discountProgress.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onNetworkCallError(Throwable e) {
+        viewUtil.hideKeyboard(this);
+        discountProgress.setVisibility(View.GONE);
+
+        if (e.getMessage()== null || e.getMessage().isEmpty()){
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
+        bakery.snackShort(getContentView(), e.getMessage());
+    }
+
+    private void showAppliedPromocodeDialog(){
+
+        AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+
+        alertbuilder.setTitle("Valid Promocode")
+                .setMessage("Your Promocode has been applied. Please continue to make payment")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+        AlertDialog alert = alertbuilder.create();
+        alert.show();
     }
 
 }

@@ -130,7 +130,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
 
     @Override
     public void onError(Throwable throwable) {
-
+        Log.d("error", throwable.getMessage());
     }
 
     // overidden methods of LoginViewInteractor

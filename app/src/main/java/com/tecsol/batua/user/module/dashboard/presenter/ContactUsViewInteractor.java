@@ -8,8 +8,8 @@ import java.util.List;
 /**
  * @author Aaditya Deowanshi.
  */
-public interface HomeViewInteractor extends NetworkViewInteractor {
+public interface ContactUsViewInteractor extends NetworkViewInteractor {
 
-    void onSuccess(List<Merchant> merchantList);
+    void onEmailSent(String message);
 
 }

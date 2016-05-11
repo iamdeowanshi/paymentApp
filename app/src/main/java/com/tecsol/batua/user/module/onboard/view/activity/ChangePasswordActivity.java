@@ -8,7 +8,6 @@ import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
 import com.tecsol.batua.user.data.model.User.ChangePassword;
-import com.tecsol.batua.user.data.model.User.Pin;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
@@ -18,7 +17,6 @@ import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.presenter.ChangePasswordPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.ChangePasswordViewInteractor;
-import com.tecsol.batua.user.module.onboard.presenter.ChangePinPresenter;
 import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
 
 import javax.inject.Inject;

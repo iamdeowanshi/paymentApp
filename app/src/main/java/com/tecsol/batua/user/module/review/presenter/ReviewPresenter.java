@@ -1,7 +1,6 @@
 package com.tecsol.batua.user.module.review.presenter;
 
 import com.tecsol.batua.user.module.base.Presenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginViewInteractor;
 
 /**
  * @author Aaditya Deowanshi.

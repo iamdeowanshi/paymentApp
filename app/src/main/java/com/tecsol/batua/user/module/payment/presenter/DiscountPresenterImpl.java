@@ -1,4 +1,4 @@
-package com.tecsol.batua.user.module.profile.presenter;
+package com.tecsol.batua.user.module.payment.presenter;
 
 import android.accounts.NetworkErrorException;
 
@@ -6,9 +6,11 @@ import com.tecsol.batua.user.data.api.ApiErrorParser;
 import com.tecsol.batua.user.data.api.ApiErrorResponse;
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
-import com.tecsol.batua.user.data.model.User.User;
+import com.tecsol.batua.user.data.model.Merchant.PromoCode;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -16,24 +18,25 @@ import retrofit2.Response;
 import rx.Observable;
 
 /**
- * @author Aaditya Deowanshi.
+ * @author Arnold Laishram
  */
-public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewInteractor> implements ProfilePresenter {
+public class DiscountPresenterImpl extends BaseNetworkPresenter<DiscountViewInteractor> implements DiscountPresenter {
 
     @Inject BatuaUserService api;
     @Inject ApiErrorParser errorParser;
 
-    public ProfilePresenterImpl() {
+    public DiscountPresenterImpl() {
         Injector.component().inject(this);
     }
 
     @Override
-    public void updateProfile(User user) {
+    public void validatePromocode(PromoCode promoCode) {
+
         getViewInteractor().onNetworkCallProgress();
 
-        Observable<Response<User>> observable = api.updateProfile(user);
+        Observable<Response<List<PromoCode>>> observable = api.validatePromocode(promoCode);
 
-        subscribeForNetwork(observable, new ApiObserver<Response<User>>() {
+        subscribeForNetwork(observable, new ApiObserver<Response<List<PromoCode>>>() {
             @Override
             public void onError(Throwable e) {
                 getViewInteractor().onNetworkCallCompleted();
@@ -41,11 +44,11 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
             }
 
             @Override
-            public void onResponse(Response<User> response) {
+            public void onResponse(Response<List<PromoCode>> response) {
                 getViewInteractor().onNetworkCallCompleted();
 
                 if (response.isSuccessful()) {
-                    getViewInteractor().onProfileUpdated(response.body());
+                    getViewInteractor().onValidPromocode(response.body().get(0));
                     return;
                 }
 
@@ -57,6 +60,6 @@ public class ProfilePresenterImpl extends BaseNetworkPresenter<ProfileViewIntera
                 }
             }
         });
-    }
 
+    }
 }

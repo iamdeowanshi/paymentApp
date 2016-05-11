@@ -12,12 +12,11 @@ public class InternetStatusReciever extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        BaseActivity currentActivity = ((BatuaUserApplication)context.getApplicationContext()).getCurrentActivity();
+        BaseActivity currentActivity = ((BatuaUserApplication) context.getApplicationContext()).getCurrentActivity();
 
-	if (!InternetUtil.hasInternetConnection(currentActivity)) {
-		currentActivity.showNoInternetTitleDialog(currentActivity);
-	}
-        
+        if (!InternetUtil.hasInternetConnection(currentActivity)) {
+            currentActivity.showNoInternetTitleDialog(currentActivity);
+        }
     }
 
 }

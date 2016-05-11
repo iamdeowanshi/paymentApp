@@ -17,7 +17,6 @@ import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
-import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
 import com.tecsol.batua.user.module.onboard.presenter.OtpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.OtpViewInteractor;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenter;

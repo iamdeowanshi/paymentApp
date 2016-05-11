@@ -2,11 +2,13 @@ package com.tecsol.batua.user.data.api;
 
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
+import com.tecsol.batua.user.data.model.Merchant.PromoCode;
 import com.tecsol.batua.user.data.model.Merchant.Review;
 import com.tecsol.batua.user.data.model.User.ChangePassword;
+import com.tecsol.batua.user.data.model.User.ContactUs;
+import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.data.model.User.Pin;
-import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.data.model.User.User;
 
 import java.util.List;
@@ -102,7 +104,13 @@ public interface BatuaUserService {
     Observable<Response<CustomResponse>> changePassword(@Body ChangePassword changePassword);
 
     @PUT(Config.RESET_PASSWORD)
-    Observable<Response<CustomResponse>> resetPassword(@Body ChangePassword changePassword);
+    Observable<Response<CustomResponse>> resetPassword(@Body ChangePassword changePassword); //api/user/validatePromocode
+
+    @POST(Config.VALIDATE_PROMOCODE)
+    Observable<Response<List<PromoCode>>> validatePromocode(@Body PromoCode promoCode);
+
+    @POST(Config.CONTACT_BATUA)
+    Observable<Response<CustomResponse>> contactBatua(@Body ContactUs contactUs);
 
     @Multipart
     @POST(Config.UPLOAD_IMAGE)

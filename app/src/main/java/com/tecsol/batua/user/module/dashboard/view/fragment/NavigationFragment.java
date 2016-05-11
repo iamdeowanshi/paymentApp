@@ -17,8 +17,9 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseFragment;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
-import com.tecsol.batua.user.module.support.activity.ContactUsActivity;
+import com.tecsol.batua.user.module.dashboard.presenter.ContactUsViewInteractor;
 import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
+import com.tecsol.batua.user.module.support.activity.ContactUsActivity;
 import com.tecsol.batua.user.module.transaction.view.activity.TransactionHistoryActivity;
 import com.tecsol.batua.user.module.wallet.view.activity.WalletActivity;
 
@@ -30,7 +31,7 @@ import butterknife.OnClick;
 /**
  * @author Arnold Laishram.
  */
-public class NavigationFragment extends BaseFragment {
+public class NavigationFragment extends BaseFragment{
 
     @Inject PreferenceUtil preferenceUtil;
 
@@ -40,6 +41,7 @@ public class NavigationFragment extends BaseFragment {
 
     private DrawerLayout drawer;
     private Navigation navigation;
+    private User user;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -90,7 +92,9 @@ public class NavigationFragment extends BaseFragment {
 
     @OnClick(R.id.nav_contact_us)
     void navigateToContactUs(){
-        startActivity(ContactUsActivity.class, null );
+        Bundle bundle = new Bundle();
+        bundle.putString("Email", user.getEmail());
+        startActivity(ContactUsActivity.class, bundle );
         drawer.closeDrawers();
     }
 
@@ -120,7 +124,7 @@ public class NavigationFragment extends BaseFragment {
     }
 
     private void loadNavigationDetails() {
-        User user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
+        user = (User)preferenceUtil.read(preferenceUtil.USER, User.class);
         if (user!=null){
             txtDisplayName.setText(user.getName());
             Picasso.with(getContext()).load(user.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(imgProfile);

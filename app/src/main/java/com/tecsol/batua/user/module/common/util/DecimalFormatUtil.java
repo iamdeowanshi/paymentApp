@@ -1,7 +1,5 @@
 package com.tecsol.batua.user.module.common.util;
 
-import android.util.Log;
-
 /**
  * Created by Arnold on 24/03/16.
  */

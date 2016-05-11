@@ -4,8 +4,8 @@ import android.accounts.NetworkErrorException;
 
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
-import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.data.model.User.CustomResponse;
+import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
 

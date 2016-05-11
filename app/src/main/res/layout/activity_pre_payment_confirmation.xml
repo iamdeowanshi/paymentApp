@@ -161,7 +161,9 @@
                 android:inputType="numberDecimal"
                 android:textColor="@android:color/black"
                 android:textColorHint="@color/light_gray"
-                android:textSize="@dimen/text_size_25"/>
+                android:textSize="@dimen/text_size_25"
+                android:layout_toLeftOf="@+id/txt_promo_code"
+                android:layout_toStartOf="@+id/txt_promo_code" />
 
             <TextView
                 android:id="@+id/txt_promo_code"
@@ -243,6 +245,14 @@
                 android:textSize="@dimen/text_size_16"/>
 
         </LinearLayout>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:id="@+id/discount_progressBar"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"/>
 
     </RelativeLayout>
 
