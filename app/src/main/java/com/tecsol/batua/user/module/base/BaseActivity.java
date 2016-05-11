@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.view.View;
 import com.tecsol.batua.user.BatuaUserApplication;
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.module.common.callback.PermissionCallback;
+import com.tecsol.batua.user.module.common.receiver.InternetStatusReciever;
 import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 
@@ -48,6 +50,10 @@ public abstract class BaseActivity extends AppCompatActivity{
     private final String NO_INTERNET_MESSAGE = "Please Check your Connection";
 
     private Map<Integer, PermissionCallback> permissionCallbackMap = new HashMap<>();
+
+    static IntentFilter filter = new IntentFilter("android.net.conn.CONNECTIVITY_CHANGE");
+    // Create an instance of our BroadcastReceiver
+    static InternetStatusReciever receiver = new InternetStatusReciever();
 
     @Override
     protected void onStart() {
@@ -174,10 +180,12 @@ public abstract class BaseActivity extends AppCompatActivity{
     protected void onResume() {
         super.onResume();
         mMyApp.setCurrentActivity(this);
+        registerReceiver(receiver, filter);
     }
 
     protected void onPause() {
         clearReferences();
+        unregisterReceiver(receiver);
         super.onPause();
     }
     protected void onDestroy() {
