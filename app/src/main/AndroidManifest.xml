@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.batua.android.user">
 
+    <permission
+        android:name="com.batua.android.user.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PROFILE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -25,6 +29,9 @@
 
     <!-- Call Permission -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!-- Push notofication Permission-->
+    <uses-permission android:name="com.batua.android.user.permission.C2D_MESSAGE" />
 
     <application
         android:name="com.tecsol.batua.user.BatuaUserApplication"
@@ -106,6 +113,19 @@
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name="com.tecsol.batua.user.module.common.receiver.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.batua.android.user" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="com.tecsol.batua.user.module.common.service.GcmIntentService" />
+
 
         <!--<receiver android:name="com.tecsol.batua.user.module.common.receiver.InternetStatusReciever" >-->
             <!--<intent-filter>-->
