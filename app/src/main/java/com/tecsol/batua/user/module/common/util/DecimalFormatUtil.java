@@ -7,7 +7,7 @@ public class DecimalFormatUtil {
 
     public static float formatToExactTwoDecimal(float distance){
 
-        return Math.round(distance*100.0f)/100.0f;
+        return Math.round(distance*10.0f)/10.0f;
 
     }
 }

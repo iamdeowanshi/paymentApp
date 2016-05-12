@@ -64,7 +64,15 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
         }
 
         //merchantDetailViewHolder.txtReviewedNum.setText("(" + merchant.getReviewedNum().toString() + ")");
-        merchantDetailViewHolder.txtMerchantAddress.setText(merchant.getAddress());
+        String[] address = merchant.getAddress().split(",");
+        if (address.length >= 2) {
+            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-2] + "," + address[address.length-1]);
+        } else if (address.length == 1) {
+            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-1] + "\n");
+        } else {
+            merchantDetailViewHolder.txtMerchantAddress.setText("\n" + "\n");
+        }
+
         merchantDetailViewHolder.txtDistance.setText(DecimalFormatUtil.formatToExactTwoDecimal(merchant.getDistance())+" km");
 
         merchantDetailViewHolder.itemView.setOnClickListener(new MerchantClickListener(merchant));

@@ -31,7 +31,7 @@
     <RelativeLayout
         android:id="@+id/merchant_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="20dp"
+        android:layout_height="30dp"
         android:layout_below="@+id/toolbar"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
@@ -45,6 +45,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:text="Pizza Hut"
+            android:layout_marginTop="5dp"
             android:textColor="@color/black"
             android:textSize="@dimen/text_size_18"
             android:textStyle="bold"/>
@@ -56,6 +57,7 @@
             android:layout_toLeftOf="@+id/txt_reviewed_num"
             android:layout_toStartOf="@+id/txt_reviewed_num"
             android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
             android:isIndicator="true"
             android:numStars="5"
             android:progressDrawable="@drawable/rating_bar_reviewed"
@@ -66,14 +68,14 @@
             android:id="@+id/txt_reviewed_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
             android:drawablePadding="3dp"
             android:gravity="right"
             android:paddingRight="3dp"
             android:text="(10)"
-            android:textSize="@dimen/text_size_16"/>
+            android:textSize="@dimen/text_size_16"
+            android:layout_alignTop="@+id/rating_review"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
 
     </RelativeLayout>

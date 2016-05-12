@@ -83,7 +83,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        socialAuth.onActivityResult(requestCode, resultCode, data);
+        socialAuth.onActivityResult(this, requestCode, resultCode, data);
     }
 
     @OnPageChange(R.id.home_viewpager)
