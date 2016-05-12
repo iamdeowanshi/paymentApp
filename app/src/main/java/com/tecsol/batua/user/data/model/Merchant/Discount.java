@@ -6,7 +6,7 @@ import com.tecsol.batua.user.data.model.BaseModel;
 /**
  * Created by arnold on 11/5/16.
  */
-public class PromoCode extends BaseModel{
+public class Discount extends BaseModel{
 
     @SerializedName("id")
     private Integer id;
@@ -40,6 +40,9 @@ public class PromoCode extends BaseModel{
 
     @SerializedName("status")
     private String status;
+
+
+    private boolean isPromocodeApplied;
 
     /**
      *
@@ -227,5 +230,13 @@ public class PromoCode extends BaseModel{
 
     public void setMerchantId(Integer merchantId) {
         this.merchantId = merchantId;
+    }
+
+    public boolean isPromocodeApplied() {
+        return isPromocodeApplied;
+    }
+
+    public void setIsPromocodeApplied(boolean isPromocodeApplied) {
+        this.isPromocodeApplied = isPromocodeApplied;
     }
 }

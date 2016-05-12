@@ -32,12 +32,13 @@ import com.batua.android.user.R;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
-import com.tecsol.batua.user.data.model.Merchant.PromoCode;
+import com.tecsol.batua.user.data.model.Merchant.Discount;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.callback.PermissionCallback;
 import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.DecimalFormatUtil;
+import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.payment.presenter.DiscountPresenter;
 import com.tecsol.batua.user.module.payment.presenter.DiscountViewInteractor;
@@ -59,6 +60,7 @@ public class PrePaymentConfirmationActivity extends BaseActivity implements Disc
     @Inject ViewUtil viewUtil;
     @Inject Bakery bakery;
     @Inject DiscountPresenter discountPresenter;
+    @Inject PreferenceUtil preferenceUtil;
 
     @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.edt_enter_amount) EditText edtAmount;
@@ -120,10 +122,10 @@ public class PrePaymentConfirmationActivity extends BaseActivity implements Disc
                     bakery.snackShort(getContentView(), "Promocode cannot be empty");
                     return;
                 }
-                PromoCode promoCode = new PromoCode();
-                promoCode.setPromocode(edtPromocode.getText().toString());
-                promoCode.setMerchantId(merchant.getId());
-                discountPresenter.validatePromocode(promoCode);
+                Discount discount = new Discount();
+                discount.setPromocode(edtPromocode.getText().toString());
+                discount.setMerchantId(merchant.getId());
+                discountPresenter.validatePromocode(discount);
                 dialog.dismiss();
             }
         });
@@ -142,7 +144,13 @@ public class PrePaymentConfirmationActivity extends BaseActivity implements Disc
 
     @OnClick(R.id.btn_make_payment)
     void onMakePaymentClick() {
-        startActivity(PaymentFailureActivity.class, null);
+        Discount discount = (Discount)preferenceUtil.read(preferenceUtil.PROMOCODE, Discount.class);
+        if (discount!=null) {
+            // got to razor pay activity
+        }
+        // check for any offers
+
+        discountPresenter.OfferExist(merchant.getId());
     }
 
     @OnClick(R.id.call_merchant)
@@ -245,8 +253,18 @@ public class PrePaymentConfirmationActivity extends BaseActivity implements Disc
     }
 
     @Override
-    public void onValidPromocode(PromoCode promoCode) {
+    public void onValidPromocode(Discount response) {
+        Discount discount = new Discount();
+        discount.setPromocode(response.getPromocode());
+        discount.setIsPromocodeApplied(true);
+        preferenceUtil.save(preferenceUtil.PROMOCODE, discount);
         showAppliedPromocodeDialog();
+    }
+
+    @Override
+    public void onOfferExist(Discount discount) {
+        preferenceUtil.save(preferenceUtil.OFFER, discount);
+        // call transaction api
     }
 
     @Override
@@ -270,6 +288,11 @@ public class PrePaymentConfirmationActivity extends BaseActivity implements Disc
 
         if (e.getMessage().startsWith("failed to connect")) {
             bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
+        if (e.getMessage().equals("No offer found")) {
+            // call transaction api
             return;
         }
 

@@ -34,9 +34,9 @@
             android:button="@null"
             android:drawableLeft="@drawable/bg_radio"
             android:drawablePadding="15dp"
-            android:text="Other Wallet"
+            android:text="YES Bank Wallet"
             android:textColor="@color/gray"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textStyle="bold"/>
     </RadioGroup>
 

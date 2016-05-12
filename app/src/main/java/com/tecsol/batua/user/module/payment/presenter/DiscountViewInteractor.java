@@ -1,6 +1,6 @@
 package com.tecsol.batua.user.module.payment.presenter;
 
-import com.tecsol.batua.user.data.model.Merchant.PromoCode;
+import com.tecsol.batua.user.data.model.Merchant.Discount;
 import com.tecsol.batua.user.module.base.NetworkViewInteractor;
 
 /**
@@ -8,6 +8,8 @@ import com.tecsol.batua.user.module.base.NetworkViewInteractor;
  */
 public interface DiscountViewInteractor extends NetworkViewInteractor {
 
-    void onValidPromocode(PromoCode promoCode);
+    void onValidPromocode(Discount discount);
+
+    void onOfferExist(Discount discount);
 
 }

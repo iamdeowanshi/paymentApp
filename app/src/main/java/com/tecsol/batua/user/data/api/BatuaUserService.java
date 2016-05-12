@@ -2,7 +2,7 @@ package com.tecsol.batua.user.data.api;
 
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
-import com.tecsol.batua.user.data.model.Merchant.PromoCode;
+import com.tecsol.batua.user.data.model.Merchant.Discount;
 import com.tecsol.batua.user.data.model.Merchant.Review;
 import com.tecsol.batua.user.data.model.User.ChangePassword;
 import com.tecsol.batua.user.data.model.User.ContactUs;
@@ -104,10 +104,14 @@ public interface BatuaUserService {
     Observable<Response<CustomResponse>> changePassword(@Body ChangePassword changePassword);
 
     @PUT(Config.RESET_PASSWORD)
-    Observable<Response<CustomResponse>> resetPassword(@Body ChangePassword changePassword); //api/user/validatePromocode
+    Observable<Response<CustomResponse>> resetPassword(@Body ChangePassword changePassword);
 
     @POST(Config.VALIDATE_PROMOCODE)
-    Observable<Response<List<PromoCode>>> validatePromocode(@Body PromoCode promoCode);
+    Observable<Response<List<Discount>>> validatePromocode(@Body Discount discount);
+
+    @FormUrlEncoded
+    @POST(Config.OFFER_EXIST)
+    Observable<Response<List<Discount>>> offerExist(@Field("merchantId")Integer merchantId);
 
     @POST(Config.CONTACT_BATUA)
     Observable<Response<CustomResponse>> contactBatua(@Body ContactUs contactUs);

@@ -90,26 +90,51 @@
         android:elevation="@dimen/elevation_depth"
         android:orientation="vertical">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/wallet_tab_layout"
+        <RadioGroup
+            android:id="@+id/radio_wallet"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/white"
-            android:elevation="2dp"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/sky_blue"
-            app:tabSelectedTextColor="@color/sky_blue"
-            app:tabTextAppearance="@style/tab_layout_font_style"
-            app:tabTextColor="@color/sky_blue_light"/>
-
-        <android.support.v4.view.ViewPager
-            android:id="@+id/wallet_viewpager"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:isScrollContainer="false"
-            android:layout_below="@+id/wallet_tab_layout"
-            android:layout_gravity="fill_horizontal"
-            android:padding="@dimen/text_size_12"/>
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="10dp">
+
+            <RadioButton
+                android:id="@+id/credit_or_debit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/bg_radio"
+                android:drawablePadding="15dp"
+                android:text="Credit / Debit card"
+                android:textColor="@color/gray"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+            <RadioButton
+                android:id="@+id/rbtn_other_wallet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/rbtn_batua_wallet"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:button="@null"
+                android:drawableLeft="@drawable/bg_radio"
+                android:drawablePadding="15dp"
+                android:text="Net Banking"
+                android:textColor="@color/gray"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_make_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/bg_button_pink"
+            android:text="Make Payment"
+            android:textColor="@color/white"/>
 
     </RelativeLayout>
 

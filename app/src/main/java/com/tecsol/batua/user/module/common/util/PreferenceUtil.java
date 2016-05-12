@@ -15,6 +15,8 @@ public class PreferenceUtil {
 
     public static final String DEVICE_ID = "DEVICE_ID";
     public static final String IS_LOGGED_IN = "IS_LOGGED_IN";
+    public static final String PROMOCODE = "PROMOCODE";
+    public static final String OFFER = "OFFER";
 
     private SharedPreferences preferences;
     public static final String USER = "USER";

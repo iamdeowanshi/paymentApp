@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <RadioGroup
+        android:id="@+id/radio_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp">
+
+        <RadioButton
+            android:id="@+id/credit_or_debit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/bg_radio"
+            android:drawablePadding="15dp"
+            android:text="Credit / Debit card"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+
+        <RadioButton
+            android:id="@+id/rbtn_other_wallet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/rbtn_batua_wallet"
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:button="@null"
+            android:drawableLeft="@drawable/bg_radio"
+            android:drawablePadding="15dp"
+            android:text="Net Banking"
+            android:textColor="@color/gray"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/btn_make_payment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/bg_button_pink"
+        android:text="Make Payment"
+        android:textColor="@color/white"/>
+
+</RelativeLayout>
