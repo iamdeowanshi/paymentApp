@@ -38,6 +38,7 @@ import com.tecsol.batua.user.module.onboard.view.activity.SplashActivity;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragment;
 import com.tecsol.batua.user.module.onboard.view.fragment.SignUpFragment;
 import com.tecsol.batua.user.module.payment.presenter.DiscountPresenterImpl;
+import com.tecsol.batua.user.module.payment.presenter.TransactionPresenterImpl;
 import com.tecsol.batua.user.module.payment.view.activity.PaymentSuccessActivity;
 import com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity;
 import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenterImpl;
@@ -103,6 +104,7 @@ public interface ApplicationComponent {
     void inject(ResetPasswordPresenterImpl resetPasswordPresenter);
     void inject(DiscountPresenterImpl discountPresenter);
     void inject(ContactUsPresenterImpl contactUsPresenter);
+    void inject(TransactionPresenterImpl transactionPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

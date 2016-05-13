@@ -3,9 +3,12 @@ package com.tecsol.batua.user.data.model.Merchant;
 import com.google.gson.annotations.SerializedName;
 import com.tecsol.batua.user.data.model.BaseModel;
 
+import org.parceler.Parcel;
+
 /**
  * Created by arnold on 11/5/16.
  */
+@Parcel
 public class Discount extends BaseModel{
 
     @SerializedName("id")
@@ -43,6 +46,8 @@ public class Discount extends BaseModel{
 
 
     private boolean isPromocodeApplied;
+
+    private boolean isOfferApplied;
 
     /**
      *
@@ -238,5 +243,13 @@ public class Discount extends BaseModel{
 
     public void setIsPromocodeApplied(boolean isPromocodeApplied) {
         this.isPromocodeApplied = isPromocodeApplied;
+    }
+
+    public boolean isOfferApplied() {
+        return isOfferApplied;
+    }
+
+    public void setIsOfferApplied(boolean isOfferApplied) {
+        this.isOfferApplied = isOfferApplied;
     }
 }

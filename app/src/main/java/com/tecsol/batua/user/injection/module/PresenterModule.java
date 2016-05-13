@@ -24,6 +24,8 @@ import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenterImpl;
 import com.tecsol.batua.user.module.payment.presenter.DiscountPresenter;
 import com.tecsol.batua.user.module.payment.presenter.DiscountPresenterImpl;
+import com.tecsol.batua.user.module.payment.presenter.TransactionPresenter;
+import com.tecsol.batua.user.module.payment.presenter.TransactionPresenterImpl;
 import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenter;
 import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenterImpl;
 import com.tecsol.batua.user.module.profile.presenter.ProfilePresenter;
@@ -110,6 +112,11 @@ public class PresenterModule {
     @Provides
     public DiscountPresenter provideDiscountPresenter() {
         return new DiscountPresenterImpl();
+    }
+
+    @Provides
+    public TransactionPresenter provideTransactionPresenter() {
+        return new TransactionPresenterImpl();
     }
 
     @Provides

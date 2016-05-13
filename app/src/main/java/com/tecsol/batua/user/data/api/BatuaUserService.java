@@ -9,6 +9,8 @@ import com.tecsol.batua.user.data.model.User.ContactUs;
 import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.data.model.User.Pin;
+import com.tecsol.batua.user.data.model.User.Transaction;
+import com.tecsol.batua.user.data.model.User.TransactionResponse;
 import com.tecsol.batua.user.data.model.User.User;
 
 import java.util.List;
@@ -108,6 +110,9 @@ public interface BatuaUserService {
 
     @POST(Config.VALIDATE_PROMOCODE)
     Observable<Response<List<Discount>>> validatePromocode(@Body Discount discount);
+
+    @POST(Config.MAKE_PAYMENT)
+    Observable<Response<TransactionResponse>> makePayment(@Body Transaction transaction);
 
     @FormUrlEncoded
     @POST(Config.OFFER_EXIST)

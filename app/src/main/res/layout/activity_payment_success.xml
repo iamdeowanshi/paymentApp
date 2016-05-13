@@ -83,6 +83,7 @@
                     android:textColor="@android:color/white"/>
 
                 <TextView
+                    android:id="@+id/txt_transaction_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/text__merchant_address"
@@ -214,6 +215,7 @@
                 android:hint="Your Review"
                 android:maxLength="750"
                 android:paddingLeft="10dp"
+                android:focusable="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="16sp"/>

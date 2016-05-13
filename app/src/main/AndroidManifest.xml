@@ -108,6 +108,8 @@
         <activity android:name="com.tecsol.batua.user.module.onboard.view.activity.PinLoginActivity">
         </activity>
 
+        <activity android:name="com.razorpay.CheckoutActivity" android:configChanges="keyboard|keyboardHidden|orientation|screenSize"></activity>
+
         <receiver android:name="com.tecsol.batua.user.module.onboard.service.IncomingSmsListener">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />

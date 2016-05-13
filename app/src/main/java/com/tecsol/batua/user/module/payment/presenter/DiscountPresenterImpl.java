@@ -88,6 +88,10 @@ public class DiscountPresenterImpl extends BaseNetworkPresenter<DiscountViewInte
                 ApiErrorResponse errorResponse = errorParser.parse(response.errorBody());
 
                 if (response.code() != 200) {
+                    if (errorResponse.errors.get(0).message.equals("No offer found")) {
+                        getViewInteractor().onOfferDoesntExist();
+                        return;
+                    }
                     getViewInteractor().onNetworkCallError(new NetworkErrorException(errorResponse.errors.get(0).message));
                     return;
                 }

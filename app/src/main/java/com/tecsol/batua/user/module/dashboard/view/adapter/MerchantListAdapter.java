@@ -54,7 +54,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
 
         merchantDetailViewHolder.txtMerchantTitle.setText(merchant.getName());
         merchantDetailViewHolder.ratingReview.setRating(merchant.getAverageRating());
-        Picasso.with(context).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(merchantDetailViewHolder.imgProfile);
+        Picasso.with(context).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fit().into(merchantDetailViewHolder.imgProfile);
 
         LayerDrawable stars = (LayerDrawable) merchantDetailViewHolder.ratingReview.getProgressDrawable();
         if (merchant.getAverageRating() != 5.0f) {
@@ -66,11 +66,11 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
         //merchantDetailViewHolder.txtReviewedNum.setText("(" + merchant.getReviewedNum().toString() + ")");
         String[] address = merchant.getAddress().split(",");
         if (address.length >= 2) {
-            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-2] + "," + address[address.length-1]);
+            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-2] + ", " +address[address.length-1] + ", " + merchant.getLocation().getCity());
         } else if (address.length == 1) {
-            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-1] + "\n");
+            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-1] + ", " + merchant.getLocation().getCity());
         } else {
-            merchantDetailViewHolder.txtMerchantAddress.setText("\n" + "\n");
+            merchantDetailViewHolder.txtMerchantAddress.setText(merchant.getLocation().getCity() + "\n");
         }
 
         merchantDetailViewHolder.txtDistance.setText(DecimalFormatUtil.formatToExactTwoDecimal(merchant.getDistance())+" km");

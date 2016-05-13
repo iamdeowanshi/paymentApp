@@ -100,7 +100,6 @@
                 android:drawableLeft="@drawable/location_confirmation"
                 android:gravity="center"
                 android:text="1 km"
-                android:paddingLeft="55dp"
                 android:textSize="@dimen/text_size_14" />
 
 

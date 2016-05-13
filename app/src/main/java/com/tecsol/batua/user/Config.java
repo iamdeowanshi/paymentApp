@@ -81,6 +81,8 @@ public class Config {
 
     public static final String VALIDATE_PROMOCODE = "api/user/validatePromocode";
 
+    public static final String MAKE_PAYMENT = "api/user/makePayment";
+
     public static final String OFFER_EXIST = "api/user/validateOffer";
 
     public static final String CONTACT_BATUA = "api/user/contactus";

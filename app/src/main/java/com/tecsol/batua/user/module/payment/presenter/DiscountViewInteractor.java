@@ -12,4 +12,6 @@ public interface DiscountViewInteractor extends NetworkViewInteractor {
 
     void onOfferExist(Discount discount);
 
+    void onOfferDoesntExist();
+
 }
