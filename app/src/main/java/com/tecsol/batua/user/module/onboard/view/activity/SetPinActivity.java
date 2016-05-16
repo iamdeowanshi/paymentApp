@@ -12,6 +12,7 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.profile.presenter.SetPinPresenter;
@@ -57,8 +58,19 @@ public class SetPinActivity extends BaseActivity implements SetPinViewInteractor
         setToolBar();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(R.id.btn_save)
     void onSave(){
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         viewUtil.hideKeyboard(this);
         Pin pin = new Pin();
         pin.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
@@ -112,6 +124,16 @@ public class SetPinActivity extends BaseActivity implements SetPinViewInteractor
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         setPinProgress.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 

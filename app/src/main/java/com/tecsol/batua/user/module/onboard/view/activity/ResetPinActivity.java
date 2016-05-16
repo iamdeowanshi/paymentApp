@@ -8,10 +8,10 @@ import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
 import com.tecsol.batua.user.data.model.User.Pin;
-import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.profile.presenter.SetPinPresenter;
@@ -46,8 +46,19 @@ public class ResetPinActivity extends BaseActivity implements SetPinViewInteract
         userId = getIntent().getExtras().getInt("UserId");
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(R.id.btn_confirm)
     void onConfirmClick() {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         viewUtil.hideKeyboard(this);
 
         if (edtNewPin.getText().toString().isEmpty()) {
@@ -103,6 +114,16 @@ public class ResetPinActivity extends BaseActivity implements SetPinViewInteract
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         resetPinProgress.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 

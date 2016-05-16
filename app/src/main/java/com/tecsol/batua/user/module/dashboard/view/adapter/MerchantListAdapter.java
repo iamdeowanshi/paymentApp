@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.LayerDrawable;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,21 +15,16 @@ import android.widget.TextView;
 import com.batua.android.user.R;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
-import com.tecsol.batua.user.data.model.Merchant.Gallery;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
 import com.tecsol.batua.user.module.common.util.DecimalFormatUtil;
 import com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity;
-import com.tecsol.batua.user.module.review.view.activity.ReviewActivity;
 
-import org.parceler.Parcel;
 import org.parceler.Parcels;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import timber.log.Timber;
 
 /**
  * @author Arnold Laishram.
@@ -60,7 +54,7 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
 
         merchantDetailViewHolder.txtMerchantTitle.setText(merchant.getName());
         merchantDetailViewHolder.ratingReview.setRating(merchant.getAverageRating());
-        Picasso.with(context).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).into(merchantDetailViewHolder.imgProfile);
+        Picasso.with(context).load(merchant.getProfileImageUrl()).placeholder(R.drawable.profile_pic_container).fit().into(merchantDetailViewHolder.imgProfile);
 
         LayerDrawable stars = (LayerDrawable) merchantDetailViewHolder.ratingReview.getProgressDrawable();
         if (merchant.getAverageRating() != 5.0f) {
@@ -70,7 +64,15 @@ public class MerchantListAdapter extends RecyclerView.Adapter<MerchantListAdapte
         }
 
         //merchantDetailViewHolder.txtReviewedNum.setText("(" + merchant.getReviewedNum().toString() + ")");
-        merchantDetailViewHolder.txtMerchantAddress.setText(merchant.getAddress());
+        String[] address = merchant.getAddress().split(",");
+        if (address.length >= 2) {
+            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-2] + ", " +address[address.length-1] + ", " + merchant.getLocation().getCity());
+        } else if (address.length == 1) {
+            merchantDetailViewHolder.txtMerchantAddress.setText(address[address.length-1] + ", " + merchant.getLocation().getCity());
+        } else {
+            merchantDetailViewHolder.txtMerchantAddress.setText(merchant.getLocation().getCity() + "\n");
+        }
+
         merchantDetailViewHolder.txtDistance.setText(DecimalFormatUtil.formatToExactTwoDecimal(merchant.getDistance())+" km");
 
         merchantDetailViewHolder.itemView.setOnClickListener(new MerchantClickListener(merchant));

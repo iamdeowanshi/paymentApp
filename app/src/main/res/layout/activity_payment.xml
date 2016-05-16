@@ -112,6 +112,7 @@
                     android:layout_height="50dp"
                     android:background="@android:color/white"
                     android:elevation="2dp"
+                    android:fillViewport="true"
                     app:tabGravity="fill"
                     app:tabIndicatorColor="@color/sky_blue"
                     app:tabSelectedTextColor="@color/sky_blue"

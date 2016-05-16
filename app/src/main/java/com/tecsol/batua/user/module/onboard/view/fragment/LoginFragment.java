@@ -1,6 +1,5 @@
 package com.tecsol.batua.user.module.onboard.view.fragment;
 
-import android.Manifest;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TextInputLayout;

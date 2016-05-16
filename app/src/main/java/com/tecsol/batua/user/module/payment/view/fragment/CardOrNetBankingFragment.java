@@ -18,9 +18,7 @@ import butterknife.OnClick;
 /**
  * @author Aaditya Deowanshi.
  */
-public class NetBankingFragment extends BaseFragment {
-
-    @Bind(R.id.spinner_bank) Spinner spinnerBank;
+public class CardOrNetBankingFragment extends BaseFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -29,16 +27,12 @@ public class NetBankingFragment extends BaseFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_net_banking, null);
+        return inflater.inflate(R.layout.fragment_card_or_net_banking, null);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.merchant_bank, R.layout.custom_spinner);
-        adapter.setDropDownViewResource(R.layout.custom_spinner_list);
-        spinnerBank.setAdapter(adapter);
     }
 
 

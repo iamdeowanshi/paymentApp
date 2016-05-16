@@ -79,6 +79,14 @@ public class Config {
 
     public static final String SEND_FORGOT_PIN_PASSWORD_OTP = "api/user/forgotpassword";
 
+    public static final String VALIDATE_PROMOCODE = "api/user/validatePromocode";
+
+    public static final String MAKE_PAYMENT = "api/user/makePayment";
+
+    public static final String OFFER_EXIST = "api/user/validateOffer";
+
+    public static final String CONTACT_BATUA = "api/user/contactus";
+
     public static int OTP_REQUEST_ACTIVITY = 0;
     public static int FORGOT_PIN_ACTIVITY = 1;
     public static int FORGOT_PASSWORD_ACTIVITY = 2;

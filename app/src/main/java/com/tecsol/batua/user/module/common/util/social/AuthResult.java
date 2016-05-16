@@ -1,5 +1,7 @@
 package com.tecsol.batua.user.module.common.util.social;
 
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,6 +21,16 @@ public class AuthResult {
         this.data = data;
         this.authType = authType;
         loadUserData();
+    }
+
+    public AuthResult(GoogleSignInAccount account, SocialAuth.SocialType type) {
+        this.authType = type;
+        authUser = new AuthUser();
+        authUser.setSocialId(account.getId());
+        authUser.setEmail(account.getEmail());
+        authUser.setFirstName(account.getDisplayName().split(" ")[0]);
+        authUser.setLastName(account.getDisplayName().split(" ")[1]);
+        authUser.setProfilePic(String.valueOf(account.getPhotoUrl()));
     }
 
     public AuthUser getAuthUser() {

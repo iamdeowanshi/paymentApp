@@ -2,11 +2,15 @@ package com.tecsol.batua.user.data.api;
 
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.Merchant.Merchant;
+import com.tecsol.batua.user.data.model.Merchant.Discount;
 import com.tecsol.batua.user.data.model.Merchant.Review;
 import com.tecsol.batua.user.data.model.User.ChangePassword;
+import com.tecsol.batua.user.data.model.User.ContactUs;
+import com.tecsol.batua.user.data.model.User.CustomResponse;
 import com.tecsol.batua.user.data.model.User.Otp;
 import com.tecsol.batua.user.data.model.User.Pin;
-import com.tecsol.batua.user.data.model.User.CustomResponse;
+import com.tecsol.batua.user.data.model.User.Transaction;
+import com.tecsol.batua.user.data.model.User.TransactionResponse;
 import com.tecsol.batua.user.data.model.User.User;
 
 import java.util.List;
@@ -103,6 +107,19 @@ public interface BatuaUserService {
 
     @PUT(Config.RESET_PASSWORD)
     Observable<Response<CustomResponse>> resetPassword(@Body ChangePassword changePassword);
+
+    @POST(Config.VALIDATE_PROMOCODE)
+    Observable<Response<List<Discount>>> validatePromocode(@Body Discount discount);
+
+    @POST(Config.MAKE_PAYMENT)
+    Observable<Response<TransactionResponse>> makePayment(@Body Transaction transaction);
+
+    @FormUrlEncoded
+    @POST(Config.OFFER_EXIST)
+    Observable<Response<List<Discount>>> offerExist(@Field("merchantId")Integer merchantId);
+
+    @POST(Config.CONTACT_BATUA)
+    Observable<Response<CustomResponse>> contactBatua(@Body ContactUs contactUs);
 
     @Multipart
     @POST(Config.UPLOAD_IMAGE)

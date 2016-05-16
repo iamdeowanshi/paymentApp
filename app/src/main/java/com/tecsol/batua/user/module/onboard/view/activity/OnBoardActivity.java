@@ -1,22 +1,18 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
 import android.Manifest;
-import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.batua.android.user.R;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.tecsol.batua.user.Config;
 import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
@@ -35,8 +31,6 @@ import com.tecsol.batua.user.module.onboard.presenter.LoginViewInteractor;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpViewInteractor;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragmentPagerAdpater;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -82,9 +76,14 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        socialAuth.onActivityResult(requestCode, resultCode, data);
+        socialAuth.onActivityResult(this, requestCode, resultCode, data);
     }
 
     @OnPageChange(R.id.home_viewpager)
@@ -95,6 +94,11 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     // overidden methods of SocialAuth
     @Override
     public void onSocialConnectionSuccess(AuthResult result) {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
 
         Log.d("result-email", result.getAuthUser().getEmail());
         String email = result.getAuthUser().getEmail();
@@ -126,7 +130,7 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
 
     @Override
     public void onError(Throwable throwable) {
-
+        Log.d("error", throwable.getMessage());
     }
 
     // overidden methods of LoginViewInteractor
@@ -175,20 +179,15 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
         viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
 
-        if (e ==  null) {
+        if (e == null || e.getMessage() == null) {
             return;
         }
 
-        if (e.getMessage() ==  null) {
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
             return;
         }
 
-        if (e.getMessage().equals("Mobile number not verified")) {
-            Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY;
-            startActivity(MobileNumberActivity.class, null);
-            finish();
-            return;
-        }
         bakery.snackShort(getContentView(), e.getMessage());
     }
 
@@ -262,11 +261,23 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
     }
 
     public void normalSignUp(User user) {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         signUpUser = user;
         signUpPresenter.normalSignUp(user);
     }
 
     public void normalLogin(String username, String password, String deviceId) {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         loginPresenter.normalLogin(username, password, deviceId);
     }
 
@@ -279,8 +290,15 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
             @Override
             public void onPermissionGranted(String[] grantedPermissions) {
                 // permissions are granted
-                preferenceUtil.save(preferenceUtil.IS_LOGGED_IN, true);
                 preferenceUtil.save(preferenceUtil.USER, user);
+
+                if (!user.isPhoneVerified()) {
+                    Config.OTP_REQUEST_ACTIVITY = Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY;
+                    showVerifyPhoneDialog();
+                    return;
+                }
+
+                preferenceUtil.save(preferenceUtil.IS_LOGGED_IN, true);
                 if (user.isPinActivated() && user.isPinSet()) {
                     startActivity(PinLoginActivity.class, null);
                     finish();
@@ -302,6 +320,24 @@ public class OnBoardActivity extends BaseActivity implements SocialAuthCallback,
                 bakery.snackShort(getContentView(), "Location permission is required to login");
             }
         });
+    }
+
+    private void showVerifyPhoneDialog(){
+
+        AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+
+        alertbuilder.setTitle("Alert")
+                .setMessage("This number is not verified. Please verify your number.")
+                .setCancelable(false)
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        startActivity(MobileNumberActivity.class, null);
+                        dialog.dismiss();
+                        finish();
+                    }
+                });
+        AlertDialog alert = alertbuilder.create();
+        alert.show();
     }
 
 }

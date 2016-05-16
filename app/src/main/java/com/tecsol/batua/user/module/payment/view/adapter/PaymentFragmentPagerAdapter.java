@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.tecsol.batua.user.module.payment.view.fragment.CardFragment;
-import com.tecsol.batua.user.module.payment.view.fragment.NetBankingFragment;
+import com.tecsol.batua.user.module.payment.view.fragment.CardOrNetBankingFragment;
 import com.tecsol.batua.user.module.payment.view.fragment.WalletFragment;
 
 /**
@@ -18,11 +18,12 @@ public class PaymentFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public PaymentFragmentPagerAdapter(FragmentManager fm, Activity activity) {
         super(fm);
-        this.activity = activity;    }
+        this.activity = activity;
+    }
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 
     @Override
@@ -31,9 +32,7 @@ public class PaymentFragmentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return new WalletFragment();
             case 1:
-                return new CardFragment();
-            case 2:
-                return new NetBankingFragment();
+                return new CardOrNetBankingFragment();
         }
 
         return null;
@@ -45,9 +44,7 @@ public class PaymentFragmentPagerAdapter extends FragmentPagerAdapter {
             case 0:
                 return "Wallet";
             case 1:
-                return "Card";
-            case 2:
-                return "Net Banking";
+                return "Card/Net Banking";
         }
 
         return null;

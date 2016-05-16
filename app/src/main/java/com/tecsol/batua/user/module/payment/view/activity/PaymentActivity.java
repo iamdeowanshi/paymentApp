@@ -17,12 +17,9 @@ import butterknife.Bind;
 
 public class PaymentActivity extends BaseActivity {
 
-    @Bind(R.id.payment_tab_layout)
-    TabLayout paymentTabLayout;
-    @Bind(R.id.payment_viewpager)
-    ViewPager paymentViewpager;
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+    @Bind(R.id.payment_tab_layout) TabLayout paymentTabLayout;
+    @Bind(R.id.payment_viewpager) ViewPager paymentViewpager;
+    @Bind(R.id.toolbar) Toolbar toolbar;
     @Bind(R.id.toolbar_title) TextView title;
 
     @Override

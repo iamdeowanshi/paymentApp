@@ -1,10 +1,6 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -16,6 +12,7 @@ import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
@@ -50,6 +47,12 @@ public class PinLoginActivity extends BaseActivity implements PinLoginViewIntera
 
     @OnClick(R.id.btn_enter)
     void login(){
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         viewUtil.hideKeyboard(this);
         Pin pin = new Pin();
         pin.setUserId(user.getId());
@@ -102,6 +105,11 @@ public class PinLoginActivity extends BaseActivity implements PinLoginViewIntera
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void onPinLoginSuccess(User user) {
         startActivity(HomeActivity.class, null);
         finish();
@@ -121,6 +129,16 @@ public class PinLoginActivity extends BaseActivity implements PinLoginViewIntera
     public void onNetworkCallError(Throwable e) {
         viewUtil.hideKeyboard(this);
         setPinProgress.setVisibility(View.GONE);
+
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         bakery.snackShort(getContentView(), e.getMessage());
     }
 

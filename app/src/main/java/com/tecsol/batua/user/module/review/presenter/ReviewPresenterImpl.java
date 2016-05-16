@@ -7,11 +7,8 @@ import com.tecsol.batua.user.data.api.ApiErrorResponse;
 import com.tecsol.batua.user.data.api.ApiObserver;
 import com.tecsol.batua.user.data.api.BatuaUserService;
 import com.tecsol.batua.user.data.model.Merchant.Review;
-import com.tecsol.batua.user.data.model.User.User;
 import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseNetworkPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginPresenter;
-import com.tecsol.batua.user.module.onboard.presenter.LoginViewInteractor;
 
 import javax.inject.Inject;
 

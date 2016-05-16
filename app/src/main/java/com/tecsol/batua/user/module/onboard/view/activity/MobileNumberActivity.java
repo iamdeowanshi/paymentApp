@@ -1,11 +1,12 @@
 package com.tecsol.batua.user.module.onboard.view.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ProgressBar;
-
 
 import com.batua.android.user.R;
 import com.tecsol.batua.user.Config;
@@ -15,6 +16,7 @@ import com.tecsol.batua.user.injection.Injector;
 import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.callback.PermissionCallback;
 import com.tecsol.batua.user.module.common.util.Bakery;
+import com.tecsol.batua.user.module.common.util.InternetUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.onboard.presenter.OtpPresenter;
@@ -27,7 +29,6 @@ import butterknife.OnClick;
 
 public class MobileNumberActivity extends BaseActivity implements OtpViewInteractor{
 
-    final String[] SEND_SMS_PERMISSION = {Manifest.permission.SEND_SMS};
     final String[] READ_SMS_PERMISSION = {Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS};
 
     @Inject OtpPresenter otpPresenter;
@@ -47,8 +48,19 @@ public class MobileNumberActivity extends BaseActivity implements OtpViewInterac
         otpPresenter.attachViewInteractor(this);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     @OnClick(R.id.btn_send_otp)
     void onSendClick() {
+
+        if (!InternetUtil.hasInternetConnection(this)) {
+            showNoInternetTitleDialog(this);
+            return;
+        }
+
         viewUtil.hideKeyboard(this);
         Otp otp = new Otp();
         try{
@@ -59,38 +71,24 @@ public class MobileNumberActivity extends BaseActivity implements OtpViewInterac
             return;
         }
 
-        sendOtp(otp);
-    }
+        if (Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
+                Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY) {
+            otpPresenter.sendForgotPasswordOrPinOtp(otp);
+            return;
+        }
 
-    private void sendOtp(final Otp otp) {
-        requestPermission(SEND_SMS_PERMISSION, new PermissionCallback() {
-            @Override
-            public void onPermissionGranted(String[] grantedPermissions) {
-                if (Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PASSWORD_ACTIVITY ||
-                        Config.OTP_REQUEST_ACTIVITY == Config.FORGOT_PIN_ACTIVITY ||
-                        Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
-                    otpPresenter.sendForgotPasswordOrPinOtp(otp);
-                    return;
-                }
+        if (Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
+            otp.setType("send");
+            otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
+            otpPresenter.sendSignUpOtp(otp);
+            return;
+        }
 
-                if (Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_SIGNUP_ACTIVITY) {
-                    otp.setType("send");
-                    otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getId());
-                    otpPresenter.sendSignUpOtp(otp);
-                    return;
-                }
-            }
-
-            @Override
-            public void onPermissionDenied(String[] deniedPermissions) {
-                bakery.snackShort(getContentView(), "Sending SMS permission is required to continue");
-            }
-
-            @Override
-            public void onPermissionBlocked(String[] blockedPermissions) {
-                bakery.snackShort(getContentView(), "Sending SMS permission is required to continue");
-            }
-        });
+        if (Config.OTP_REQUEST_ACTIVITY == Config.PHONE_VERIFICATION_AFTER_LOGIN_ACTIVITY) {
+            otp.setType("send");
+            otp.setUserId(((User) preferenceUtil.read(preferenceUtil.USER, User.class)).getUserId());
+            otpPresenter.sendSignUpOtp(otp);
+        }
     }
 
     @Override
@@ -142,8 +140,40 @@ public class MobileNumberActivity extends BaseActivity implements OtpViewInterac
 
     @Override
     public void onNetworkCallError(Throwable e) {
+        if (e == null || e.getMessage() == null) {
+            return;
+        }
+
+        if (e.getMessage().equals("Already a social user")) {
+            showAlreadySocialUserDialog();
+            return;
+        }
+
+        if (e.getMessage().startsWith("failed to connect")) {
+            bakery.snackShort(getContentView(), "Server error");
+            return;
+        }
+
         viewUtil.hideKeyboard(this);
         progressBar.setVisibility(View.GONE);
         bakery.snackShort(getContentView(), e.getMessage());
+    }
+
+    private void showAlreadySocialUserDialog(){
+
+            AlertDialog.Builder alertbuilder = new AlertDialog.Builder(this);
+
+            alertbuilder.setTitle("Alert")
+                    .setMessage("This number is associated with a social login. Please login with your Facebook or Google to reset the password.")
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(OnBoardActivity.class, null);
+                            dialog.dismiss();
+                            finish();
+                        }
+                    });
+            AlertDialog alert = alertbuilder.create();
+            alert.show();
     }
 }

@@ -12,6 +12,7 @@ import com.tecsol.batua.user.module.common.util.PermissionUtil;
 import com.tecsol.batua.user.module.common.util.PreferenceUtil;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.common.util.social.SocialAuth;
+import com.tecsol.batua.user.module.dashboard.presenter.ContactUsPresenterImpl;
 import com.tecsol.batua.user.module.dashboard.presenter.HomePresenterImpl;
 import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
 import com.tecsol.batua.user.module.dashboard.view.fragment.NavigationFragment;
@@ -36,6 +37,8 @@ import com.tecsol.batua.user.module.onboard.view.activity.SetPinActivity;
 import com.tecsol.batua.user.module.onboard.view.activity.SplashActivity;
 import com.tecsol.batua.user.module.onboard.view.fragment.LoginFragment;
 import com.tecsol.batua.user.module.onboard.view.fragment.SignUpFragment;
+import com.tecsol.batua.user.module.payment.presenter.DiscountPresenterImpl;
+import com.tecsol.batua.user.module.payment.presenter.TransactionPresenterImpl;
 import com.tecsol.batua.user.module.payment.view.activity.PaymentSuccessActivity;
 import com.tecsol.batua.user.module.payment.view.activity.PrePaymentConfirmationActivity;
 import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenterImpl;
@@ -44,6 +47,7 @@ import com.tecsol.batua.user.module.profile.presenter.SetPinPresenterImpl;
 import com.tecsol.batua.user.module.profile.view.activity.EditProfileActivity;
 import com.tecsol.batua.user.module.profile.view.activity.ProfileActivity;
 import com.tecsol.batua.user.module.review.presenter.ReviewPresenterImpl;
+import com.tecsol.batua.user.module.support.activity.ContactUsActivity;
 
 import javax.inject.Singleton;
 
@@ -81,6 +85,7 @@ public interface ApplicationComponent {
     void inject(PinLoginActivity pinLoginActivity);
     void inject(ChangePasswordActivity changePasswordActivity);
     void inject(ResetPinActivity resetPinActivity);
+    void inject(ContactUsActivity contactUsActivity);
 
     // inject methods for presenter classes
     void inject(SignUpPresenterImpl loginPresenter);
@@ -97,6 +102,9 @@ public interface ApplicationComponent {
     void inject(PinLoginPresenterImpl pinLoginPresenter);
     void inject(ChangePasswordPresenterImpl changePasswordPresenter);
     void inject(ResetPasswordPresenterImpl resetPasswordPresenter);
+    void inject(DiscountPresenterImpl discountPresenter);
+    void inject(ContactUsPresenterImpl contactUsPresenter);
+    void inject(TransactionPresenterImpl transactionPresenter);
 
     // inject methods for util classes
     void inject(PreferenceUtil preferenceUtil);

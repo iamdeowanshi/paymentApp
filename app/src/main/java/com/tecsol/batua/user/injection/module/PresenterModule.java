@@ -1,5 +1,7 @@
 package com.tecsol.batua.user.injection.module;
 
+import com.tecsol.batua.user.module.dashboard.presenter.ContactUsPresenter;
+import com.tecsol.batua.user.module.dashboard.presenter.ContactUsPresenterImpl;
 import com.tecsol.batua.user.module.dashboard.presenter.HomePresenter;
 import com.tecsol.batua.user.module.dashboard.presenter.HomePresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.ChangePasswordPresenter;
@@ -20,6 +22,10 @@ import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.SignUpPresenterImpl;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenter;
 import com.tecsol.batua.user.module.onboard.presenter.VerifyOtpPresenterImpl;
+import com.tecsol.batua.user.module.payment.presenter.DiscountPresenter;
+import com.tecsol.batua.user.module.payment.presenter.DiscountPresenterImpl;
+import com.tecsol.batua.user.module.payment.presenter.TransactionPresenter;
+import com.tecsol.batua.user.module.payment.presenter.TransactionPresenterImpl;
 import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenter;
 import com.tecsol.batua.user.module.profile.presenter.PinStatusPresenterImpl;
 import com.tecsol.batua.user.module.profile.presenter.ProfilePresenter;
@@ -101,6 +107,21 @@ public class PresenterModule {
     @Provides
     public ResetPasswordPresenter provideResetPasswordPresenter() {
         return new ResetPasswordPresenterImpl();
+    }
+
+    @Provides
+    public DiscountPresenter provideDiscountPresenter() {
+        return new DiscountPresenterImpl();
+    }
+
+    @Provides
+    public TransactionPresenter provideTransactionPresenter() {
+        return new TransactionPresenterImpl();
+    }
+
+    @Provides
+    public ContactUsPresenter provideContactUsPresenter() {
+        return new ContactUsPresenterImpl();
     }
 
 }

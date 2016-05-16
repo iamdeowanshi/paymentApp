@@ -72,6 +72,11 @@ public class SignUpFragment extends BaseFragment {
 
     @OnTextChanged(R.id.edt_mobile)
     void verifyMobile(CharSequence mobile){
+
+        if (!edtMobile.isFocused()) {
+            return;
+        }
+
         inputLayoutMobile.setErrorEnabled(false);
 
         if (!isValidNumber(mobile)) {
