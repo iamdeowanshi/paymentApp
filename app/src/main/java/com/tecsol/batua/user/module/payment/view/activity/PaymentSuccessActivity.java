@@ -18,6 +18,7 @@ import com.tecsol.batua.user.module.base.BaseActivity;
 import com.tecsol.batua.user.module.common.util.Bakery;
 import com.tecsol.batua.user.module.common.util.ViewUtil;
 import com.tecsol.batua.user.module.dashboard.view.activity.HomeActivity;
+import com.tecsol.batua.user.module.payment.util.DateValidationUtil;
 
 import org.parceler.Parcels;
 
@@ -62,10 +63,12 @@ public class PaymentSuccessActivity extends BaseActivity {
     private void showSuccessTransaction(TransactionResponse transactionResponse) {
         txtMerchantName.setText(transactionResponse.getMerchant().getName());
         txtMerchantAddress.setText(transactionResponse.getMerchant().getAddress());
-        //txtTransactionId.setText(transactionResponse.getTransactionDetail().get);
-        txtAmount.setText(transactionResponse.getInitialAmount());
-        //txtDate.setText(transactionResponse.getD);
-        txtPromocodeAmount.setText(transactionResponse.getPromocodeAmount());
+        txtTransactionId.setText(transactionResponse.getTransactionDetail().getOrderNumber());
+        txtAmount.setText(transactionResponse.getInitialAmount().toString());
+        txtDate.setText(transactionResponse.getTransactionDetail().getCreatedAt());
+        txtPromocodeAmount.setText(transactionResponse.getPromocodeAmount().toString());
+        txtDate.setText(DateValidationUtil.formatDateNormal(transactionResponse.getTransactionDetail().getCreatedAt()));
+        txtTime.setText(DateValidationUtil.formatTime(transactionResponse.getTransactionDetail().getCreatedAt()));
     }
 
     @Override

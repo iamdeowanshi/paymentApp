@@ -36,6 +36,213 @@ public class Transaction extends BaseModel {
     @SerializedName("promocode")
     private Discount promocode;
 
+    @SerializedName("bankName")
+    private String bankName;
+    @SerializedName("orderNumber")
+    private String orderNumber;
+    @SerializedName("transactionId")
+    private String transactionId;
+    @SerializedName("mode")
+    private String mode;
+
+
+    @SerializedName("additionalCharges")
+    private Float additionalCharges;
+    @SerializedName("netAmountDebited")
+    private String netAmountDebited;
+    @SerializedName("bankReferenceNumber")
+    private String bankReferenceNumber;
+    @SerializedName("cardType")
+    private String cardType;
+    @SerializedName("cardNumber")
+    private String cardNumber;
+    @SerializedName("expiryDate")
+    private String expiryDate;
+
+    @SerializedName("createdAt")
+    private String createdAt;
+
+    /**
+     *
+     * @return
+     * The bankName
+     */
+    public String getBankName() {
+        return bankName;
+    }
+
+    /**
+     *
+     * @param bankName
+     * The bankName
+     */
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    /**
+     *
+     * @return
+     * The orderNumber
+     */
+    public String getOrderNumber() {
+        return orderNumber;
+    }
+
+    /**
+     *
+     * @param orderNumber
+     * The orderNumber
+     */
+    public void setOrderNumber(String orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    /**
+     *
+     * @return
+     * The transactionId
+     */
+    public String getTransactionId() {
+        return transactionId;
+    }
+
+    /**
+     *
+     * @param transactionId
+     * The transactionId
+     */
+    public void setTransactionId(String transactionId) {
+        this.transactionId = transactionId;
+    }
+
+    /**
+     *
+     * @return
+     * The mode
+     */
+    public Object getMode() {
+        return mode;
+    }
+
+    /**
+     *
+     * @param mode
+     * The mode
+     */
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    /**
+     *
+     * @return
+     * The additionalCharges
+     */
+    public Float getAdditionalCharges() {
+        return additionalCharges;
+    }
+
+    /**
+     *
+     * @param additionalCharges
+     * The additionalCharges
+     */
+    public void setAdditionalCharges(Float additionalCharges) {
+        this.additionalCharges = additionalCharges;
+    }
+
+    /**
+     *
+     * @return
+     * The netAmountDebited
+     */
+    public Object getNetAmountDebited() {
+        return netAmountDebited;
+    }
+
+    /**
+     *
+     * @param netAmountDebited
+     * The netAmountDebited
+     */
+    public void setNetAmountDebited(String netAmountDebited) {
+        this.netAmountDebited = netAmountDebited;
+    }
+
+    /**
+     *
+     * @return
+     * The bankReferenceNumber
+     */
+    public Object getBankReferenceNumber() {
+        return bankReferenceNumber;
+    }
+
+    /**
+     *
+     * @param bankReferenceNumber
+     * The bankReferenceNumber
+     */
+    public void setBankReferenceNumber(String bankReferenceNumber) {
+        this.bankReferenceNumber = bankReferenceNumber;
+    }
+
+    /**
+     *
+     * @return
+     * The cardType
+     */
+    public Object getCardType() {
+        return cardType;
+    }
+
+    /**
+     *
+     * @param cardType
+     * The cardType
+     */
+    public void setCardType(String cardType) {
+        this.cardType = cardType;
+    }
+
+    /**
+     *
+     * @return
+     * The cardNumber
+     */
+    public Object getCardNumber() {
+        return cardNumber;
+    }
+
+    /**
+     *
+     * @param cardNumber
+     * The cardNumber
+     */
+    public void setCardNumber(String cardNumber) {
+        this.cardNumber = cardNumber;
+    }
+
+    /**
+     *
+     * @return
+     * The expiryDate
+     */
+    public Object getExpiryDate() {
+        return expiryDate;
+    }
+
+    /**
+     *
+     * @param expiryDate
+     * The expiryDate
+     */
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+
     /**
      *
      * @return
@@ -178,6 +385,14 @@ public class Transaction extends BaseModel {
      */
     public void setPromocode(Discount promocode) {
         this.promocode = promocode;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
     }
 
 }

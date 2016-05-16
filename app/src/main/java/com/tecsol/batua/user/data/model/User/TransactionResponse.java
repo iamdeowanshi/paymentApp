@@ -17,7 +17,7 @@ public class TransactionResponse extends BaseModel {
     private Integer id;
 
     @SerializedName("initialAmount")
-    private Integer initialAmount;
+    private Float initialAmount;
 
     @SerializedName("reducedAmount")
     private Double reducedAmount;
@@ -47,7 +47,7 @@ public class TransactionResponse extends BaseModel {
     private Integer promocodeId;
 
     @SerializedName("offerDiscountId")
-    private Discount offerDiscountId;
+    private Integer offerDiscountId;
 
     @SerializedName("merchantId")
     private Integer merchantId;
@@ -74,13 +74,13 @@ public class TransactionResponse extends BaseModel {
     private PaymentMode paymentMode;
 
     @SerializedName("promocodeAmount")
-    private Integer promocodeAmount;
+    private Float promocodeAmount;
 
     @SerializedName("batuaCommission")
-    private Integer batuaCommission;
+    private Float batuaCommission;
 
     @SerializedName("merchantFee")
-    private Double merchantFee;
+    private Float merchantFee;
 
     /**
      *
@@ -105,7 +105,7 @@ public class TransactionResponse extends BaseModel {
      * @return
      * The initialAmount
      */
-    public Integer getInitialAmount() {
+    public Float getInitialAmount() {
         return initialAmount;
     }
 
@@ -114,7 +114,7 @@ public class TransactionResponse extends BaseModel {
      * @param initialAmount
      * The initialAmount
      */
-    public void setInitialAmount(Integer initialAmount) {
+    public void setInitialAmount(Float initialAmount) {
         this.initialAmount = initialAmount;
     }
 
@@ -285,7 +285,7 @@ public class TransactionResponse extends BaseModel {
      * @return
      * The offerDiscountId
      */
-    public Discount getOfferDiscountId() {
+    public Integer getOfferDiscountId() {
         return offerDiscountId;
     }
 
@@ -294,7 +294,7 @@ public class TransactionResponse extends BaseModel {
      * @param offerDiscountId
      * The offerDiscountId
      */
-    public void setOfferDiscountId(Discount offerDiscountId) {
+    public void setOfferDiscountId(Integer offerDiscountId) {
         this.offerDiscountId = offerDiscountId;
     }
 
@@ -447,7 +447,7 @@ public class TransactionResponse extends BaseModel {
      * @return
      * The promocodeAmount
      */
-    public Integer getPromocodeAmount() {
+    public Float getPromocodeAmount() {
         return promocodeAmount;
     }
 
@@ -456,7 +456,7 @@ public class TransactionResponse extends BaseModel {
      * @param promocodeAmount
      * The promocodeAmount
      */
-    public void setPromocodeAmount(Integer promocodeAmount) {
+    public void setPromocodeAmount(Float promocodeAmount) {
         this.promocodeAmount = promocodeAmount;
     }
 
@@ -465,7 +465,7 @@ public class TransactionResponse extends BaseModel {
      * @return
      * The batuaCommission
      */
-    public Integer getBatuaCommission() {
+    public Float getBatuaCommission() {
         return batuaCommission;
     }
 
@@ -474,7 +474,7 @@ public class TransactionResponse extends BaseModel {
      * @param batuaCommission
      * The batuaCommission
      */
-    public void setBatuaCommission(Integer batuaCommission) {
+    public void setBatuaCommission(Float batuaCommission) {
         this.batuaCommission = batuaCommission;
     }
 
@@ -483,7 +483,7 @@ public class TransactionResponse extends BaseModel {
      * @return
      * The merchantFee
      */
-    public Double getMerchantFee() {
+    public Float getMerchantFee() {
         return merchantFee;
     }
 
@@ -492,7 +492,7 @@ public class TransactionResponse extends BaseModel {
      * @param merchantFee
      * The merchantFee
      */
-    public void setMerchantFee(Double merchantFee) {
+    public void setMerchantFee(Float merchantFee) {
         this.merchantFee = merchantFee;
     }
 

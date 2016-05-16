@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -19,7 +18,7 @@
         android:paddingRight="15dp"
         android:theme="@style/PaymentStatus"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextAppearance="?attr/titleTextAppearance"/>
+        app:titleTextAppearance="?attr/titleTextAppearance" />
 
     <ScrollView
         android:id="@+id/scroll_view"
@@ -49,29 +48,22 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="30dp"
+                    android:layout_marginBottom="20dp"
                     android:text="Payment Successful"
                     android:textColor="@android:color/white"
                     android:textSize="24sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/text__merchant_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Pizza Hut"
                     android:layout_below="@+id/text_payment"
+                    android:text="Pizza Hut"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_18"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/text__merchant_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/text__merchant_name"
-                    android:text="J P Nagar, Bangalore"
-                    android:textColor="@android:color/white"/>
 
                 <TextView
                     android:id="@+id/text_transaction"
@@ -80,29 +72,46 @@
                     android:layout_alignBaseline="@+id/text__merchant_name"
                     android:layout_alignParentRight="true"
                     android:text="Transaction ID"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
 
-                <TextView
-                    android:id="@+id/txt_transaction_id"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/address_transaction_id"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/text__merchant_address"
-                    android:layout_alignParentRight="true"
-                    android:text="M756357875"
-                    android:textColor="@android:color/white"
-                    android:textStyle="bold"/>
+                    android:layout_below="@+id/text__merchant_name"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/text__merchant_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:text="J P Nagar, Bangalore"
+                        android:layout_weight="2"
+                        android:textColor="@android:color/white" />
+
+                    <TextView
+                        android:id="@+id/txt_transaction_id"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/text__merchant_address"
+                        android:layout_alignParentRight="true"
+                        android:text="M756357875"
+                        android:paddingLeft="5dp"
+                        android:textColor="@android:color/white"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/text_rupee_symbol"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/text__merchant_address"
+                    android:layout_below="@+id/address_transaction_id"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="15dp"
                     android:padding="5dp"
                     android:text="@string/rupee_symbol"
                     android:textColor="@android:color/white"
-                    android:textSize="26sp"/>
+                    android:textSize="26sp" />
 
                 <TextView
                     android:id="@+id/text_amount"
@@ -113,7 +122,7 @@
                     android:text="1000.00"
                     android:textColor="@android:color/white"
                     android:textSize="70sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/text_time"
@@ -122,7 +131,7 @@
                     android:layout_below="@+id/text_amount"
                     android:layout_toRightOf="@+id/text_rupee_symbol"
                     android:text="12:23:32am"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/text_date"
@@ -131,7 +140,7 @@
                     android:layout_below="@+id/text_amount"
                     android:layout_toLeftOf="@+id/text_rupee_symbol"
                     android:text="12/12/2015"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white" />
 
             </RelativeLayout>
 
@@ -147,7 +156,7 @@
                     android:text="Offer / Promo applied :"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/text_size_12"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/promo_amount"
@@ -156,7 +165,7 @@
                     android:layout_alignParentRight="true"
                     android:text="Rs. 0"
                     android:textColor="@android:color/white"
-                    android:textSize="@dimen/text_size_12"/>
+                    android:textSize="@dimen/text_size_12" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -180,7 +189,7 @@
                         android:text="Rate "
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_size_16"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -188,7 +197,7 @@
                         android:text="Pizza Hut"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/text_size_16"
-                        android:textStyle="bold"/>
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 
@@ -201,7 +210,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:progressTint="@color/white"
-                    android:rating="0"/>
+                    android:rating="0" />
 
             </RelativeLayout>
 
@@ -212,13 +221,13 @@
                 android:layout_below="@+id/review_layout"
                 android:layout_marginBottom="10dp"
                 android:backgroundTint="@color/white"
+                android:focusable="true"
                 android:hint="Your Review"
                 android:maxLength="750"
                 android:paddingLeft="10dp"
-                android:focusable="true"
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
             <Button
                 android:id="@+id/btn_submit"
@@ -231,7 +240,7 @@
                 android:drawableLeft="@drawable/share"
                 android:text="Submit"
                 android:textAllCaps="false"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
 
         </RelativeLayout>
