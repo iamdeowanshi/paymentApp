@@ -1,6 +1,9 @@
 package com.batua.android.merchant.module.dashboard.view.adapter;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -37,7 +40,9 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     public HomeFragmentPagerAdapter(FragmentManager fm, List<Merchant> merchantList) {
         super(fm);
         this.merchantList = merchantList;
+
         setMerchantList();
+       // new AsyncCaller().execute();
     }
 
     private static int NUMBER_OF_HOME_FRAGMENT = 3;
@@ -112,5 +117,14 @@ public class HomeFragmentPagerAdapter extends FragmentStatePagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
+    }
+
+    private class AsyncCaller extends AsyncTask<Void ,Void ,Void> {
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            setMerchantList();
+            return null;
+        }
     }
 }

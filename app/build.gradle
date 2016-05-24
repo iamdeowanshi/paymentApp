@@ -82,6 +82,7 @@ dependencies {
 
     //circular image
     compile 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 
     //multi image pick
     compile project(':imagepicker')

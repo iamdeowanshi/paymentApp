@@ -11,18 +11,26 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
+import com.batua.android.merchant.R;
 import com.batua.android.merchant.injection.Injector;
 import com.batua.android.merchant.module.common.util.Bakery;
 import com.batua.android.merchant.module.common.util.PermissionUtil;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Scope;
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.plus.Plus;
 
 import java.io.IOException;
@@ -37,7 +45,7 @@ import timber.log.Timber;
  *         Socail Authentication class.
  */
 
-public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class SocialAuth implements GoogleApiClient.OnConnectionFailedListener {
 
     public enum SocialType {
         GOOGLE,
@@ -54,6 +62,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
     private boolean isResolving = false;
     private boolean shouldResolve = false;
     private GoogleApiClient googleApiClient;
+    private GoogleSignInOptions gso;
     private ProgressDialog progressDialog;
 
     private static String[] ACCOUNT_PERMISSION = {Manifest.permission.GET_ACCOUNTS};
@@ -114,13 +123,14 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         bakery.snackShort(getContentView(), "Permissions were not granted");
     }
 
-    // Google Api callbacks
+/*    // Google Api callbacks
     @Override
     public void onConnected(Bundle bundle) {
         shouldResolve = false;
         try {
-            new RetrieveTokenTask(Plus.PeopleApi.getCurrentPerson(googleApiClient).toString(), Plus.AccountApi.getAccountName(googleApiClient))
-                    .execute(Plus.AccountApi.getAccountName(googleApiClient));
+            signOut();
+            *//*new RetrieveTokenTask(Plus.PeopleApi.getCurrentPerson(googleApiClient).toString(), Plus.AccountApi.getAccountName(googleApiClient))
+                    .execute(Plus.AccountApi.getAccountName(googleApiClient));*//*
         } catch (NullPointerException e) {
             callback.onError(e);
             hideProgress();
@@ -129,7 +139,7 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     @Override
     public void onConnectionSuspended(int i) {
-    }
+    }*/
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
@@ -149,20 +159,35 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         this.activity = activity;
-
         if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            handleSignInResult(result);
+        }
+/*        if (requestCode == RC_SIGN_IN) {
             if (resultCode != Activity.RESULT_OK) {
                 shouldResolve = false;
             }
 
             isResolving = false;
-            googleApiClient.connect();
+            hideProgress();
         }
 
         if (requestCode == REQ_SIGN_IN_REQUIRED && resultCode == Activity.RESULT_OK) {
             // Retrieving access token after sign in.
+            signOut();
             new RetrieveTokenTask(Plus.PeopleApi.getCurrentPerson(googleApiClient).toString(), Plus.AccountApi.getAccountName(googleApiClient))
                     .execute(Plus.AccountApi.getAccountName(googleApiClient));
+        }*/
+    }
+
+    private void handleSignInResult(GoogleSignInResult result) {
+        hideProgress();
+        if (result.isSuccess()) {
+            // Signed in successfully, show authenticated UI.
+            GoogleSignInAccount acct = result.getSignInAccount();
+            AuthResult authResult = new AuthResult(acct);
+            callback.onSuccess(authResult);
+            signOut();
         }
     }
 
@@ -170,12 +195,29 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
      * Initializing Google.
      */
     private void initGoogleClient() {
-        googleApiClient = new GoogleApiClient.Builder(activity)
+/*        googleApiClient = new GoogleApiClient.Builder(activity)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(Plus.API)
                 .addScope(new Scope(Scopes.PROFILE))
+                .build();*/
+
+        gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
                 .build();
+
+        googleApiClient = new GoogleApiClient.Builder(activity)
+                .enableAutoManage((FragmentActivity) activity /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .addOnConnectionFailedListener(this)
+                .addApi(Plus.API)
+                .addScope(new Scope(Scopes.PROFILE))
+                .build();
+    }
+
+    private void signIn() {
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
+        activity.startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     public void setCallback(SocialAuthCallback callback) {
@@ -201,7 +243,8 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
 
     private void googleLogin() {
         shouldResolve = true;
-        googleApiClient.connect();
+        //googleApiClient.connect();
+        signIn();
         showProgress();
     }
 
@@ -210,9 +253,21 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
      */
     public void disconnect() {
         if (socialType == SocialType.GOOGLE) {
+            shouldResolve = false;
+            isResolving = false;
             googleApiClient.disconnect();
             Timber.d("google logout");
         }
+    }
+
+    private void signOut() {
+        Auth.GoogleSignInApi.signOut(googleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        Timber.d("Logged out");
+                    }
+                });
     }
 
     private void showProgress() {
@@ -227,9 +282,9 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
         progressDialog.dismiss();
     }
 
-    /**
+ /*   *//**
      * Retrieving access token from google.
-     */
+     *//*
     private class RetrieveTokenTask extends AsyncTask<String, Void, String> {
 
         String jsonData;
@@ -270,6 +325,6 @@ public class SocialAuth implements GoogleApiClient.ConnectionCallbacks, GoogleAp
                 hideProgress();
             }
         }
-    }
+    }*/
 
 }

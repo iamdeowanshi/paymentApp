@@ -80,6 +80,7 @@ public class GalleryViewPagerAdapter extends PagerAdapter {
             this.position = position;
 
             Glide.with(context).load(images.get(position).getUrl()).fitCenter().into(imageView);
+
         }
     }
 

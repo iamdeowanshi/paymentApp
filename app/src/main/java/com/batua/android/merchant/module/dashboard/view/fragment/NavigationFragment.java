@@ -1,6 +1,8 @@
 package com.batua.android.merchant.module.dashboard.view.fragment;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
@@ -21,6 +23,7 @@ import com.batua.android.merchant.module.dashboard.presenter.LogoutViewInteracto
 import com.batua.android.merchant.module.dashboard.view.activity.HomeActivity;
 import com.batua.android.merchant.module.onboard.view.activity.LoginActivity;
 import com.batua.android.merchant.module.profile.view.activity.ProfileActivity;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -78,7 +81,13 @@ public class NavigationFragment extends BaseFragment implements LogoutViewIntera
         user = (User) preferenceUtil.read(preferenceUtil.USER, User.class);
         deviceId = preferenceUtil.readString(preferenceUtil.DEVICE_ID, "");
 
-        initializeProfile();
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                initializeProfile();
+            }
+        });
+        //initializeProfile();
     }
 
     @Override

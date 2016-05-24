@@ -82,7 +82,7 @@ public class LoginActivity extends BaseActivity implements SocialAuthCallback, A
 
     @Override
     public void onSuccess(AuthResult result) {
-        socialAuth.disconnect();
+        //socialAuth.disconnect();
         loginPresenter.socialLogin(result.getAuthUser().getEmail(), result.getAuthUser().getSocialId());
     }
 

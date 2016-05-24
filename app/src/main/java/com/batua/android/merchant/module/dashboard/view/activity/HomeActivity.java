@@ -160,7 +160,21 @@ public class HomeActivity extends BaseActivity implements MerchantListViewIntera
     }
 
     @OnTextChanged(R.id.txt_search)
-    public void searchMerchant(CharSequence filterText){
+    public void onSearchTextChange(final CharSequence filterText){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                searchMerchant(filterText);
+            }
+        });
+    }
+
+    @OnPageChange(R.id.home_viewpager)
+    public void onPageSelected(int position){
+        SELECTED_PAGE = position;
+    }
+
+    private void searchMerchant(CharSequence filterText) {
         if (!filterText.toString().isEmpty()) {
             filteredMerchantList = new ArrayList<>();
             for (Merchant merchant : unFilteredMerchantList) {
@@ -178,13 +192,7 @@ public class HomeActivity extends BaseActivity implements MerchantListViewIntera
         loadFragments();
     }
 
-    @OnPageChange(R.id.home_viewpager)
-    public void onPageSelected(int position){
-        SELECTED_PAGE = position;
-    }
-
     private void loadFragments() {
-
         homeViewPager.setAdapter(new HomeFragmentPagerAdapter(getSupportFragmentManager(), filteredMerchantList));
         homeViewPager.setCurrentItem(SELECTED_PAGE);
         homeTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
@@ -194,6 +202,7 @@ public class HomeActivity extends BaseActivity implements MerchantListViewIntera
                 homeTabLayout.setupWithViewPager(homeViewPager);
             }
         });
+        homeViewPager.setOffscreenPageLimit(1);
     }
 
     private void initializeNavigation() {
