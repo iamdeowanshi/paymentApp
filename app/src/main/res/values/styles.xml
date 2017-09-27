@@ -1,0 +1,68 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- changing color of back arrow -->
+        <item name="colorControlNormal">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/blue_light</item>
+        <item name="android:actionMenuTextAppearance">@style/menuTitleTheme</item>
+    </style>
+
+    <style name="PaymentStatus" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- changing color of back arrow -->
+        <item name="colorControlNormal">@color/sky_blue</item>
+        <item name="colorAccent">@color/white</item>
+        <item name="android:actionMenuTextColor">@color/sky_blue</item>
+        <item name="android:actionMenuTextAppearance">@style/menuTitleTheme</item>
+    </style>
+
+    <style name="login_tab_layout_font_style">
+        <item name="android:textSize">@dimen/text_size_18</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="tab_layout_font_style">
+        <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="TextLabel" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textSize">14sp</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/blue_dark</item>
+        <item name="colorControlNormal">@color/blue_dark</item>
+        <item name="colorControlActivated">@color/blue_dark</item>
+    </style>
+
+    <style name="error_appearance" parent="@android:style/TextAppearance">
+        <item name="android:textColor">@color/red</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="menuTitleTheme">
+        <item name="android:textSize">@dimen/text_size_18_to_pix</item>
+    </style>
+
+    <style name="BlueTheme" parent="AppTheme">
+        <item name="android:colorPrimaryDark">@color/sky_blue_dark</item>
+    </style>
+
+    <style name="ReviewRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/ratingstars</item>
+    </style>
+
+    <style name="PaymentRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/payment_rating</item>
+    </style>
+
+    <style name="RadioButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="colorControlHighlight">@android:color/transparent</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+</resources>

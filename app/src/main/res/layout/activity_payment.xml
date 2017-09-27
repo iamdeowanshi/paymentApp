@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.batua.android.user.ui.activity.PaymentActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/sky_blue"
+        android:elevation="@dimen/elevation_depth"
+        android:layout_alignParentTop="true"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextAppearance="?attr/titleTextAppearance">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:textColor="@color/white"
+            android:textSize="@dimen/toolbar_title_font_size"/>
+
+    </android.support.v7.widget.Toolbar>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_below="@+id/toolbar"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/details_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_size_12"
+                android:background="@android:color/white"
+                android:elevation="@dimen/elevation_depth"
+                android:paddingBottom="20dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="8dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/text__merchant_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pizza Hut"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text__merchant_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text__merchant_name"
+                    android:text="J P Nagar, Bangalote - 560012"/>
+
+                <TextView
+                    android:id="@+id/text_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text__merchant_address"
+                    android:layout_marginTop="30dp"
+                    android:text="Total Amount :"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/text_amount_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/text_amount"
+                    android:text="1000"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_18"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/text_amount"
+                    android:layout_marginRight="5dp"
+                    android:layout_toLeftOf="@+id/text_amount_value"
+                    android:text="@string/rupee_symbol"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_size_18"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:isScrollContainer="false"
+                android:layout_below="@+id/details_layout"
+                android:layout_marginBottom="@dimen/text_size_12"
+                android:layout_marginLeft="@dimen/text_size_12"
+                android:layout_marginRight="@dimen/text_size_12"
+                android:background="@android:color/white"
+                android:elevation="@dimen/elevation_depth"
+                android:orientation="vertical">
+
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/payment_tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white"
+                    android:elevation="2dp"
+                    android:fillViewport="true"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/sky_blue"
+                    app:tabSelectedTextColor="@color/sky_blue"
+                    app:tabTextAppearance="@style/tab_layout_font_style"
+                    app:tabTextColor="@color/sky_blue_light"/>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/payment_viewpager"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:isScrollContainer="false"
+                    android:layout_below="@+id/payment_tab_layout"
+                    android:layout_gravity="fill_horizontal"
+                    android:padding="@dimen/text_size_12"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_margin="10dp"
+    android:background="@android:color/white"
+    android:elevation="@dimen/elevation_depth">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@android:color/white">
+
+
+        <RelativeLayout
+            android:id="@+id/cash_back_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:id="@+id/transaction_recieved_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_recieved_title" />
+
+            <TextView
+                android:id="@+id/txt_transaction_recieved_against"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/transaction_recieved_title"
+                android:paddingLeft="3dp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transaction_amount_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cash_back_layout">
+
+            <TextView
+                android:id="@+id/rupee_symbol"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rupee_symbol"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_18" />
+
+            <TextView
+                android:id="@+id/txt_amount_paid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/rupee_symbol"
+                android:layout_toRightOf="@+id/rupee_symbol"
+                android:paddingLeft="2dp"
+                android:text="@string/amount"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/text_size_18" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:id="@+id/order_number_layout"
+            android:layout_below="@+id/transaction_amount_layout">
+
+            <TextView
+                android:id="@+id/order_number_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_num_title"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/txt_order_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/order_number_title"
+                android:layout_toRightOf="@+id/order_number_title"
+                android:paddingLeft="2dp"
+                android:text="8970653762534"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/txt_payment_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="15/03/2016"
+                android:textSize="@dimen/text_size_14" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/transaction_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_below="@+id/order_number_layout">
+
+            <TextView
+                android:id="@+id/transaction_number_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/transaction_number_title"
+                android:textSize="@dimen/text_size_14" />
+
+            <TextView
+                android:id="@+id/txt_transaction_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/transaction_number_title"
+                android:layout_toRightOf="@+id/transaction_number_title"
+                android:paddingLeft="2dp"
+                android:text="8970653762534"
+                android:textSize="@dimen/text_size_14"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txt_card_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Credit / Debit Card"
+                android:textSize="@dimen/text_size_14" />
+
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_make_another_payment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:visibility="gone"
+            android:text="@string/make_another_payment"
+            android:textColor="@color/white"
+            android:background="@color/pink"
+            android:layout_below="@+id/transaction_layout"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

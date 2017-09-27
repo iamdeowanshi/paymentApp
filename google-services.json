@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "348607505068",
+    "project_id": "batua-user"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:348607505068:android:b2033472a960a8df",
+        "android_client_info": {
+          "package_name": "com.batua.android.user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "348607505068-i58smtoqk1knd0h71ajop7kkesgpqihs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.batua.android.user",
+            "certificate_hash": "52F07FB0B08AEBF0B237014CEB3988C8F66D404F"
+          }
+        },
+        {
+          "client_id": "348607505068-3s46hb6b6e7ld2nru854tq707c9198h3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCF76yBJ4uAIW-3MKuyDWDzYwYdDl-FFOQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

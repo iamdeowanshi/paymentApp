@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/tool_bar_blue"
+        app:titleTextAppearance="?attr/titleTextAppearance"
+        android:theme="@style/AppTheme"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:elevation="@dimen/elevation_depth"
+        app:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Change PIN"
+            android:textSize="@dimen/toolbar_title_font_size"
+            android:textColor="@color/white"
+            android:background="@android:color/transparent"
+            android:id="@+id/toolbar_title"/>
+
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:elevation="@dimen/elevation_depth"
+        android:background="@android:color/white">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_merchant_current_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorTextAppearance="@style/error_appearance"
+            android:theme="@style/TextLabel">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/edt_merchant_current_pin"
+                android:hint="@string/merchant_current_pin"
+                android:textColorHint="@color/light_gray"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_16"
+                android:maxLength="4"
+                android:inputType="numberPassword"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/view1"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_merchant_new_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorTextAppearance="@style/error_appearance"
+            android:theme="@style/TextLabel"
+            android:layout_below="@+id/input_layout_merchant_current_pin">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/edt_merchant_new_pin"
+                android:hint="@string/merchant_new_pin"
+                android:textColorHint="@color/light_gray"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_16"
+                android:maxLength="4"
+                android:inputType="numberPassword"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/input_layout_merchant_current_password"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_layout_merchant_confirm_pin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:errorTextAppearance="@style/error_appearance"
+            android:theme="@style/TextLabel"
+            android:layout_below="@+id/input_layout_merchant_new_pin">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:id="@+id/edt_merchant_confirm_pin"
+                android:hint="@string/merchant_confirm_pin"
+                android:textColorHint="@color/light_gray"
+                android:paddingLeft="10dp"
+                android:textSize="@dimen/text_size_16"
+                android:maxLength="4"
+                android:inputType="numberPassword"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/view3"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_update_pin"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="@string/update_title"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_size_18"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="50dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@color/pink"
+            android:layout_below="@+id/input_layout_merchant_confirm_pin"/>
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/change_pin_progressBar"
+            android:visibility="gone"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
