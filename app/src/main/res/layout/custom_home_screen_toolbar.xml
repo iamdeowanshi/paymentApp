@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="#ffffff"
+        app:titleTextAppearance="?attr/titleTextAppearance"
+        android:theme="@style/AppTheme"
+        app:contentInsetStart="0dp"
+        android:contentInsetLeft="0dp">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:layout_margin="10dp"
+            android:gravity="left"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/search"
+            android:drawablePadding="5dp"
+            android:padding="5dp"
+            android:hint="@string/search_merchant_hint"
+            android:background="@drawable/search_box"
+            android:inputType="textNoSuggestions"
+            android:id="@+id/txt_search"/>
+    </android.support.v7.widget.Toolbar>

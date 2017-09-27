@@ -1,0 +1,76 @@
+<resources>
+    <string name="app_name">Batua</string>
+    <string name="app_description">Batua Android Project</string>
+    <string name="action_settings">Settings</string>
+    <string name="logout_title">Logout</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="google_project_number">242024561321</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password (optional)</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email
+        completions."
+    </string>
+    <string name="hint_email">Email or mobile number</string>
+    <string name="hint_password">Password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="google_login">Login with Google+</string>
+    <string name="mobile_number">Enter mobile number</string>
+    <string name="otp">Enter OTP</string>
+    <string name="resend_otp">Resend OTP</string>
+    <string name="new_password">Enter new password</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="add_merchant_title">Add Merchant</string>
+    <string name="merchant_name">Merchant Name</string>
+    <string name="merchant_short_code">Merchant Short Code</string>
+    <string name="merchant_email">Merchant Email</string>
+    <string name="merchant_email_title">Email : </string>
+    <string name="merchant_mobile">Merchant Mobile</string>
+    <string name="merchant_category">Merchant Category</string>
+    <string name="merchant_fee">Merchant Fee (in %)</string>
+    <string name="merchant_address">Address</string>
+    <string name="merchant_pin_code">Pin</string>
+    <string name="account_holder_name">Account holder Name</string>
+    <string name="account_number">Account Number</string>
+    <string name="bank_branch">Bank Branch</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="merchant_city">City</string>
+    <string name="merchant_bank">Bank</string>
+    <string name="edit_merchant_title">Edit Merchant</string>
+    <string name="leader_board_title">Leader Board</string>
+    <string name="profile_title">Profile</string>
+    <string name="merchant_current_password">Current Password</string>
+    <string name="merchant_new_password">New Password</string>
+    <string name="merchant_confirm_password">Confirm Password</string>
+    <string name="save_title">SAVE</string>
+    <string name="add_image_title">Add Image</string>
+    <string name="search_merchant_hint">Search Merchant</string>
+
+
+    <string-array name="merchant_category">
+        <item>@string/merchant_category</item>
+    </string-array>
+
+    <string-array name="merchant_city">
+        <item>@string/merchant_city</item>
+    </string-array>
+
+    <string-array name="merchant_bank">
+        <item>HDFC</item>
+        <item>ICICI</item>
+        <item>SBI</item>
+        <item>AXIS</item>
+    </string-array>
+
+</resources>

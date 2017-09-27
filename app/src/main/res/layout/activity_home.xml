@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:focusable="true">
+
+    <android.support.v4.widget.DrawerLayout
+        android:layout_width="match_parent"
+        android:id="@+id/drawer_layout"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <include layout="@layout/app_bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <fragment
+            android:id="@+id/fragment_drawer"
+            android:name="com.batua.android.merchant.module.dashboard.view.fragment.NavigationFragment"
+            android:layout_width="260dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/white"/>
+
+    </android.support.v4.widget.DrawerLayout>
+
+
+</RelativeLayout>
